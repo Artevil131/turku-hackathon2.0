@@ -7,6 +7,15 @@ touches the other's. The shared contract is `libs/contract` (D-006).
 Before starting on either machine: read README.md, CONCEPT.md,
 ARCHITECTURE.md, PRIVACY.md, DECISIONS.md and AGENTS.md. Then this file.
 
+## Remotes
+
+Artem's repository (`Artevil131/turku-hackathon2.0`) is the official
+one, but only Artem and Aapo can push to it. Work happens on Aapo's copy,
+`https://github.com/aapolipponen/turku-hackathon2.0`, where machine B has
+collaborator access. Machine A pulls from Aapo's copy and pushes to both,
+so Artem's stays current. Machine B: clone Aapo's copy, push to its
+`main`, never to Artem's.
+
 ## Ground rules for both
 
 - Own directories only. If you need something in the other side's
