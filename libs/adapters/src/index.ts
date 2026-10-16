@@ -17,10 +17,14 @@ function addDays(s: IsoDate, n: number): IsoDate {
 /** Applies the rules every adapter must: the window, the cap, no empty text. */
 export function minimise(source: Source, items: readonly Snippet[], window: ReadWindow): Snippet[] {
   const to = source === "calendar" ? addDays(window.to, CALENDAR_LOOKAHEAD_DAYS) : window.to;
-  return items
-    .filter((s) => s.source === source && s.date >= window.from && s.date <= to)
-    .map((s) => ({ ...s, text: s.text.trim().slice(0, SNIPPET_MAX_CHARS) }))
-    .filter((s) => s.text.length > 0);
+  return (
+    items
+      .filter((s) => s.source === source && s.date >= window.from && s.date <= to)
+      // An entry that did not exist yet (calendar `meta.created`) is not visible.
+      .filter((s) => typeof s.meta?.created !== "string" || s.meta.created <= window.to)
+      .map((s) => ({ ...s, text: s.text.trim().slice(0, SNIPPET_MAX_CHARS) }))
+      .filter((s) => s.text.length > 0)
+  );
 }
 
 /** An adapter over an in-memory list, which is what a synthetic phone is. */

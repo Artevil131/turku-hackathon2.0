@@ -7,7 +7,9 @@
 // MiniLM's). A snippet is evidence for its best event when its normalised
 // margin clears `floor`. An event's score is the decayed sum of its
 // evidence margins over the window; it fires above `threshold` when at
-// least `minSources` sources contribute.
+// least `minSources` sources contribute. Identical texts (the monthly rent,
+// the usual shop) count once, and when they recur more than `maxRepeats`
+// times in the window they are routine and count for nothing.
 
 import type { DetectedEvent, Detector, DetectorOptions, Embedder, EventType, Evidence, IsoDate, Snippet } from "@ahead/contract";
 import { EVENT_TYPES } from "@ahead/contract";
@@ -16,6 +18,8 @@ import { datesIn, placeIn } from "./dates.ts";
 import { ordinary, prototypes } from "./prototypes.ts";
 
 export interface DetectorParams {
+  /** A text seen more often than this in the window is routine and never evidence; otherwise it counts once. */
+  maxRepeats: number;
   /** Minimum margin (event similarity minus ordinary similarity) for a snippet to count. */
   floor: number;
   /** Event score needed to fire. */
@@ -26,7 +30,7 @@ export interface DetectorParams {
   minSources: number;
 }
 
-export const DEFAULT_PARAMS: DetectorParams = { floor: 0.6, threshold: 2.5, halfLifeDays: 30, minSources: 2 };
+export const DEFAULT_PARAMS: DetectorParams = { maxRepeats: 2, floor: 0.75, threshold: 2.5, halfLifeDays: 30, minSources: 2 };
 
 export interface Scored {
   snippet: Snippet;
@@ -127,7 +131,18 @@ export class PrototypeDetector implements Detector {
   async detect(snippets: readonly Snippet[], today: IsoDate, options: DetectorOptions = {}): Promise<DetectedEvent[]> {
     const rejected = new Set(options.rejectedSnippetIds ?? []);
     const muted = new Set(options.mutedTypes ?? []);
-    const scored = (await this.score(snippets)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
+    const counts = new Map<string, number>();
+    const keyOf = (s: Snippet) => `${s.source}\u0000${s.text.toLowerCase().replace(/\s+/g, " ").trim()}`;
+    for (const s of snippets) counts.set(keyOf(s), (counts.get(keyOf(s)) ?? 0) + 1);
+    const seen = new Set<string>();
+    const latestFirst = [...snippets].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+    const unique = latestFirst.filter((s) => {
+      const k = keyOf(s);
+      if ((counts.get(k) ?? 0) > this.params.maxRepeats || seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+    const scored = (await this.score(unique)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
     const byType = new Map<EventType, Scored[]>();
     for (const x of scored) byType.set(x.type, [...(byType.get(x.type) ?? []), x]);
 

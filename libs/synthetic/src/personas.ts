@@ -9,6 +9,7 @@ import { familyNoise, type NoiseTemplate, studentNoise } from "./noise.ts";
 
 export interface Planted {
   source: Source;
+  /** Calendar entries: the day the entry was created; the adapter hides it before that (meta.created). */
   date: IsoDate;
   text: string;
   meta?: Record<string, string | number>;
@@ -65,7 +66,7 @@ export const student: Persona = {
       text: "Vuokrasopimus allekirjoitettavaksi – Yo-kylä 12 B 7, Turku. Hei Emma, liitteenä vuokrasopimus, vuokrasuhde alkaa 1.11.2026.",
       meta: { from: "TYS" },
     },
-    { source: "calendar", date: "2026-11-01", text: "Muutto Turkuun 🚚" },
+    { source: "calendar", date: "2026-11-01", text: "Muutto Turkuun 🚚", meta: { created: "2026-10-09" } },
     {
       source: "mail",
       date: "2026-10-12",
@@ -100,7 +101,7 @@ export const student: Persona = {
       meta: { from: "dealer" },
     },
     { source: "places", date: "2026-10-11", text: "Autotalo Laakkonen, Oulu" },
-    { source: "calendar", date: "2026-10-18", text: "Koeajo Yaris, Laakkonen klo 14" },
+    { source: "calendar", date: "2026-10-18", text: "Koeajo Yaris, Laakkonen klo 14", meta: { created: "2026-10-11" } },
     {
       source: "mail",
       date: "2026-10-16",
@@ -116,12 +117,12 @@ export const student: Persona = {
     },
     { source: "mail", date: "2026-10-13", text: "Your booking confirmation AY1741 Helsinki–Lisbon 10 Jan 2027", meta: { from: "Finnair" } },
     { source: "bank", date: "2026-10-13", text: "Finnair", meta: { amountBand: "200-500" } },
-    { source: "calendar", date: "2027-01-10", text: "✈️ Lisbon – exchange semester (until 30 May)" },
+    { source: "calendar", date: "2027-01-10", text: "✈️ Lisbon – exchange semester (until 30 May)", meta: { created: "2026-10-13" } },
     { source: "mail", date: "2026-10-15", text: "Learning Agreement signed – Erasmus+ spring 2027", meta: { from: "University of Oulu" } },
   ],
   traps: [
     { source: "mail", date: "2026-08-12", text: "Voitko auttaa mua muutossa lauantaina? Tarjoan pizzaa 🍕", meta: { from: "Matti" } },
-    { source: "calendar", date: "2026-08-15", text: "Matin muuttoapu" },
+    { source: "calendar", date: "2026-08-15", text: "Matin muuttoapu", meta: { created: "2026-08-12" } },
     { source: "mail", date: "2026-09-05", text: "Isä kysyy: tuleeko Saran uusi auto tällä viikolla?", meta: { from: "Äiti" } },
   ],
   truth: [
@@ -148,9 +149,9 @@ export const family: Persona = {
       meta: { from: "housing" },
     },
     { source: "bank", date: "2026-10-10", text: "K-Rauta Turku", meta: { amountBand: "200-500" } },
-    { source: "calendar", date: "2026-10-20", text: "Remonttipalaveri Virtanen" },
+    { source: "calendar", date: "2026-10-20", text: "Remonttipalaveri Virtanen", meta: { created: "2026-10-12" } },
     { source: "mail", date: "2026-09-30", text: "Pentueesta vapaana vielä yksi uros – luovutus 15.11.", meta: { from: "breeder" } },
-    { source: "calendar", date: "2026-11-15", text: "Haetaan koiranpentu 🐶" },
+    { source: "calendar", date: "2026-11-15", text: "Haetaan koiranpentu 🐶", meta: { created: "2026-09-30" } },
     { source: "bank", date: "2026-10-08", text: "Musti ja Mirri", meta: { amountBand: "50-200" } },
   ],
   traps: [

@@ -80,3 +80,18 @@ describe("PrototypeDetector", () => {
     expect(ev?.place).toBe("Turku");
   });
 });
+
+describe("routine items", () => {
+  it("counts an identical text once and drops it when it recurs", async () => {
+    const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0, maxRepeats: 2 });
+    const twice = [
+      snip("a", "bank", "2026-10-10", "move 0.6"),
+      snip("b", "bank", "2026-10-14", "move 0.6"),
+      snip("c", "mail", "2026-10-15", "move 0.6"),
+    ];
+    const once = await det.detect(twice, today);
+    expect(once[0]?.evidence.length).toBe(2); // bank counted once, mail once
+    const routine = [...twice, snip("d", "bank", "2026-10-16", "move 0.6")];
+    expect(await det.detect(routine, today)).toEqual([]); // bank text recurs 3 times: routine; mail alone is one source
+  });
+});

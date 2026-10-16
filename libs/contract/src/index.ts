@@ -27,7 +27,10 @@ export interface Snippet {
   date: IsoDate;
   /** At most SNIPPET_MAX_CHARS characters. */
   text: string;
-  /** Free-form, source-specific and small: merchant, place name, amount band. */
+  /**
+   * Free-form, source-specific and small: merchant, place name, amount band.
+   * Calendar entries carry `created` (IsoDate): the entry is invisible before it.
+   */
   meta?: Record<string, string | number>;
 }
 
