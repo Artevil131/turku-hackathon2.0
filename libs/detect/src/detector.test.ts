@@ -72,6 +72,16 @@ describe("PrototypeDetector", () => {
     expect(await det.detect(s, today, { rejectedSnippetIds: ["a"] })).toEqual([]);
     expect(await det.detect(s, today, { mutedTypes: ["move"] })).toEqual([]);
   });
+  it("lets a future calendar entry decide date and place over the mail", async () => {
+    const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0 });
+    const s = [
+      snip("a", "mail", "2026-10-15", "long_trip 0.9 Helsinki–Lisbon 10 Jan 2027 and movers 31.10."),
+      snip("b", "calendar", "2027-01-10", "long_trip 0.9 Lisbon"),
+    ];
+    const [ev] = await det.detect(s, today);
+    expect(ev?.estimatedDate).toBe("2027-01-10");
+    expect(ev?.place).toBe("Lisbon");
+  });
   it("estimates the date from the evidence and a future calendar entry", async () => {
     const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0 });
     const s = [snip("a", "mail", "2026-10-10", "move 0.9 alkaen 1.11.2026 Turku"), snip("b", "calendar", "2026-11-01", "move 0.9")];

@@ -39,6 +39,21 @@ export interface Scored {
   prototype: string;
 }
 
+/** The most frequent value; ties go to the one seen first in `xs`. */
+function mostFrequent<T>(xs: readonly T[]): T | undefined {
+  const counts = new Map<T, number>();
+  for (const x of xs) counts.set(x, (counts.get(x) ?? 0) + 1);
+  let best: T | undefined;
+  let n = 0;
+  for (const [x, c] of counts) {
+    if (c > n) {
+      best = x;
+      n = c;
+    }
+  }
+  return best;
+}
+
 function daysBetween(a: IsoDate, b: IsoDate): number {
   return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / 86400000);
 }
@@ -162,11 +177,14 @@ export class PrototypeDetector implements Detector {
         score: Number(x.margin.toFixed(3)),
         prototype: x.prototype,
       }));
-      const dates = sorted.flatMap((x) =>
-        x.snippet.source === "calendar" && x.snippet.date >= today ? [x.snippet.date] : datesIn(x.snippet.text, today),
-      );
-      const future = dates.filter((d) => d >= today).sort();
-      const place = sorted.map((x) => placeIn(x.snippet.text)).find((p) => p !== undefined);
+      // Date and place: a future calendar entry is the user's own statement and wins;
+      // otherwise the most frequent future date and place in the evidence.
+      const calendar = sorted.filter((x) => x.snippet.source === "calendar" && x.snippet.date >= today);
+      const calendarDate = calendar.map((x) => x.snippet.date).sort()[0];
+      const calendarPlace = calendar.map((x) => placeIn(x.snippet.text)).find((p) => p !== undefined);
+      const future = mostFrequent(sorted.flatMap((x) => datesIn(x.snippet.text, today)).filter((d) => d >= today));
+      const place = calendarPlace ?? mostFrequent(sorted.map((x) => placeIn(x.snippet.text)).filter((p): p is string => p !== undefined));
+      const estimatedDate = calendarDate ?? future;
       const firstSignal = xs.map((x) => x.snippet.date).sort()[0] as IsoDate;
       const ev: DetectedEvent = {
         id: `${type}-${firstSignal}`,
@@ -176,7 +194,7 @@ export class PrototypeDetector implements Detector {
         firstSignal,
         detectedAt: today,
       };
-      if (future[0]) ev.estimatedDate = future[0];
+      if (estimatedDate) ev.estimatedDate = estimatedDate;
       if (place) ev.place = place;
       events.push(ev);
     }
