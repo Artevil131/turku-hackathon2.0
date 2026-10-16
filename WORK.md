@@ -12,7 +12,7 @@ ARCHITECTURE.md, PRIVACY.md, DECISIONS.md and AGENTS.md. Then this file.
 Artem's repository (`Artevil131/turku-hackathon2.0`) is the official
 one, but only Artem and Aapo can push to it. Work happens on Aapo's copy,
 `https://github.com/aapolipponen/turku-hackathon2.0`, where machine B has
-collaborator access. Machine A pulls from Aapo's copy and pushes to both,
+collaborator access. Machine A has Aapo's copy as `origin` and Artem's as `artem`, and pushes to both,
 so Artem's stays current. Machine B: clone Aapo's copy, push to its
 `main`, never to Artem's.
 
