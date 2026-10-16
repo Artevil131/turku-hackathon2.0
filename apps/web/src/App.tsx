@@ -1,5 +1,6 @@
 import type { Journey as JourneyData, LedgerEntry, LedgerStatus, SourceState, Store } from "@ahead/contract";
-import { mockMoveJourney, mockSnippets } from "@ahead/contract/mock";
+import { mockSnippets } from "@ahead/contract/mock";
+import { createBuilders } from "@ahead/journeys";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { checkNow } from "./detect.ts";
 import { useI18n } from "./i18n.tsx";
@@ -27,6 +28,7 @@ function wasOnboarded(): boolean {
 export function App() {
   const { t, locale, setLocale } = useI18n();
   const store: Store = useMemo(() => createStore(), []);
+  const builders = useMemo(() => createBuilders({ today: today() }), []);
   const [sources, setSources] = useState<SourceState[]>([]);
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [journey, setJourney] = useState<JourneyData | undefined>();
@@ -68,9 +70,7 @@ export function App() {
 
   const answer = async (entry: LedgerEntry, status: Exclude<LedgerStatus, "pending">) => {
     await store.upsertLedger({ ...entry, status, answeredAt: today() });
-    if (status === "confirmed" && entry.event.type === "move") {
-      // Mock journey until @ahead/journeys lands (WORK.md, machine B item 3).
-      await store.putJourney({ ...mockMoveJourney, eventId: entry.event.id });
+    if (status === "confirmed") {
       await openJourney(entry.event.id);
     } else {
       setView(null);
@@ -83,10 +83,26 @@ export function App() {
     await reload();
   };
 
+  /** Built from @ahead/journeys in the current language; the done flags come from the store, keyed by item id. */
+  const buildJourney = useCallback(
+    async (eventId: string) => {
+      const entry = (await store.ledger()).find((e) => e.event.id === eventId);
+      const built = entry && (await builders[entry.event.type]?.build({ event: entry.event, municipality: entry.event.place, locale }));
+      if (!built) return undefined;
+      const done = new Set(((await store.journey(eventId))?.items ?? []).filter((i) => i.done).map((i) => i.id));
+      return { ...built, items: built.items.map((i) => (done.has(i.id) ? { ...i, done: true } : i)) };
+    },
+    [store, builders, locale],
+  );
+
   const openJourney = async (eventId: string) => {
-    setJourney(await store.journey(eventId));
+    setJourney(await buildJourney(eventId));
     setView({ kind: "journey", eventId });
   };
+
+  useEffect(() => {
+    if (view?.kind === "journey") void buildJourney(view.eventId).then(setJourney);
+  }, [view, buildJourney]);
 
   const toggleDone = async (itemId: string) => {
     if (!journey) return;
