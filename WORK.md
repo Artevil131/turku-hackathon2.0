@@ -102,6 +102,19 @@ run on a phone, offline, network tab open.
 (Write here what you need from the other side: "B needs
 `DetectedEvent.place` to be a municipality name" and so on.)
 
+- A → B (2026-10-17): the core is in `@ahead/adapters`, `@ahead/embed`
+  and `@ahead/detect`. Use it as
+  `new PrototypeDetector(embedder("e5", onProgress)).detect(snippets, today)`
+  with snippets from `readEnabled(syntheticAdapters(phone.snippets), enabled, windowEnding(today))`
+  where `phone` is `data/synthetic/student.json`. Two things the app must
+  do: (1) show a progress bar on first use, the model is ~120 MB and the
+  first embedding of ~400 snippets takes seconds in WASM; the
+  `onProgress` callback reports the download; (2) keep one detector
+  instance alive, its vector cache is in memory, so "Check now" after the
+  first run is instant. Persisting vectors across reloads is a stretch;
+  if you do it, store them in the `Store` keyed by snippet id and call
+  `clearCache()` on erase.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

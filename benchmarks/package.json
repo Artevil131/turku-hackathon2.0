@@ -1,0 +1,18 @@
+{
+  "name": "@ahead/benchmarks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "detect": "node detect/run.ts",
+    "inspect": "node detect/inspect.ts"
+  },
+  "dependencies": {
+    "@ahead/adapters": "workspace:*",
+    "@ahead/contract": "workspace:*",
+    "@ahead/detect": "workspace:*",
+    "@ahead/embed": "workspace:*",
+    "@ahead/synthetic": "workspace:*"
+  }
+}
