@@ -114,6 +114,12 @@ run on a phone, offline, network tab open.
   first run is instant. Persisting vectors across reloads is a stretch;
   if you do it, store them in the `Store` keyed by snippet id and call
   `clearCache()` on erase.
+- A → B (2026-10-17, later): the model is `e5` (D-012) and the detector
+  defaults are final. On the student phone with today = 2026-10-17 the
+  detector returns move (1 Nov, Turku), first_car (18 Oct) and long_trip
+  (10 Jan 2027, Lisbon); `node benchmarks/detect/today.ts` prints exactly
+  what the notice screen gets. Calendar snippets carry `meta.created`;
+  `readEnabled` already hides entries not yet created.
 
 ## Contract changes
 
