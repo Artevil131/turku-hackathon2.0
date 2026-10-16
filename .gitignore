@@ -47,3 +47,6 @@ xcuserdata/
 !data/synthetic/
 # cached model weights for the PWA
 apps/web/public/models/
+
+# cached open data for the offline demo is committed (WORK.md, libs/opendata)
+!libs/opendata/data/

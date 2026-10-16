@@ -1,0 +1,213 @@
+{
+  "source": {
+    "name": "Ilmatieteen laitos, avoin data (CC BY 4.0)",
+    "url": "https://en.ilmatieteenlaitos.fi/open-data"
+  },
+  "feedUrl": "https://alerts.fmi.fi/cap/feed/atom_en-GB.xml",
+  "fetchedAt": "2026-10-16T23:14:30.761Z",
+  "warnings": [
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.5505073929730626284081450915572546863",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "seaWind",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-17T06:00:00+03:00",
+      "expires": "2026-10-18T00:00:00+03:00",
+      "regions": [],
+      "areas": ["Saaristomeri"],
+      "text": {
+        "fi": {
+          "event": "Tuulivaroitus merelle",
+          "headline": "Keltainen tuulivaroitus merelle: Saaristomeri, la 6.00 - su 0.00",
+          "description": "Huomautus veneilijöille: Pohjoistuulta aamusta alkaen 12 m/s."
+        },
+        "sv": {
+          "event": "Vindvarning för havsområden",
+          "headline": "Gul vind varning för sjöområden: Skärgårdshavet, lö 6.00 - sö 0.00",
+          "description": "Meddelande för båtförare: Från och med morgonen nordlig vind 12 m/s."
+        },
+        "en": {
+          "event": "Wind warning for sea areas",
+          "headline": "Yellow wind warning for sea area: Sea of Archipelago, Sat 6.00 - Sun 0.00",
+          "description": "Strong wind advisory: North wind 12 m/s from the morning on."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.22515628618420151037566692227493488607",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "seaWaveHeight",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-17T15:00:00+03:00",
+      "expires": "2026-10-18T00:00:00+03:00",
+      "regions": [],
+      "areas": ["Pohjois-Itämeren itäosa", "Pohjois-Itämeren länsiosa"],
+      "text": {
+        "fi": {
+          "event": "Aallokkovaroitus",
+          "headline": "Keltainen aallokkovaroitus: Pohjois-Itämeri, la 15.00 - su 0.00",
+          "description": "Aallokkovaroitus: Iltapäivästä alkaen esiintyy kohtalaista aallokkoa, jossa merkitsevä aallonkorkeus ylittää 2,5 metriä."
+        },
+        "sv": {
+          "event": "Varning för hård sjögång",
+          "headline": "Gul varning för hård sjögång: Norra Östersjön, lö 15.00 - sö 0.00",
+          "description": "Varning för sjögång: Från och med eftermiddagen förekommer måttlig sjögång, där den signifikanta våghöjden överstiger 2,5 meter."
+        },
+        "en": {
+          "event": "Wave height warning",
+          "headline": "Yellow wave height warning: Northern Baltic, Sat 15.00 - Sun 0.00",
+          "description": "Wave height warning: Rough waves occur from the afternoon on. Significant wave height exceeds 2.5 meters."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.271757296025695488402337364948380922946",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "seaWind",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-19T12:00:00+03:00",
+      "expires": "2026-10-20T00:00:00+03:00",
+      "regions": [],
+      "areas": ["Perämeren pohjoisosa", "Perämeren eteläosa", "Merenkurkku", "Selkämeren pohjoisosa"],
+      "text": {
+        "fi": {
+          "event": "Tuulivaroitus merelle",
+          "headline": "Keltainen tuulivaroitus merelle: Paikoin Pohjanlahti, ma 12.00 - ti 0.00",
+          "description": "Kovan tuulen varoitus: Kovan lounaistuulen todennäköisyys on 40 % maanantaipäivästä maanantain ja tiistain väliseen yöhön."
+        },
+        "sv": {
+          "event": "Vindvarning för havsområden",
+          "headline": "Gul vind varning för sjöområden: Lokalt på Bottniska viken, må 12.00 - ti 0.00",
+          "description": "Varning för hård vind: Från och med måndag fram till natten mellan måndag och tisdag är sannolikheten 40 % för hård sydvästlig vind."
+        },
+        "en": {
+          "event": "Wind warning for sea areas",
+          "headline": "Yellow wind warning for sea area: Locally on Gulf of Bothnia, Mon 12.00 - Tue 0.00",
+          "description": "Wind warning for sea areas: From Monday noon to the night between Monday and Tuesday, probability for southwest gale-force winds is 40%."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.41837267779237000661458435143638595137",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "seaWind",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-17T06:00:00+03:00",
+      "expires": "2026-10-18T00:00:00+03:00",
+      "regions": [],
+      "areas": ["Ahvenanmeri", "Selkämeren eteläosa", "Pohjois-Itämeren itäosa", "Pohjois-Itämeren länsiosa"],
+      "text": {
+        "fi": {
+          "event": "Tuulivaroitus merelle",
+          "headline": "Keltainen tuulivaroitus merelle: Paikoin kaikki merialueet, la 6.00 - su 0.00",
+          "description": "Kovan tuulen varoitus: Pohjoisen ja koillisen välistä tuulta aamusta alkaen 14 m/s."
+        },
+        "sv": {
+          "event": "Vindvarning för havsområden",
+          "headline": "Gul vind varning för sjöområden: Lokalt på alla havsområden, lö 6.00 - sö 0.00",
+          "description": "Varning för hård vind: Från och med morgonen nordlig till nordostlig vind 14 m/s."
+        },
+        "en": {
+          "event": "Wind warning for sea areas",
+          "headline": "Yellow wind warning for sea area: Locally on all sea areas, Sat 6.00 - Sun 0.00",
+          "description": "Wind warning for sea areas: North to northeast near gale 14 m/s from the morning on."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.187943455477911215120522033681343076438",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "wind",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-19T13:00:00+03:00",
+      "expires": "2026-10-20T00:00:00+03:00",
+      "regions": ["FI-10"],
+      "areas": ["Lappi"],
+      "text": {
+        "fi": {
+          "event": "Tuulivaroitus maa-alueille",
+          "headline": "Keltainen tuulivaroitus maa-alueille: Lappi, ma 13.00 - ti 0.00",
+          "description": "Tuulivaroitus maa-alueille: Vaarallisen voimakkaan lounaistuulen todennäköisyys on 30 % maanantaipäivästä maanantain ja tiistain väliseen yöhön. Tuulen nopeus voi olla puuskissa 15 m/s."
+        },
+        "sv": {
+          "event": "Vindvarning för landområden",
+          "headline": "Gul vindvarning för landområden: Lappland, må 13.00 - ti 0.00",
+          "description": "Vindvarning för landområden: Sannolikheten för farligt kraftig sydvästlig vind är 30 % från och med måndag fram till natten mellan måndag och tisdag. Vindhastigheten kan i byarna uppgå till 15 m/s."
+        },
+        "en": {
+          "event": "Wind warning for land areas",
+          "headline": "Yellow wind warning for land areas: Lapland, Mon 13.00 - Tue 0.00",
+          "description": "Wind warning for land areas: Probability for strong winds from southwest is 30% from Monday noon to the night between Monday and Tuesday. Wind gusts can exceed 15 m/s."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.156846570594745496348602181010406828546",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Update",
+      "eventCode": "seaWaveHeight",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-19T18:00:00+03:00",
+      "expires": "2026-10-20T00:00:00+03:00",
+      "regions": [],
+      "areas": ["Perämeren pohjoisosa"],
+      "text": {
+        "fi": {
+          "event": "Aallokkovaroitus",
+          "headline": "Keltainen aallokkovaroitus: Perämeren pohjoisosa, ma 18.00 - ti 0.00",
+          "description": "Aallokkovaroitus: Maanantaina illalla ja maanantain ja tiistain välisenä yönä kohtalaisen aallokon todennäköisyys on 20 %. Merkitsevä aallonkorkeus voi ylittää 2,5 metriä."
+        },
+        "sv": {
+          "event": "Varning för hård sjögång",
+          "headline": "Gul varning för hård sjögång: Norra Bottenviken, må 18.00 - ti 0.00",
+          "description": "Varning för sjögång: På måndag kväll och på natten mellan måndag och tisdag är sannolikheten 20 % för måttlig sjögång. Den signifikanta våghöjden kan överstiga 2,5 meter."
+        },
+        "en": {
+          "event": "Wave height warning",
+          "headline": "Yellow wave height warning: Northern Bay of Bothnia, Mon 18.00 - Tue 0.00",
+          "description": "Wave height warning: In Monday evening and in the night between Monday and Tuesday, probability for rough waves is 20%. The significant wave height may exceed 2.5 meters."
+        }
+      }
+    },
+    {
+      "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.181630979483905398319067783343525886717",
+      "sentAt": "2026-10-17T00:00:19+03:00",
+      "msgType": "Alert",
+      "eventCode": "seaWind",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-17T00:00:19+03:00",
+      "expires": "2026-10-17T12:00:00+03:00",
+      "regions": [],
+      "areas": ["Suomenlahden länsiosa", "Suomenlahden itäosa"],
+      "text": {
+        "fi": {
+          "event": "Tuulivaroitus merelle",
+          "headline": "Keltainen tuulivaroitus merelle: Suomenlahti, la 0.00 - 12.00",
+          "description": "Huomautus veneilijöille: Etelän ja lounaan välistä tuulta aluksi 12 m/s."
+        },
+        "sv": {
+          "event": "Vindvarning för havsområden",
+          "headline": "Gul vind varning för sjöområden: Finska viken, lö 0.00 - 12.00",
+          "description": "Meddelande för båtförare: Till en början sydlig till sydvästlig vind 12 m/s."
+        },
+        "en": {
+          "event": "Wind warning for sea areas",
+          "headline": "Yellow wind warning for sea area: Gulf of Finland, Sat 0.00 - 12.00",
+          "description": "Strong wind advisory: South to southwest wind 12 m/s at first."
+        }
+      }
+    }
+  ]
+}

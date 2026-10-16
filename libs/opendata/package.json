@@ -1,0 +1,16 @@
+{
+  "name": "@ahead/opendata",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./data/fmi-warnings.json": "./data/fmi-warnings.json"
+  },
+  "dependencies": {
+    "@ahead/contract": "workspace:*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  }
+}
