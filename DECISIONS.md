@@ -17,12 +17,12 @@ not deleted: add a new entry and mark the old one `superseded by D-NNN`.
 | D-009 | 2026-10-17 | Window 60 days; demo events move, first car, long trip; child, pet and renovation have prototypes but no journey this weekend | PLAN.md scope | Aapo |
 | D-010 | 2026-10-17 | Mail, bank and places in the demo come from the synthetic phone only; the OAuth and bank-consent screens are shown as mocks; a real calendar may be read on a team member's own device as a stretch | No real mailbox on stage (PRIVACY.md §8); no time for a reviewed OAuth app | Aapo |
 | D-011 | 2026-10-17 | Working name Ahead; package scope `@ahead` | Placeholder until someone has a better one | Aapo |
+| D-012 | 2026-10-17 | The app Store is IndexedDB through the `idb` wrapper, so erase-all is one transaction | Team choice, the proposal in Open | Operator (machine B) |
+| D-013 | 2026-10-17 | UI is Finnish and English from the start with a language toggle; the demo runs in English | Team choice, the proposal in Open | Operator (machine B) |
 
 ## Open (to be decided by the team before code depends on them)
 
 | Item | Options | Proposal |
 |------|---------|----------|
 | Server for the demo | None (journeys bundled, open data fetched at build time into JSON); or a tiny proxy for FMI if its feeds block browser requests | Machine B tests FMI from the browser first; proxy only if forced |
-| Store | IndexedDB directly; `idb` wrapper; localStorage for the demo | `idb`, so erase-all is one transaction |
-| Locale of the demo | Finnish UI with English toggle, as in entry one; or English only for the judges | Finnish and English toggle, demo in English |
 | Benchmark metrics | Days from first signal to detection; false notices per 120 days; per-event precision at the chosen threshold | All three, printed as one table |
