@@ -1,0 +1,57 @@
+import { readEnabled, syntheticAdapters, windowEnding } from "@ahead/adapters";
+import type { Adapter, DetectedEvent, Detector, IsoDate, Snippet, Source } from "@ahead/contract";
+import { mockMove, mockSnippets } from "@ahead/contract/mock";
+
+/** What "Check now" needs from the core: where snippets come from and what turns them into events. */
+export interface Engine {
+  adapters: readonly Adapter[];
+  detector: Detector;
+}
+
+/** First-use model download, as reported by @ahead/embed (WORK.md, A to B). */
+export type EngineProgress = (p: { status: string; progress?: number; file?: string }) => void;
+
+/**
+ * Mock core: the real adapters over the contract's mock phone, and a stand-in detector that fires Emma's move
+ * once two sources show its evidence (the two-source rule of D-008). Replaced by `createCoreEngine`.
+ */
+export function createMockEngine(): Engine {
+  const detector: Detector = {
+    async detect(snippets, _today, options) {
+      const rejected = new Set(options?.rejectedSnippetIds ?? []);
+      if (options?.mutedTypes?.includes(mockMove.type)) return [];
+      const present = new Map(snippets.filter((s) => !rejected.has(s.id)).map((s) => [s.id, s]));
+      const evidence = mockMove.evidence.filter((e) => present.has(e.snippetId));
+      const sources = new Set(evidence.map((e) => present.get(e.snippetId)?.source));
+      return sources.size >= 2 ? [{ ...mockMove, evidence }] : [];
+    },
+  };
+  return { adapters: syntheticAdapters(mockSnippets), detector };
+}
+
+/**
+ * The real core: A's prototype detector over the synthetic student phone. Loaded on demand so the model code
+ * stays out of the main bundle. The model (~120 MB) downloads on the first `embed`, which is why `onProgress`
+ * exists; one detector instance is kept so later checks reuse its vector cache.
+ */
+export async function createCoreEngine(onProgress?: EngineProgress): Promise<Engine> {
+  // A glob, not an import: a clone without the generated phone still builds (the file is git-ignored today).
+  const phones = import.meta.glob("../../../data/synthetic/student.json", { import: "default" });
+  const loadPhone = Object.values(phones)[0];
+  if (!loadPhone) throw new Error("data/synthetic/student.json is missing. Generate it with: node libs/synthetic/src/cli.ts");
+  const phone = (await loadPhone()) as { snippets: Snippet[] };
+  const [{ PrototypeDetector }, { embedder }] = await Promise.all([import("@ahead/detect"), import("@ahead/embed")]);
+  return { adapters: syntheticAdapters(phone.snippets), detector: new PrototypeDetector(embedder("e5", onProgress)) };
+}
+
+/** `?engine=core` selects the real core; anything else is the mock, so the app always runs. */
+export function createEngine(onProgress?: EngineProgress, search = location.search): Promise<Engine> {
+  return new URLSearchParams(search).get("engine") === "core" ? createCoreEngine(onProgress) : Promise.resolve(createMockEngine());
+}
+
+/** Reads the enabled sources through their adapters over the default window (D-009). */
+export function readSnippets(engine: Engine, enabled: readonly Source[], today: IsoDate): Promise<Snippet[]> {
+  return readEnabled(engine.adapters, new Set(enabled), windowEnding(today));
+}
+
+export type { DetectedEvent };

@@ -1,8 +1,8 @@
-import type { Journey as JourneyData, LedgerEntry, LedgerStatus, SourceState, Store } from "@ahead/contract";
-import { mockSnippets } from "@ahead/contract/mock";
+import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, SourceState, Store } from "@ahead/contract";
 import { createBuilders } from "@ahead/journeys";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { checkNow } from "./detect.ts";
+import { createEngine, type Engine, readSnippets } from "./engine.ts";
 import { useI18n } from "./i18n.tsx";
 import { useOutboundCount } from "./netcounter.ts";
 import { Home } from "./screens/Home.tsx";
@@ -15,7 +15,11 @@ import { createStore } from "./store.ts";
 type Tab = "home" | "ledger" | "sources";
 type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | null;
 
-const today = () => new Date().toISOString().slice(0, 10);
+/** The real date, unless the URL says `?today=YYYY-MM-DD`: the demo phone is dated, so the demo can pin the day. */
+const today = () => {
+  const pinned = new URLSearchParams(location.search).get("today");
+  return pinned && /^d{4}-d{2}-d{2}$/.test(pinned) ? pinned : new Date().toISOString().slice(0, 10);
+};
 
 function wasOnboarded(): boolean {
   try {
@@ -38,6 +42,20 @@ export function App() {
   const [view, setView] = useState<View>(null);
   const [checking, setChecking] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [progress, setProgress] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [snippets, setSnippets] = useState<Snippet[]>([]);
+  /** One engine for the whole session: its detector keeps the vector cache, so later checks are instant. */
+  const engineRef = useRef<Promise<Engine> | undefined>(undefined);
+  const getEngine = useCallback(() => {
+    engineRef.current ??= createEngine((p) => {
+      if (typeof p.progress === "number") setProgress(Math.round(p.progress));
+    }).catch((e) => {
+      engineRef.current = undefined;
+      throw e;
+    });
+    return engineRef.current;
+  }, []);
   const outbound = useOutboundCount();
 
   const reload = useCallback(async () => {
@@ -56,15 +74,34 @@ export function App() {
 
   const onCheck = async () => {
     setChecking(true);
-    const found = await checkNow(sources.filter((s) => s.enabled).map((s) => s.source));
-    const known = new Set((await store.ledger()).map((e) => e.event.id));
-    for (const event of found) {
-      if (!known.has(event.id)) await store.upsertLedger({ event, status: "pending", rejectedEvidence: [], shared: false });
+    setError(null);
+    try {
+      const enabled = sources.filter((s) => s.enabled).map((s) => s.source);
+      const result = await checkNow({ engine: await getEngine(), enabled, today: today(), ledger: await store.ledger() });
+      setSnippets(result.snippets);
+      const known = new Set((await store.ledger()).map((e) => e.event.id));
+      for (const event of result.events) {
+        if (!known.has(event.id)) await store.upsertLedger({ event, status: "pending", rejectedEvidence: [], shared: false });
+      }
+      await reload();
+      setChecked(true);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setChecking(false);
+      setProgress(null);
     }
-    await reload();
-    setChecked(true);
-    setChecking(false);
   };
+
+  // A notice opened after a reload has no snippets yet: read them again through the adapters (nothing is stored).
+  useEffect(() => {
+    if (view?.kind !== "notice" || snippets.length > 0) return;
+    const enabled = sources.filter((s) => s.enabled).map((s) => s.source);
+    void getEngine()
+      .then((engine) => readSnippets(engine, enabled, today()))
+      .then(setSnippets)
+      .catch(() => {});
+  }, [view, snippets.length, sources, getEngine]);
 
   const find = (id: string) => ledger.find((e) => e.event.id === id);
 
@@ -146,7 +183,7 @@ export function App() {
     body = (
       <Notice
         entry={current}
-        snippets={mockSnippets}
+        snippets={snippets}
         onRejectEvidence={(id) => rejectEvidence(current, id)}
         onAnswer={(status) => answer(current, status)}
       />
@@ -169,6 +206,8 @@ export function App() {
         anySourceOn={sources.some((s) => s.enabled)}
         checked={checked}
         checking={checking}
+        progress={progress}
+        error={error}
         onCheck={onCheck}
         onOpenNotice={(e) => setView({ kind: "notice", eventId: e.event.id })}
         onOpenJourney={(e) => openJourney(e.event.id)}

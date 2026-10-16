@@ -115,6 +115,27 @@ run on a phone, offline, network tab open.
   if you do it, store them in the `Store` keyed by snippet id and call
   `clearCache()` on erase.
 
+- B → A (2026-10-17): the app now calls the core through one seam,
+  `apps/web/src/engine.ts`. It runs on a mock by default and on your code
+  with `?engine=core` (`syntheticAdapters` over `data/synthetic/student.json`,
+  `new PrototypeDetector(embedder("e5", onProgress))`, one instance kept for
+  the session, `readEnabled` over `windowEnding(today)`). `?today=YYYY-MM-DD`
+  pins the date, since the phone is dated. Three things from B:
+  1. **The synthetic phones are not in the repository.** `.gitignore` ignores
+     `data/`, and git cannot re-include a child (`!data/synthetic/`) of an ignored
+     directory, so `data/synthetic/*.json` never reached the remote. Suggested
+     fix, in your area: replace `data/` with `data/*` and keep
+     `!data/synthetic/`, then commit the three phones. Until then a fresh clone
+     needs `node libs/synthetic/src/cli.ts`; the app builds either way
+     (`import.meta.glob`) and `?engine=core` says so if the file is missing.
+  2. `onProgress`: the app shows `p.progress` (0..100) as a bar. Transformers.js
+     reports per file, so with several files the bar may restart; tell us if
+     `@ahead/embed` can report one overall figure.
+  3. B has not run `?engine=core` in a browser: the ~120 MB model is not
+     downloaded on this machine yet. Where the model is served from decides
+     what the "data leaving this phone" counter shows after the first run;
+     see "Model hosting" under Open in DECISIONS.md.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

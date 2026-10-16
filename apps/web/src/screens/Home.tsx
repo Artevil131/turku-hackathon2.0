@@ -6,13 +6,16 @@ interface Props {
   anySourceOn: boolean;
   checked: boolean;
   checking: boolean;
+  /** Model download progress 0..100 while the on-device model loads on first use; null otherwise. */
+  progress: number | null;
+  error: string | null;
   onCheck(): void;
   onOpenNotice(entry: LedgerEntry): void;
   onOpenJourney(entry: LedgerEntry): void;
 }
 
 /** Quiet by default: an empty state and a "Check now" button. The app does not nag. */
-export function Home({ ledger, anySourceOn, checked, checking, onCheck, onOpenNotice, onOpenJourney }: Props) {
+export function Home({ ledger, anySourceOn, checked, checking, progress, error, onCheck, onOpenNotice, onOpenJourney }: Props) {
   const { t, locale } = useI18n();
   const pending = ledger.filter((e) => e.status === "pending");
   const confirmed = ledger.filter((e) => e.status === "confirmed");
@@ -55,6 +58,16 @@ export function Home({ ledger, anySourceOn, checked, checking, onCheck, onOpenNo
           {checking ? t("home.checking") : t("home.check")}
         </button>
       </div>
+      {checking && progress !== null && (
+        <p className="muted" role="status">
+          <progress max={100} value={progress} /> {t("home.loadingModel", { pct: progress })}
+        </p>
+      )}
+      {error && (
+        <p className="muted" role="alert">
+          {t("home.failed", { reason: error })}
+        </p>
+      )}
       {!anySourceOn && <p className="muted">{t("home.noSources")}</p>}
     </section>
   );

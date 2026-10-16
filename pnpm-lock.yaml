@@ -23,9 +23,18 @@ importers:
 
   apps/web:
     dependencies:
+      '@ahead/adapters':
+        specifier: workspace:*
+        version: link:../../libs/adapters
       '@ahead/contract':
         specifier: workspace:*
         version: link:../../libs/contract
+      '@ahead/detect':
+        specifier: workspace:*
+        version: link:../../libs/detect
+      '@ahead/embed':
+        specifier: workspace:*
+        version: link:../../libs/embed
       '@ahead/journeys':
         specifier: workspace:*
         version: link:../../libs/journeys

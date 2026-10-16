@@ -9,11 +9,14 @@
     "typecheck": "tsc -p ."
   },
   "dependencies": {
+    "@ahead/adapters": "workspace:*",
     "@ahead/contract": "workspace:*",
+    "@ahead/detect": "workspace:*",
+    "@ahead/embed": "workspace:*",
+    "@ahead/journeys": "workspace:*",
     "idb": "^8.0.4",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "@ahead/journeys": "workspace:*"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
