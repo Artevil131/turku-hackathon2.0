@@ -23,6 +23,12 @@ importers:
 
   libs/contract: {}
 
+  libs/synthetic:
+    dependencies:
+      '@ahead/contract':
+        specifier: workspace:*
+        version: link:../contract
+
 packages:
 
   '@biomejs/biome@2.5.15':
