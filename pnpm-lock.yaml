@@ -35,6 +35,9 @@ importers:
       '@ahead/embed':
         specifier: workspace:*
         version: link:../libs/embed
+      '@ahead/synthetic':
+        specifier: workspace:*
+        version: link:../libs/synthetic
 
   libs/adapters:
     dependencies:

@@ -35,7 +35,7 @@ const phones: Phone[] = readdirSync(dir)
   .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")));
 
 const grid: Partial<DetectorParams>[] = [];
-for (const floor of [0.03, 0.05, 0.08]) for (const threshold of [0.15, 0.25, 0.35, 0.5]) grid.push({ floor, threshold });
+for (const floor of [0.45, 0.6, 0.75]) for (const threshold of [1.5, 2.0, 2.5, 3.5]) grid.push({ floor, threshold });
 
 function addDays(s: string, n: number) {
   const d = new Date(`${s}T00:00:00Z`);
@@ -61,9 +61,10 @@ for (const key of models) {
   await emb.embed(["warm up"]);
   for (const phone of phones) {
     const all = await readEnabled(syntheticAdapters(phone.snippets), new Set(SOURCES), { from: phone.from, to: addDays(phone.to, 400) });
+    const cache = new Map<string, Float32Array>();
+    await new PrototypeDetector(emb, {}, cache).score(all); // embed everything once; every setting shares the cache
     for (const p of grid) {
-      const det = new PrototypeDetector(emb, p);
-      await det.score(all); // embed everything once; the day loop reuses the cache
+      const det = new PrototypeDetector(emb, p, cache);
       const firstDetected: Record<string, string> = {};
       let falseEpisodes = 0;
       const falseTypes = new Set<string>();
@@ -74,13 +75,14 @@ for (const key of models) {
         const events = await det.detect(snippets, day);
         const now = new Set(events.map((e) => e.type));
         for (const type of now) {
-          if (firing.has(type)) continue;
           const truth = phone.truth.find((t) => t.type === type);
-          if (truth && day >= truth.firstSignal) firstDetected[type] ??= day;
-          else {
-            falseEpisodes++;
-            falseTypes.add(type);
+          if (truth && day >= truth.firstSignal) {
+            firstDetected[type] ??= day;
+            continue;
           }
+          if (firing.has(type)) continue;
+          falseEpisodes++;
+          falseTypes.add(type);
         }
         firing.clear();
         for (const t of now) firing.add(t);

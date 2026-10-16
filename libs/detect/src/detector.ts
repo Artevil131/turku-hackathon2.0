@@ -1,10 +1,13 @@
 // The matching rule (D-008). Every snippet is embedded once (cached by
 // id). For each event type, a snippet's event score is its best cosine to
 // that event's prototypes minus its best cosine to the ordinary-life
-// prototypes. A snippet is evidence for its best event when that margin
-// clears `floor`. An event's score is the decayed sum of its evidence
-// margins over the window; it fires above `threshold` when at least
-// `minSources` sources contribute.
+// prototypes. That margin is divided by `scale`, the typical margin a
+// prototype itself has over ordinary life, so floor and threshold mean
+// the same thing for every embedding model (e5's cosines span a fifth of
+// MiniLM's). A snippet is evidence for its best event when its normalised
+// margin clears `floor`. An event's score is the decayed sum of its
+// evidence margins over the window; it fires above `threshold` when at
+// least `minSources` sources contribute.
 
 import type { DetectedEvent, Detector, DetectorOptions, Embedder, EventType, Evidence, IsoDate, Snippet } from "@ahead/contract";
 import { EVENT_TYPES } from "@ahead/contract";
@@ -23,9 +26,9 @@ export interface DetectorParams {
   minSources: number;
 }
 
-export const DEFAULT_PARAMS: DetectorParams = { floor: 0.05, threshold: 0.3, halfLifeDays: 30, minSources: 2 };
+export const DEFAULT_PARAMS: DetectorParams = { floor: 0.6, threshold: 2.5, halfLifeDays: 30, minSources: 2 };
 
-interface Scored {
+export interface Scored {
   snippet: Snippet;
   type: EventType;
   margin: number;
@@ -39,12 +42,21 @@ function daysBetween(a: IsoDate, b: IsoDate): number {
 export class PrototypeDetector implements Detector {
   private readonly embedder: Embedder;
   readonly params: DetectorParams;
-  private readonly cache = new Map<string, Float32Array>();
-  private protoVectors: Promise<{ events: Map<EventType, { text: string; v: Float32Array }[]>; ordinary: Float32Array[] }> | undefined;
+  private readonly cache: Map<string, Float32Array>;
+  private protoVectors:
+    | Promise<{ events: Map<EventType, { text: string; v: Float32Array }[]>; ordinary: Float32Array[]; scale: number }>
+    | undefined;
 
-  constructor(embedder: Embedder, params: Partial<DetectorParams> = {}) {
+  /** `cache` may be shared between detectors over the same embedder (the benchmark does). */
+  constructor(embedder: Embedder, params: Partial<DetectorParams> = {}, cache = new Map<string, Float32Array>()) {
     this.embedder = embedder;
     this.params = { ...DEFAULT_PARAMS, ...params };
+    this.cache = cache;
+  }
+
+  /** The model's margin unit (see the header comment); loads the prototypes. */
+  async scale(): Promise<number> {
+    return (await this.loadPrototypes()).scale;
   }
 
   /** Forget cached vectors, for the erase button. */
@@ -63,7 +75,22 @@ export class PrototypeDetector implements Detector {
           texts.map((text, i) => ({ text, v: vs[i] as Float32Array })),
         );
       }
-      return { events, ordinary: await this.embedder.embed(ordinary) };
+      const ord = await this.embedder.embed(ordinary);
+      // Scale: the median, over event prototypes, of (best cosine to another prototype of the
+      // same event) minus (best cosine to an ordinary sentence). A model-intrinsic unit.
+      const margins: number[] = [];
+      for (const ps of events.values()) {
+        for (const p of ps) {
+          let same = -1;
+          for (const q of ps) if (q !== p) same = Math.max(same, cosine(p.v, q.v));
+          let o = -1;
+          for (const x of ord) o = Math.max(o, cosine(p.v, x));
+          margins.push(same - o);
+        }
+      }
+      margins.sort((a, b) => a - b);
+      const scale = Math.max(1e-6, margins[Math.floor(margins.length / 2)] ?? 1);
+      return { events, ordinary: ord, scale };
     })();
     return this.protoVectors;
   }
@@ -77,8 +104,8 @@ export class PrototypeDetector implements Detector {
     return this.cache;
   }
 
-  /** Per-snippet scores, exposed for the benchmark and for explaining. */
-  async score(snippets: readonly Snippet[]): Promise<Scored[]> {
+  /** Per-snippet scores, exposed for the benchmark and for explaining. With `all`, below-floor snippets are returned too. */
+  async score(snippets: readonly Snippet[], all = false): Promise<Scored[]> {
     const [protos, vecs] = await Promise.all([this.loadPrototypes(), this.vectors(snippets)]);
     const out: Scored[] = [];
     for (const s of snippets) {
@@ -88,11 +115,11 @@ export class PrototypeDetector implements Detector {
       let best: Scored | undefined;
       for (const [type, ps] of protos.events) {
         for (const p of ps) {
-          const margin = cosine(v, p.v) - ord;
+          const margin = (cosine(v, p.v) - ord) / protos.scale;
           if (!best || margin > best.margin) best = { snippet: s, type, margin, prototype: p.text };
         }
       }
-      if (best && best.margin >= this.params.floor) out.push(best);
+      if (best && (all || best.margin >= this.params.floor)) out.push(best);
     }
     return out;
   }
