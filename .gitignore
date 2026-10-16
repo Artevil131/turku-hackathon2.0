@@ -45,5 +45,7 @@ xcuserdata/
 
 # synthetic phones are committed; everything else under data/ is not
 !data/synthetic/
-# cached model weights for the PWA
+# model weights served locally (libs/embed/scripts/fetch-model.ts); never committed
 apps/web/public/models/
+libs/embed/models/
+libs/embed/models-public/

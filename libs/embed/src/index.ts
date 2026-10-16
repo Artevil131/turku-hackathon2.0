@@ -4,7 +4,7 @@
 // Cache API, or ~/.cache/huggingface in Node).
 
 import type { Embedder } from "@ahead/contract";
-import { type FeatureExtractionPipeline, pipeline } from "@huggingface/transformers";
+import { env, type FeatureExtractionPipeline, pipeline } from "@huggingface/transformers";
 
 export interface ModelSpec {
   /** Hugging Face id of an ONNX export. */
@@ -65,6 +65,17 @@ export class TransformersEmbedder implements Embedder {
 
 export function embedder(key: ModelKey, onProgress?: ProgressCallback): TransformersEmbedder {
   return new TransformersEmbedder(MODELS[key], onProgress);
+}
+
+/**
+ * Serve the model from our own server instead of huggingface.co: call it once
+ * before the first `embed`. `path` is where `scripts/fetch-model.ts` put the
+ * files, as a URL path (browser) or directory (Node).
+ */
+export function useLocalModels(path = "/models/"): void {
+  env.allowRemoteModels = false;
+  env.allowLocalModels = true;
+  env.localModelPath = path;
 }
 
 /** Cosine similarity of two L2-normalised vectors is their dot product. */

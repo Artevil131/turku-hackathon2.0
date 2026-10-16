@@ -55,3 +55,5 @@ export async function readEnabled(adapters: readonly Adapter[], enabled: Readonl
 export function windowEnding(today: IsoDate, days = 60): ReadWindow {
   return { from: addDays(today, -days), to: today };
 }
+
+export { IcsAdapter, type IcsEvent, icsToSnippets, parseIcs } from "./ics.ts";

@@ -1,15 +1,42 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "files": {
-    "includes": ["apps/**", "libs/**", "scripts/**", "benchmarks/**", "*.ts", "*.json", "!**/node_modules", "!**/dist", "!**/public/models"]
+    "includes": [
+      "apps/**",
+      "libs/**",
+      "scripts/**",
+      "benchmarks/**",
+      "*.ts",
+      "*.json",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/public/models",
+      "!**/models",
+      "!**/models-public"
+    ]
   },
-  "formatter": { "indentStyle": "space", "indentWidth": 2, "lineWidth": 140 },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 140
+  },
   "linter": {
     "rules": {
       "preset": "recommended",
-      "a11y": { "noSvgWithoutTitle": "off", "useSemanticElements": "off" },
-      "style": { "noDescendingSpecificity": "off" }
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useSemanticElements": "off"
+      },
+      "style": {
+        "noDescendingSpecificity": "off"
+      }
     }
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } }
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
 }

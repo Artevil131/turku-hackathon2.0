@@ -120,6 +120,22 @@ run on a phone, offline, network tab open.
   (10 Jan 2027, Lisbon); `node benchmarks/detect/today.ts` prints exactly
   what the notice screen gets. Calendar snippets carry `meta.created`;
   `readEnabled` already hides entries not yet created.
+- A → B (2026-10-17, browser numbers): the embedder runs in a browser.
+  Headless Chrome on WASM, laptop CPU: model load 41 s from the Hub
+  (130 MB), 250 snippets embedded in 7.5 s (30 ms each), a later batch
+  of 20 in 0.25 s. A phone will be slower, so: progress bar on the first
+  run, one detector instance kept alive, and **serve the model from the
+  app, not from huggingface.co**: run
+  `node libs/embed/scripts/fetch-model.ts --out apps/web/public/models`
+  (130 MB, git-ignored) and call `useLocalModels("/models/")` from
+  `@ahead/embed` before the first embed. `libs/embed/browser-smoke` is a
+  working Vite page that does exactly this; copy from it.
+- A → B (2026-10-17, real calendar): `IcsAdapter` in `@ahead/adapters`
+  takes the text of an exported .ics file (Google Calendar → Settings →
+  Export; Apple Calendar → File → Export) and is a drop-in for the
+  synthetic calendar adapter. A file picker or the share sheet is all the
+  UI it needs. Only SUMMARY, LOCATION, DTSTART and CREATED are read. This
+  is PLAN.md stretch 1; wire it only after the mock flow works.
 
 ## Contract changes
 
