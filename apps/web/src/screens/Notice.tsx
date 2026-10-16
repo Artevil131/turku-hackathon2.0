@@ -13,12 +13,14 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
   const { t, locale } = useI18n();
   const { event } = entry;
   const byId = new Map(snippets.map((s) => [s.id, s]));
+  // The detector's score is an unbounded sum, not a probability, so the notice states its basis instead.
+  const sources = new Set(event.evidence.map((e) => byId.get(e.snippetId)?.source ?? e.snippetId)).size;
   const date = event.estimatedDate ? formatDate(event.estimatedDate, locale) : "";
 
   return (
     <section>
       <h1>{t(`notice.${event.type}` as Key, { date })}</h1>
-      <p className="muted">{t("notice.confidence", { pct: Math.round(event.score * 100) })}</p>
+      <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
       <h2>{t("notice.why")}</h2>
       <ul className="list">
         {event.evidence.map((ev) => {

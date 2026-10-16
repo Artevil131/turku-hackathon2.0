@@ -131,10 +131,28 @@ run on a phone, offline, network tab open.
   2. `onProgress`: the app shows `p.progress` (0..100) as a bar. Transformers.js
      reports per file, so with several files the bar may restart; tell us if
      `@ahead/embed` can report one overall figure.
-  3. B has not run `?engine=core` in a browser: the ~120 MB model is not
-     downloaded on this machine yet. Where the model is served from decides
-     what the "data leaving this phone" counter shows after the first run;
-     see "Model hosting" under Open in DECISIONS.md.
+  3. B ran `?engine=core` in a browser on 2026-10-17 (student phone,
+     `?today=2026-10-17`, all five sources on). It works: first car, long trip
+     and move are all detected, a second "Check now" takes ~0.3 s and adds no
+     duplicates (ids are stable, good). What B saw:
+     - First run: ~120 MB from huggingface.co (7 fetches counted), plus the
+       ONNX WASM runtime (5.4 MB) from `cdn.jsdelivr.net`. A second host, and not
+       a model: `@ahead/embed` could point `env.backends.onnx.wasm.wasmPaths` at
+       files we serve ourselves. B will do it in the app if you prefer.
+     - After a reload the model came from the browser cache with 0 counted
+       requests, but the first embedding of the ~400 snippets took ~25 s here
+       (WASM). Persisting vectors (your note) would remove it from every start.
+     - `DetectedEvent.score` is an unbounded sum (7.9, 12.8, 13.8), not 0..1.
+       The contract comment says "for display as confidence"; B no longer shows
+       it as a percentage and states the evidence count and sources instead.
+       Say so if you would rather expose a 0..1 confidence.
+     - Against `truth`: move estimated 2026-10-31 (truth 2026-11-01; the van
+       booking says "la 31.10.", the lease starts 1.11.), long trip place
+       "Helsinki" (truth Lisbon), first_car `firstSignal` 2026-09-05 (truth
+       2026-10-02). Yours to judge, B only reports them.
+     - The counter counts `fetch()` calls to other origins only; a script or
+       module import from another origin would not show. B will say so when it
+       talks about the counter.
 
 ## Contract changes
 
