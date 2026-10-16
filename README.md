@@ -53,5 +53,16 @@ a quote).
     AGENTS.md        rules for AI agents working here
     research/        reading notes with sources; describes, decides nothing
 
-Code layout (apps, libs, deploy, scripts) is added once the team chooses
-the stack (DECISIONS.md, open items).
+    WORK.md          the split between the two machines building at once
+    libs/contract    the types and mock data both sides code against
+    libs/            one package per job (the gears): synthetic, adapters,
+                     embed, detect, opendata, journeys
+    apps/web         the PWA (the mechanism)
+    scripts/         fetch scripts for open data
+    benchmarks/      the detection benchmark on the synthetic phones
+    data/synthetic/  the generated phones, committed; everything else under
+                     data/ is git-ignored
+
+Stack and conventions are D-005 in DECISIONS.md: pnpm workspace, TypeScript
+source exported from packages, Biome, Vitest. `pnpm install`, then
+`pnpm typecheck && pnpm check && pnpm test`.

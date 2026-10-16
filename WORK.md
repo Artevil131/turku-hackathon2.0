@@ -1,0 +1,107 @@
+# Work split: two machines, one repository
+
+Two people's Claude Code sessions build at the same time. Machine A is
+Aapo's laptop; machine B is the second PC. Each owns directories; neither
+touches the other's. The shared contract is `libs/contract` (D-006).
+
+Before starting on either machine: read README.md, CONCEPT.md,
+ARCHITECTURE.md, PRIVACY.md, DECISIONS.md and AGENTS.md. Then this file.
+
+## Ground rules for both
+
+- Own directories only. If you need something in the other side's
+  directories, write what you need in this file under "Requests" and
+  commit; do not do it yourself.
+- `libs/contract` changes only when a type is missing. Make the change
+  its own commit, `contract: <what>`, and note it under "Contract
+  changes" below. Keep the mock data compiling.
+- Commit small and often, `<area>: <what>`. Before every push:
+  `git pull --rebase origin main`. Never force-push. Push only with the
+  operator's approval (that machine's own rules apply).
+- `pnpm typecheck && pnpm check && pnpm test` green before a push.
+- Nothing personal, no real accounts, no secrets. Synthetic data only
+  (PRIVACY.md §8).
+- A technical choice not in DECISIONS.md: write the options under
+  "Open" there and ask the operator; do not pick quietly (AGENTS.md).
+
+## Machine A (Aapo's laptop): the core
+
+Owns `libs/synthetic`, `libs/adapters`, `libs/embed`, `libs/detect`,
+`benchmarks/`, `data/synthetic/`.
+
+1. `libs/synthetic`: generator for the three personas (DATA.md §2),
+   deterministic by seed, output committed to `data/synthetic/<persona>.json`
+   as `Snippet[]` plus a `truth.json` of planted events with dates.
+2. `libs/adapters`: `Adapter` implementations that read the synthetic
+   files per source, applying the minimisation rules (cap, window).
+3. `libs/embed`: `Embedder` over Transformers.js with the two candidate
+   models (D-007); runs in Node for the benchmark and in the browser for
+   the app.
+4. `libs/detect`: prototypes per event type (fi/en), the matching rule
+   (D-008), date and place extraction from evidence.
+5. `benchmarks/detect`: runs the detector over every persona, prints
+   detection delay, false notices and precision per model and threshold.
+
+Done when: the move, first car and long trip are detected on the student
+persona before their dates, with at most one false notice, and the
+benchmark table is in `benchmarks/detect/README.md`.
+
+## Machine B (second PC): open data, journeys, the app
+
+Owns `libs/opendata`, `libs/journeys`, `scripts/`, `apps/web`.
+
+Start order matters: the app on mock data first, so there is something on
+a phone by Saturday evening regardless of the core.
+
+1. `apps/web`: React + Vite PWA, package `@ahead/web`, mobile-first,
+   Finnish and English strings from the start. Screens, each driven by
+   the contract types and fed from `@ahead/contract/mock` until the core
+   lands (CONCEPT.md "What the user sees"):
+   - Onboarding: one toggle per `Source`, all off, one line each on what
+     is read and that it stays on the phone. Mail and bank open a mocked
+     OAuth / bank-consent sheet (D-010).
+   - Home: empty state "Nothing coming up. Last checked today." and a
+     "Check now" button.
+   - Notice: a `DetectedEvent` as a question, its evidence snippets with
+     a "not this" button each, and Confirm / Not now / Never for this.
+   - Journey: `Journey.items` by kind (todo, warning, insurance, compare,
+     info) with due dates and the source link on every card.
+   - Ledger: every event, status, "shared: no", one-tap erase.
+   - A `Store` over IndexedDB (see DECISIONS.md open items for the
+     wrapper question).
+   - A visible "data leaving this phone: 0 requests" counter is worth
+     more than any slide; count fetches in a service worker or a fetch
+     wrapper and show it.
+2. `libs/opendata`: small fetchers with cached JSON results committed
+   under `libs/opendata/data/` so the demo is offline-safe:
+   - FMI warnings for a municipality (CAP Atom feed; find the endpoint,
+     check it from a browser for CORS; proxy only if forced, see Open).
+   - DVV move-notification window as a pure function of the move date.
+   - Traficom inspection due-date rule from first registration date.
+3. `libs/journeys`: a `JourneyBuilder` per demo event, starting with
+   the move; items from templates filled with opendata and with If's
+   public terms. Extract the relevant clauses from If's home, car and
+   travel T&Cs and IPIDs (if.fi) into `libs/journeys/terms/*.md` with the
+   source URL and clause number on each; the comparison card uses two
+   competitors' public terms the same way.
+4. `scripts/`: the fetch scripts behind the cached JSON.
+
+Done when: the move journey renders on a phone from mock data with real
+FMI, DVV and T&C content, and the first-car and long-trip journeys exist
+at least as templates.
+
+## Integration (Saturday evening, both)
+
+Machine A publishes `@ahead/embed` and `@ahead/detect`; machine B swaps
+the mock event for `detector.detect(adapterSnippets, today)` behind
+"Check now", with the model loaded once and cached. Then the end-to-end
+run on a phone, offline, network tab open.
+
+## Requests
+
+(Write here what you need from the other side: "B needs
+`DetectedEvent.place` to be a municipality name" and so on.)
+
+## Contract changes
+
+- 2026-10-17: initial contract and mock data (machine A).
