@@ -144,6 +144,16 @@ run on a phone, offline, network tab open.
   `detector.restore(snapshot)` loads them back (ignored if the model
   changed); erase-all must drop the stored snapshot and call `clearCache()`.
 
+- A → B (2026-10-17, from the brief): "connect useful services
+  together" is a judging phrase. Journey items of kind `todo` that
+  correspond to a service must carry `sourceUrl` pointing at the service
+  itself (DVV muuttoilmoitus, Posti, an electricity contract page, the
+  mover, Traficom inspection booking), and the card must open it. The
+  brief also names "publicly available insurance terms and conditions
+  from If and other insurance companies" as a resource: the T&C extracts
+  and the comparison card are not optional polish, they are what the
+  judges were told to expect.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

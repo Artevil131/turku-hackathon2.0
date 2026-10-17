@@ -65,6 +65,20 @@ Everything else is a stretch.
 7. (2:50) Close: "The phone looks. The phone asks. If helps. Nothing
    leaves unless you say so."
 
+## Pitch rules
+
+- Emma first. The judges meet a person and a move before they meet a
+  model. The words "embedding", "on-device" and "GDPR" are not said
+  until the journey has been shown; then they are said once, as the
+  reason this can be trusted.
+- The value in one sentence, said twice: "Help arrives before the
+  event, and you never have to tell anyone your life."
+- Numbers only from sources we can name (Finanssiala 2021). What we do
+  not know about If (market share, churn at life events) we ask, on
+  stage if needed.
+- Show the comparison card with If beside competitors. The judges will
+  look for the catch; the catch is that there is none.
+
 ## Pitch outline against the criteria
 
 | Criterion | Our answer in one line |

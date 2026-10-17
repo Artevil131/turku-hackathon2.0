@@ -80,6 +80,24 @@ The architecture handles any event that can be described in a sentence.
 | Efficiency | When the user does want a quote or files a claim, the event, dates and address are already structured on the phone and shared with one tap | Fewer calls, fewer form fields, fewer wrong addresses |
 | New value | Partner services around events (movers, locksmiths, inspection), and anonymous aggregate signals ("moves into Turku peak in August") if users opt in | Only with explicit opt-in; counts, never individuals |
 
+### The arithmetic, with its assumptions in the open
+
+Finanssiala counted 34 800 leak damages and 171 M€ paid in Finland in
+2021. Every one percent of those prevented is about 1.7 M€ a year across
+the market, before fire, theft and car. We do not know If's market share
+or its retention at life events; those are questions for the mentor, and
+the pitch says so rather than inventing them. The claim we make is the
+mechanism, not a number: a reminder at the right moment prevents a share
+of damages that today nobody is in a position to prevent.
+
+### Services actually connected
+
+The brief asks to "connect useful services together". A checklist is
+not that. Each journey card that corresponds to a service opens it: the
+DVV move notification, Posti's forwarding, the electricity contract,
+the mover's booking, the inspection booking, the comparison. The app
+is the thread; the services stay where they are.
+
 ## Why it is not "another insurance app"
 
 - The product is the help, and it works for people who never buy
