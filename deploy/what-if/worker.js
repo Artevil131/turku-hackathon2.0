@@ -2,13 +2,17 @@
 //
 // POST /api/read {text} passes an ad the page's rules can't read to the team's listing reader on
 // chili (Qwen3.8-27B, D-024–D-027) and answers in What if…'s own fields, or, for kinds we have no
-// facts for, a short draft (D-028). The reader only reports what the ad says (every field quotes
-// the ad); costs and who pays still come from the page's sourced data. The reader's address and
-// team token are Worker secrets, never in the repo or the page. The ad's text is used for this
-// one answer; nothing is stored or logged. Contract: apps/what-if/README.md.
+// facts for, a short draft (D-028). POST /api/read {image} does the same for a screenshot the
+// person chose to send after the page's check, and also returns the text the reader read off it
+// (D-029). The reader only reports what the ad says (every field quotes the ad); costs and who pays
+// still come from the page's sourced data. The reader's address and team token are Worker secrets,
+// never in the repo or the page. What is sent is used for this one answer; nothing is stored or
+// logged. Contract: apps/what-if/README.md.
 
 const MAX_CHARS = 12000;
+const MAX_IMAGE_CHARS = 8_000_000; // a data URL; the page sends a JPEG of at most 1600 px a side
 const READER_TIMEOUT_MS = 11000; // the page stops waiting at 12 s
+const IMAGE_TIMEOUT_MS = 28000; // and at 30 s for a screenshot
 const MODEL = "Qwen3.8-27B";
 
 export default {
@@ -27,22 +31,35 @@ async function readAd(request, env) {
   } catch {
     return reply({ ok: false, error: "bad_request" }, 400);
   }
-  if (typeof body?.text !== "string") return reply({ ok: false, error: "bad_request" }, 400);
-  if (body.text.length > MAX_CHARS) return reply({ ok: false, error: "too_long" }, 413);
-  // The page strips contact details first; this is the second line of defence.
-  const text = stripContacts(body.text).trim();
-  if (text.length < 20) return reply({ ok: false, error: "bad_request" }, 400);
+  const isImage = typeof body?.image === "string";
+  let text = "";
+  let ask;
+  if (isImage) {
+    // Either a screenshot or text, never both; only the image types the reader takes.
+    if (body.text !== undefined || !/^data:image\/(?:png|jpeg|webp);base64,/.test(body.image.slice(0, 40))) {
+      return reply({ ok: false, error: "bad_request" }, 400);
+    }
+    if (body.image.length > MAX_IMAGE_CHARS) return reply({ ok: false, error: "too_large" }, 413);
+    ask = { image: body.image };
+  } else {
+    if (typeof body?.text !== "string") return reply({ ok: false, error: "bad_request" }, 400);
+    if (body.text.length > MAX_CHARS) return reply({ ok: false, error: "too_long" }, 413);
+    // The page strips contact details first; this is the second line of defence.
+    text = stripContacts(body.text).trim();
+    if (text.length < 20) return reply({ ok: false, error: "bad_request" }, 400);
+    ask = { text };
+  }
   if (!env.AHEAD_ADDRESS || !env.AHEAD_TEAM_TOKEN) return reply({ ok: false, error: "ai_unavailable" }, 503);
 
   let res;
   try {
     res = await withTimeout(
-      fetch(new URL("/api/listing", env.AHEAD_ADDRESS), {
+      fetch(new URL("/api/listing", String(env.AHEAD_ADDRESS).trim()), {
         method: "POST",
         headers: { authorization: `Bearer ${env.AHEAD_TEAM_TOKEN}`, "content-type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify(ask),
       }),
-      READER_TIMEOUT_MS,
+      isImage ? IMAGE_TIMEOUT_MS : READER_TIMEOUT_MS,
     );
   } catch (e) {
     // Only the error, never the ad or the token: visible to the account owner with `wrangler tail`.
@@ -60,9 +77,11 @@ async function readAd(request, env) {
   } catch {
     return reply({ ok: false, error: "unreadable" }, 502);
   }
-  const out = fromListing(answer, text);
+  // For a screenshot, the reader's own transcript is the ad's text: the page's rules read it too.
+  const read = isImage ? (typeof answer?.text === "string" ? answer.text.slice(0, MAX_CHARS) : "") : text;
+  const out = fromListing(answer, read);
   if (!out) return reply({ ok: false, error: "unreadable" }, 502);
-  return reply({ ok: true, model: MODEL, ...out });
+  return reply({ ok: true, model: MODEL, ...out, transcript: isImage ? read || null : null });
 }
 
 export function stripContacts(s) {
@@ -153,13 +172,15 @@ export function fromListing(answer, text = "") {
       draft: null,
     };
   }
-  return { kind: "other", fields: null, draft: draftFor(cat, val("title"), answer.risks, mentions, text) };
+  return { kind: "other", fields: null, draft: draftFor(cat, val("title"), mentions, text) };
 }
 
-// Anything else (a moped, a boat, a cottage, a pet…): the reader's own risk cards where it has
-// them, a few plain questions, and who pays in the page's three words. No figures.
+// Anything else (a moped, a boat, a cottage, a pet…): a draft. The reader names the item and gives
+// the ad's own words; the other questions and the what-ifs are plain ones for that kind of item,
+// each with who pays in the page's three words. No figures. (The reader's risk cards are statuses
+// such as "Rust: reported", not things that could happen, so they are not used as what-ifs.)
 const GROUP = {
-  boat: "vehicle", caravan: "vehicle", motorcycle: "vehicle", car: "vehicle", home: "building", cottage: "building",
+  boat: "boat", caravan: "caravan", motorcycle: "small", car: "small", home: "building", cottage: "building",
   pet: "pet", bicycle: "item", electronics: "item", other_item: "item",
 };
 const ITEM = {
@@ -167,33 +188,34 @@ const ITEM = {
   cottage: "a cottage", pet: "a pet", bicycle: "a bicycle", electronics: "an electronic device", other_item: "an item",
 };
 const ASKS = {
-  vehicle: ["Can I see the service records and receipts?", "Has it been damaged or repaired?", "How has it been stored over the winter?"],
+  small: ["Can I see the service records and receipts?", "Has it been damaged or repaired?", "How has it been stored over the winter?"],
+  boat: ["Can I see the engine's service records?", "Has the hull been damaged or repaired?", "Where has it been kept over the winter?"],
+  caravan: ["Can I see the service records and the latest moisture check?", "Has water ever got in?", "Where has it been kept over the winter?"],
   building: ["Can I see the condition inspection report (kuntotarkastus)?", "What has been renovated, and when?", "Has there ever been moisture or water damage?"],
   pet: ["Can I see the health tests and the vaccination record?", "How healthy are the parents?", "Has the animal been ill or injured?"],
   item: ["Is there a receipt or a warranty left?", "Has it been repaired?", "Why is it being sold?"],
 };
-// Facts that hold for any policy; used when the reader names fewer than two risks.
+// Who pays for the usual things, for this kind of item; any policy's terms decide the details.
 const BASICS = {
-  vehicle: [{ text: "It is stolen", whoPays: "insurance" }, { text: "The engine, clutch or tyres wear out", whoPays: "you" }],
+  small: [{ text: "It is stolen", whoPays: "insurance" }, { text: "Parts wear out with use: engine, clutch, tyres or track", whoPays: "you" }],
+  boat: [
+    { text: "It is stolen, with or without its trailer", whoPays: "insurance" },
+    { text: "The engine wears out or breaks down", whoPays: "you" },
+    { text: "A storm damages it at its mooring", whoPays: "check" },
+  ],
+  caravan: [{ text: "It is stolen", whoPays: "insurance" }, { text: "Water gets in slowly through the roof or windows", whoPays: "you" }],
   building: [{ text: "A pipe leaks and damages the building", whoPays: "insurance" }, { text: "Old pipes, roof or windows need renewing", whoPays: "you" }],
   pet: [{ text: "It falls ill or is injured", whoPays: "check" }, { text: "Food, routine care and vaccinations", whoPays: "you" }],
   item: [{ text: "It is stolen from your home", whoPays: "insurance" }, { text: "It breaks from wear and age", whoPays: "you" }],
 };
-// Renewals, wear and upkeep are never insured events; the rest depends on the policy.
-const YOU_PAY = /renovation|timing_belt|engine_fault|battery|rust|service|inspection|tax|wear|plinth|oil_heating/;
 const hasFigures = (s) => /[€%]|(?<!\p{L})euro|(?<!\p{L})eur(?!\p{L})|prosent|percent/iu.test(s);
 
-function draftFor(cat, title, risks, mentions, text) {
-  const group = NOT_OURS.test(text) ? "vehicle" : (GROUP[cat] ?? "item");
-  const cards = (Array.isArray(risks) ? risks : [])
-    .map((r) => ({ text: str(r?.title?.en ?? r?.title?.fi, 160), whoPays: YOU_PAY.test(String(r?.id)) ? "you" : "check" }))
-    .filter((w) => w.text && !hasFigures(w.text));
-  const whatIfs = (cards.length >= 2 ? cards : [...cards, ...BASICS[group]]).slice(0, 4);
-  const asks = [
-    ...mentions.map((m) => (m?.quote && !hasFigures(m.quote) ? `The ad says “${str(m.quote, 90)}”. What exactly does that mean?` : null)).filter(Boolean).slice(0, 1),
-    ...ASKS[group],
-  ].slice(0, 3);
-  return { item: str(title, 80) ?? (NOT_OURS.test(text) ? ITEM.motorcycle : (ITEM[cat] ?? "this item")), asks, whatIfs };
+function draftFor(cat, title, mentions, text) {
+  const group = NOT_OURS.test(text) ? "small" : (GROUP[cat] ?? "item");
+  // The ad's own words first: what the seller wrote is what to ask about.
+  const quotes = mentions.map((m) => str(m?.quote, 90)?.replace(/[.!?…:;,]+$/, "")).filter((q) => q && !hasFigures(q));
+  const asks = [...new Set(quotes)].slice(0, 2).map((q) => `The ad says “${q}”. Can you show me?`).concat(ASKS[group]).slice(0, 3);
+  return { item: str(title, 80) ?? (NOT_OURS.test(text) ? ITEM.motorcycle : (ITEM[cat] ?? "this item")), asks, whatIfs: BASICS[group] };
 }
 
 // ---- small checks, in the page's formats ----

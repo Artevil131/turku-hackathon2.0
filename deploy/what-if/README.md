@@ -1,15 +1,16 @@
 # What if… on Cloudflare
 
-Live at **https://what-if.what-if.workers.dev** (DECISIONS.md D-028): the page from
+Live at **https://what-if.what-if.workers.dev** (DECISIONS.md D-028, D-029): the page from
 `apps/what-if/index.html`, served by a Worker on Cloudflare's free plan, plus one route,
-`POST /api/read`, that passes ads the page's rules can't read to the team's listing reader on
-chili (Qwen3.8-27B, D-024–D-027) and answers in What if…'s own fields. Nothing is stored.
+`POST /api/read`, that passes ads the page's rules can't read, or a screenshot the person chose
+to send, to the team's listing reader on chili (Qwen3.8-27B, D-024–D-027) and answers in
+What if…'s own fields. Nothing is stored.
 
 | File | What it is |
 |---|---|
 | `wrangler.jsonc` | The Worker: static assets from `public/`, `/api/*` to `worker.js` |
-| `worker.js` | `/api/read`: strips phone numbers and emails, asks the listing reader with the team token, translates its quote-checked answer into the page's fields, or a draft for kinds we have no facts for |
-| `build.mjs` | Copies the page into `public/` (wrangler runs it before `dev` and `deploy`) |
+| `worker.js` | `/api/read`: takes `{text}` (phone numbers and emails stripped) or `{image}` (a PNG, JPEG or WebP data URL), asks the listing reader with the team token, and translates its quote-checked answer into the page's fields, or a draft for kinds we have no facts for. For a screenshot it also returns `transcript`, the text the reader read off it |
+| `build.mjs` | Puts the page into `public/` as last committed (`git show HEAD`), so a half-edited working copy never goes live; `WHATIF_WORKTREE=1` takes the working copy instead |
 
 ## Secrets
 
