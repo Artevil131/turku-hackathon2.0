@@ -3,8 +3,9 @@
 // compared as text; topics and clusters in the embedding space.
 
 import type { ChangePoint, Cluster, EventType, IsoDate, Novelty, Recurring, Snippet, Source, TimelineSignal } from "@ahead/contract";
+import { EVENT_TYPES } from "@ahead/contract";
 import type { PrototypeDetector } from "@ahead/detect";
-import { placeIn } from "@ahead/detect";
+import { PLACES, placeIn } from "@ahead/detect";
 import { cosine } from "@ahead/embed";
 import { addDays, daysBetween } from "@ahead/opendata";
 import { changePoint } from "./changepoint.ts";
@@ -30,6 +31,9 @@ export const INTERVAL_BANDS: readonly { min: number; max: number }[] = [
   { min: 26, max: 33 },
 ];
 export const RECURRING_CAP = 8;
+/** A k-means cluster takes an event's name only when this many of its members, and this share of them, clear the floor for it. */
+export const LABEL_MIN_MEMBERS = 3;
+export const LABEL_MIN_SHARE = 0.2;
 
 const STOPWORDS = new Set([
   "and",
@@ -205,42 +209,57 @@ export async function novelty(detector: PrototypeDetector, snippets: readonly Sn
     .slice(0, TOPICS_CAP)
     .map(({ u, d }) => ({ date: u.rep.date, source: u.rep.source, snippetId: u.rep.id, text: u.rep.text, margin: round3(d) }));
 
-  // Clusters over the current period's distinct texts; identical texts join the cluster of their representative.
+  // Event groups first: every distinct text that clears the floor for an event, grouped by event. Then k-means
+  // over the rest of the month, each cluster named by its words unless enough of its members clear the floor.
+  const scored = new Map(
+    (
+      await detector.score(
+        cur.map((u) => u.rep),
+        true,
+      )
+    ).map((x) => [x.snippet.id, x]),
+  );
+  const floor = detector.params.floor;
+  const evidenceOf = (u: { rep: Snippet }) => {
+    const x = scored.get(u.rep.id);
+    return x && x.margin >= floor ? x.type : undefined;
+  };
+  const toCluster = (members: { u: { rep: Snippet; ids: string[] }; i: number }[], nearest: EventType | undefined): Cluster => {
+    const texts = members.map(({ u }) => u.rep.text);
+    let label: string;
+    if (nearest) {
+      label = EVENT_LABEL[nearest];
+      // Only a move or a trip goes somewhere; a trip to the last place a text names ("Helsinki–Lisbon").
+      const pick = nearest === "move" ? placeIn : nearest === "long_trip" ? lastPlaceIn : undefined;
+      const place = pick ? mostFrequent(texts.map(pick).filter((p): p is string => p !== undefined)) : undefined;
+      if (place) label = STRINGS.clusterWithPlace(label, place);
+    } else label = frequentWords(texts).join(", ");
+    const nov = members.reduce((a, { i }) => a + (distance[i] as number), 0) / members.length;
+    const cluster: Cluster = { label, snippetIds: members.flatMap(({ u }) => u.ids), novelty: round3(nov) };
+    if (nearest) cluster.nearest = nearest;
+    return cluster;
+  };
+  const indexed = cur.map((u, i) => ({ u, i }));
+  const groups: Cluster[] = [];
+  for (const type of EVENT_TYPES) {
+    const members = indexed.filter(({ u }) => evidenceOf(u) === type);
+    if (members.length > 0) groups.push(toCluster(members, type));
+  }
+  groups.sort((a, b) => b.snippetIds.length - a.snippetIds.length);
+  const rest = indexed.filter(({ u }) => evidenceOf(u) === undefined);
   const km = kmeans(
-    cur.map((u) => vec(u.rep)),
+    rest.map(({ u }) => vec(u.rep)),
     CLUSTERS_K,
     KMEANS_ITERATIONS,
     KMEANS_SEED,
   );
   const clusters: Cluster[] = [];
   for (let c = 0; c < km.centroids.length; c++) {
-    const members = cur.map((u, i) => ({ u, i })).filter(({ i }) => km.assignment[i] === c);
+    const members = rest.filter((_, j) => km.assignment[j] === c);
     if (members.length === 0) continue;
-    // The cluster takes an event's name when its best single snippet would count as evidence for that event.
-    const best = (
-      await detector.score(
-        members.map(({ u }) => u.rep),
-        true,
-      )
-    ).sort((a, b) => b.margin - a.margin)[0];
-    const nearest: EventType | undefined = best && best.margin >= detector.params.floor ? best.type : undefined;
-    const texts = members.map(({ u }) => u.rep.text);
-    let label: string;
-    if (nearest) {
-      label = EVENT_LABEL[nearest];
-      // Only a move or a trip goes somewhere.
-      const place =
-        nearest === "move" || nearest === "long_trip"
-          ? mostFrequent(texts.map(placeIn).filter((p): p is string => p !== undefined))
-          : undefined;
-      if (place) label = STRINGS.clusterWithPlace(label, place);
-    } else label = frequentWords(texts).join(", ");
-    const nov = members.reduce((a, { i }) => a + (distance[i] as number), 0) / members.length;
-    const cluster: Cluster = { label, snippetIds: members.flatMap(({ u }) => u.ids), novelty: round3(nov) };
-    if (nearest) cluster.nearest = nearest;
-    clusters.push(cluster);
+    clusters.push(toCluster(members, eventFor(members.map(({ u }) => evidenceOf(u)))));
   }
-  const merged = mergeClusters(clusters);
+  const merged = [...groups, ...mergeClusters(clusters)].slice(0, CLUSTERS_K);
 
   const window = enteredBetween(snippets, addDays(from, -PERIOD_DAYS), today);
   return {
@@ -273,6 +292,36 @@ export function mergeClusters(clusters: readonly Cluster[]): Cluster[] {
     m.snippetIds.push(...c.snippetIds);
   }
   return [...byLabel.values()].sort((a, b) => b.novelty - a.novelty || b.snippetIds.length - a.snippetIds.length).slice(0, CLUSTERS_K);
+}
+
+/**
+ * The event a cluster may be named after: the one that at least `LABEL_MIN_MEMBERS` of its members, and at least
+ * `LABEL_MIN_SHARE` of them, clear the floor for. `evidence` holds, per member, the event it is evidence for, if any.
+ */
+export function eventFor(evidence: readonly (EventType | undefined)[]): EventType | undefined {
+  const counts = new Map<EventType, number>();
+  for (const e of evidence) if (e) counts.set(e, (counts.get(e) ?? 0) + 1);
+  let best: EventType | undefined;
+  let n = 0;
+  for (const [type, c] of counts) {
+    if (c > n) {
+      best = type;
+      n = c;
+    }
+  }
+  return best && n >= LABEL_MIN_MEMBERS && n >= LABEL_MIN_SHARE * evidence.length ? best : undefined;
+}
+
+const PLACE_STEMS = PLACES.map((name) => ({ name, re: new RegExp(`\\b${name.replace(/i$/, "")}\\w*`, "i") }));
+
+/** The place named last in `text`: the destination of "Helsinki–Lisbon". */
+export function lastPlaceIn(text: string): string | undefined {
+  let best: { name: string; at: number } | undefined;
+  for (const { name, re } of PLACE_STEMS) {
+    const at = text.search(re);
+    if (at >= 0 && (!best || at > best.at)) best = { name, at };
+  }
+  return best?.name;
 }
 
 function mostFrequent(xs: readonly string[]): string | undefined {

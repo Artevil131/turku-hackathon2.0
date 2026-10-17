@@ -78,8 +78,14 @@ describe("OnDeviceAnalyst on the student phone", () => {
     expect(n.recurring.every((r) => r.occurrences >= 3 && r.intervalDays >= 5)).toBe(true);
     expect(n.clusters.length).toBeLessThanOrEqual(5);
     expect(new Set(n.clusters.map((c) => c.label)).size).toBe(n.clusters.length);
-    expect(n.clusters.find((c) => c.nearest === "move")?.label).toBe("Moving to Turku");
+    const move = n.clusters.find((c) => c.nearest === "move");
+    expect(move?.label).toBe("Moving to Turku");
     expect(n.clusters.find((c) => c.nearest === "first_car")).toBeDefined();
+    // Event groups are exactly the snippets that clear the floor for the event, and come first.
+    expect(n.clusters.findIndex((c) => c.nearest === undefined)).toBeGreaterThan(n.clusters.findLastIndex((c) => c.nearest !== undefined));
+    const scored = await detector.score(phone.snippets.filter((s) => move?.snippetIds.includes(s.id)));
+    expect(scored.length).toBe(move?.snippetIds.length);
+    expect(scored.every((x) => x.type === "move")).toBe(true);
     for (const c of n.clusters) expect(c.novelty).toBeGreaterThanOrEqual(0);
     const ids = new Set(n.clusters.flatMap((c) => c.snippetIds));
     expect(ids.has("mail-0077")).toBe(true);

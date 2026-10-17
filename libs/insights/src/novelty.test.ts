@@ -1,6 +1,6 @@
 import type { Snippet } from "@ahead/contract";
 import { describe, expect, it } from "vitest";
-import { changePoints, frequentWords, mergeClusters, newNames, recurring } from "./novelty.ts";
+import { changePoints, eventFor, frequentWords, lastPlaceIn, mergeClusters, newNames, recurring } from "./novelty.ts";
 
 const bank = (id: string, date: string, text: string): Snippet => ({ id, source: "bank", date, text, meta: { amountBand: "10-50" } });
 const mail = (id: string, date: string, from: string): Snippet => ({ id, source: "mail", date, text: `From ${from}`, meta: { from } });
@@ -104,5 +104,24 @@ describe("mergeClusters", () => {
       { label: "A first car", nearest: "first_car", snippetIds: ["a", "b", "d", "e", "f"], novelty: 0.4 },
       { label: "groceries, market", snippetIds: ["c"], novelty: 0.3 },
     ]);
+  });
+});
+
+describe("eventFor", () => {
+  it("names a cluster after an event only when 3 members and a fifth of them clear the floor for it", () => {
+    const none = undefined;
+    expect(eventFor(["move", "move", "move", none, none, none, none, none, none, none])).toBe("move");
+    expect(eventFor(["move", "move", none, none, none])).toBeUndefined();
+    expect(eventFor(["move", "move", "move", ...new Array<undefined>(17).fill(none)])).toBeUndefined();
+    expect(eventFor(["move", "move", "move", "first_car", "first_car", "first_car", "first_car"])).toBe("first_car");
+    expect(eventFor([])).toBeUndefined();
+  });
+});
+
+describe("lastPlaceIn", () => {
+  it("takes the destination of a route", () => {
+    expect(lastPlaceIn("Your booking confirmation AY1741 Helsinki–Lisbon 10 Jan 2027")).toBe("Lisbon");
+    expect(lastPlaceIn("Muutto Turkuun")).toBe("Turku");
+    expect(lastPlaceIn("Tentti")).toBeUndefined();
   });
 });
