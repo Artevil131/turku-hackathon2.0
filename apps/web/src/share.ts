@@ -1,6 +1,6 @@
 import type { DetectedEvent, EventType, IsoDate } from "@ahead/contract";
 
-/** The only message that can ever leave the phone, and only when the user presses Share (apps/api). */
+/** The confirmed event sent only when the user presses Share (apps/api); ad analysis is separate (D-017/D-018). */
 export interface SharePayload {
   type: EventType;
   date?: IsoDate;

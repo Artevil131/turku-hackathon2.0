@@ -26,6 +26,7 @@ interface Props {
   onOpenJourney(entry: LedgerEntry): void;
   onHorizon(): void;
   onMonth(): void;
+  onListing(): void;
 }
 
 /** The constellation's name: the event type and its place, both from code. */
@@ -51,6 +52,7 @@ export function Home({
   onOpenJourney,
   onHorizon,
   onMonth,
+  onListing,
 }: Props) {
   const { t, locale } = useI18n();
   const now = today();
@@ -178,6 +180,14 @@ export function Home({
       )}
       {!anySourceOn && <p className="muted">{t("home.noSources")}</p>}
       <ul className="list plate-links">
+        <li>
+          <button type="button" className="plate-link" onClick={onListing}>
+            <span className="row-title serif">{t("listing.title")}</span>
+            <span className="event-arrow" aria-hidden="true">
+              →
+            </span>
+          </button>
+        </li>
         <li>
           <button type="button" className="plate-link" onClick={onHorizon}>
             <span className="row-title serif">{t("home.horizon")}</span>
