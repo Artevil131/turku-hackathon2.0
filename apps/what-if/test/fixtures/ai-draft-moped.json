@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "model": "@cf/test/fixture-model",
+  "kind": "other",
+  "fields": null,
+  "draft": {
+    "item": "a 50 cc moped",
+    "asks": [
+      "Can I see the registration certificate?",
+      "Has it been derestricted to go faster than 45 km/h?",
+      "When were the brakes and tyres last changed?"
+    ],
+    "whatIfs": [
+      { "text": "What if it is stolen from the yard?", "whoPays": "insurance" },
+      { "text": "What if the engine wears out next summer?", "whoPays": "you" },
+      { "text": "What if it was derestricted? Then it is no longer a moped <b>in law</b>.", "whoPays": "check" },
+      { "text": "What if the repair costs 300 € more than you thought?", "whoPays": "you" }
+    ]
+  }
+}

@@ -869,6 +869,14 @@ function createEngine(DATA, today) {
   const MODS = [["lowered suspension", /madallet|madallus|lowered|lowering|lyhennetyt jouset|matalammat jouset/],
     ["aftermarket exhaust", /akrapovic|yoshimura|termignoni|leovince|sc-project|tehoputki|aftermarket exhaust|sport exhaust|race exhaust/],
     ["engine changes", /viritetty|viritys|(?<!\p{L})tuned|derestrict|rajoitin poistettu|rajoittimet poistettu/u]];
+  // Licence class as a fact about the bike: up to 125 cm³ and 11 kW is A1; up to 35 kW is A2; more is A.
+  function licenceOf(cc, kw, hp) {
+    const k = kw ?? (hp ? Math.round(hp * 0.7457) : null);
+    if (cc == null && k == null) return null;
+    if (cc != null && cc <= 125 && (k == null || k <= 11)) return "A1";
+    return k != null ? (k <= 35 ? "A2" : "A") : null;
+  }
+
   function readMoto(P) {
     const c = readCar(P); // year, km, price, seller, place and inspection are read the same way as for cars
     const hit = [...fold(P.text).matchAll(BIKE_RE)][0];
@@ -886,9 +894,7 @@ function createEngine(DATA, today) {
     m.powerKw = c.powerKw;
     m.powerHp = c.powerHp;
     m.sellerType = c.sellerType ?? (/(?:moottoripyörä|moto|mp)[- ]?liike|(?<!\p{L})dealer(?!\p{L})|(?<!\p{L})(?:liike|kauppa)(?!\p{L})/u.test(P.low) ? "dealer" : null);
-    // Licence class as a fact about the bike: up to 125 cm³ and 11 kW is A1; up to 35 kW is A2; more is A.
-    const kw = m.powerKw ?? (m.powerHp ? Math.round(m.powerHp * 0.7457) : null);
-    m.licence = m.engineCc == null && kw == null ? null : m.engineCc != null && m.engineCc <= 125 && (kw == null || kw <= 11) ? "A1" : kw != null && kw <= 35 ? "A2" : kw != null ? "A" : null;
+    m.licence = licenceOf(m.engineCc, m.powerKw, m.powerHp);
     m.abs = /(?:ei|ilman|no|without) abs/i.test(P.text) ? false : /(?<!\p{L})abs(?!\p{L})/iu.test(P.text) ? true : null;
     m.modifications = MODS.filter(([, re]) => re.test(P.low)).map(([w]) => w);
     m.modified = m.modifications.length ? true : null;
@@ -1475,7 +1481,7 @@ function createEngine(DATA, today) {
     const site = SITES.find(([re]) => re.test(P.text))?.[1];
     if (P.lines.length <= 3 && /https?:\/\/|www\./i.test(P.text)) {
       if (site === "Nettivene") return { message: `That’s a link to Nettivene. ${READS} Boats come in the full version.` };
-      return { message: `That’s a link${site ? ` to ${site}` : ""}. This prototype can’t open other websites, and it sends nothing. Open the ad, select all its text, copy it and paste it here.` };
+      return { message: `That’s a link${site ? ` to ${site}` : ""}. This page can’t open other websites. Open the ad, select all its text, copy it and paste it here.` };
     }
     const car = readCar(P);
     const odd = unsupported(P, car);
@@ -1491,7 +1497,195 @@ function createEngine(DATA, today) {
     return { message: `We couldn’t tell what this ad is for. ${READS} Paste the ad’s text, not the link.` };
   }
 
-  return { read, analyse, SRC, COVER, esc };
+  /* ---------- the AI reader, for ads the rules can't read ---------- */
+  // Contract with deploy/what-if: POST /api/read {text} → {ok, model, kind, fields, draft}. The rules stay first;
+  // the AI is asked only when they can't read the ad. Any failure, or no answer within 12 s, means "no AI".
+  const AI_URL = "/api/read";
+  const AI_MAX = 12000;
+  const AI_TIMEOUT = 12000;
+
+  // Out before an ad goes anywhere: e-mail addresses, phone numbers, and the seller's name where a site's layout shows it.
+  const EMAIL = /[\p{L}\d._%+-]+@[\p{L}\d-]+(?:\.[\p{L}\d-]+)*\.\p{L}{2,}/gu;
+  const PHONE = /(?:\+|00|\()?\d[\d \t()-]{5,18}\d/g;
+  const PERSON = /^[\p{Lu}][\p{Ll}'’-]+(?: [\p{Lu}][\p{Ll}'’-]+){1,3}$/u;
+  function stripContacts(raw) {
+    let t = String(raw ?? "").replace(EMAIL, "[email removed]");
+    t = t.replace(PHONE, (m, at, s) => {
+      const digits = m.replace(/\D/g, "");
+      const phoneLike = /^(?:\+|00|\(?0)/.test(m);
+      const after = s.slice(at + m.length, at + m.length + 8).toLowerCase();
+      if (!phoneLike || digits.length < 7 || digits.length > 13) return m;
+      if (/^\s?(?:€|e(?!\p{L})|eur|km|kg|m²|m2|cm|kw|hv|hp|%)/u.test(after)) return m;
+      return "[phone removed]";
+    });
+    const lines = t.split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (/^(?:jäsenenä \d+ vuotta|member for \d+ years?|ota yhteyttä|contact)$/i.test(line) && PERSON.test((lines[i + 1] ?? "").trim())) lines[i + 1] = "[name removed]";
+      if (/^(?:näytä numero|show number|lähetä viesti(?: ilmoittajalle)?|send a message)$/i.test(line) && i > 0 && PERSON.test(lines[i - 1].trim())) lines[i - 1] = "[name removed]";
+    }
+    return lines.join("\n").replace(/[\p{Lu}][\p{Ll}'’-]+ [\p{Lu}][\p{Ll}'’-]+(?=,?\s*(?:puh|p\.|tel|phone|\[phone removed\]|\[email removed\]))/gu, "[name removed]");
+  }
+
+  // Ask the AI only when the rules can't give a full result: a car or motorcycle needs make and model,
+  // a flat for sale its building year and a price, a rental its rent. Links and scraps never go out.
+  function plan(raw) {
+    const P = prep(raw);
+    if (P.text.length < 30 || (P.lines.length <= 3 && /https?:\/\/|www\./i.test(P.text))) return { callAI: false, read: null };
+    const r = read(raw);
+    const enough = r.kind === "car" || r.kind === "moto" ? !!(r.make && r.model)
+      : r.kind === "home" ? !!(r.buildingYear && (r.debtFreePrice || r.sellingPrice))
+      : r.kind === "rent" ? !!r.rent : false;
+    return { callAI: !enough, read: r };
+  }
+
+  // The AI's fields, checked one by one: wrong types, out-of-range numbers and unknown values become null.
+  const fNum = (v, lo, hi) => (typeof v === "number" && Number.isFinite(v) && v >= lo && v <= hi ? v : null);
+  const fStr = (v, max = 60) => (typeof v === "string" && v.trim() && v.trim().length <= max ? v.trim() : null);
+  const fOne = (v, list) => (list.includes(v) ? v : null);
+  const fBool = (v) => (typeof v === "boolean" ? v : null);
+  const fDate = (v) => (typeof v === "string" && /^(?:19|20)\d\d-(?:0[1-9]|1[0-2])(?:-\d\d)?$/.test(v) ? v : null);
+  const pick = (f, path) => (path in f ? f[path] : path.split(".").reduce((o, k) => (o == null ? o : o[k]), f));
+  const ckeys = (f, o) => Object.keys(o).filter((k) => o[k] != null && pick(f, k) != null);
+  function aiFields(kind, f) {
+    const common = { city: fStr(pick(f, "city"), 40), district: fStr(pick(f, "district"), 40) };
+    if (kind === "car") return { make: fStr(pick(f, "make"), 30), model: fStr(pick(f, "model"), 40), year: fNum(pick(f, "year"), 1950, YEAR + 1),
+      km: fNum(pick(f, "km"), 0, 2e6), price: fNum(pick(f, "price"), 100, 1e7), previousPrice: fNum(pick(f, "previousPrice"), 100, 1e7), officeFee: fNum(pick(f, "officeFee"), 1, 5000),
+      fuel: fOne(pick(f, "fuel"), ["petrol", "diesel", "electric", "gas", "hybrid-petrol", "hybrid-diesel", "plug-in hybrid"]), gearbox: fOne(pick(f, "gearbox"), ["manual", "automatic"]),
+      sellerType: fOne(pick(f, "sellerType"), ["private", "dealer"]), city: common.city, lastInspection: fDate(pick(f, "lastInspection")),
+      flags: Object.fromEntries(["timingBeltReplaced", "timingChain", "serviceBook", "rustMentioned"].map((k) => [k, fBool(pick(f, `flags.${k}`)) ?? undefined]).filter(([, v]) => v !== undefined)) };
+    if (kind === "moto") return { make: fStr(pick(f, "make"), 30), model: fStr(pick(f, "model"), 40), year: fNum(pick(f, "year"), 1950, YEAR + 1),
+      km: fNum(pick(f, "km"), 0, 1e6), price: fNum(pick(f, "price"), 50, 1e6), officeFee: fNum(pick(f, "officeFee"), 1, 5000), engineCc: fNum(pick(f, "engineCc"), 30, 3000),
+      powerKw: fNum(pick(f, "powerKw"), 1, 300), sellerType: fOne(pick(f, "sellerType"), ["private", "dealer"]), city: common.city, lastInspection: fDate(pick(f, "lastInspection")),
+      abs: fBool(pick(f, "abs")), modifications: Array.isArray(pick(f, "modifications")) ? pick(f, "modifications").filter((x) => MODS.some(([w]) => w === x)) : null };
+    if (kind === "home") {
+      const pr = pick(f, "pipeRenovation") ?? {};
+      const status = fOne(pick(f, "pipeRenovation.status") ?? pr.status, ["done", "planned", "mentioned", "not-mentioned"]);
+      const years = (pick(f, "pipeRenovation.years") ?? pr.years ?? []).filter?.((y) => fNum(y, 1950, 2050) != null) ?? [];
+      return { buildingYear: fNum(pick(f, "buildingYear"), 1800, YEAR + 2), livingAreaM2: fNum(pick(f, "livingAreaM2"), 8, 1000),
+        debtFreePrice: fNum(pick(f, "debtFreePrice"), 1000, 1e8), sellingPrice: fNum(pick(f, "sellingPrice"), 1000, 1e8), debtShare: fNum(pick(f, "debtShare"), 0, 1e8),
+        maintenanceCharge: fNum(pick(f, "maintenanceCharge"), 0, 10000), financingCharge: fNum(pick(f, "financingCharge"), 0, 10000), plotRentCharge: fNum(pick(f, "plotRentCharge"), 0, 10000),
+        rooms: fNum(pick(f, "rooms"), 1, 20), ...common, pipeRenovation: status ? { status, years } : null };
+    }
+    if (kind === "rent") return { rent: fNum(pick(f, "rent"), 50, 20000), deposit: fNum(pick(f, "deposit"), 0, 100000), depositMonths: fNum(pick(f, "depositMonths"), 0, 12),
+      buildingYear: fNum(pick(f, "buildingYear"), 1800, YEAR + 2), livingAreaM2: fNum(pick(f, "livingAreaM2"), 8, 1000), homeInsuranceRequired: fBool(pick(f, "homeInsuranceRequired")),
+      rooms: fNum(pick(f, "rooms"), 1, 20), ...common };
+    return null;
+  }
+
+  // Wherever the rules read a field, the rules' value wins; the AI fills the gaps.
+  function fill(rules, ai) {
+    const out = { ...rules };
+    const used = [];
+    for (const [k, v] of Object.entries(ai)) {
+      if (v == null || k === "flags") continue;
+      if (out[k] == null || (Array.isArray(out[k]) && !out[k].length && Array.isArray(v) && v.length)) { out[k] = v; used.push(k); }
+    }
+    if (ai.flags) for (const [k, v] of Object.entries(ai.flags)) if (out.flags?.[k] === undefined) { out.flags = { ...(out.flags ?? {}), [k]: v }; used.push(k); }
+    return { out, used };
+  }
+  const WORDS = { make: "make", model: "model", year: "year", km: "km", price: "price", previousPrice: "earlier price", officeFee: "office fee", fuel: "fuel", gearbox: "gearbox",
+    sellerType: "seller", city: "place", district: "district", lastInspection: "last inspection", engineCc: "engine size", powerKw: "power", abs: "ABS", modifications: "changes",
+    buildingYear: "building year", livingAreaM2: "size", debtFreePrice: "debt-free price", sellingPrice: "selling price", debtShare: "loan share", maintenanceCharge: "maintenance charge",
+    financingCharge: "capital charge", plotRentCharge: "plot rent", rooms: "rooms", pipeRenovation: "pipe renovation", rent: "rent", deposit: "deposit", depositMonths: "deposit",
+    homeInsuranceRequired: "home insurance", timingBeltReplaced: "timing belt", timingChain: "timing chain", serviceBook: "service book", rustMentioned: "rust" };
+
+  // A full result from the AI's fields, built by the same rules as a rules-read ad.
+  function fromAI(kind, fields, raw, model) {
+    const ai = aiFields(kind, fields && typeof fields === "object" ? fields : {});
+    if (!ai) return null;
+    const P = prep(raw ?? "");
+    let result, used;
+    if (kind === "car") {
+      const base = { make: null, model: null, modelKey: null, flags: {}, ...(P.text ? readCar(P) : {}) };
+      const filled = fill(base, ai);
+      used = filled.used;
+      const c = filled.out;
+      if (!c.modelKey && c.make) {
+        const mm = makeModel(prep(`${c.make} ${c.model ?? ""}`));
+        if (mm) { c.make = mm.make; if (mm.key) { c.modelKey = mm.key; c.model = c.model ?? mm.text; } }
+      }
+      if (!c.make || !c.model) return null;
+      result = carResult(c);
+    } else if (kind === "moto") {
+      const base = { make: null, model: null, modifications: [], flags: {}, ...(P.text ? readMoto(P) : {}) };
+      const { out, used: u } = fill(base, ai);
+      used = u;
+      out.licence = licenceOf(out.engineCc, out.powerKw, out.powerHp);
+      out.modifications = out.modifications ?? [];
+      out.modified = out.modifications.length ? true : null;
+      if (!out.make) return null;
+      result = motoResult(out);
+    } else if (kind === "home") {
+      const base = { renovationsPlanned: [], renovationsDone: [], pipeRenovation: null, ...(P.text ? readHome(P) : {}) };
+      if (base.pipeRenovation?.status === "not-mentioned" && ai.pipeRenovation) base.pipeRenovation = null;
+      const { out, used: u } = fill(base, ai);
+      used = u;
+      out.pipeRenovation = out.pipeRenovation ?? { status: "not-mentioned", years: [] };
+      if (out.debtFreePrice == null && out.sellingPrice != null) out.debtFreePrice = out.sellingPrice + (out.debtShare ?? 0);
+      if (!out.buildingYear && !out.debtFreePrice) return null;
+      result = homeResult(out);
+    } else if (kind === "rent") {
+      const base = { pipeRenovation: { status: "not-mentioned", years: [] }, noDeposit: false, fixedTerm: false, waterFee: null, ...(P.text ? readRent(P) : {}) };
+      const { out, used: u } = fill(base, ai);
+      used = u;
+      if (out.deposit == null && out.depositMonths && out.rent) out.deposit = out.depositMonths * out.rent;
+      if (!out.rent) return null;
+      result = rentResult(out);
+    }
+    if (!result) return null;
+    const words = uniq(used.map((k) => WORDS[k]).filter(Boolean));
+    result.ai = { model: esc(String(model ?? "AI model").slice(0, 80)), fields: words };
+    if (words.length) result.aiNote = `An AI model read these details from the ad: ${esc(and(words))}. Check them against the ad.`;
+    return result;
+  }
+
+  // A draft for anything we have no facts for: written by the AI, shown as such, with no figures.
+  const WHO_AI = { you: ["pay", "Not covered · you pay"], insurance: ["covered", "Covered by insurance · after your excess"], check: ["other", "Depends on the policy · check before you sign"] };
+  const noFigures = (s) => !/€|%|(?<!\p{L})euro/iu.test(s);
+  function draftResult(draft, model) {
+    if (!draft || typeof draft !== "object") return null;
+    const item = fStr(draft.item, 80);
+    const asks = (Array.isArray(draft.asks) ? draft.asks : []).map((a) => fStr(a, 220)).filter((a) => a && noFigures(a)).slice(0, 3);
+    const whatIfs = (Array.isArray(draft.whatIfs) ? draft.whatIfs : []).filter((w) => w && fStr(w.text, 220) && noFigures(w.text) && WHO_AI[w.whoPays]).slice(0, 4)
+      .map((w) => ({ text: esc(w.text.trim()), who: WHO_AI[w.whoPays][1], tone: WHO_AI[w.whoPays][0] }));
+    if (!item || !asks.length || !whatIfs.length) return null;
+    const quote = (q) => (/^[“"]/.test(q) ? q : `“${q}”`);
+    return {
+      kind: "draft", item: esc(item), model: esc(String(model ?? "AI model").slice(0, 80)),
+      asks: asks.map((q) => esc(quote(q))), whatIfs,
+      disclaimer: "Written by AI from the ad. Not checked like our car, motorcycle and flat results.",
+      insure: { label: "Before you sign", title: "Ask If about cover for it.", text: "The item from the ad is already filled in, so you don’t have to type it again.", details: [["Item", esc(item)]] },
+    };
+  }
+
+  // Rules first; the AI only when needed; today's behaviour whenever the AI can't help.
+  async function analyseWithAI(raw, { fetch: fetchImpl, url = AI_URL, timeoutMs = AI_TIMEOUT } = {}) {
+    const p = plan(raw);
+    if (!p.callAI || typeof fetchImpl !== "function") return analyse(raw);
+    const text = stripContacts(raw).slice(0, AI_MAX);
+    const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    let timer;
+    const timeout = new Promise((_, no) => { timer = setTimeout(() => { ctrl?.abort(); no(new Error("timeout")); }, timeoutMs); });
+    const work = (async () => {
+      const res = await fetchImpl(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }), signal: ctrl?.signal });
+      return res && res.ok ? res.json() : null;
+    })();
+    work.catch(() => {}); // a late failure after the time limit is not an error
+    try {
+      const answer = await Promise.race([work, timeout]);
+      if (!answer || answer.ok !== true) return analyse(raw);
+      if (["car", "moto", "home", "rent"].includes(answer.kind)) return fromAI(answer.kind, answer.fields, raw, answer.model) ?? analyse(raw);
+      if (answer.kind === "other") return draftResult(answer.draft, answer.model) ?? analyse(raw);
+      return analyse(raw);
+    } catch {
+      return analyse(raw);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  return { read, analyse, plan, stripContacts, fromAI, draftResult, analyseWithAI, SRC, COVER, esc };
 }
 /* engine:end */
 
@@ -1686,6 +1880,9 @@ const CASES = {
 };
 const ORDER = ["home", "car", "rent"];
 
+// The AI reader runs only on our own site at Cloudflare (and on localhost while we build it). Anywhere else, such as
+// the claude.ai artifact or the file opened from disk, the page never sends the ad anywhere and stays rules-only.
+const AI_ON = /^https?:$/.test(location.protocol) && /(?:^|\.)workers\.dev$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
 const sum = (rows) => rows.reduce((s, r) => s + (r.eur ?? 0), 0);
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const screen = document.getElementById("screen");
@@ -1720,7 +1917,8 @@ function home(message) {
       </div>
       ${message ? `<p class="notice" role="alert">${message}</p>` : ""}
       <button class="btn" type="submit" id="checkBtn">Check this ad</button>
-      <p class="fine">Reads used cars and motorcycles (Nettiauto, Autotalli, Nettimoto), flats for sale (Etuovi, Oikotie) and flats to rent (Vuokraovi, Oikotie). Paste the ad’s text, not the link. Other ads come in the full version. Figures with a source are real; the rest are labelled estimates. Nothing you paste leaves your phone.</p>
+      <p class="fine">Reads used cars and motorcycles (Nettiauto, Autotalli, Nettimoto), flats for sale (Etuovi, Oikotie) and flats to rent (Vuokraovi, Oikotie). Paste the ad’s text, not the link. ${AI_ON ? "For other ads, an AI model writes a first draft." : "Other ads come in the full version."} Figures with a source are real; the rest are labelled estimates.</p>
+      <p class="fine">${AI_ON ? "If our rules can’t read an ad, its text, without phone numbers or email addresses, is read by an AI model on our server at Cloudflare. Nothing about you is sent, and nothing goes to If." : "Nothing you paste leaves your phone."}</p>
     </form>
   `);
   const box = document.getElementById("ad");
@@ -1738,15 +1936,69 @@ function home(message) {
       home();
     }),
   );
-  document.getElementById("checkForm").addEventListener("submit", (e) => {
+  document.getElementById("checkForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (state.busy) return;
     state.text = box.value;
     const id = curatedFor(state.text);
     if (id) return check(CASES[id], id);
-    const r = engine.analyse(state.text);
+    let r;
+    if (AI_ON && engine.plan(state.text).callAI) {
+      // The rules can't read this ad: our server's AI reader gets its text. Any failure falls back to the rules.
+      state.busy = true;
+      reading();
+      try { r = await engine.analyseWithAI(state.text, { fetch: (url, opts) => window.fetch(url, opts) }); } finally { state.busy = false; }
+    } else {
+      r = engine.analyse(state.text);
+    }
     if (r.message) return home(r.message);
+    if (r.kind === "draft") return draftView(r);
     check(r, "ad:" + squash(state.text).length + ":" + r.name);
   });
+}
+
+/* ---------- Reading with the AI ---------- */
+function reading() {
+  show(`
+    <section class="stack-lg" aria-live="polite">
+      <p class="eyebrow">Reading the ad</p>
+      <h2>Our rules can’t read this one, so an AI model is reading it</h2>
+      <ol class="steps"><li class="on"><span class="lamp" aria-hidden="true"></span><span>Reading the ad…</span></li></ol>
+      <p class="fine">Only the ad’s text goes to our server at Cloudflare, without phone numbers or email addresses. Nothing about you is sent, and nothing goes to If.</p>
+    </section>
+  `);
+}
+
+// For anything we have no facts for: the AI's draft, marked as such, with no figures.
+function draftView(d) {
+  show(`
+    <button class="back" type="button" id="backBtn">← New ad</button>
+    <section class="item">
+      <span class="stamp">First draft by AI</span>
+      <p class="name">${d.item}</p>
+      <p class="notice">${d.disclaimer}</p>
+    </section>
+    <section class="sheet">
+      <p class="eyebrow">Before you sign</p>
+      <h2>${d.asks.length === 1 ? "Ask this" : `Ask these ${d.asks.length} things`}</h2>
+      <ol class="asks">${d.asks.map((q) => `<li class="ask"><div class="ask-body"><span class="q">${q}</span></div></li>`).join("")}</ol>
+    </section>
+    <section class="sheet">
+      <p class="eyebrow">If something goes wrong</p>
+      <h2>Who pays</h2>
+      <ul class="cover">${d.whatIfs.map((w) => `<li><span class="what">${w.text}</span>${whoHtml(w.who, w.tone)}</li>`).join("")}</ul>
+      <p class="fine">What insurance pays depends on the policy. Read the terms before you sign.</p>
+    </section>
+    ${insureHtml(d)}
+    <section class="sources">
+      <p class="eyebrow">Sources</p>
+      <ol><li>Written by an AI model (${d.model}) on our server from the ad’s text, without phone numbers or email addresses. It gives no figures.</li></ol>
+    </section>
+  `);
+  document.getElementById("backBtn").addEventListener("click", () => home());
+  screen.querySelectorAll("[data-quote]").forEach((b) => b.addEventListener("click", () => {
+    document.getElementById("quoteNote").textContent = "In the full version this opens If’s quote with these details filled in. This prototype sends nothing.";
+  }));
 }
 
 /* ---------- Checking ---------- */
@@ -1964,7 +2216,9 @@ function sourcesHtml(c) {
       <p class="eyebrow">Sources</p>
       <ol>
         ${ids.map((id) => `<li><a href="${SRC[id].url}" target="_blank" rel="noopener">${SRC[id].text}</a></li>`).join("")}
-        ${c.readout ? "<li>Read from the ad by rules, no AI. Check “What we read from the ad” against the ad itself.</li>" : ""}
+        ${c.readout ? (c.ai
+          ? `<li>Some details were read from the ad by an AI model (${c.ai.model}) on our server; the rules read the rest. The numbers and who pays come from the rules and the sources above.</li>`
+          : "<li>Read from the ad by rules, no AI. Check “What we read from the ad” against the ad itself.</li>") : ""}
         <li>Anything marked estimate is a rough figure for this prototype. With If’s own claims data it would be exact.</li>
       </ol>
     </section>`;
@@ -1980,6 +2234,7 @@ function result(c, key, still) {
       <span class="stamp">${c.stamp}</span>
       <p class="name">${c.name}</p>
       <p class="specs">${c.specs}</p>
+      ${c.aiNote ? `<p class="notice">${c.aiNote}</p>` : ""}
       <div class="price"><span class="kicker">${c.priceLabel}</span>${c.price != null ? `<span class="amount">${eur(c.price)}</span>` : `<span class="amount none">Not in the ad</span>`}</div>
       ${c.readout ? `<details class="read"><summary>What we read from the ad</summary><dl class="kv">${c.readout.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></details>` : ""}
     </section>

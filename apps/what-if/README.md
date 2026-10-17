@@ -10,15 +10,17 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 
 | Path | What it is |
 |---|---|
-| `index.html` | The whole app in one file. Works offline from disk, contacts no outside server. |
+| `index.html` | The whole app in one file. Deployment copies it to the site root as is. Opened from disk or as the claude.ai artifact it is rules-only and contacts no outside server; on our own site it can also ask the AI reader (below). |
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
 | `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses and real-page quirks. Currently 17 of 17 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`) and every fallback. Currently 80 of 80 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
 node apps/what-if/test/reader.test.mjs          # pass/fail per field
 node apps/what-if/test/reader.test.mjs --show   # also print each result's asks and who pays
+node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
 ```
 
 ## How it works
@@ -38,22 +40,45 @@ node apps/what-if/test/reader.test.mjs --show   # also print each result's asks 
    who-pays label on every what-if ("Not covered, you pay" or "Covered by insurance, after your excess"),
    the safer choice and the sources.
 
-## Where an LLM fits (for Aapo)
+## The AI reader, for ads the rules can't read
 
-- **Reading the ad, yes.** An LLM can replace or back up `read()`: return the same fields as JSON for messier
-  ads (other sites, free text, other languages). Check it against the same tests: `expected` in
-  `data/sample-ads.json` (cars and flats) and `data/sample-ads-moto.json` (motorcycles) has the right values
-  for every ad, and `notSupported` there lists the mopeds, snowmobiles and ATVs that must stay unsupported.
-- **Numbers and who pays, no.** Keep costs, failure rates, renovation shares and the who-pays labels coming
-  from the rules and the data in step 2, so every number has a source and nothing is made up. An LLM may word
-  the three questions from the rule output, but should not invent figures.
-- **Keep the rule reader as the fallback** when the LLM call fails or is slow, so the demo never breaks.
-- **Privacy note:** the page currently promises that nothing leaves the browser until "Get a quote". Sending
-  the ad text to an LLM API changes that; ads are public text, but the page should say so, or the call should
-  go through If's own server.
+The rules stay first. The page asks an AI model only when they can't give a full result, and only on our
+own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `deploy/what-if`.
+
+1. **When.** `plan(text)` calls the AI when the rules find no kind, an unsupported kind, or a kind without its
+   key fields:
+   - a car or motorcycle without make and model;
+   - a flat for sale without a building year and a price;
+   - a rental without a rent.
+
+   Links and scraps of under 30 characters never go out, and none of the 17 sample ads makes a call.
+2. **What goes out.** `stripContacts(text)` takes out:
+   - e-mail addresses and phone numbers;
+   - the seller's name where a site's layout shows it (Netti\*'s "Jäsenenä N vuotta" block, Oikotie's "Ota
+     yhteyttä" block, "Name, puh." in free text).
+
+   Then the first 12,000 characters go to `POST /api/read` as `{"text": …}`.
+3. **What comes back.** `{ok, model, kind, fields, draft}`:
+   - **`kind` car, moto, home or rent:** `fromAI()` checks each field (types, ranges, the same value lists
+     as `CORE` in `test/reader.test.mjs`) and fills only what the rules didn't read. The rules' values win.
+     The result is built by the same code as a rules result, with the model-key lookup and the licence class
+     from cm³ and kW, so the numbers and who pays still come from our data. The page names the fields the AI
+     read: "An AI model read these details from the ad: make and model. Check them against the ad."
+   - **`kind` other:** `draftResult()` makes a card with the item, three asks and two to four what-ifs, each
+     with who pays (`you`, `insurance`, `check`). It is marked "Written by AI from the ad. Not checked like
+     our car, motorcycle and flat results." Anything with €, % or "euro" is dropped on the page as well as on
+     the server, so a draft never carries a figure. The hand-over stays If's.
+   - **`kind` none, any error, or no answer within 12 s:** the page does exactly what it did before, rules
+     only.
+4. **What the page says.** On our site: "If our rules can't read an ad, its text, without phone numbers or
+   email addresses, is read by an AI model on our server at Cloudflare. Nothing about you is sent, and
+   nothing goes to If." Anywhere else: "Nothing you paste leaves your phone." Both are true where they're
+   shown.
 
 ## Rules we keep
 
 - Every what-if states facts ("if this happens, who pays"), never personal advice.
 - If does not pay for car breakdowns or wear; those what-ifs are labelled "Not covered, you pay".
 - Nothing is priced on using the tool or on anything guessed about the person.
+- The AI reads ads; it never sets a number or a who-pays label. Figures come from the rules and the sources.
+- Only an ad's text goes to the AI, without contact details, and only from our own site.

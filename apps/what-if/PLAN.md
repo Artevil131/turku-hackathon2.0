@@ -130,7 +130,8 @@ building). Public data covers the rest (Traficom inspections, Isännöintiliitto
 
 ## The prototype
 
-Live at https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (single file: `index.html`, works offline).
+Live at https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (single file: `index.html`, works offline, rules only)
+and, once deployed, on our own Cloudflare site with the AI reader.
 
 - Reads real car, motorcycle, flat-for-sale and rental ads with rules, no AI (`index.html`; data built by
   `tools/build-data.mjs` from `data/`; tested by `test/reader.test.mjs`, 17 of 17 sample ads pass).
@@ -143,9 +144,16 @@ Live at https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (single file: `index.h
   - no vehicle tax; ABS as the safer choice;
   - winter storage as an If-customer reminder.
   
-  Mopeds, snowmobiles and ATVs get "comes in the full version".
+  Mopeds, snowmobiles and ATVs get "comes in the full version" where there's no AI; on the live site they get
+  the AI draft below.
 - Every what-if carries its who-pays label; the end card hands over to an If quote with the details filled in.
-- Next, being explored by Aapo: an LLM that reads messier ads and drafts the risk factors (see `README.md`).
+- On the live site (Cloudflare, free plan), ads the rules can't read go to an AI reader on our own server:
+  - only the ad's text, without phone numbers, email addresses or the seller's name where a site shows it;
+  - a car, motorcycle or flat it reads becomes a normal result, with the numbers and who pays still from the rules;
+  - anything else becomes a first draft marked "Written by AI from the ad", with no figures in it;
+  - if the AI fails or is slow, the page is rules-only, as before.
+
+  The claude.ai link and the file on disk never call it. Details in `README.md` ("The AI reader").
 
 ## Pitch, 3 minutes
 
