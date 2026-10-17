@@ -2107,9 +2107,14 @@ async function screenshotData(file) {
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(file);
   });
+  // onload, not image.decode(): decode() can wait forever while the page isn't being drawn (an app in the
+  // background, a tab without focus).
   const image = new Image();
-  image.src = data;
-  await image.decode();
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = () => reject(new Error("the picture could not be opened"));
+    image.src = data;
+  });
   const scale = Math.min(1, 1600 / Math.max(image.naturalWidth, image.naturalHeight));
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
