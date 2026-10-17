@@ -7,10 +7,13 @@ const NEEDS_CONSENT_SHEET: readonly Source[] = ["mail", "bank"];
 interface Props {
   sources: SourceState[];
   onChange(state: SourceState): void;
+  /** Entries read from the user's own calendar file, or null when the phone's calendar is used. */
+  calendarFile?: number | null;
+  onCalendarFile?(file: File | null): void;
 }
 
 /** One toggle per source, all off by default. Mail and bank open a mocked consent sheet (D-010). */
-export function SourceList({ sources, onChange }: Props) {
+export function SourceList({ sources, onChange, calendarFile = null, onCalendarFile }: Props) {
   const { t } = useI18n();
   const [sheet, setSheet] = useState<Source | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -32,6 +35,32 @@ export function SourceList({ sources, onChange }: Props) {
             <div className="grow">
               <div className="row-title">{t(`source.${s.source}` as Key)}</div>
               <div className="muted">{t(`source.${s.source}.what` as Key)}</div>
+              {s.source === "calendar" && onCalendarFile && (
+                // PLAN.md stretch 1: an exported .ics file, read on this phone. Only the parsed entries are kept.
+                <div className="file-row">
+                  {calendarFile === null ? (
+                    <label className="file-button">
+                      {t("calendar.file.use")}
+                      <input
+                        type="file"
+                        accept=".ics,text/calendar"
+                        onChange={(e) => {
+                          const file = e.currentTarget.files?.[0];
+                          if (file) onCalendarFile(file);
+                          e.currentTarget.value = "";
+                        }}
+                      />
+                    </label>
+                  ) : (
+                    <>
+                      <span className="muted">{t("calendar.file.using", { n: calendarFile })}</span>
+                      <button type="button" className="quiet" onClick={() => onCalendarFile(null)}>
+                        {t("calendar.file.remove")}
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <button
               type="button"
@@ -85,13 +114,13 @@ export function SourceList({ sources, onChange }: Props) {
   );
 }
 
-export function Onboarding({ sources, onChange, onDone }: Props & { onDone(): void }) {
+export function Onboarding({ sources, onChange, onDone, ...file }: Props & { onDone(): void }) {
   const { t } = useI18n();
   return (
     <section className="onboarding-screen">
       <h1>{t("onboarding.title")}</h1>
       <p className="screen-lead">{t("onboarding.lead")}</p>
-      <SourceList sources={sources} onChange={onChange} />
+      <SourceList sources={sources} onChange={onChange} {...file} />
       <div className="actions">
         <button type="button" className="primary" onClick={onDone}>
           {t("onboarding.continue")}

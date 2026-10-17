@@ -1,10 +1,11 @@
+import { icsToSnippets, parseIcs } from "@ahead/adapters";
 import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, SourceState } from "@ahead/contract";
 import { createBuilders } from "@ahead/journeys";
 import type { FmiWarning } from "@ahead/opendata";
 import exampleWarnings from "@ahead/opendata/data/fmi-example-warnings.json" with { type: "json" };
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { checkNow } from "./detect.ts";
-import { createEngine, type Engine, readSnippets } from "./engine.ts";
+import { createEngine, type Engine, readSnippets, withCalendar } from "./engine.ts";
 import { useI18n } from "./i18n.tsx";
 import { useOutboundCount } from "./netcounter.ts";
 import { Home } from "./screens/Home.tsx";
@@ -56,6 +57,7 @@ export function App() {
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [snippets, setSnippets] = useState<Snippet[]>([]);
+  const [calendarFile, setCalendarFile] = useState<number | null>(null);
   /** One engine for the whole session: its detector keeps the vector cache, so later checks are instant. */
   const engineRef = useRef<Promise<Engine> | undefined>(undefined);
   const getEngine = useCallback(() => {
@@ -66,7 +68,8 @@ export function App() {
         // Vectors from an earlier session: no re-embedding of snippets already seen (ignored if the model changed).
         const saved = await store.vectors();
         if (saved && engine.vectors) engine.vectors.restore(saved);
-        return engine;
+        const calendar = await store.calendarEvents();
+        return calendar ? withCalendar(engine, icsToSnippets(calendar)) : engine;
       })
       .catch((e) => {
         engineRef.current = undefined;
@@ -79,6 +82,7 @@ export function App() {
   const reload = useCallback(async () => {
     setSources(await store.sources());
     setLedger(await store.ledger());
+    setCalendarFile((await store.calendarEvents())?.length ?? null);
   }, [store]);
 
   useEffect(() => {
@@ -87,6 +91,24 @@ export function App() {
 
   const onSource = async (s: SourceState) => {
     await store.setSource({ ...s, lastSync: s.enabled ? today() : undefined });
+    await reload();
+  };
+
+  /** A calendar file chosen by the user: parsed here, minimised entries kept, the phone's calendar replaced. */
+  const onCalendarFile = async (file: File | null) => {
+    setError(null);
+    const events = file ? parseIcs(await file.text()) : undefined;
+    if (file && events?.length === 0) {
+      setError(t("calendar.file.bad"));
+      return;
+    }
+    await store.putCalendarEvents(events);
+    if (events) await store.setSource({ source: "calendar", enabled: true, lastSync: today() });
+    if (engineRef.current) {
+      const snippetsFromFile = events ? icsToSnippets(events) : undefined;
+      engineRef.current = engineRef.current.then((engine) => withCalendar(engine, snippetsFromFile));
+    }
+    setSnippets([]);
     await reload();
   };
 
@@ -219,7 +241,15 @@ export function App() {
   if (settingsOpen) {
     body = <Settings theme={theme} onTheme={setTheme} onBack={() => setSettingsOpen(false)} />;
   } else if (!onboarded) {
-    body = <Onboarding sources={sources} onChange={onSource} onDone={finishOnboarding} />;
+    body = (
+      <Onboarding
+        sources={sources}
+        onChange={onSource}
+        onDone={finishOnboarding}
+        calendarFile={calendarFile}
+        onCalendarFile={onCalendarFile}
+      />
+    );
   } else if (view?.kind === "notice" && current) {
     body = (
       <Notice
@@ -250,7 +280,12 @@ export function App() {
     body = (
       <section>
         <h1>{t("sources.title")}</h1>
-        <SourceList sources={sources} onChange={onSource} />
+        <SourceList sources={sources} onChange={onSource} calendarFile={calendarFile} onCalendarFile={onCalendarFile} />
+        {error && (
+          <p className="muted" role="alert">
+            {error}
+          </p>
+        )}
       </section>
     );
   } else {

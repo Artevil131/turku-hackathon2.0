@@ -4,7 +4,7 @@ import { mockMove, mockSnippets } from "@ahead/contract/mock";
 import { PrototypeDetector } from "@ahead/detect";
 import { expect, test } from "vitest";
 import { checkNow } from "./detect.ts";
-import { createMockEngine, type Engine } from "./engine.ts";
+import { createMockEngine, type Engine, readSnippets, withCalendar } from "./engine.ts";
 
 const TODAY = "2026-10-17";
 const entry = (status: LedgerEntry["status"], rejected: string[] = []): LedgerEntry => ({
@@ -80,4 +80,14 @@ test("A's PrototypeDetector plugs into the engine seam", async () => {
   const result = await checkNow({ engine, enabled: ["mail", "calendar", "bank"], today: TODAY, ledger: [] });
   expect(Array.isArray(result.events)).toBe(true);
   expect(result.snippets.length).toBeGreaterThan(0);
+});
+
+test("a calendar file replaces the phone's calendar and can be taken back", async () => {
+  const base = createMockEngine();
+  const mine: Snippet[] = [{ id: "cal-mine", source: "calendar", date: "2026-10-20", text: "Muuttoauto haettava" }];
+  const withFile = withCalendar(base, mine);
+  expect((await readSnippets(withFile, ["calendar"], TODAY)).map((s) => s.id)).toEqual(["cal-mine"]);
+  const back = withCalendar(withFile, undefined);
+  expect((await readSnippets(back, ["calendar"], TODAY)).map((s) => s.id)).toEqual(["cal-88"]);
+  expect(back.detector).toBe(base.detector);
 });

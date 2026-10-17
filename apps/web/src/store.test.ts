@@ -36,3 +36,15 @@ test("vectors persist and are erased with everything else", async () => {
   await s.eraseAll();
   expect(await s.vectors()).toBeUndefined();
 });
+
+test("calendar events from a file persist, can be removed, and are erased", async () => {
+  const s = createStore("t4");
+  const events = [{ uid: "u1", summary: "Muutto Turkuun", start: "2026-11-01" }];
+  await s.putCalendarEvents(events);
+  expect(await s.calendarEvents()).toEqual(events);
+  await s.putCalendarEvents(undefined);
+  expect(await s.calendarEvents()).toBeUndefined();
+  await s.putCalendarEvents(events);
+  await s.eraseAll();
+  expect(await s.calendarEvents()).toBeUndefined();
+});

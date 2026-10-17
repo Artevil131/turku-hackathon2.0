@@ -1,3 +1,4 @@
+import type { IcsEvent } from "@ahead/adapters";
 import { type Journey, type LedgerEntry, SOURCES, type SourceState, type Store } from "@ahead/contract";
 import type { VectorSnapshot } from "@ahead/detect";
 import { type IDBPDatabase, openDB } from "idb";
@@ -7,7 +8,7 @@ const DB_NAME = "ahead";
 type Db = IDBPDatabase;
 
 function open(name: string): Promise<Db> {
-  return openDB(name, 2, {
+  return openDB(name, 3, {
     upgrade(db, oldVersion) {
       if (oldVersion < 1) {
         db.createObjectStore("sources", { keyPath: "source" });
@@ -16,6 +17,8 @@ function open(name: string): Promise<Db> {
       }
       // v2: the detector's embedded vectors, one snapshot (derived personal data: on this device only, erased with the rest).
       if (oldVersion < 2) db.createObjectStore("vectors");
+      // v3: events from a calendar file the user chose, already minimised by parseIcs (never the raw file).
+      if (oldVersion < 3) db.createObjectStore("calendar");
     },
   });
 }
@@ -24,9 +27,13 @@ function open(name: string): Promise<Db> {
 export interface AppStore extends Store {
   vectors(): Promise<VectorSnapshot | undefined>;
   putVectors(snapshot: VectorSnapshot): Promise<void>;
+  /** Events from the user's own calendar file (PLAN.md stretch 1), or nothing when none was chosen. */
+  calendarEvents(): Promise<IcsEvent[] | undefined>;
+  putCalendarEvents(events: IcsEvent[] | undefined): Promise<void>;
 }
 
 const SNAPSHOT_KEY = "snapshot";
+const CALENDAR_KEY = "events";
 
 /** The app's single store, over IndexedDB. Nothing is enabled until the user turns it on. */
 export function createStore(name = DB_NAME): AppStore {
@@ -60,6 +67,14 @@ export function createStore(name = DB_NAME): AppStore {
     },
     async putVectors(snapshot) {
       await (await get()).put("vectors", snapshot, SNAPSHOT_KEY);
+    },
+    async calendarEvents() {
+      return (await (await get()).get("calendar", CALENDAR_KEY)) as IcsEvent[] | undefined;
+    },
+    async putCalendarEvents(events) {
+      const d = await get();
+      if (events) await d.put("calendar", events, CALENDAR_KEY);
+      else await d.delete("calendar", CALENDAR_KEY);
     },
     /** One transaction over every object store, so nothing survives a half-finished erase. */
     async eraseAll() {

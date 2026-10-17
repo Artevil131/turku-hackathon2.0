@@ -156,6 +156,26 @@ Once, on the laptop:
 `pnpm --filter @ahead/web serve --host`. Chromium documents the flag for
 service workers; whether the Android build honours it is not confirmed.
 
+**On stage.** Open `/?engine=core&fmi=example`:
+- `engine=core` runs the real detector on the student phone (without it the
+  app runs on the contract's mock).
+- `fmi=example` shows one hand-written frost warning for Southwest Finland on
+  the move week, because FMI has no land warning there today. Its card says
+  "Example for the demo, not a current warning", and the pitch should say
+  so too. Without it the journey shows the live cache honestly ("no
+  warnings"). Refresh the cache with `node scripts/fetch-fmi.ts`.
+- `today=YYYY-MM-DD` pins the date if the demo is not on 17 October.
+- Backup for a dead projector or phone: `node scripts/demo-capture.ts` (after
+  a build) walks the demo script at 390×844 in headless Chrome and writes ten
+  PNGs to `demo-capture/` (git-ignored). It finds buttons by their text, so
+  rerun it after the redesign rather than keeping old images. A screen
+  recording on the real phone is still the better backup video.
+- Sources → Calendar → "Use my calendar file (.ics)" reads a real export
+  (PLAN.md stretch 1, A's `IcsAdapter`). Only the parsed entries are kept on
+  the phone, never the file; "Remove" goes back to the synthetic calendar,
+  and erase-all removes them. Tested with a two-entry file: the move was
+  detected with that entry as evidence.
+
 ## Requests
 
 (Write here what you need from the other side: "B needs
@@ -361,6 +381,28 @@ service workers; whether the Android build honours it is not confirmed.
   lifting off then arriving, with the counter flipping. Run the API
   beside the preview: `node apps/api/src/server.ts`.
 - A changed libs/journeys/src/common.ts month format to long per the finish review.
+- B → A (2026-10-17, your review and the redesign handoff): done and pushed
+  on `machine-b/web-app`, so fetch before the redesign touches the screens.
+  - `today()` lives in `apps/web/src/today.ts` with `/^\d{4}-\d{2}-\d{2}$/`
+    since e33a0df (the build you walked was older); `today.test.ts` pins it.
+  - (1) Home sorts soonest first, undated last (`src/order.ts`, two lines in
+    `Home.tsx`). Note: by date the car still leads, because the test drive
+    is 18 Oct and the move 1 Nov. If the move must lead on stage, that is a
+    product rule (for example "pending events by date, but the one with the
+    most sources first"), so say which one and B wires it.
+  - (2) Already in: every title comes from `describe()`.
+  - (3) Left for the redesign: shortening cards behind "More" is
+    presentation. The journey text stays whole in `libs/journeys`, so the
+    first sentence can be cut in the card component.
+  - (4) The notice reads "Based on 6 items from 2 sources in the last 60
+    days" (`WINDOW_DAYS` in `engine.ts`, one line in `Notice.tsx`).
+  - (5) A live FMI warning now leads the move journey, then the DVV todo;
+    the "no warnings" note goes last (`libs/journeys/src/move.ts`).
+  - Screen files B touched tonight, all pushed: `Sources.tsx` (calendar
+    file row, locked Health row), `Home.tsx` and `Notice.tsx` (above),
+    `Journey.tsx` (Open/Source link), `styles.css` (`.service`, `.file-row`,
+    `.file-button`, `.row.locked`). From here B stays out of the screens,
+    `App.tsx`, `styles.css` and `index.html`, as agreed.
 
 ## Contract changes
 

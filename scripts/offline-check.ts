@@ -3,76 +3,11 @@
 // the server and runs it again from the service worker's cache alone. Prints one JSON summary.
 //   pnpm --filter @ahead/web build && node scripts/offline-check.ts
 // Needs the model and runtime under apps/web/public (pnpm --filter @ahead/web assets) before the build.
-import { type ChildProcess, spawn } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { LOADED, launchChrome, sleep, startPreview, waitFor } from "./cdp.ts";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const web = join(root, "apps", "web");
 const PORT = 4191;
 const ORIGIN = `http://localhost:${PORT}`;
 const URL_UNDER_TEST = `${ORIGIN}/?engine=core&today=2026-10-17`;
-const CHROME =
-  process.env.CHROME ??
-  [
-    "C:/Program Files/Google/Chrome/Application/chrome.exe",
-    "/usr/bin/google-chrome",
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  ].find((p) => existsSync(p));
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-async function waitFor(url: string, ms = 30_000): Promise<void> {
-  const end = Date.now() + ms;
-  while (Date.now() < end) {
-    try {
-      if ((await fetch(url)).ok) return;
-    } catch {}
-    await sleep(300);
-  }
-  throw new Error(`${url} did not answer`);
-}
-
-function startPreview(): ChildProcess {
-  return spawn(process.execPath, [join(web, "node_modules/vite/bin/vite.js"), "preview", "--port", String(PORT), "--strictPort"], {
-    cwd: web,
-    stdio: "ignore",
-  });
-}
-
-/** A minimal DevTools Protocol client over Node's built-in WebSocket. */
-async function connect(wsUrl: string) {
-  const ws = new WebSocket(wsUrl);
-  await new Promise((r, j) => {
-    ws.onopen = r;
-    ws.onerror = j;
-  });
-  let id = 0;
-  const pending = new Map<number, (v: { result?: unknown; error?: { message: string } }) => void>();
-  const handlers: ((m: { method: string; params: Record<string, unknown> }) => void)[] = [];
-  ws.onmessage = (e) => {
-    const msg = JSON.parse(String(e.data));
-    if (msg.id && pending.has(msg.id)) pending.get(msg.id)?.(msg);
-    else if (msg.method) for (const h of handlers) h(msg);
-  };
-  const send = (method: string, params: object = {}) =>
-    new Promise<Record<string, unknown>>((resolve, reject) => {
-      const n = ++id;
-      pending.set(n, (m) => (m.error ? reject(new Error(m.error.message)) : resolve(m.result as Record<string, unknown>)));
-      ws.send(JSON.stringify({ id: n, method, params }));
-    });
-  const evaluate = async <T>(expression: string): Promise<T> => {
-    const r = (await send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true })) as {
-      result: { value: T };
-      exceptionDetails?: { exception?: { description?: string } };
-    };
-    if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description ?? "evaluate failed");
-    return r.result.value;
-  };
-  return { send, evaluate, on: (h: (typeof handlers)[number]) => handlers.push(h), close: () => ws.close() };
-}
 
 // Runs in the page: onboards with every source on (first time only), presses "Check now" and waits for it.
 const CHECK = `(async () => {
@@ -95,28 +30,12 @@ const CHECK = `(async () => {
   };
 })()`;
 
-const LOADED = `new Promise((r) => { const t = () => (document.readyState === "complete" && document.querySelector("main") ? r(true) : setTimeout(t, 200)); t(); })`;
-
-if (!CHROME) throw new Error("Chrome not found; set CHROME to its path");
-if (!existsSync(join(web, "dist", "index.html"))) throw new Error("apps/web/dist is missing; build first");
-
-const profile = mkdtempSync(join(tmpdir(), "ahead-chrome-"));
-const preview = startPreview();
-const chrome = spawn(
-  CHROME,
-  ["--headless=new", "--remote-debugging-port=9333", `--user-data-dir=${profile}`, "--no-first-run", "about:blank"],
-  {
-    stdio: "ignore",
-  },
-);
+const preview = startPreview(PORT);
 const summary: Record<string, unknown> = {};
+const chrome = await launchChrome();
 try {
   await waitFor(`${ORIGIN}/`);
-  await waitFor("http://127.0.0.1:9333/json/version");
-  const targets = (await (await fetch("http://127.0.0.1:9333/json/list")).json()) as { type: string; webSocketDebuggerUrl: string }[];
-  const page = targets.find((t) => t.type === "page");
-  if (!page) throw new Error("no page target");
-  const cdp = await connect(page.webSocketDebuggerUrl);
+  const { cdp } = chrome;
 
   const outbound: string[] = [];
   cdp.on((m) => {
@@ -152,13 +71,8 @@ try {
   await cdp.evaluate(LOADED);
   summary.offline = await cdp.evaluate(CHECK);
   summary.outboundRequests = outbound;
-  cdp.close();
 } finally {
   preview.kill();
-  chrome.kill();
-  await sleep(1000);
-  try {
-    rmSync(profile, { recursive: true, force: true });
-  } catch {}
+  await chrome.close();
 }
 console.log(JSON.stringify(summary, null, 2));
