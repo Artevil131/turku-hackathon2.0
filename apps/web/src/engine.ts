@@ -40,7 +40,18 @@ export async function createCoreEngine(onProgress?: EngineProgress): Promise<Eng
   const loadPhone = Object.values(phones)[0];
   if (!loadPhone) throw new Error("data/synthetic/student.json is missing. Generate it with: node libs/synthetic/src/cli.ts");
   const phone = (await loadPhone()) as { snippets: Snippet[] };
-  const [{ PrototypeDetector }, { embedder }] = await Promise.all([import("@ahead/detect"), import("@ahead/embed")]);
+  const [{ PrototypeDetector }, { embedder, useLocalModels: serveModelsFrom }, { env }] = await Promise.all([
+    import("@ahead/detect"),
+    import("@ahead/embed"),
+    import("@huggingface/transformers"),
+  ]);
+  // D-015: the model and the ONNX Runtime come from this app, never from huggingface.co or a CDN.
+  // Renamed on import: it is not a React hook, whatever its name says.
+  serveModelsFrom("/models/");
+  const wasm = env.backends.onnx.wasm;
+  if (wasm) wasm.wasmPaths = "/ort/";
+  // When the service worker caches everything, the library's own cache would only store the model twice.
+  env.useBrowserCache = !navigator.serviceWorker?.controller;
   return { adapters: syntheticAdapters(phone.snippets), detector: new PrototypeDetector(embedder("e5", onProgress)) };
 }
 

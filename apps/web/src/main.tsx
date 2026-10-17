@@ -7,6 +7,11 @@ import "./styles.css";
 
 installNetCounter();
 
+// Production only: in development the service worker would cache Vite's modules and hide changes.
+if (import.meta.env.PROD && "serviceWorker" in navigator) {
+  void navigator.serviceWorker.register("/sw.js").catch(() => {});
+}
+
 const root = document.getElementById("root");
 if (!root) throw new Error("#root missing");
 createRoot(root).render(

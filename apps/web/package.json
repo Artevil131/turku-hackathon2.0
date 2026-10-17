@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "phone": "vite build && vite preview --host --mode phone",
+    "assets": "node ../../libs/embed/scripts/fetch-model.ts --out public/models && node ../../scripts/copy-ort.ts"
   },
   "dependencies": {
     "@ahead/adapters": "workspace:*",
@@ -14,6 +16,7 @@
     "@ahead/detect": "workspace:*",
     "@ahead/embed": "workspace:*",
     "@ahead/journeys": "workspace:*",
+    "@huggingface/transformers": "^4.3.1",
     "idb": "^8.0.4",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "fake-indexeddb": "^6.2.6",
     "vite": "^8.3.4"
