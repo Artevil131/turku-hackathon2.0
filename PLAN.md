@@ -58,7 +58,8 @@ Everything else is a stretch.
    move week, the lock-change card, the comparison card with If beside
    two competitors.
 5. (2:10) The ledger: what was inferred, what was shared (nothing), erase.
-6. (2:30) Business slide: prevention (water-damage numbers), retention at
+6. (2:30) Business slide: prevention (Finanssiala 2021: 34 800 leaks,
+   171 M€, more than fire), retention at
    the moment of change, acquisition because it is useful before you buy,
    efficiency because the data is already structured when you do.
 7. (2:50) Close: "The phone looks. The phone asks. If helps. Nothing

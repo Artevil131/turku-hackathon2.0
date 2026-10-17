@@ -74,7 +74,7 @@ The architecture handles any event that can be described in a sentence.
 
 | Mechanism | How it works here | Hypothesis we can state |
 |-----------|-------------------|--------------------------|
-| Risk prevention, fewer claims | Leak, freeze, empty-home, inspection and lock reminders at the moment they matter | Water damage is the largest home cost driver in Finland (~40 000 cases, >160 M€/yr); a share of these are preventable with timely action, and LähiTapiola's sensor programme shows insurers already pay to prevent them |
+| Risk prevention, fewer claims | Leak, freeze, empty-home, inspection and lock reminders at the moment they matter | Leaks are the largest home-insurance cost in Finland (34 800 damages, 171 M€ in 2021, Finanssiala); a share of these are preventable with timely action, and LähiTapiola's sensor programme shows insurers already pay to prevent them |
 | Retention | A move or a first car is exactly when people change insurer; being the one who helped, before the sale, changes who gets the call | Standard churn-at-life-event argument; ask If for their own numbers |
 | Acquisition | The app is useful before you are a customer; comparison cards list If honestly beside others | Trust is earned by not pushing; the If card converts when it is the right answer |
 | Efficiency | When the user does want a quote or files a claim, the event, dates and address are already structured on the phone and shared with one tap | Fewer calls, fewer form fields, fewer wrong addresses |
