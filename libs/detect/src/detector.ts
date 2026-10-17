@@ -11,7 +11,7 @@
 // the usual shop) count once, and when they recur more than `maxRepeats`
 // times in the window they are routine and count for nothing.
 
-import type { DetectedEvent, Detector, DetectorOptions, Embedder, EventType, Evidence, IsoDate, Snippet } from "@ahead/contract";
+import type { DetectedEvent, Detector, DetectorOptions, Embedder, EventType, Evidence, IsoDate, Snippet, Source } from "@ahead/contract";
 import { EVENT_TYPES } from "@ahead/contract";
 import { cosine } from "@ahead/embed";
 import { datesIn, placeIn } from "./dates.ts";
@@ -40,6 +40,23 @@ export interface Scored {
   prototype: string;
 }
 
+/** An event type's state on one day: the decayed sum of its evidence margins and what contributed. */
+export interface EventScore {
+  type: EventType;
+  score: number;
+  sources: Set<Source>;
+  /** Strongest first. */
+  evidence: Scored[];
+}
+
+/** The embedded prototypes, in the model's own space, for analyses that compare against them (clusters, labels). */
+export interface PrototypeVectors {
+  events: Map<EventType, { text: string; v: Float32Array }[]>;
+  ordinary: Float32Array[];
+  /** The model's margin unit (see the header comment). */
+  scale: number;
+}
+
 /** The most frequent value; ties go to the one seen first in `xs`. */
 function mostFrequent<T>(xs: readonly T[]): T | undefined {
   const counts = new Map<T, number>();
@@ -63,9 +80,9 @@ export class PrototypeDetector implements Detector {
   private readonly embedder: Embedder;
   readonly params: DetectorParams;
   private readonly cache: Map<string, Float32Array>;
-  private protoVectors:
-    | Promise<{ events: Map<EventType, { text: string; v: Float32Array }[]>; ordinary: Float32Array[]; scale: number }>
-    | undefined;
+  /** Best prototype match per snippet id: a function of the vector alone, so it is computed once per snippet. */
+  private readonly best = new Map<string, { type: EventType; margin: number; prototype: string }>();
+  private protoVectors: Promise<PrototypeVectors> | undefined;
 
   /** `cache` may be shared between detectors over the same embedder (the benchmark does). */
   constructor(embedder: Embedder, params: Partial<DetectorParams> = {}, cache = new Map<string, Float32Array>()) {
@@ -94,9 +111,15 @@ export class PrototypeDetector implements Detector {
   /** Forget cached vectors, for the erase button. */
   clearCache(): void {
     this.cache.clear();
+    this.best.clear();
   }
 
-  private loadPrototypes() {
+  /** The embedded prototypes and the scale, for analyses in the same space (`@ahead/insights`). */
+  prototypeVectors(): Promise<PrototypeVectors> {
+    return this.loadPrototypes();
+  }
+
+  private loadPrototypes(): Promise<PrototypeVectors> {
     this.protoVectors ??= (async () => {
       const events = new Map<EventType, { text: string; v: Float32Array }[]>();
       for (const type of EVENT_TYPES) {
@@ -127,7 +150,8 @@ export class PrototypeDetector implements Detector {
     return this.protoVectors;
   }
 
-  private async vectors(snippets: readonly Snippet[]): Promise<Map<string, Float32Array>> {
+  /** The vector of every snippet, embedding only the ones not cached yet. The map is the live cache: read it, do not write to it. */
+  async vectors(snippets: readonly Snippet[]): Promise<ReadonlyMap<string, Float32Array>> {
     const missing = snippets.filter((s) => !this.cache.has(s.id));
     if (missing.length > 0) {
       const vs = await this.embedder.embed(missing.map((s) => s.text));
@@ -141,22 +165,30 @@ export class PrototypeDetector implements Detector {
     const [protos, vecs] = await Promise.all([this.loadPrototypes(), this.vectors(snippets)]);
     const out: Scored[] = [];
     for (const s of snippets) {
-      const v = vecs.get(s.id) as Float32Array;
-      let ord = -1;
-      for (const o of protos.ordinary) ord = Math.max(ord, cosine(v, o));
-      let best: Scored | undefined;
-      for (const [type, ps] of protos.events) {
-        for (const p of ps) {
-          const margin = (cosine(v, p.v) - ord) / protos.scale;
-          if (!best || margin > best.margin) best = { snippet: s, type, margin, prototype: p.text };
+      let b = this.best.get(s.id);
+      if (!b) {
+        const v = vecs.get(s.id) as Float32Array;
+        let ord = -1;
+        for (const o of protos.ordinary) ord = Math.max(ord, cosine(v, o));
+        for (const [type, ps] of protos.events) {
+          for (const p of ps) {
+            const margin = (cosine(v, p.v) - ord) / protos.scale;
+            if (!b || margin > b.margin) b = { type, margin, prototype: p.text };
+          }
         }
+        if (!b) continue;
+        this.best.set(s.id, b);
       }
-      if (best && (all || best.margin >= this.params.floor)) out.push(best);
+      if (all || b.margin >= this.params.floor) out.push({ snippet: s, ...b });
     }
     return out;
   }
 
-  async detect(snippets: readonly Snippet[], today: IsoDate, options: DetectorOptions = {}): Promise<DetectedEvent[]> {
+  /**
+   * The snippets that count as evidence, as `detect` sees them: identical texts once, routine texts
+   * (more than `maxRepeats` in `snippets`) never, rejected snippets and muted types left out, margin at the floor or above.
+   */
+  async evidence(snippets: readonly Snippet[], options: DetectorOptions = {}): Promise<Scored[]> {
     const rejected = new Set(options.rejectedSnippetIds ?? []);
     const muted = new Set(options.mutedTypes ?? []);
     const counts = new Map<string, number>();
@@ -170,21 +202,38 @@ export class PrototypeDetector implements Detector {
       seen.add(k);
       return true;
     });
-    const scored = (await this.score(unique)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
-    const byType = new Map<EventType, Scored[]>();
-    for (const x of scored) byType.set(x.type, [...(byType.get(x.type) ?? []), x]);
+    return (await this.score(unique)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
+  }
 
+  /**
+   * Every event type's decayed score on `today` over `snippets` (the window the caller chose), with its evidence,
+   * whether or not it fires. `detect` is this plus the firing rule; a timeline is this once per day over a cache
+   * that embeds nothing twice.
+   */
+  async scoresOn(snippets: readonly Snippet[], today: IsoDate, options: DetectorOptions = {}): Promise<Map<EventType, EventScore>> {
+    const byType = new Map<EventType, EventScore>();
+    for (const x of await this.evidence(snippets, options)) {
+      const age = Math.max(0, daysBetween(x.snippet.date, today));
+      const e = byType.get(x.type) ?? { type: x.type, score: 0, sources: new Set<Source>(), evidence: [] };
+      e.score += x.margin * 2 ** (-age / this.params.halfLifeDays);
+      e.sources.add(x.snippet.source);
+      e.evidence.push(x);
+      byType.set(x.type, e);
+    }
+    for (const e of byType.values()) e.evidence.sort((a, b) => b.margin - a.margin);
+    return byType;
+  }
+
+  /** The firing rule alone: enough score from enough sources. */
+  fires(e: EventScore): boolean {
+    return e.score >= this.params.threshold && e.sources.size >= this.params.minSources;
+  }
+
+  async detect(snippets: readonly Snippet[], today: IsoDate, options: DetectorOptions = {}): Promise<DetectedEvent[]> {
     const events: DetectedEvent[] = [];
-    for (const [type, xs] of byType) {
-      let score = 0;
-      const sources = new Set<string>();
-      for (const x of xs) {
-        const age = Math.max(0, daysBetween(x.snippet.date, today));
-        score += x.margin * 2 ** (-age / this.params.halfLifeDays);
-        sources.add(x.snippet.source);
-      }
-      if (score < this.params.threshold || sources.size < this.params.minSources) continue;
-      const sorted = [...xs].sort((a, b) => b.margin - a.margin);
+    for (const [type, e] of await this.scoresOn(snippets, today, options)) {
+      if (!this.fires(e)) continue;
+      const sorted = e.evidence;
       const evidence: Evidence[] = sorted.map((x) => ({
         snippetId: x.snippet.id,
         score: Number(x.margin.toFixed(3)),
@@ -198,11 +247,11 @@ export class PrototypeDetector implements Detector {
       const future = mostFrequent(sorted.flatMap((x) => datesIn(x.snippet.text, today)).filter((d) => d >= today));
       const place = calendarPlace ?? mostFrequent(sorted.map((x) => placeIn(x.snippet.text)).filter((p): p is string => p !== undefined));
       const estimatedDate = calendarDate ?? future;
-      const firstSignal = xs.map((x) => x.snippet.date).sort()[0] as IsoDate;
+      const firstSignal = sorted.map((x) => x.snippet.date).sort()[0] as IsoDate;
       const ev: DetectedEvent = {
         id: `${type}-${firstSignal}`,
         type,
-        score: Number(score.toFixed(3)),
+        score: Number(e.score.toFixed(3)),
         evidence,
         firstSignal,
         detectedAt: today,

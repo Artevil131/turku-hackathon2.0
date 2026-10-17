@@ -93,6 +93,12 @@ importers:
       '@ahead/embed':
         specifier: workspace:*
         version: link:../libs/embed
+      '@ahead/insights':
+        specifier: workspace:*
+        version: link:../libs/insights
+      '@ahead/opendata':
+        specifier: workspace:*
+        version: link:../libs/opendata
       '@ahead/synthetic':
         specifier: workspace:*
         version: link:../libs/synthetic
@@ -126,6 +132,21 @@ importers:
       vite:
         specifier: ^8.0.0
         version: 8.3.4(@types/node@22.20.5)
+
+  libs/insights:
+    dependencies:
+      '@ahead/contract':
+        specifier: workspace:*
+        version: link:../contract
+      '@ahead/detect':
+        specifier: workspace:*
+        version: link:../detect
+      '@ahead/embed':
+        specifier: workspace:*
+        version: link:../embed
+      '@ahead/opendata':
+        specifier: workspace:*
+        version: link:../opendata
 
   libs/journeys:
     dependencies:
