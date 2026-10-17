@@ -20,16 +20,17 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
   const sources = new Set(event.evidence.map((e) => byId.get(e.snippetId)?.source ?? e.snippetId)).size;
 
   return (
-    <section>
+    <section className="notice-screen">
       <h1>{text.title}</h1>
       <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
+      <p className="muted">{t("notice.window")}</p>
       <h2>{text.why}</h2>
-      <ul className="list">
+      <ul className="list evidence-list">
         {event.evidence.map((ev) => {
           const snippet = byId.get(ev.snippetId);
           const rejected = entry.rejectedEvidence.includes(ev.snippetId);
           return (
-            <li key={ev.snippetId} className={`row ${rejected ? "struck" : ""}`}>
+            <li key={ev.snippetId} className={`row evidence-row ${rejected ? "struck" : ""}`}>
               <div className="grow">
                 <div className="chip">{snippet ? t(`source.${snippet.source}` as Key) : ev.snippetId}</div>
                 <div>{snippet?.text ?? ev.prototype}</div>
@@ -46,7 +47,7 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
         })}
       </ul>
       <p>{text.question}</p>
-      <div className="actions">
+      <div className="actions answer-actions">
         <button type="button" className="primary" onClick={() => onAnswer("confirmed")}>
           {text.answers.confirm}
         </button>

@@ -11,6 +11,7 @@ import { Home } from "./screens/Home.tsx";
 import { Journey } from "./screens/Journey.tsx";
 import { Ledger } from "./screens/Ledger.tsx";
 import { Notice } from "./screens/Notice.tsx";
+import { Settings, useTheme } from "./screens/Settings.tsx";
 import { Onboarding, SourceList } from "./screens/Sources.tsx";
 import { type AppStore, createStore } from "./store.ts";
 import { today } from "./today.ts";
@@ -27,7 +28,14 @@ function wasOnboarded(): boolean {
 }
 
 export function App() {
-  const { t, locale, setLocale } = useI18n();
+  const { t, locale } = useI18n();
+  const { theme, setTheme } = useTheme();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
   const store: AppStore = useMemo(() => createStore(), []);
   // `?fmi=example` swaps the live FMI cache for one labelled example warning, for the stage (WORK.md); every card says so.
   const builders = useMemo(() => {
@@ -185,12 +193,21 @@ export function App() {
     else setView({ kind: "notice", eventId: entry.event.id });
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: destination changes intentionally reset scroll and focus.
+  useEffect(() => {
+    // Every destination begins at its task heading, including when leaving a long journey.
+    mainRef.current?.scrollTo({ top: 0 });
+    mainRef.current?.focus({ preventScroll: true });
+  }, [view, tab, onboarded, settingsOpen]);
+
   if (!ready) return null;
 
   const current = view?.kind === "notice" ? find(view.eventId) : undefined;
 
   let body: React.ReactNode;
-  if (!onboarded) {
+  if (settingsOpen) {
+    body = <Settings theme={theme} onTheme={setTheme} onBack={() => setSettingsOpen(false)} />;
+  } else if (!onboarded) {
     body = <Onboarding sources={sources} onChange={onSource} onDone={finishOnboarding} />;
   } else if (view?.kind === "notice" && current) {
     body = (
@@ -231,15 +248,26 @@ export function App() {
   return (
     <div className="app">
       <header className="top">
-        <strong>{t("appName")}</strong>
-        <button type="button" className="quiet" onClick={() => setLocale(locale === "en" ? "fi" : "en")}>
-          {t("lang.toggle")}
+        <strong className="wordmark">
+          {t("appName")}
+          <span aria-hidden="true" className="brand-mark" />
+        </strong>
+        <button type="button" className="settings-toggle" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(!settingsOpen)}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+            <path d="M4 7h16M4 17h16" />
+            <circle cx="9" cy="7" r="3" fill="var(--shell)" />
+            <circle cx="15" cy="17" r="3" fill="var(--shell)" />
+          </svg>
+          {t("settings.title")}
         </button>
       </header>
-      <main>{body}</main>
+      <main ref={mainRef} tabIndex={-1}>
+        {body}
+      </main>
       <footer className="bottom">
         <div className="net" aria-live="polite">
-          {t("net.label")}: <strong>{outbound === 1 ? t("net.one") : t("net.requests", { n: outbound })}</strong>
+          <span>{t("net.label")}</span>
+          <strong>{outbound === 1 ? t("net.one") : t("net.requests", { n: outbound })}</strong>
         </div>
         {onboarded && (
           <nav>
@@ -247,8 +275,10 @@ export function App() {
               <button
                 key={k}
                 type="button"
-                className={tab === k && !view ? "active" : ""}
+                className={tab === k && !view && !settingsOpen ? "active" : ""}
+                aria-current={tab === k && !view && !settingsOpen ? "page" : undefined}
                 onClick={() => {
+                  setSettingsOpen(false);
                   setTab(k);
                   setView(null);
                 }}

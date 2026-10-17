@@ -13,9 +13,9 @@ interface Props {
 export function Ledger({ ledger, onOpen, onEraseAll }: Props) {
   const { t, locale } = useI18n();
   return (
-    <section>
+    <section className="ledger-screen">
       <h1>{t("ledger.title")}</h1>
-      <p className="muted">{t("ledger.lead")}</p>
+      <p className="screen-lead">{t("ledger.lead")}</p>
       {ledger.length === 0 ? (
         <p className="muted">{t("ledger.empty")}</p>
       ) : (

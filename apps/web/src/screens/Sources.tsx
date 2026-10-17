@@ -1,5 +1,5 @@
 import type { Source, SourceState } from "@ahead/contract";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { type Key, useI18n } from "../i18n.tsx";
 
 const NEEDS_CONSENT_SHEET: readonly Source[] = ["mail", "bank"];
@@ -13,6 +13,11 @@ interface Props {
 export function SourceList({ sources, onChange }: Props) {
   const { t } = useI18n();
   const [sheet, setSheet] = useState<Source | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (sheet) dialogRef.current?.showModal();
+  }, [sheet]);
 
   const toggle = (s: SourceState) => {
     if (!s.enabled && NEEDS_CONSENT_SHEET.includes(s.source)) setSheet(s.source);
@@ -21,9 +26,9 @@ export function SourceList({ sources, onChange }: Props) {
 
   return (
     <>
-      <ul className="list">
+      <ul className="list source-list">
         {sources.map((s) => (
-          <li key={s.source} className="row">
+          <li key={s.source} className={`row source-row ${s.enabled ? "enabled" : ""}`}>
             <div className="grow">
               <div className="row-title">{t(`source.${s.source}` as Key)}</div>
               <div className="muted">{t(`source.${s.source}.what` as Key)}</div>
@@ -56,27 +61,25 @@ export function SourceList({ sources, onChange }: Props) {
         </li>
       </ul>
       {sheet && (
-        <div className="scrim">
-          <div className="sheet" role="dialog" aria-modal="true">
-            <h2>{t(sheet === "mail" ? "consent.mail.title" : "consent.bank.title")}</h2>
-            <p className="muted">{t("consent.body")}</p>
-            <div className="actions">
-              <button
-                type="button"
-                className="primary"
-                onClick={() => {
-                  onChange({ source: sheet, enabled: true });
-                  setSheet(null);
-                }}
-              >
-                {t("consent.allow")}
-              </button>
-              <button type="button" onClick={() => setSheet(null)}>
-                {t("consent.cancel")}
-              </button>
-            </div>
+        <dialog ref={dialogRef} className="sheet" aria-labelledby="consent-title" onCancel={() => setSheet(null)}>
+          <h2 id="consent-title">{t(sheet === "mail" ? "consent.mail.title" : "consent.bank.title")}</h2>
+          <p className="muted">{t("consent.body")}</p>
+          <div className="actions">
+            <button
+              type="button"
+              className="primary"
+              onClick={() => {
+                onChange({ source: sheet, enabled: true });
+                setSheet(null);
+              }}
+            >
+              {t("consent.allow")}
+            </button>
+            <button type="button" onClick={() => setSheet(null)}>
+              {t("consent.cancel")}
+            </button>
           </div>
-        </div>
+        </dialog>
       )}
     </>
   );
@@ -85,9 +88,9 @@ export function SourceList({ sources, onChange }: Props) {
 export function Onboarding({ sources, onChange, onDone }: Props & { onDone(): void }) {
   const { t } = useI18n();
   return (
-    <section>
+    <section className="onboarding-screen">
       <h1>{t("onboarding.title")}</h1>
-      <p className="muted">{t("onboarding.lead")}</p>
+      <p className="screen-lead">{t("onboarding.lead")}</p>
       <SourceList sources={sources} onChange={onChange} />
       <div className="actions">
         <button type="button" className="primary" onClick={onDone}>

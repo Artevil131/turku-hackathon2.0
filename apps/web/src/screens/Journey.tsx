@@ -11,16 +11,16 @@ interface Props {
 export function Journey({ journey, onBack, onToggleDone }: Props) {
   const { t, locale } = useI18n();
   return (
-    <section>
-      <button type="button" className="quiet" onClick={onBack}>
-        ← {t("journey.back")}
+    <section className="journey-screen">
+      <button type="button" className="back quiet" onClick={onBack}>
+        {t("journey.back")}
       </button>
       {!journey ? (
         <p className="muted">{t("journey.none")}</p>
       ) : (
         <>
           <h1>{journey.title}</h1>
-          <p className="muted">{t("journey.share")}</p>
+          <p className="muted">{t("journey.private")}</p>
           <ul className="cards">
             {journey.items.map((item) => (
               <li key={item.id} className={`card kind-${item.kind} ${item.done ? "done" : ""}`}>
@@ -29,7 +29,18 @@ export function Journey({ journey, onBack, onToggleDone }: Props) {
                   {item.due && <span className="muted">{t("journey.due", { date: formatDate(item.due, locale) })}</span>}
                 </div>
                 <h3>{item.title}</h3>
-                <p>{item.body}</p>
+                <p>{item.body.split(/(?<=[.!?])\s/)[0]}</p>
+                {item.body.split(/(?<=[.!?])\s/).length > 1 && (
+                  <details>
+                    <summary>{t("journey.more")}</summary>
+                    <p>
+                      {item.body
+                        .split(/(?<=[.!?])\s/)
+                        .slice(1)
+                        .join(" ")}
+                    </p>
+                  </details>
+                )}
                 <div className="card-foot">
                   {item.sourceName &&
                     (item.sourceUrl ? (
@@ -44,7 +55,12 @@ export function Journey({ journey, onBack, onToggleDone }: Props) {
                     ))}
                   {item.kind === "todo" && (
                     <label className="check">
-                      <input type="checkbox" checked={!!item.done} onChange={() => onToggleDone(item.id)} />
+                      <input
+                        type="checkbox"
+                        aria-label={`${t("journey.done")}: ${item.title}`}
+                        checked={!!item.done}
+                        onChange={() => onToggleDone(item.id)}
+                      />
                     </label>
                   )}
                 </div>
