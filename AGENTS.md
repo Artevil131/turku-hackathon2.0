@@ -35,6 +35,14 @@ legal-design choice and goes through the team.
 - Scripts in `scripts/`, deployment in `deploy/`, data in `data/`
   (git-ignored except `data/synthetic/`), reading notes in `research/`.
 
+## The listing model (AI on the GPU server)
+
+- Change the prompt, schema and rules in `libs/listing`; the model's
+  settings in `deploy/listing-model/model.env`. Read
+  `deploy/listing-model/README.md` first. Run the listing benchmark and
+  put its numbers in the pull request; nothing that invents a field or a
+  risk is merged.
+
 ## Records
 
 - Ask before a download over 1 GB, a run over an hour, or anything that

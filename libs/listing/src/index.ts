@@ -4,10 +4,10 @@ export {
   extractFromImage,
   extractListing,
   MAX_AD_CHARS,
-  SYSTEM_PROMPT,
   transcribe,
 } from "./extract.ts";
 export { type AreaPrice, areaPrice, type InspectionStats, inspectionStats } from "./lookups.ts";
+export { SYSTEM_PROMPT, TRANSCRIBE_PROMPT } from "./prompt.ts";
 export {
   type Cost,
   INSPECTION_EUR,

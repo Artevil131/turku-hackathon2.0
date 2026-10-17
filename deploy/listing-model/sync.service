@@ -1,0 +1,8 @@
+# systemd user unit on chili: one run of sync.sh (README.md).
+[Unit]
+Description=turku-hackathon2.0: apply deploy/listing-model/model.env from main to the NInfer model
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/bin/bash %h/llm/bin/hackathon-model-sync

@@ -1,0 +1,11 @@
+# systemd user timer on chili: check main every five minutes (README.md).
+[Unit]
+Description=turku-hackathon2.0: check main for listing-model changes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
