@@ -156,6 +156,21 @@ Once, on the laptop:
 `pnpm --filter @ahead/web serve --host`. Chromium documents the flag for
 service workers; whether the Android build honours it is not confirmed.
 
+**On stage.** Open `/?engine=core&fmi=example`:
+- `engine=core` runs the real detector on the student phone (without it the
+  app runs on the contract's mock).
+- `fmi=example` shows one hand-written frost warning for Southwest Finland on
+  the move week, because FMI has no land warning there today. Its card says
+  "Example for the demo, not a current warning", and the pitch should say
+  so too. Without it the journey shows the live cache honestly ("no
+  warnings"). Refresh the cache with `node scripts/fetch-fmi.ts`.
+- `today=YYYY-MM-DD` pins the date if the demo is not on 17 October.
+- Sources → Calendar → "Use my calendar file (.ics)" reads a real export
+  (PLAN.md stretch 1, A's `IcsAdapter`). Only the parsed entries are kept on
+  the phone, never the file; "Remove" goes back to the synthetic calendar,
+  and erase-all removes them. Tested with a two-entry file: the move was
+  detected with that entry as evidence.
+
 ## Requests
 
 (Write here what you need from the other side: "B needs

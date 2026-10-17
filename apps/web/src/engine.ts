@@ -1,4 +1,4 @@
-import { readEnabled, syntheticAdapters, windowEnding } from "@ahead/adapters";
+import { readEnabled, SyntheticAdapter, syntheticAdapters, windowEnding } from "@ahead/adapters";
 import type { Adapter, DetectedEvent, Detector, IsoDate, Snippet, Source } from "@ahead/contract";
 import { mockMove, mockSnippets } from "@ahead/contract/mock";
 import type { VectorSnapshot } from "@ahead/detect";
@@ -6,6 +6,8 @@ import type { VectorSnapshot } from "@ahead/detect";
 /** What "Check now" needs from the core: where snippets come from and what turns them into events. */
 export interface Engine {
   adapters: readonly Adapter[];
+  /** The adapters before a calendar file replaced the calendar one, so removing the file restores them. */
+  baseAdapters?: readonly Adapter[];
   detector: Detector;
   /** The detector's vector cache, when it has one (the real core): saved after a check, restored at start. */
   vectors?: {
@@ -65,6 +67,16 @@ export async function createCoreEngine(onProgress?: EngineProgress): Promise<Eng
 /** `?engine=core` selects the real core; anything else is the mock, so the app always runs. */
 export function createEngine(onProgress?: EngineProgress, search = location.search): Promise<Engine> {
   return new URLSearchParams(search).get("engine") === "core" ? createCoreEngine(onProgress) : Promise.resolve(createMockEngine());
+}
+
+/**
+ * Uses the user's own calendar (snippets from an .ics file) instead of the phone's, or goes back to the phone's
+ * when `calendar` is undefined. The detector, and with it the vector cache, stays the same.
+ */
+export function withCalendar(engine: Engine, calendar: readonly Snippet[] | undefined): Engine {
+  const base = engine.baseAdapters ?? engine.adapters;
+  const adapters = calendar ? [...base.filter((a) => a.source !== "calendar"), new SyntheticAdapter("calendar", calendar)] : base;
+  return { ...engine, adapters, baseAdapters: base };
 }
 
 /** Reads the enabled sources through their adapters over the default window (D-009). */
