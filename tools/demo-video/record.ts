@@ -237,7 +237,9 @@ try {
     120_000,
   );
   await step("events");
-  await click(client, "first event", [
+  // The move, when listed (second by date after the test drive): its share carries a municipality.
+  await click(client, "the move, else the first event", [
+    ".event-list li:nth-child(2) .row-button",
     ".row-button",
     ".event-card button",
     "button.event-card",
