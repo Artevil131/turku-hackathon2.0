@@ -91,11 +91,23 @@ function page(rows: readonly Stored[]): string {
     .map(([m, t]) => `<tr><td>${m}</td>${EVENT_TYPES.map((k) => `<td>${t[k] ?? ""}</td>`).join("")}</tr>`)
     .join("");
   return `<!doctype html><meta charset="utf-8"><title>Ahead, what If sees</title>
-<style>body{font:18px/1.5 system-ui;max-width:720px;margin:40px auto;padding:0 16px;color:#14171c}table{border-collapse:collapse;width:100%}td,th{padding:8px 10px;border-bottom:1px solid #ddd;text-align:left}th{font-weight:600}small{color:#5b6573}</style>
+<style>body{font:22px/1.5 system-ui;max-width:860px;margin:48px auto;padding:0 24px;color:#0f2a30;background:#eaf3f4}h1{font-size:44px;margin:0 0 8px}.big{font-size:96px;font-weight:700;line-height:1;margin:16px 0 8px;color:#123e48}table{border-collapse:collapse;width:100%;font-size:22px;background:#fff;border-radius:12px;overflow:hidden}td,th{padding:12px 14px;border-bottom:1px solid #d7e3e5;text-align:left}th{font-weight:600;background:#f3f8f8}small{color:#5b6573}</style>
 <h1>What If sees</h1>
-<p>${c.total} shared event${c.total === 1 ? "" : "s"}. Each one is a type, a date and a municipality that a user chose to share. Nothing else ever arrives here.</p>
+<div class="big">${c.total}</div>
+<p>shared event${c.total === 1 ? "" : "s"}. Each one is a type, a date and a municipality that a user chose to share. Nothing else ever arrives here.</p>
 <table><tr><th>Municipality</th>${EVENT_TYPES.map((k) => `<th>${k}</th>`).join("")}</tr>${munis || `<tr><td colspan="7"><small>Nothing yet.</small></td></tr>`}</table>
-<p><small>Last received: ${rows.at(-1)?.receivedAt ?? "never"}. Raw: <a href="/api/counts">/api/counts</a></small></p>`;
+<p><small>Last received: <span id="last">${rows.at(-1)?.receivedAt ?? "never"}</span>. Raw: <a href="/api/counts">/api/counts</a>. This page refreshes itself.</small></p>
+<script>
+  // The stage beat: when a phone shares, this page's number ticks without a reload.
+  let shown = ${c.total};
+  setInterval(async () => {
+    try {
+      const r = await fetch("/api/counts", { cache: "no-store" });
+      const c = await r.json();
+      if (c.total !== shown) location.reload();
+    } catch {}
+  }, 2000);
+</script>`;
 }
 
 export function start(port = PORT) {

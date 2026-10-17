@@ -62,7 +62,10 @@ Everything else is a stretch.
    and says that is the whole message. Press Share: the footer counter
    goes from 0 requests to 1 request and the sheet shows what If
    received. Then the ledger: what was inferred, what was shared (that
-   one line), erase. The If side at localhost:8787 shows one count.
+   one line), erase. The If side at localhost:8787 refreshes itself and
+   shows the count in large type; keep it in a second window. Before the
+   demo: `rm -f data/shared/events.jsonl` so it starts at 0, and start the
+   API with `node apps/api/src/server.ts`.
 6. (2:30) Business slide: prevention (Finanssiala 2021: 34 800 leaks,
    171 M€, more than fire), retention at
    the moment of change, acquisition because it is useful before you buy,
