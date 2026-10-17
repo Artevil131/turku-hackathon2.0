@@ -16,7 +16,10 @@ ARCHITECTURE.md, PRIVACY.md, DECISIONS.md and AGENTS.md. Then this file.
   its own commit, `contract: <what>`, and note it under "Contract
   changes" below. Keep the mock data compiling.
 - Commit small and often, `<area>: <what>`. Before every push:
-  `git pull --rebase origin main`. Never force-push. Push only with the
+  `git fetch origin && git merge --ff-only origin/main`; if that refuses,
+  `git merge origin/main` and resolve. Not `pull --rebase`: it replays
+  merge commits and conflicts on history that was already merged (it bit
+  machine A on 2026-10-17). Never force-push. Push only with the
   operator's approval (that machine's own rules apply).
 - `pnpm typecheck && pnpm check && pnpm test` green before a push.
 - Nothing personal, no real accounts, no secrets. Synthetic data only
