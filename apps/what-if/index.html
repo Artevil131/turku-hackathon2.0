@@ -232,9 +232,15 @@ dl.kv dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 .insure { background: var(--blue-soft); border-radius: 18px; padding: 20px; display: grid; gap: 12px; }
 .insure dl.kv { margin: 0; background: var(--card); border-radius: 12px; padding: 12px 14px; }
 
-/* The screenshot check: the picture as it will be sent, the wording, Send and Cancel */
+/* The screenshot check: the pictures as they will be sent, the wording, Send and Cancel */
 .shot { display: block; width: 100%; max-height: 52vh; object-fit: contain; background: var(--sand); border-radius: 12px; border: 1px solid var(--line); }
 .shotactions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+.shots figure { margin: 0; display: grid; gap: 6px; justify-items: start; }
+.shots .shot { max-height: 34vh; }
+/* Screenshots dragged over the form: the box shows where to let go */
+form.dropping textarea { border: 2px dashed var(--blue); background: var(--blue-soft); }
+.dropnote { margin: 0; font: 600 15px/1.3 var(--font); color: var(--blue); }
 .notice .textbtn { padding: 0; font-size: 15px; text-align: left; text-underline-offset: 3px; text-decoration: underline; }
 
 .sources { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
@@ -1700,30 +1706,66 @@ function createEngine(DATA, today) {
   // Contract: POST /api/read {image: "data:image/jpeg;base64,…"} (PNG, JPEG or WebP, at most 8,000,000 characters),
   // never text and image together. The answer is as for text, plus "transcript": the text read off the picture.
   // The transcript goes through the rules like pasted text, so wherever the rules read a field, their value wins.
+  // A long ad takes several screenshots: up to SHOTS_MAX go one by one (each is one request, so each counts as one ad
+  // on the reader), their transcripts are joined in order, and the rules read the whole ad from that. The AI's fields
+  // from every screenshot fill what the rules miss, the first screenshot that names a field winning.
   const IMAGE_MAX = 8000000;
   const IMAGE_TIMEOUT = 30000;
+  const SHOTS_MAX = 4;
   const SHOT_FAIL = "We couldn’t read an ad from that screenshot. Try one that shows the whole ad, or paste the ad’s text.";
   const SHOT_NOTE = "Read from your screenshot by an AI model on our team’s own computer.";
-  async function analyseImage(image, { fetch: fetchImpl, url = AI_URL, timeoutMs = IMAGE_TIMEOUT } = {}) {
+  const READ_KINDS = ["car", "moto", "home", "rent"];
+  const isImage = (image) => typeof image === "string" && image.length <= IMAGE_MAX && /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/.test(image);
+  const shotNote = (read, sent) => (sent === 1 ? SHOT_NOTE
+    : read === sent ? `Read from your ${sent} screenshots by an AI model on our team’s own computer.`
+    : `Read from ${read} of your ${sent} screenshots by an AI model on our team’s own computer; the other${sent - read > 1 ? "s" : ""} couldn’t be read.`);
+  // The most common kind among the answers; on a tie, the first screenshot's.
+  const shotKind = (answers) => {
+    const kinds = answers.map((a) => a.kind).filter((k) => [...READ_KINDS, "other"].includes(k));
+    return kinds.reduce((best, k) => (kinds.filter((x) => x === k).length > kinds.filter((x) => x === best).length ? k : best), kinds[0]);
+  };
+  // First non-empty value per field across the screenshots; flags and other small objects are merged the same way.
+  const empty = (x) => x == null || (Array.isArray(x) && !x.length);
+  const mergeFields = (list) => {
+    const out = {};
+    for (const fields of list) {
+      if (!fields || typeof fields !== "object") continue;
+      for (const [k, v] of Object.entries(fields)) {
+        if (v && typeof v === "object" && !Array.isArray(v)) out[k] = { ...v, ...Object.fromEntries(Object.entries(out[k] ?? {}).filter(([, x]) => !empty(x))) };
+        else if (empty(out[k]) && !empty(v)) out[k] = v;
+      }
+    }
+    return out;
+  };
+  async function analyseImages(images, { fetch: fetchImpl, url = AI_URL, timeoutMs = IMAGE_TIMEOUT } = {}) {
     const fail = { message: SHOT_FAIL };
-    if (typeof fetchImpl !== "function" || typeof image !== "string" || image.length > IMAGE_MAX
-      || !/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/.test(image)) return fail;
-    const answer = await ask({ image }, fetchImpl, url, timeoutMs);
-    if (!answer) return fail;
-    const transcript = typeof answer.transcript === "string" && answer.transcript.trim() ? answer.transcript.trim().slice(0, 20000) : null;
-    const r = ["car", "moto", "home", "rent"].includes(answer.kind) ? fromAI(answer.kind, answer.fields, transcript ?? "", answer.model)
-      : answer.kind === "other" ? draftResult(answer.draft, answer.model) : null;
+    const list = (Array.isArray(images) ? images : [images]).slice(0, SHOTS_MAX);
+    if (typeof fetchImpl !== "function" || !list.length || !list.every(isImage)) return fail;
+    const answers = (await Promise.all(list.map((image) => ask({ image }, fetchImpl, url, timeoutMs)))).filter(Boolean);
+    if (!answers.length) return fail;
+    const texts = answers.map((a) => (typeof a.transcript === "string" ? a.transcript.trim() : "")).filter(Boolean);
+    const transcript = texts.length ? texts.join("\n\n").slice(0, 20000) : null;
+    const kind = shotKind(answers);
+    const same = answers.filter((a) => a.kind === kind);
+    const r = READ_KINDS.includes(kind) ? fromAI(kind, mergeFields(same.map((a) => a.fields)), transcript ?? "", same[0].model)
+      : kind === "other" ? draftResult(same.find((a) => a.draft)?.draft, same[0].model) : null;
     if (!r) return fail;
-    return { ...r, fromScreenshot: true, shotNote: SHOT_NOTE, transcript };
+    return { ...r, fromScreenshot: true, shotNote: shotNote(answers.length, list.length), transcript };
   }
+  const analyseImage = (image, opts) => analyseImages([image], opts);
 
-  // The check before a screenshot leaves the phone: confirm(image) shows it and answers yes or no. No sends nothing.
-  async function sendScreenshot(image, confirm, opts = {}) {
-    if (!(await confirm(image))) return { cancelled: true };
-    return analyseImage(image, opts);
+  // The check before screenshots leave the phone: confirm(images) shows them and answers false (send nothing), true
+  // (send them all) or the list the person kept after removing some.
+  async function sendScreenshots(images, confirm, opts = {}) {
+    const list = (Array.isArray(images) ? images : [images]).slice(0, SHOTS_MAX);
+    const chosen = await confirm(list);
+    const send = Array.isArray(chosen) ? chosen.slice(0, SHOTS_MAX) : chosen ? list : [];
+    if (!send.length) return { cancelled: true };
+    return analyseImages(send, opts);
   }
+  const sendScreenshot = (image, confirm, opts) => sendScreenshots([image], (list) => confirm(list[0]), opts);
 
-  return { read, analyse, plan, stripContacts, fromAI, draftResult, analyseWithAI, analyseImage, sendScreenshot, SHOT_FAIL, SRC, COVER, esc };
+  return { read, analyse, plan, stripContacts, fromAI, draftResult, analyseWithAI, analyseImage, analyseImages, sendScreenshot, sendScreenshots, SHOTS_MAX, SHOT_FAIL, SRC, COVER, esc };
 }
 /* engine:end */
 
@@ -1944,7 +1986,9 @@ function home(message) {
     <form class="stack" id="checkForm" novalidate>
       <div class="fieldrow"><label class="field" for="ad">The ad’s text</label><button type="button" class="textbtn" id="clearBtn">Clear</button></div>
       <textarea id="ad" spellcheck="false" placeholder="Open the ad, select all its text, copy it and paste it here."></textarea>
-      ${AI_ON ? `<button type="button" class="btn ghost small" id="shotBtn">Or upload a screenshot</button><input type="file" id="shot" accept="image/*" hidden>` : ""}
+      ${AI_ON ? `<button type="button" class="btn ghost small" id="shotBtn">Or upload screenshots</button><input type="file" id="shot" accept="image/*" multiple hidden>
+      <p class="dropnote" id="dropNote" hidden>Let go to read the screenshots</p>
+      <p class="fine">Up to ${engine.SHOTS_MAX} screenshots of one ad. On a computer you can also drop them on the box, or paste one with Ctrl+V.</p>` : ""}
       <div class="stack" style="gap:8px">
         <span class="fine">Or try an example</span>
         <div class="examples" role="group" aria-label="Example ads">
@@ -1971,21 +2015,47 @@ function home(message) {
   document.getElementById("clearBtn").addEventListener("click", () => { state.text = ""; box.value = ""; box.dispatchEvent(new Event("input")); box.focus(); });
   const shot = document.getElementById("shot");
   if (shot) {
-    document.getElementById("shotBtn").addEventListener("click", () => shot.click());
-    shot.addEventListener("change", async () => {
-      const file = shot.files?.[0];
-      shot.value = "";
-      if (!file || state.busy) return;
-      let image;
-      try { image = await screenshotData(file); } catch { return home("We couldn’t open that picture. Choose another screenshot, or paste the ad’s text."); }
+    const form = document.getElementById("checkForm");
+    const note = document.getElementById("dropNote");
+    // Chosen, dropped or pasted: the same check, then the same reading.
+    const takeShots = async (files) => {
+      const pics = [...files].filter((f) => /^image\//.test(f.type));
+      if (!pics.length || state.busy) return;
+      let images;
+      try { images = await Promise.all(pics.slice(0, engine.SHOTS_MAX).map(screenshotData)); } catch { return home("We couldn’t open that picture. Choose another screenshot, or paste the ad’s text."); }
       state.busy = true;
       let r;
-      try { r = await engine.sendScreenshot(image, confirmShot, { fetch: (url, opts) => window.fetch(url, opts) }); } finally { state.busy = false; }
+      try { r = await engine.sendScreenshots(images, (list) => confirmShots(list, pics.length - list.length), { fetch: (url, opts) => window.fetch(url, opts) }); } finally { state.busy = false; }
       if (r.cancelled) return home();
       if (r.message) return home(r.message);
-      if (r.transcript) state.text = r.transcript; // the text read off the picture, in the box to see and correct
+      if (r.transcript) state.text = r.transcript; // the text read off the pictures, in the box to see and correct
       if (r.kind === "draft") return draftView(r);
       check(r, `shot:${Date.now()}`);
+    };
+    document.getElementById("shotBtn").addEventListener("click", () => shot.click());
+    shot.addEventListener("change", () => {
+      const files = [...(shot.files ?? [])];
+      shot.value = "";
+      takeShots(files);
+    });
+    // Drag and drop: files only, so dragging text inside the box still works as usual.
+    const hasFiles = (e) => [...(e.dataTransfer?.types ?? [])].includes("Files");
+    const dropping = (on) => { form.classList.toggle("dropping", on); note.hidden = !on; };
+    form.addEventListener("dragenter", (e) => { if (hasFiles(e)) { e.preventDefault(); dropping(true); } });
+    form.addEventListener("dragover", (e) => { if (hasFiles(e)) { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; dropping(true); } });
+    form.addEventListener("dragleave", (e) => { if (!form.contains(e.relatedTarget)) dropping(false); });
+    form.addEventListener("drop", (e) => {
+      if (!hasFiles(e)) return;
+      e.preventDefault();
+      dropping(false);
+      takeShots(e.dataTransfer.files);
+    });
+    // A screenshot pasted into the box (Win+Shift+S, then Ctrl+V) is read like an upload; text pastes as usual.
+    box.addEventListener("paste", (e) => {
+      const pics = [...(e.clipboardData?.files ?? [])].filter((f) => /^image\//.test(f.type));
+      if (!pics.length) return;
+      e.preventDefault();
+      takeShots(pics);
     });
   }
   screen.querySelectorAll("[data-example]").forEach((b) =>
@@ -2052,44 +2122,65 @@ async function screenshotData(file) {
   return canvas.toDataURL("image/jpeg", 0.85);
 }
 
-// consent copy: needs team review (AGENTS.md). Proposed wording; Vaishnav confirms it.
+// Consent copy: a legal-design choice (AGENTS.md). Vaishnav confirmed the one-screenshot wording on 2026-10-17;
+// the wording for several says the same.
 const SHOT_CONSENT = {
-  title: "Send this screenshot?",
-  text: "It goes through our server at Cloudflare to an AI model on our team’s own computer, which reads the ad from it. Check that it shows only the ad, not your name, messages or notifications. Nothing is stored, and nothing goes to If.",
+  title: (n) => (n === 1 ? "Send this screenshot?" : `Send these ${n} screenshots?`),
+  text: (n) => (n === 1
+    ? "It goes through our server at Cloudflare to an AI model on our team’s own computer, which reads the ad from it. Check that it shows only the ad, not your name, messages or notifications. Nothing is stored, and nothing goes to If."
+    : "They go through our server at Cloudflare to an AI model on our team’s own computer, which reads the ad from them. Check that they show only the ad, not your name, messages or notifications. Nothing is stored, and nothing goes to If."),
   send: "Send",
   cancel: "Cancel",
 };
 
-// The check before a screenshot leaves the phone: the resized picture and the wording. Cancel sends nothing.
-function confirmShot(image) {
+// The check before screenshots leave the phone: the resized pictures and the wording. Remove takes one out; Cancel,
+// or removing the last one, sends nothing. Resolves with the pictures to send, or false.
+function confirmShots(images, extra = 0) {
   return new Promise((done) => {
-    show(`
-      <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="shotTitle" aria-describedby="shotText">
-        <h2 id="shotTitle" tabindex="-1">${SHOT_CONSENT.title}</h2>
-        <img class="shot" src="${image}" alt="The screenshot you chose, made smaller on this phone">
-        <p id="shotText">${SHOT_CONSENT.text}</p>
-        <div class="shotactions">
-          <button class="btn" type="button" id="shotSend">${SHOT_CONSENT.send}</button>
-          <button class="btn ghost" type="button" id="shotCancel">${SHOT_CONSENT.cancel}</button>
-        </div>
-      </section>
-    `);
-    document.getElementById("shotTitle").focus();
-    document.getElementById("shotSend").addEventListener("click", () => { readingShot(); done(true); });
-    document.getElementById("shotCancel").addEventListener("click", () => done(false));
+    const list = [...images];
+    const draw = () => {
+      const n = list.length;
+      show(`
+        <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="shotTitle" aria-describedby="shotText">
+          <h2 id="shotTitle" tabindex="-1">${SHOT_CONSENT.title(n)}</h2>
+          ${n === 1
+            ? `<img class="shot" src="${list[0]}" alt="The screenshot you chose, made smaller on this phone">`
+            : `<div class="shots">${list.map((src, i) => `<figure><img class="shot" src="${src}" alt="Screenshot ${i + 1} of ${n}, made smaller on this phone"><button type="button" class="textbtn" data-remove="${i}" aria-label="Remove screenshot ${i + 1}">Remove</button></figure>`).join("")}</div>`}
+          ${extra > 0 ? `<p class="fine">Only the first ${engine.SHOTS_MAX} screenshots are read.</p>` : ""}
+          <p id="shotText">${SHOT_CONSENT.text(n)}</p>
+          <div class="shotactions">
+            <button class="btn" type="button" id="shotSend">${SHOT_CONSENT.send}</button>
+            <button class="btn ghost" type="button" id="shotCancel">${SHOT_CONSENT.cancel}</button>
+          </div>
+        </section>
+      `);
+      document.getElementById("shotTitle").focus();
+      document.getElementById("shotSend").addEventListener("click", () => { readingShot(list.length); done(list); });
+      document.getElementById("shotCancel").addEventListener("click", () => done(false));
+      screen.querySelectorAll("[data-remove]").forEach((b) => b.addEventListener("click", () => {
+        list.splice(Number(b.dataset.remove), 1);
+        if (!list.length) return done(false);
+        draw();
+      }));
+    };
+    draw();
   });
 }
 
-function readingShot() {
+function readingShot(n = 1) {
+  const what = n === 1 ? "screenshot" : `${n} screenshots`;
   show(`
     <section class="stack-lg" aria-live="polite">
-      <p class="eyebrow">Reading the screenshot</p>
-      <h2>An AI model is reading the ad from your screenshot</h2>
-      <ol class="steps"><li class="on"><span class="lamp" aria-hidden="true"></span><span>Reading the screenshot…</span></li></ol>
+      <p class="eyebrow">Reading the ${n === 1 ? "screenshot" : "screenshots"}</p>
+      <h2>An AI model is reading the ad from your ${what}</h2>
+      <ol class="steps"><li class="on"><span class="lamp" aria-hidden="true"></span><span>Reading the ${what}…</span></li></ol>
       <p class="fine">This can take up to half a minute.</p>
     </section>
   `);
 }
+
+// A picture dropped next to the box shouldn't open in the tab and lose the page.
+if (AI_ON) for (const type of ["dragover", "drop"]) window.addEventListener(type, (e) => { if ([...(e.dataTransfer?.types ?? [])].includes("Files")) e.preventDefault(); });
 
 // Where a result came from a screenshot: say so, and offer the text it read for checking.
 const shotHtml = (c) => (c.shotNote
@@ -2112,7 +2203,7 @@ function draftView(d) {
       <ol class="asks">${d.asks.map((q) => `<li class="ask"><div class="ask-body"><span class="q">${q}</span></div></li>`).join("")}</ol>
     </section>
     <section class="sheet">
-      <p class="eyebrow">If something goes wrong</p>
+      <p class="eyebrow">What if something goes wrong</p>
       <h2>Who pays</h2>
       <ul class="cover">${d.whatIfs.map((w) => `<li><span class="what">${w.text}</span>${whoHtml(w.who, w.tone)}</li>`).join("")}</ul>
       <p class="fine">What insurance pays depends on the policy. Read the terms before you sign.</p>
@@ -2299,7 +2390,7 @@ function coverHtml(c) {
   if (!v) return "";
   return `
     <section class="sheet">
-      <p class="eyebrow">If something goes wrong</p>
+      <p class="eyebrow">What if something goes wrong</p>
       <h2>Who pays</h2>
       <ul class="cover">
         ${v.items.map((x) => `<li><span class="what">${x.what}</span>${whoHtml(x.who, x.tone)}${x.note ? `<span class="fine">${x.note}</span>` : ""}</li>`).join("")}

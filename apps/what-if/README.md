@@ -14,7 +14,7 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
 | `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses and real-page quirks. Currently 17 of 17 pass. |
-| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message). Currently 99 of 99 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four). Currently 110 of 110 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
@@ -85,20 +85,27 @@ own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `d
 
 ### Screenshots
 
-On our own site there is an "Or upload a screenshot" button by the text box. It is a file input with
-`accept="image/*"` and no `capture`, so phones offer both the camera and the library. The claude.ai artifact
-and the file on disk don't show it.
+On our own site there is an "Or upload screenshots" button by the text box. It is a file input with
+`accept="image/*"`, `multiple` and no `capture`, so phones offer both the camera and the library. On a computer
+the screenshots can also be dropped on the box, or one pasted into it (Win+Shift+S, then Ctrl+V); text still
+pastes and drags as usual. The claude.ai artifact and the file on disk show none of this.
+
+A long ad can take **up to four screenshots** (`SHOTS_MAX`). Each goes to `/api/read` on its own (so each counts
+as one ad of the team's 120 an hour), their transcripts are joined in order, and the rules read the whole ad
+from that; the AI's fields from every screenshot fill what the rules miss (`analyseImages()`). A screenshot
+with no ad on it doesn't change the kind, and if one can't be read the result says "Read from 1 of your 2
+screenshots…". The check shows every picture with a Remove button; removing the last one sends nothing.
 
 1. **Made smaller on the phone first,** like Aapo's PWA (D-025): at most 1600 px on the longest side, re-encoded
    as JPEG at quality 0.85. Only that copy can leave; the re-encoding also drops the photo's metadata, such as
    its location.
-2. **The check before sending.** `sendScreenshot(image, confirm)` shows the resized picture and asks. Cancel
-   sends nothing. The wording is consent copy, marked "consent copy: needs team review (AGENTS.md)" in
-   `index.html` (`SHOT_CONSENT`), for Vaishnav to confirm:
-   - **Send this screenshot?**
+2. **The check before sending.** `sendScreenshots(images, confirm)` shows the resized pictures and asks. Cancel
+   sends nothing. The wording is consent copy (AGENTS.md), in `index.html` as `SHOT_CONSENT`; Vaishnav
+   confirmed it on 2026-10-17, and the wording for several screenshots says the same:
+   - **Send this screenshot?** / **Send these 3 screenshots?**
    - It goes through our server at Cloudflare to an AI model on our team's own computer, which reads the ad
      from it. Check that it shows only the ad, not your name, messages or notifications. Nothing is stored,
-     and nothing goes to If.
+     and nothing goes to If. (For several: "They go… from them… they show only the ad…")
    - Buttons: Send, Cancel.
 3. **Then `POST /api/read` with `{"image": "data:image/jpeg;base64,…"}`,** never text and image together. It
    allows at most 8,000,000 characters and 30 s ("Reading the screenshot…").

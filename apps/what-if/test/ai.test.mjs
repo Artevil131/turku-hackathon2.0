@@ -169,5 +169,51 @@ ok("screenshot: not an image data URL is refused before sending", (await engine.
 ok("screenshot: over 8,000,000 characters is refused before sending", (await engine.analyseImage(`data:image/jpeg;base64,${"A".repeat(8000001)}`, { fetch: shotFetch(200, shotCar) })).message === engine.SHOT_FAIL && shotSent.length === before);
 ok("screenshot: without fetch (the artifact) nothing is sent", (await engine.analyseImage(img, {})).message === engine.SHOT_FAIL);
 
+// 7. Several screenshots of one ad: one request each, the transcripts joined, the rules reading the whole ad.
+const img2 = `data:image/jpeg;base64,${"REVG".repeat(100)}`;
+const img3 = `data:image/png;base64,${"R0hJ".repeat(100)}`;
+const queue = (...answers) => {
+  const sent = [];
+  const fetchMock = async (url, opts) => {
+    sent.push(JSON.parse(opts.body));
+    const [status, body] = answers[sent.length - 1] ?? [503, { ok: false, error: "ai_unavailable" }];
+    return reply(status, body)();
+  };
+  return { sent, fetchMock };
+};
+const top = [200, { ok: true, model: "m", kind: "car", draft: null, transcript: "Toyota Corolla 1.6\nHinta 5 000 €\nTurku",
+  fields: { make: "Toyota", model: "Corolla", price: 5000, city: "Turku", flags: { serviceBook: true } } }];
+const bottom = [200, { ok: true, model: "m", kind: "car", draft: null, transcript: "Vuosimalli 2010\nMittarilukema 150 000 km\nKatsastettu 4/2026",
+  fields: { year: 2010, km: 150000, lastInspection: "2026-04", flags: { timingBeltReplaced: true } } }];
+const blank = [200, { ok: true, model: "m", kind: "none", fields: null, draft: null, transcript: "Lisätiedot" }];
+
+let q = queue(top, bottom);
+const none = await engine.sendScreenshots([img, img2], async () => false, { fetch: q.fetchMock });
+ok("screenshots: Cancel sends none of them", none.cancelled === true && q.sent.length === 0);
+q = queue(top);
+const kept = await engine.sendScreenshots([img, img2, img3], async (list) => [list[0]], { fetch: q.fetchMock });
+ok("screenshots: removing some in the check sends only the rest", q.sent.length === 1 && q.sent[0].image === img && kept.kind === "car", `${q.sent.length} sent`);
+q = queue(top, bottom);
+const two = await engine.sendScreenshots([img, img2], async () => true, { fetch: q.fetchMock });
+ok("screenshots: one request per screenshot, {image} only", q.sent.length === 2 && q.sent.every((b) => Object.keys(b).join() === "image"));
+ok("screenshots: read together, the details from both (price from one, year and km from the other)",
+  full(two) && two.kind === "car" && two.price === 5000 && two.specs.startsWith("2010") && /150,000 km/.test(two.specs), two?.specs ?? two?.message);
+ok("screenshots: the joined transcript goes to the text box, the note says how many",
+  two.transcript.includes("Hinta 5 000") && two.transcript.includes("150 000 km") && /your 2 screenshots/.test(two.shotNote));
+q = queue([503, { ok: false, error: "ai_unavailable" }], top);
+const half = await engine.sendScreenshots([img, img2], async () => true, { fetch: q.fetchMock });
+ok("screenshots: one unread of two still gives a result, and says so", !half.message && /1 of your 2 screenshots/.test(half.shotNote ?? ""), half?.message ?? half?.shotNote);
+q = queue([503, { ok: false }], [503, { ok: false }]);
+ok("screenshots: none read gives the screenshot message", (await engine.sendScreenshots([img, img2], async () => true, { fetch: q.fetchMock })).message === engine.SHOT_FAIL);
+q = queue(top, blank, bottom);
+const voted = await engine.sendScreenshots([img, img2, img3], async () => true, { fetch: q.fetchMock });
+ok("screenshots: a page with no ad on it doesn't change the kind", voted.kind === "car" && full(voted), voted?.kind ?? voted?.message);
+q = queue(top, bottom, bottom, bottom, bottom, bottom);
+await engine.sendScreenshots([img, img2, img3, img, img2, img3], async () => true, { fetch: q.fetchMock });
+ok(`screenshots: at most ${engine.SHOTS_MAX} are sent`, q.sent.length === engine.SHOTS_MAX, `${q.sent.length} sent`);
+q = queue(top, bottom);
+ok("screenshots: one bad picture in the list stops all of them before sending",
+  (await engine.analyseImages([img, "https://example.com/x.png"], { fetch: q.fetchMock })).message === engine.SHOT_FAIL && q.sent.length === 0);
+
 console.log(`\nAI reader: ${pass} of ${pass + fail} pass.`);
 process.exit(fail ? 1 : 0);
