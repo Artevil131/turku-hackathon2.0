@@ -1,7 +1,8 @@
 import { readEnabled, SyntheticAdapter, syntheticAdapters, windowEnding } from "@ahead/adapters";
-import type { Adapter, DetectedEvent, Detector, IsoDate, Snippet, Source } from "@ahead/contract";
+import type { Adapter, Analyst, DetectedEvent, Detector, DetectorOptions, IsoDate, Snippet, Source } from "@ahead/contract";
 import { mockMove, mockSnippets } from "@ahead/contract/mock";
 import type { VectorSnapshot } from "@ahead/detect";
+import type { FmiWarning } from "@ahead/opendata";
 
 /** What "Check now" needs from the core: where snippets come from and what turns them into events. */
 export interface Engine {
@@ -15,6 +16,11 @@ export interface Engine {
     restore(snapshot: VectorSnapshot): number;
     clear(): void;
   };
+  /**
+   * The on-device analyst over the snippets the adapters read (the real core): the evidence timeline, the
+   * contributions, this month and the horizon. Absent on the mock, whose analyses are the contract's mock data.
+   */
+  analyst?(snippets: readonly Snippet[], options?: { warnings?: readonly FmiWarning[]; detectorOptions?: DetectorOptions }): Analyst;
 }
 
 /** First-use model download, as reported by @ahead/embed (WORK.md, A to B). */
@@ -46,10 +52,11 @@ export function createMockEngine(): Engine {
 export async function createCoreEngine(onProgress?: EngineProgress): Promise<Engine> {
   // The student phone is committed (data/synthetic); loaded on demand like the model code.
   const phone = (await import("../../../data/synthetic/student.json")).default as { snippets: Snippet[] };
-  const [{ PrototypeDetector }, { embedder, useLocalModels: serveModelsFrom }, { env }] = await Promise.all([
+  const [{ PrototypeDetector }, { embedder, useLocalModels: serveModelsFrom }, { env }, { OnDeviceAnalyst }] = await Promise.all([
     import("@ahead/detect"),
     import("@ahead/embed"),
     import("@huggingface/transformers"),
+    import("@ahead/insights"),
   ]);
   // D-015: the model and the ONNX Runtime come from this app, never from huggingface.co or a CDN.
   // Renamed on import: it is not a React hook, whatever its name says.
@@ -61,6 +68,8 @@ export async function createCoreEngine(onProgress?: EngineProgress): Promise<Eng
     adapters: syntheticAdapters(phone.snippets),
     detector,
     vectors: { snapshot: () => detector.snapshot(), restore: (s) => detector.restore(s), clear: () => detector.clearCache() },
+    analyst: (snippets, options = {}) =>
+      new OnDeviceAnalyst({ detector, snippets, warnings: options.warnings, detectorOptions: options.detectorOptions }),
   };
 }
 

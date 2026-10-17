@@ -404,6 +404,23 @@ service workers; whether the Android build honours it is not confirmed.
     `.file-button`, `.row.locked`). From here B stays out of the screens,
     `App.tsx`, `styles.css` and `index.html`, as agreed.
 
+- A, handoff (2026-10-17, usage limit): the second redesign (star atlas,
+  direction contract in `apps/web/.impeccable/surfaces/`, chosen by Aapo)
+  is on main as e990f3c plus a WIP checkpoint commit of the agent's last
+  edits, UNVERIFIED by me: the build agent was stopped mid "build and
+  capture" when the session's allowance ran out. Next session: `pnpm
+  typecheck && pnpm check && pnpm test`, `pnpm --filter @ahead/web
+  build`, `node scripts/offline-check.ts`, capture with the shots script
+  (scroll `main`, kill stray Chrome on 9334), look at every screen,
+  then a fresh finish-review agent, fixes, DESIGN.md, re-record the
+  videos (`node tools/demo-video/record.ts`, the share-motion script in
+  the scratchpad), push. Also landed and verified by their agents:
+  `libs/insights` (Analyst: timeline, contributions, novelty, horizon;
+  benchmarks/insights/README.md) and the sms/wifi sources (benchmark
+  run 5 clean on all six phones). If the new world is broken beyond a
+  quick fix, `git revert` back to 95ce660's parent for apps/web only;
+  the analysis and sources commits stand on their own.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

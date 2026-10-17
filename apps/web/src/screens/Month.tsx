@@ -1,4 +1,4 @@
-import type { Novelty } from "@ahead/contract";
+import type { Novelty, Snippet } from "@ahead/contract";
 import { useEffect, useState } from "react";
 import type { Analysis } from "../analysis.ts";
 import { formatShort, type Key, useI18n } from "../i18n.tsx";
@@ -7,11 +7,12 @@ import { MAGNITUDE_RADII } from "./Sky.tsx";
 
 interface Props {
   analysis(): Promise<Analysis>;
+  snippets: Snippet[];
   onBack(): void;
 }
 
 /** "This month": what is new, what recurs, what shifted, and the month's constellations. */
-export function Month({ analysis, onBack }: Props) {
+export function Month({ analysis, snippets, onBack }: Props) {
   const { t, locale } = useI18n();
   const now = today();
   const [novelty, setNovelty] = useState<Novelty | null>(null);
@@ -20,7 +21,7 @@ export function Month({ analysis, onBack }: Props) {
     let cancelled = false;
     void analysis()
       .then(async (a) => {
-        const n = await a.novelty(now);
+        const n = await a.novelty(now, snippets);
         if (cancelled) return;
         setNovelty(n);
         setExample(a.mocked.novelty);
@@ -29,7 +30,7 @@ export function Month({ analysis, onBack }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [analysis, now]);
+  }, [analysis, now, snippets]);
 
   const chips = (title: string, items: string[]) => (
     <div className="chip-group">

@@ -1,4 +1,4 @@
-import type { CrossInsight, Horizon as HorizonData, LedgerEntry } from "@ahead/contract";
+import type { CrossInsight, Horizon as HorizonData, LedgerEntry, Snippet } from "@ahead/contract";
 import { useEffect, useMemo, useState } from "react";
 import { type Analysis, addDays, daysBetween } from "../analysis.ts";
 import { formatDate, formatMonth, formatShort, type Key, useI18n } from "../i18n.tsx";
@@ -8,6 +8,7 @@ import { constellationName } from "./Home.tsx";
 
 interface Props {
   ledger: LedgerEntry[];
+  snippets: Snippet[];
   analysis(): Promise<Analysis>;
   onOpen(entry: LedgerEntry): void;
 }
@@ -15,7 +16,7 @@ interface Props {
 const KINDS: readonly CrossInsight["kind"][] = ["weather-at-event", "lapse", "empty-home", "same-month", "spend-shift"];
 
 /** The next 90 days: a plate with the events as ringed stars on their dates and the insights as bands over their periods. */
-export function Horizon({ ledger, analysis, onOpen }: Props) {
+export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
   const { t, locale } = useI18n();
   const now = today();
   const [horizon, setHorizon] = useState<HorizonData | null>(null);
@@ -28,6 +29,7 @@ export function Horizon({ ledger, analysis, onOpen }: Props) {
         const h = await a.horizon(
           live.map((e) => e.event),
           now,
+          snippets,
         );
         if (cancelled) return;
         setHorizon(h);
@@ -37,7 +39,7 @@ export function Horizon({ ledger, analysis, onOpen }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [analysis, live, now]);
+  }, [analysis, live, now, snippets]);
 
   const byId = new Map(live.map((e) => [e.event.id, e]));
   const events = horizon?.events ?? [];

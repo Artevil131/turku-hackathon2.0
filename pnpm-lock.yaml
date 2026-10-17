@@ -41,6 +41,9 @@ importers:
       '@ahead/embed':
         specifier: workspace:*
         version: link:../../libs/embed
+      '@ahead/insights':
+        specifier: workspace:*
+        version: link:../../libs/insights
       '@ahead/journeys':
         specifier: workspace:*
         version: link:../../libs/journeys

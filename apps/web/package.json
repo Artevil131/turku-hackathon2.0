@@ -16,6 +16,7 @@
     "@ahead/contract": "workspace:*",
     "@ahead/detect": "workspace:*",
     "@ahead/embed": "workspace:*",
+    "@ahead/insights": "workspace:*",
     "@ahead/journeys": "workspace:*",
     "@ahead/opendata": "workspace:*",
     "@huggingface/transformers": "^4.3.1",

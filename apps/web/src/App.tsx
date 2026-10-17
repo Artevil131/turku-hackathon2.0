@@ -3,6 +3,7 @@ import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, Source
 import { createBuilders } from "@ahead/journeys";
 import type { FmiWarning } from "@ahead/opendata";
 import exampleWarnings from "@ahead/opendata/data/fmi-example-warnings.json" with { type: "json" };
+import cachedWarnings from "@ahead/opendata/data/fmi-warnings.json" with { type: "json" };
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type Analysis, createAnalysis, type SkyDot } from "./analysis.ts";
 import { checkNow } from "./detect.ts";
@@ -48,6 +49,11 @@ export function App() {
     const warnings = example ? { warnings: exampleWarnings.warnings as FmiWarning[], warningsAreExample: true } : {};
     return createBuilders({ today: today(), ...warnings });
   }, []);
+  /** The warnings the horizon reads: the same choice as the journeys (the example set on stage, the cache otherwise). */
+  const fmiWarnings = useMemo(() => {
+    const example = new URLSearchParams(location.search).get("fmi") === "example";
+    return (example ? exampleWarnings.warnings : cachedWarnings.warnings) as FmiWarning[];
+  }, []);
   const [sources, setSources] = useState<SourceState[]>([]);
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [journey, setJourney] = useState<JourneyData | undefined>();
@@ -86,9 +92,9 @@ export function App() {
   /** One analysis over the session's engine: the plates, the numbers and the two extra views read through it. */
   const analysisRef = useRef<Promise<Analysis> | undefined>(undefined);
   const getAnalysis = useCallback(() => {
-    analysisRef.current ??= getEngine().then(createAnalysis);
+    analysisRef.current ??= getEngine().then((engine) => createAnalysis(engine, { warnings: fmiWarnings }));
     return analysisRef.current;
-  }, [getEngine]);
+  }, [getEngine, fmiWarnings]);
   const outbound = useOutboundCount();
 
   const reload = useCallback(async () => {
@@ -163,7 +169,11 @@ export function App() {
     void getEngine()
       .then(async (engine) => {
         const read = await readSnippets(engine, enabled, today());
-        const dots = await (await getAnalysis()).sky(read, ledger.map((e) => e.event), { score: false });
+        const dots = await (await getAnalysis()).sky(
+          read,
+          ledger.map((e) => e.event),
+          { score: false },
+        );
         if (cancelled) return;
         // A check that finished first has scored the sky already; this read never overwrites it.
         setSnippets((cur) => (cur.length > 0 ? cur : read));
@@ -317,7 +327,7 @@ export function App() {
       />
     );
   } else if (view?.kind === "month") {
-    body = <Month analysis={getAnalysis} onBack={() => setView(null)} />;
+    body = <Month analysis={getAnalysis} snippets={snippets} onBack={() => setView(null)} />;
   } else if (view?.kind === "journey") {
     const entry = find(view.eventId);
     body = (
@@ -333,7 +343,7 @@ export function App() {
       />
     );
   } else if (tab === "sky") {
-    body = <Horizon ledger={ledger} analysis={getAnalysis} onOpen={openFromLedger} />;
+    body = <Horizon ledger={ledger} snippets={snippets} analysis={getAnalysis} onOpen={openFromLedger} />;
   } else if (tab === "ledger") {
     body = <Ledger ledger={ledger} onOpen={openFromLedger} onEraseAll={eraseAll} />;
   } else if (tab === "sources") {

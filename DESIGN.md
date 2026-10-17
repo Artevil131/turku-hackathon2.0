@@ -51,11 +51,27 @@ typography:
     fontWeight: 400
     fontStyle: italic
     lineHeight: 1.2
+  row-name:
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "24px"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.2
+  horizon-star-name:
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "22px"
+    fontWeight: 400
+    fontStyle: italic
   constellation-name:
     fontFamily: '"Instrument Serif", serif'
     fontSize: "18px"
     fontWeight: 400
     fontStyle: italic
+  counter:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "20px"
+    fontWeight: 700
+    fontVariantNumeric: tabular-nums
   row:
     fontFamily: '"Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif'
     fontSize: "19px"
@@ -75,6 +91,14 @@ typography:
     fontSize: "15px"
     lineHeight: 1.5
     fontVariantNumeric: tabular-nums
+  compact:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "14px"
+    lineHeight: 1.3
+  plate-label:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "13px"
+    lineHeight: 1.3
   small-caps:
     fontFamily: '"Atkinson Hyperlegible", sans-serif'
     fontSize: "12px"
@@ -85,8 +109,11 @@ typography:
     fontFamily: '"Atkinson Hyperlegible", sans-serif'
     fontSize: "11px"
 rounded:
+  bar: "2px"
   control: "4px"
+  scrollbar: "6px"
   sheet: "8px"
+  switch-track: "20px"
   chip: "999px"
 spacing:
   compact: "8px"
@@ -153,7 +180,7 @@ Cream Stardust becomes the ground and Night Sky the ink; the shell is `#e9e9de`,
 
 ## Typography
 
-Two faces, both self-hosted from `apps/web/public/fonts/` (OFL; see its README). **Instrument Serif italic** is the naming voice: the wordmark (26), the task heading (34–46 fluid), sheet titles (30), section headings (28), card titles and the notice's question (25–28), row titles on the plate links and the horizon (24), the empty state (24), and constellation names on the canvas (18). **Atkinson Hyperlegible** is the measuring voice, chosen for the back of a room: rows (19), body (18), secondary (16), date cells (15), small caps for band names, sources and legends (12, bold, 0.08em, uppercase), plate ticks (11). All numerals are tabular. Finnish and English wrap naturally; paragraphs hold 68ch.
+Two faces, both self-hosted from `apps/web/public/fonts/` (OFL; see its README). **Instrument Serif italic** is the naming voice: the wordmark (26), the task heading (34–46 fluid), sheet titles (30), section headings (28), card titles and the notice's question (25–28), row titles on the plate links and the horizon (24), the empty state (24), and constellation names on the canvas (18). **Atkinson Hyperlegible** is the measuring voice, chosen for the back of a room: the outbound count (20), rows (19), body (18), secondary (16), date cells (15), a compact step for the strip and nav under 350px (14), plate labels and the dates beside constellation names (13), small caps for band names, sources and legends (12, bold, 0.08em, uppercase), plate ticks (11). All numerals are tabular. The horizon's star names are 22 in the serif, the plate links and cluster names 24. Finnish and English wrap naturally; paragraphs hold 68ch.
 
 **The Two Voices Rule.** Serif italic names; sans measures. A number is never set in the serif; a constellation name is never set in the sans.
 
@@ -171,7 +198,7 @@ None. Hairlines and spacing carry structure; the sheets lift only by a darkened 
 
 ## Shapes
 
-4px on every control, card, payload row and plate frame; 8px on dialogs; a 999px pill only for the novelty chips and the switch track. No ornamental edges.
+4px on every control, card, payload row and plate frame; 8px on dialogs; 2px on the contribution bars; 20px on the switch track and a 999px pill on the novelty chips; 6px on the scrollbar thumb. No ornamental edges.
 
 ## Components
 
