@@ -76,3 +76,17 @@ pitch.
   Moottori), secondary; average car age 17.8 years at the end of 2025
   (Statistics Finland). https://moottori.fi/uutinen/suomalaiset-korjaavat-autojaan-keskimaarin-1-070-eurolla-kulut-kasvaneet-10-vuodessa/
   https://stat.fi/en/publication/cmfqlg5zx01jd07uordhc6leg
+- Statistics Finland, table 13mu: price per m² and number of sales of old
+  housing-company flats by postcode, yearly 2009–2025, CC BY 4.0; fetched
+  for 2025 into `libs/listing/data/prices-postcode.json` (793 postcodes
+  with a price; small areas are suppressed). Primary.
+  https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ashi/statfin_ashi_pxt_13mu.px/
+- Traficom, passenger car periodic inspections by make, model series and
+  commissioning year, 2023–2025 (PxWeb 040_kats_tau_104): number
+  inspected, failure %, median km; 2025 fetched into
+  `libs/listing/data/inspections.json` (505 makes and models). All 2025
+  inspections of 4–20-year-old cars: 26.9 % failed. Primary.
+  https://trafi2.stat.fi/PXWeb/pxweb/fi/TraFi/TraFi__Katsastuksen_vikatilastot/040_kats_tau_104.px/
+- Dog's basic needs about 1 561 € a year (Kennelliitto and
+  Taloustutkimus, 1 631 owners, February 2025, via STT). Secondary until
+  the report itself is read. https://www.sttinfo.fi/files/1744/70976680/195916/fi
