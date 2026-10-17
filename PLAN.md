@@ -25,8 +25,8 @@ Everything else is a stretch.
 | When | What | Who |
 |------|------|-----|
 | Sat morning | Confirm criteria and deadline with the judges; take the open decisions (stack, model, window) to DECISIONS.md | Artem asks, Aapo records |
-| Sat midday | Synthetic phone generator and one persona committed (DATA.md); event prototypes written in fi/en | Aapo |
-| Sat afternoon | Pipeline: adapters over the synthetic data, on-device embedding, matcher, ledger; benchmark on planted events | Aapo (+ agent) |
+| Sat midday | Synthetic phone generator and one persona committed (DATA.md); event prototypes written in fi/en. **Done**, three personas | Aapo |
+| Sat afternoon | Pipeline: adapters over the synthetic data, on-device embedding, matcher, ledger; benchmark on planted events. **Done**: see benchmarks/detect/README.md | Aapo (+ agent) |
 | Sat afternoon | UI: onboarding toggles, home, notice with evidence, journey, ledger | Vaishnav |
 | Sat evening | Move journey filled with FMI, DVV, T&C extracts; comparison card | Artem (content), Aapo (fetch) |
 | Sat late | End-to-end run on a phone; fix; record a backup video | All |

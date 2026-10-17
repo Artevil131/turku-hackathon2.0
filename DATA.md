@@ -41,9 +41,12 @@ benchmark: for each persona, days from first signal to detection, and
 number of false notices in 120 days. Target for the demo: every planted
 event detected before its date, at most one false notice per persona.
 
-Generation is by template plus a language model for variety; the model is
-never given real data. Output is committed under `data/synthetic/` so the
-demo does not depend on a model at show time.
+Generation is by templates with a seeded random generator, no language
+model involved (`libs/synthetic`); rerunning gives the same files, so a
+diff means the generator changed. Output is committed under
+`data/synthetic/` so the demo depends on nothing at show time. Calendar
+entries carry the day they were created, so a replay does not see the
+future. The benchmark and its results are in `benchmarks/detect/README.md`.
 
 ## 3. Data that is never used
 
