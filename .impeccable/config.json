@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "createdAt": "2026-10-17T10:16:52.053Z",
+        "reason": "Aapo selected the star-atlas design on 2026-10-17; the committed surface brief and DESIGN.md specify the self-hosted Instrument Serif naming voice."
+      }
+    ]
+  }
+}
