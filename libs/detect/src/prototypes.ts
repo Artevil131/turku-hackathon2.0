@@ -21,6 +21,11 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Moving day, moving to a new home in another city",
     "Booked movers for the move",
     "Electricity contract for the new address",
+    "Hyresavtal för ny lägenhet, hyresförhållandet börjar",
+    "Flyttdag, flytt till nytt hem",
+    "Flyttfirma bokad, betalning till flyttfirma",
+    "Elavtal till den nya adressen",
+    "Uppsägning av den gamla bostaden",
   ],
   first_car: [
     "Käytetyn auton hakuvahti, uusia autoja myynnissä",
@@ -34,6 +39,10 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Test drive at the car dealer",
     "Buying my first car",
     "Car insurance quote for a new car",
+    "Begagnad bil till salu, bevakning",
+    "Provkörning hos bilhandlaren",
+    "Försäkring för första bilen",
+    "Besiktningstid bokad",
   ],
   long_trip: [
     "Lentovaraus vahvistettu, lento ulkomaille",
@@ -48,6 +57,9 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Your booking confirmation, flight Helsinki–Lisbon",
     "Finnair, Norwegian, lentolippu",
     "Hostel booking for the exchange semester",
+    "Flygbokning bekräftad, resa utomlands",
+    "Utbytesstudier utomlands nästa vår",
+    "Bokningsbekräftelse, flyg Helsingfors–Lissabon",
   ],
   child: [
     "Neuvolan ensikäynti, raskaus",
@@ -56,6 +68,8 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Vauvan tarvikkeet, turvakaukalo",
     "Expecting a baby, maternity clinic appointment",
     "Ordered a baby box and a car seat",
+    "Rådgivningens första besök, graviditet",
+    "Moderskapsförpackning beställd",
   ],
   pet: [
     "Koiranpentu luovutus kasvattajalta",
@@ -64,6 +78,8 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Lemmikkitarvikkeita, pentupaketti",
     "Picking up a puppy from the breeder",
     "Adopting a kitten from the shelter",
+    "Hämta valpen hos uppfödaren",
+    "Veterinärens första besök för valpen",
   ],
   renovation: [
     "Tarjous kylpyhuoneremontista",
@@ -74,6 +90,8 @@ export const prototypes: Record<EventType, readonly string[]> = {
     "Quote for a bathroom renovation",
     "Meeting with the contractor about the renovation",
     "Hardware store purchase for the renovation",
+    "Offert för badrumsrenovering",
+    "Ändringsanmälan till husbolaget, våtrumsrenovering",
   ],
 };
 
@@ -102,4 +120,12 @@ export const ordinary: readonly string[] = [
   "Streaming subscription",
   "Receipt from a food delivery",
   "Grocery store",
+  "Tentresultat, föreläsning",
+  "Veckobrev, nyhetsbrev",
+  "Din beställning har levererats",
+  "Din faktura har kommit",
+  "Hyra, månadshyra",
+  "Matbutik",
+  "Tandläkare",
+  "Gym, träning",
 ];

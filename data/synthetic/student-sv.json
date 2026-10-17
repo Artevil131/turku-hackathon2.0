@@ -1,0 +1,3393 @@
+{
+  "persona": "student-sv",
+  "description": "Elin, 23, studies in Vasa; moves to Åbo on 1 Nov 2026, looks at a used car in October, leaves for an exchange term in January. Swedish mail and calendar.",
+  "from": "2026-07-01",
+  "to": "2026-10-17",
+  "snippets": [
+    {
+      "id": "calendar-0001",
+      "source": "calendar",
+      "date": "2026-07-01",
+      "text": "Datastrukturer luento",
+      "meta": {
+        "created": "2026-06-26"
+      }
+    },
+    {
+      "id": "mail-0001",
+      "source": "mail",
+      "date": "2026-07-01",
+      "text": "Luento siirtyy: Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0065",
+      "source": "mail",
+      "date": "2026-07-01",
+      "text": "Duolingo streak reminder",
+      "meta": {
+        "from": "app"
+      }
+    },
+    {
+      "id": "places-0001",
+      "source": "places",
+      "date": "2026-07-01",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0082",
+      "source": "bank",
+      "date": "2026-07-02",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0002",
+      "source": "calendar",
+      "date": "2026-07-02",
+      "text": "Datastrukturer harjoitukset",
+      "meta": {
+        "created": "2026-06-28"
+      }
+    },
+    {
+      "id": "mail-0044",
+      "source": "mail",
+      "date": "2026-07-02",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "mail-0066",
+      "source": "mail",
+      "date": "2026-07-02",
+      "text": "GitHub: security alert",
+      "meta": {
+        "from": "app"
+      }
+    },
+    {
+      "id": "places-0002",
+      "source": "places",
+      "date": "2026-07-02",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0003",
+      "source": "places",
+      "date": "2026-07-02",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0001",
+      "source": "bank",
+      "date": "2026-07-03",
+      "text": "Prisma Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0003",
+      "source": "calendar",
+      "date": "2026-07-03",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-03"
+      }
+    },
+    {
+      "id": "calendar-0004",
+      "source": "calendar",
+      "date": "2026-07-03",
+      "text": "Datastrukturer harjoitukset",
+      "meta": {
+        "created": "2026-07-03"
+      }
+    },
+    {
+      "id": "mail-0002",
+      "source": "mail",
+      "date": "2026-07-03",
+      "text": "Moodle: uusi viesti kurssilla Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0004",
+      "source": "places",
+      "date": "2026-07-03",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "places-0005",
+      "source": "places",
+      "date": "2026-07-04",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0002",
+      "source": "bank",
+      "date": "2026-07-05",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0006",
+      "source": "places",
+      "date": "2026-07-05",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0003",
+      "source": "bank",
+      "date": "2026-07-06",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0005",
+      "source": "calendar",
+      "date": "2026-07-06",
+      "text": "Ryhmätyö Datastrukturer",
+      "meta": {
+        "created": "2026-06-27"
+      }
+    },
+    {
+      "id": "mail-0067",
+      "source": "mail",
+      "date": "2026-07-06",
+      "text": "Duolingo streak reminder",
+      "meta": {
+        "from": "app"
+      }
+    },
+    {
+      "id": "places-0007",
+      "source": "places",
+      "date": "2026-07-06",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0004",
+      "source": "bank",
+      "date": "2026-07-07",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0005",
+      "source": "bank",
+      "date": "2026-07-07",
+      "text": "Prisma Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0006",
+      "source": "calendar",
+      "date": "2026-07-07",
+      "text": "Datastrukturer luento",
+      "meta": {
+        "created": "2026-07-07"
+      }
+    },
+    {
+      "id": "places-0008",
+      "source": "places",
+      "date": "2026-07-07",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "calendar-0043",
+      "source": "calendar",
+      "date": "2026-07-08",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-07-03"
+      }
+    },
+    {
+      "id": "mail-0003",
+      "source": "mail",
+      "date": "2026-07-08",
+      "text": "Luento siirtyy: Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "photos-0001",
+      "source": "photos",
+      "date": "2026-07-08",
+      "text": "Photo: Yliopisto"
+    },
+    {
+      "id": "places-0009",
+      "source": "places",
+      "date": "2026-07-08",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0006",
+      "source": "bank",
+      "date": "2026-07-09",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0044",
+      "source": "calendar",
+      "date": "2026-07-09",
+      "text": "Futsal",
+      "meta": {
+        "created": "2026-06-26"
+      }
+    },
+    {
+      "id": "places-0010",
+      "source": "places",
+      "date": "2026-07-09",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "places-0011",
+      "source": "places",
+      "date": "2026-07-09",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0007",
+      "source": "bank",
+      "date": "2026-07-10",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0012",
+      "source": "places",
+      "date": "2026-07-10",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "places-0013",
+      "source": "places",
+      "date": "2026-07-10",
+      "text": "Sali"
+    },
+    {
+      "id": "mail-0024",
+      "source": "mail",
+      "date": "2026-07-11",
+      "text": "Your weekly digest",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0045",
+      "source": "mail",
+      "date": "2026-07-11",
+      "text": "Order shipped: desk lamp",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "bank-0008",
+      "source": "bank",
+      "date": "2026-07-12",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0009",
+      "source": "bank",
+      "date": "2026-07-12",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0014",
+      "source": "places",
+      "date": "2026-07-12",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0010",
+      "source": "bank",
+      "date": "2026-07-13",
+      "text": "K-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0007",
+      "source": "calendar",
+      "date": "2026-07-13",
+      "text": "Tentti: Linjär algebra",
+      "meta": {
+        "created": "2026-07-10"
+      }
+    },
+    {
+      "id": "places-0015",
+      "source": "places",
+      "date": "2026-07-13",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "bank-0011",
+      "source": "bank",
+      "date": "2026-07-14",
+      "text": "Prisma Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0008",
+      "source": "calendar",
+      "date": "2026-07-14",
+      "text": "Linjär algebra luento",
+      "meta": {
+        "created": "2026-07-11"
+      }
+    },
+    {
+      "id": "places-0016",
+      "source": "places",
+      "date": "2026-07-14",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0012",
+      "source": "bank",
+      "date": "2026-07-15",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0013",
+      "source": "bank",
+      "date": "2026-07-15",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0009",
+      "source": "calendar",
+      "date": "2026-07-15",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-07"
+      }
+    },
+    {
+      "id": "calendar-0010",
+      "source": "calendar",
+      "date": "2026-07-15",
+      "text": "Linjär algebra luento",
+      "meta": {
+        "created": "2026-07-02"
+      }
+    },
+    {
+      "id": "calendar-0045",
+      "source": "calendar",
+      "date": "2026-07-15",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-07-12"
+      }
+    },
+    {
+      "id": "places-0017",
+      "source": "places",
+      "date": "2026-07-15",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0083",
+      "source": "bank",
+      "date": "2026-07-16",
+      "text": "Hesburger",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "bank-0084",
+      "source": "bank",
+      "date": "2026-07-16",
+      "text": "Wolt",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0011",
+      "source": "calendar",
+      "date": "2026-07-16",
+      "text": "Tentti: Linjär algebra",
+      "meta": {
+        "created": "2026-07-15"
+      }
+    },
+    {
+      "id": "places-0018",
+      "source": "places",
+      "date": "2026-07-16",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "bank-0014",
+      "source": "bank",
+      "date": "2026-07-17",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0004",
+      "source": "mail",
+      "date": "2026-07-17",
+      "text": "Tehtävän palautus muistutus – Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0046",
+      "source": "mail",
+      "date": "2026-07-17",
+      "text": "Your receipt from Wolt",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0019",
+      "source": "places",
+      "date": "2026-07-17",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0015",
+      "source": "bank",
+      "date": "2026-07-18",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0016",
+      "source": "bank",
+      "date": "2026-07-18",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0020",
+      "source": "places",
+      "date": "2026-07-18",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0021",
+      "source": "places",
+      "date": "2026-07-18",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0017",
+      "source": "bank",
+      "date": "2026-07-19",
+      "text": "K-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0018",
+      "source": "bank",
+      "date": "2026-07-19",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0025",
+      "source": "mail",
+      "date": "2026-07-19",
+      "text": "TYY:n viikkotiedote",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0022",
+      "source": "places",
+      "date": "2026-07-19",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0085",
+      "source": "bank",
+      "date": "2026-07-20",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0012",
+      "source": "calendar",
+      "date": "2026-07-20",
+      "text": "Datastrukturer luento",
+      "meta": {
+        "created": "2026-07-16"
+      }
+    },
+    {
+      "id": "photos-0002",
+      "source": "photos",
+      "date": "2026-07-20",
+      "text": "Photo: Koti"
+    },
+    {
+      "id": "places-0023",
+      "source": "places",
+      "date": "2026-07-20",
+      "text": "Koti"
+    },
+    {
+      "id": "mail-0005",
+      "source": "mail",
+      "date": "2026-07-21",
+      "text": "Tehtävän palautus muistutus – Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0026",
+      "source": "mail",
+      "date": "2026-07-21",
+      "text": "Your weekly digest",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0024",
+      "source": "places",
+      "date": "2026-07-21",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "bank-0019",
+      "source": "bank",
+      "date": "2026-07-22",
+      "text": "Prisma Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0013",
+      "source": "calendar",
+      "date": "2026-07-22",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-14"
+      }
+    },
+    {
+      "id": "places-0025",
+      "source": "places",
+      "date": "2026-07-22",
+      "text": "K-Market Gerby"
+    },
+    {
+      "id": "places-0026",
+      "source": "places",
+      "date": "2026-07-22",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0020",
+      "source": "bank",
+      "date": "2026-07-23",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0021",
+      "source": "bank",
+      "date": "2026-07-23",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0046",
+      "source": "calendar",
+      "date": "2026-07-23",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-07-22"
+      }
+    },
+    {
+      "id": "places-0027",
+      "source": "places",
+      "date": "2026-07-23",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0022",
+      "source": "bank",
+      "date": "2026-07-24",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0014",
+      "source": "calendar",
+      "date": "2026-07-24",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-15"
+      }
+    },
+    {
+      "id": "calendar-0015",
+      "source": "calendar",
+      "date": "2026-07-24",
+      "text": "Datastrukturer harjoitukset",
+      "meta": {
+        "created": "2026-07-16"
+      }
+    },
+    {
+      "id": "calendar-0047",
+      "source": "calendar",
+      "date": "2026-07-24",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-07-22"
+      }
+    },
+    {
+      "id": "mail-0006",
+      "source": "mail",
+      "date": "2026-07-24",
+      "text": "Tehtävän palautus muistutus – Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0027",
+      "source": "mail",
+      "date": "2026-07-24",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0047",
+      "source": "mail",
+      "date": "2026-07-24",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0028",
+      "source": "places",
+      "date": "2026-07-24",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0023",
+      "source": "bank",
+      "date": "2026-07-25",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0007",
+      "source": "mail",
+      "date": "2026-07-25",
+      "text": "Luento siirtyy: Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0029",
+      "source": "places",
+      "date": "2026-07-25",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0030",
+      "source": "places",
+      "date": "2026-07-25",
+      "text": "K-Market Gerby"
+    },
+    {
+      "id": "bank-0086",
+      "source": "bank",
+      "date": "2026-07-26",
+      "text": "Wolt",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "photos-0003",
+      "source": "photos",
+      "date": "2026-07-26",
+      "text": "Photo: Vasa centrum"
+    },
+    {
+      "id": "places-0031",
+      "source": "places",
+      "date": "2026-07-26",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0024",
+      "source": "bank",
+      "date": "2026-07-27",
+      "text": "Prisma Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0048",
+      "source": "calendar",
+      "date": "2026-07-27",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-07-16"
+      }
+    },
+    {
+      "id": "calendar-0049",
+      "source": "calendar",
+      "date": "2026-07-27",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-07-15"
+      }
+    },
+    {
+      "id": "mail-0061",
+      "source": "mail",
+      "date": "2026-07-27",
+      "text": "Laskusi on saapunut",
+      "meta": {
+        "from": "official"
+      }
+    },
+    {
+      "id": "places-0032",
+      "source": "places",
+      "date": "2026-07-27",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "mail-0048",
+      "source": "mail",
+      "date": "2026-07-28",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "bank-0025",
+      "source": "bank",
+      "date": "2026-07-29",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0087",
+      "source": "bank",
+      "date": "2026-07-29",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0028",
+      "source": "mail",
+      "date": "2026-07-29",
+      "text": "TYY:n viikkotiedote",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0033",
+      "source": "places",
+      "date": "2026-07-29",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "bank-0026",
+      "source": "bank",
+      "date": "2026-07-30",
+      "text": "Prisma Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0027",
+      "source": "bank",
+      "date": "2026-07-30",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0016",
+      "source": "calendar",
+      "date": "2026-07-30",
+      "text": "Tentti: Datastrukturer",
+      "meta": {
+        "created": "2026-07-18"
+      }
+    },
+    {
+      "id": "calendar-0017",
+      "source": "calendar",
+      "date": "2026-07-30",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-30"
+      }
+    },
+    {
+      "id": "calendar-0050",
+      "source": "calendar",
+      "date": "2026-07-30",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-07-16"
+      }
+    },
+    {
+      "id": "mail-0049",
+      "source": "mail",
+      "date": "2026-07-30",
+      "text": "Your receipt from Wolt",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "mail-0062",
+      "source": "mail",
+      "date": "2026-07-30",
+      "text": "Laskusi on saapunut",
+      "meta": {
+        "from": "official"
+      }
+    },
+    {
+      "id": "places-0034",
+      "source": "places",
+      "date": "2026-07-30",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0035",
+      "source": "places",
+      "date": "2026-07-30",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "bank-0028",
+      "source": "bank",
+      "date": "2026-07-31",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0018",
+      "source": "calendar",
+      "date": "2026-07-31",
+      "text": "Datastrukturer luento",
+      "meta": {
+        "created": "2026-07-22"
+      }
+    },
+    {
+      "id": "mail-0050",
+      "source": "mail",
+      "date": "2026-07-31",
+      "text": "Your receipt from Wolt",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0036",
+      "source": "places",
+      "date": "2026-07-31",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0029",
+      "source": "bank",
+      "date": "2026-08-01",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0037",
+      "source": "places",
+      "date": "2026-08-01",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0038",
+      "source": "places",
+      "date": "2026-08-01",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "calendar-0051",
+      "source": "calendar",
+      "date": "2026-08-03",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-07-20"
+      }
+    },
+    {
+      "id": "bank-0088",
+      "source": "bank",
+      "date": "2026-08-04",
+      "text": "Hesburger",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0019",
+      "source": "calendar",
+      "date": "2026-08-04",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-07-22"
+      }
+    },
+    {
+      "id": "places-0039",
+      "source": "places",
+      "date": "2026-08-04",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0030",
+      "source": "bank",
+      "date": "2026-08-05",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0040",
+      "source": "places",
+      "date": "2026-08-05",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "calendar-0020",
+      "source": "calendar",
+      "date": "2026-08-06",
+      "text": "Tentti: Linjär algebra",
+      "meta": {
+        "created": "2026-07-29"
+      }
+    },
+    {
+      "id": "calendar-0076",
+      "source": "calendar",
+      "date": "2026-08-06",
+      "text": "Hannan synttärit",
+      "meta": {
+        "created": "2026-07-25"
+      }
+    },
+    {
+      "id": "places-0041",
+      "source": "places",
+      "date": "2026-08-06",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0031",
+      "source": "bank",
+      "date": "2026-08-07",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0008",
+      "source": "mail",
+      "date": "2026-08-07",
+      "text": "Moodle: uusi viesti kurssilla Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0051",
+      "source": "mail",
+      "date": "2026-08-07",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0042",
+      "source": "places",
+      "date": "2026-08-07",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0032",
+      "source": "bank",
+      "date": "2026-08-08",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0033",
+      "source": "bank",
+      "date": "2026-08-08",
+      "text": "K-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0043",
+      "source": "places",
+      "date": "2026-08-09",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0034",
+      "source": "bank",
+      "date": "2026-08-10",
+      "text": "Prisma Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0052",
+      "source": "calendar",
+      "date": "2026-08-10",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-08-05"
+      }
+    },
+    {
+      "id": "bank-0035",
+      "source": "bank",
+      "date": "2026-08-11",
+      "text": "Prisma Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0036",
+      "source": "bank",
+      "date": "2026-08-11",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0044",
+      "source": "places",
+      "date": "2026-08-11",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0037",
+      "source": "bank",
+      "date": "2026-08-12",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0089",
+      "source": "bank",
+      "date": "2026-08-12",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0029",
+      "source": "mail",
+      "date": "2026-08-12",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0078",
+      "source": "mail",
+      "date": "2026-08-12",
+      "text": "Kan du hjälpa mig flytta på lördag? Jag bjuder på pizza 🍕",
+      "meta": {
+        "from": "Matias"
+      }
+    },
+    {
+      "id": "photos-0004",
+      "source": "photos",
+      "date": "2026-08-12",
+      "text": "Photo: Gerby"
+    },
+    {
+      "id": "places-0045",
+      "source": "places",
+      "date": "2026-08-12",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0046",
+      "source": "places",
+      "date": "2026-08-12",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "bank-0038",
+      "source": "bank",
+      "date": "2026-08-13",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0039",
+      "source": "bank",
+      "date": "2026-08-13",
+      "text": "K-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0105",
+      "source": "bank",
+      "date": "2026-08-13",
+      "text": "VR",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0053",
+      "source": "calendar",
+      "date": "2026-08-13",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-08-01"
+      }
+    },
+    {
+      "id": "places-0047",
+      "source": "places",
+      "date": "2026-08-13",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "places-0048",
+      "source": "places",
+      "date": "2026-08-13",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0090",
+      "source": "bank",
+      "date": "2026-08-14",
+      "text": "Wolt",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0021",
+      "source": "calendar",
+      "date": "2026-08-14",
+      "text": "Tentti: Datastrukturer",
+      "meta": {
+        "created": "2026-08-03"
+      }
+    },
+    {
+      "id": "calendar-0054",
+      "source": "calendar",
+      "date": "2026-08-14",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-08-06"
+      }
+    },
+    {
+      "id": "mail-0009",
+      "source": "mail",
+      "date": "2026-08-14",
+      "text": "Tehtävän palautus muistutus – Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0030",
+      "source": "mail",
+      "date": "2026-08-14",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "photos-0005",
+      "source": "photos",
+      "date": "2026-08-14",
+      "text": "Photo: Yliopisto"
+    },
+    {
+      "id": "places-0049",
+      "source": "places",
+      "date": "2026-08-14",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0040",
+      "source": "bank",
+      "date": "2026-08-15",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0081",
+      "source": "calendar",
+      "date": "2026-08-15",
+      "text": "Hjälpa Matias flytta",
+      "meta": {
+        "created": "2026-08-12"
+      }
+    },
+    {
+      "id": "places-0050",
+      "source": "places",
+      "date": "2026-08-15",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0041",
+      "source": "bank",
+      "date": "2026-08-16",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0055",
+      "source": "calendar",
+      "date": "2026-08-16",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-08-09"
+      }
+    },
+    {
+      "id": "places-0051",
+      "source": "places",
+      "date": "2026-08-16",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0052",
+      "source": "places",
+      "date": "2026-08-16",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0106",
+      "source": "bank",
+      "date": "2026-08-17",
+      "text": "Onnibus",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0022",
+      "source": "calendar",
+      "date": "2026-08-17",
+      "text": "Ryhmätyö Datastrukturer",
+      "meta": {
+        "created": "2026-08-05"
+      }
+    },
+    {
+      "id": "calendar-0023",
+      "source": "calendar",
+      "date": "2026-08-17",
+      "text": "Linjär algebra harjoitukset",
+      "meta": {
+        "created": "2026-08-10"
+      }
+    },
+    {
+      "id": "calendar-0056",
+      "source": "calendar",
+      "date": "2026-08-17",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-08-15"
+      }
+    },
+    {
+      "id": "mail-0010",
+      "source": "mail",
+      "date": "2026-08-17",
+      "text": "Kurssin Datastrukturer tenttitulokset",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0031",
+      "source": "mail",
+      "date": "2026-08-17",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "bank-0042",
+      "source": "bank",
+      "date": "2026-08-18",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0011",
+      "source": "mail",
+      "date": "2026-08-18",
+      "text": "Moodle: uusi viesti kurssilla Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0053",
+      "source": "places",
+      "date": "2026-08-18",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0043",
+      "source": "bank",
+      "date": "2026-08-19",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0107",
+      "source": "bank",
+      "date": "2026-08-19",
+      "text": "Onnibus",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0024",
+      "source": "calendar",
+      "date": "2026-08-19",
+      "text": "Tentti: Linjär algebra",
+      "meta": {
+        "created": "2026-08-10"
+      }
+    },
+    {
+      "id": "calendar-0057",
+      "source": "calendar",
+      "date": "2026-08-19",
+      "text": "Futsal",
+      "meta": {
+        "created": "2026-08-07"
+      }
+    },
+    {
+      "id": "mail-0052",
+      "source": "mail",
+      "date": "2026-08-19",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0054",
+      "source": "places",
+      "date": "2026-08-19",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0055",
+      "source": "places",
+      "date": "2026-08-19",
+      "text": "Sali"
+    },
+    {
+      "id": "calendar-0025",
+      "source": "calendar",
+      "date": "2026-08-20",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-08-07"
+      }
+    },
+    {
+      "id": "photos-0006",
+      "source": "photos",
+      "date": "2026-08-20",
+      "text": "Photo: Koti"
+    },
+    {
+      "id": "places-0056",
+      "source": "places",
+      "date": "2026-08-20",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0044",
+      "source": "bank",
+      "date": "2026-08-21",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0108",
+      "source": "bank",
+      "date": "2026-08-21",
+      "text": "Föli",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0058",
+      "source": "calendar",
+      "date": "2026-08-21",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-08-21"
+      }
+    },
+    {
+      "id": "mail-0053",
+      "source": "mail",
+      "date": "2026-08-21",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0057",
+      "source": "places",
+      "date": "2026-08-21",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "mail-0054",
+      "source": "mail",
+      "date": "2026-08-22",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "bank-0045",
+      "source": "bank",
+      "date": "2026-08-23",
+      "text": "S-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0091",
+      "source": "bank",
+      "date": "2026-08-23",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0032",
+      "source": "mail",
+      "date": "2026-08-23",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0058",
+      "source": "places",
+      "date": "2026-08-23",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0046",
+      "source": "bank",
+      "date": "2026-08-24",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0026",
+      "source": "calendar",
+      "date": "2026-08-24",
+      "text": "Tentti: Datastrukturer",
+      "meta": {
+        "created": "2026-08-11"
+      }
+    },
+    {
+      "id": "photos-0007",
+      "source": "photos",
+      "date": "2026-08-24",
+      "text": "Photo: Yliopisto"
+    },
+    {
+      "id": "places-0059",
+      "source": "places",
+      "date": "2026-08-24",
+      "text": "K-Market Gerby"
+    },
+    {
+      "id": "places-0060",
+      "source": "places",
+      "date": "2026-08-24",
+      "text": "Sali"
+    },
+    {
+      "id": "calendar-0059",
+      "source": "calendar",
+      "date": "2026-08-25",
+      "text": "Futsal",
+      "meta": {
+        "created": "2026-08-12"
+      }
+    },
+    {
+      "id": "mail-0055",
+      "source": "mail",
+      "date": "2026-08-25",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0061",
+      "source": "places",
+      "date": "2026-08-25",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "calendar-0027",
+      "source": "calendar",
+      "date": "2026-08-26",
+      "text": "Linjär algebra harjoitukset",
+      "meta": {
+        "created": "2026-08-22"
+      }
+    },
+    {
+      "id": "mail-0012",
+      "source": "mail",
+      "date": "2026-08-26",
+      "text": "Tehtävän palautus muistutus – Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0062",
+      "source": "places",
+      "date": "2026-08-26",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "mail-0033",
+      "source": "mail",
+      "date": "2026-08-27",
+      "text": "Your weekly digest",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "photos-0008",
+      "source": "photos",
+      "date": "2026-08-27",
+      "text": "Photo: Yliopisto"
+    },
+    {
+      "id": "places-0063",
+      "source": "places",
+      "date": "2026-08-27",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0064",
+      "source": "places",
+      "date": "2026-08-27",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0047",
+      "source": "bank",
+      "date": "2026-08-28",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0065",
+      "source": "places",
+      "date": "2026-08-28",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0066",
+      "source": "places",
+      "date": "2026-08-29",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0067",
+      "source": "places",
+      "date": "2026-08-29",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "bank-0109",
+      "source": "bank",
+      "date": "2026-08-30",
+      "text": "Föli",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0060",
+      "source": "calendar",
+      "date": "2026-08-30",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-08-18"
+      }
+    },
+    {
+      "id": "mail-0034",
+      "source": "mail",
+      "date": "2026-08-30",
+      "text": "TYY:n viikkotiedote",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0063",
+      "source": "mail",
+      "date": "2026-08-30",
+      "text": "Verokortti 2027 on valmis",
+      "meta": {
+        "from": "official"
+      }
+    },
+    {
+      "id": "places-0068",
+      "source": "places",
+      "date": "2026-08-30",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "bank-0048",
+      "source": "bank",
+      "date": "2026-08-31",
+      "text": "Prisma Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0028",
+      "source": "calendar",
+      "date": "2026-08-31",
+      "text": "Tentti: Datastrukturer",
+      "meta": {
+        "created": "2026-08-31"
+      }
+    },
+    {
+      "id": "places-0069",
+      "source": "places",
+      "date": "2026-08-31",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0070",
+      "source": "places",
+      "date": "2026-08-31",
+      "text": "K-Market Sandviken"
+    },
+    {
+      "id": "calendar-0029",
+      "source": "calendar",
+      "date": "2026-09-01",
+      "text": "Tentti: Datastrukturer",
+      "meta": {
+        "created": "2026-08-24"
+      }
+    },
+    {
+      "id": "places-0071",
+      "source": "places",
+      "date": "2026-09-01",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0049",
+      "source": "bank",
+      "date": "2026-09-02",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "photos-0009",
+      "source": "photos",
+      "date": "2026-09-02",
+      "text": "Photo: Sandviken"
+    },
+    {
+      "id": "places-0072",
+      "source": "places",
+      "date": "2026-09-02",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0073",
+      "source": "places",
+      "date": "2026-09-02",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "calendar-0061",
+      "source": "calendar",
+      "date": "2026-09-03",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-08-20"
+      }
+    },
+    {
+      "id": "calendar-0062",
+      "source": "calendar",
+      "date": "2026-09-03",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-08-27"
+      }
+    },
+    {
+      "id": "mail-0068",
+      "source": "mail",
+      "date": "2026-09-04",
+      "text": "Duolingo streak reminder",
+      "meta": {
+        "from": "app"
+      }
+    },
+    {
+      "id": "places-0074",
+      "source": "places",
+      "date": "2026-09-04",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0050",
+      "source": "bank",
+      "date": "2026-09-05",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0075",
+      "source": "places",
+      "date": "2026-09-05",
+      "text": "Koti"
+    },
+    {
+      "id": "mail-0013",
+      "source": "mail",
+      "date": "2026-09-06",
+      "text": "Tehtävän palautus muistutus – Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0035",
+      "source": "mail",
+      "date": "2026-09-06",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "bank-0051",
+      "source": "bank",
+      "date": "2026-09-07",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0014",
+      "source": "mail",
+      "date": "2026-09-07",
+      "text": "Kurssin Datastrukturer tenttitulokset",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0076",
+      "source": "places",
+      "date": "2026-09-07",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0077",
+      "source": "places",
+      "date": "2026-09-07",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0052",
+      "source": "bank",
+      "date": "2026-09-08",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0063",
+      "source": "calendar",
+      "date": "2026-09-08",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-09-07"
+      }
+    },
+    {
+      "id": "places-0078",
+      "source": "places",
+      "date": "2026-09-08",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0110",
+      "source": "bank",
+      "date": "2026-09-09",
+      "text": "Onnibus",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0030",
+      "source": "calendar",
+      "date": "2026-09-09",
+      "text": "Ryhmätyö Datastrukturer",
+      "meta": {
+        "created": "2026-09-05"
+      }
+    },
+    {
+      "id": "calendar-0064",
+      "source": "calendar",
+      "date": "2026-09-09",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-09-01"
+      }
+    },
+    {
+      "id": "mail-0015",
+      "source": "mail",
+      "date": "2026-09-09",
+      "text": "Moodle: uusi viesti kurssilla Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "photos-0010",
+      "source": "photos",
+      "date": "2026-09-09",
+      "text": "Photo: Koti"
+    },
+    {
+      "id": "places-0079",
+      "source": "places",
+      "date": "2026-09-09",
+      "text": "Sali"
+    },
+    {
+      "id": "mail-0016",
+      "source": "mail",
+      "date": "2026-09-10",
+      "text": "Luento siirtyy: Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0069",
+      "source": "mail",
+      "date": "2026-09-10",
+      "text": "GitHub: security alert",
+      "meta": {
+        "from": "app"
+      }
+    },
+    {
+      "id": "places-0080",
+      "source": "places",
+      "date": "2026-09-10",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0111",
+      "source": "bank",
+      "date": "2026-09-11",
+      "text": "Föli",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0036",
+      "source": "mail",
+      "date": "2026-09-11",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0081",
+      "source": "places",
+      "date": "2026-09-11",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0082",
+      "source": "places",
+      "date": "2026-09-11",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0053",
+      "source": "bank",
+      "date": "2026-09-12",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0092",
+      "source": "bank",
+      "date": "2026-09-12",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "places-0083",
+      "source": "places",
+      "date": "2026-09-12",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0084",
+      "source": "places",
+      "date": "2026-09-12",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "calendar-0065",
+      "source": "calendar",
+      "date": "2026-09-13",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-09-08"
+      }
+    },
+    {
+      "id": "calendar-0066",
+      "source": "calendar",
+      "date": "2026-09-13",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-09-02"
+      }
+    },
+    {
+      "id": "bank-0093",
+      "source": "bank",
+      "date": "2026-09-14",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0031",
+      "source": "calendar",
+      "date": "2026-09-14",
+      "text": "Linjär algebra luento",
+      "meta": {
+        "created": "2026-09-08"
+      }
+    },
+    {
+      "id": "places-0085",
+      "source": "places",
+      "date": "2026-09-14",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0054",
+      "source": "bank",
+      "date": "2026-09-15",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0032",
+      "source": "calendar",
+      "date": "2026-09-15",
+      "text": "Tentti: Linjär algebra",
+      "meta": {
+        "created": "2026-09-05"
+      }
+    },
+    {
+      "id": "places-0086",
+      "source": "places",
+      "date": "2026-09-15",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0087",
+      "source": "places",
+      "date": "2026-09-15",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0116",
+      "source": "bank",
+      "date": "2026-09-16",
+      "text": "Kotipizza",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0088",
+      "source": "places",
+      "date": "2026-09-16",
+      "text": "K-Market Gerby"
+    },
+    {
+      "id": "places-0089",
+      "source": "places",
+      "date": "2026-09-16",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "bank-0055",
+      "source": "bank",
+      "date": "2026-09-17",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0117",
+      "source": "bank",
+      "date": "2026-09-17",
+      "text": "Kotipizza",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0017",
+      "source": "mail",
+      "date": "2026-09-17",
+      "text": "Moodle: uusi viesti kurssilla Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0056",
+      "source": "mail",
+      "date": "2026-09-17",
+      "text": "Order shipped: headphones",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "bank-0056",
+      "source": "bank",
+      "date": "2026-09-18",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0057",
+      "source": "bank",
+      "date": "2026-09-18",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0094",
+      "source": "bank",
+      "date": "2026-09-18",
+      "text": "Wolt",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "bank-0112",
+      "source": "bank",
+      "date": "2026-09-18",
+      "text": "Onnibus",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0033",
+      "source": "calendar",
+      "date": "2026-09-18",
+      "text": "Linjär algebra harjoitukset",
+      "meta": {
+        "created": "2026-09-15"
+      }
+    },
+    {
+      "id": "calendar-0067",
+      "source": "calendar",
+      "date": "2026-09-18",
+      "text": "Futsal",
+      "meta": {
+        "created": "2026-09-05"
+      }
+    },
+    {
+      "id": "mail-0018",
+      "source": "mail",
+      "date": "2026-09-18",
+      "text": "Luento siirtyy: Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0057",
+      "source": "mail",
+      "date": "2026-09-18",
+      "text": "Your receipt from Wolt",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0090",
+      "source": "places",
+      "date": "2026-09-18",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0058",
+      "source": "bank",
+      "date": "2026-09-19",
+      "text": "S-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0059",
+      "source": "bank",
+      "date": "2026-09-19",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0077",
+      "source": "calendar",
+      "date": "2026-09-19",
+      "text": "Matiasn synttärit",
+      "meta": {
+        "created": "2026-09-13"
+      }
+    },
+    {
+      "id": "places-0091",
+      "source": "places",
+      "date": "2026-09-19",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0092",
+      "source": "places",
+      "date": "2026-09-19",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "mail-0076",
+      "source": "mail",
+      "date": "2026-09-20",
+      "text": "Nomination confirmed: Erasmus+ exchange, Universidade de Lisboa, spring 2027",
+      "meta": {
+        "from": "Åbo Akademi"
+      }
+    },
+    {
+      "id": "bank-0060",
+      "source": "bank",
+      "date": "2026-09-21",
+      "text": "Lidl Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0118",
+      "source": "bank",
+      "date": "2026-09-21",
+      "text": "Vuokra",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0034",
+      "source": "calendar",
+      "date": "2026-09-21",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-09-09"
+      }
+    },
+    {
+      "id": "mail-0019",
+      "source": "mail",
+      "date": "2026-09-21",
+      "text": "Tehtävän palautus muistutus – Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0093",
+      "source": "places",
+      "date": "2026-09-21",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "places-0094",
+      "source": "places",
+      "date": "2026-09-21",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0061",
+      "source": "bank",
+      "date": "2026-09-22",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0062",
+      "source": "bank",
+      "date": "2026-09-22",
+      "text": "S-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0113",
+      "source": "bank",
+      "date": "2026-09-22",
+      "text": "Waltti",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0068",
+      "source": "calendar",
+      "date": "2026-09-22",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-09-18"
+      }
+    },
+    {
+      "id": "places-0095",
+      "source": "places",
+      "date": "2026-09-22",
+      "text": "K-Market Gerby"
+    },
+    {
+      "id": "places-0096",
+      "source": "places",
+      "date": "2026-09-22",
+      "text": "Koti"
+    },
+    {
+      "id": "calendar-0035",
+      "source": "calendar",
+      "date": "2026-09-23",
+      "text": "Linjär algebra harjoitukset",
+      "meta": {
+        "created": "2026-09-23"
+      }
+    },
+    {
+      "id": "mail-0020",
+      "source": "mail",
+      "date": "2026-09-23",
+      "text": "Kurssin Linjär algebra tenttitulokset",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "places-0097",
+      "source": "places",
+      "date": "2026-09-23",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0063",
+      "source": "bank",
+      "date": "2026-09-24",
+      "text": "Lidl Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0095",
+      "source": "bank",
+      "date": "2026-09-24",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0021",
+      "source": "mail",
+      "date": "2026-09-24",
+      "text": "Kurssin Datastrukturer tenttitulokset",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0037",
+      "source": "mail",
+      "date": "2026-09-24",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0098",
+      "source": "places",
+      "date": "2026-09-24",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0099",
+      "source": "places",
+      "date": "2026-09-24",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0064",
+      "source": "bank",
+      "date": "2026-09-25",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0036",
+      "source": "calendar",
+      "date": "2026-09-25",
+      "text": "Linjär algebra luento",
+      "meta": {
+        "created": "2026-09-12"
+      }
+    },
+    {
+      "id": "mail-0058",
+      "source": "mail",
+      "date": "2026-09-25",
+      "text": "Order shipped: desk lamp",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0100",
+      "source": "places",
+      "date": "2026-09-25",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0101",
+      "source": "places",
+      "date": "2026-09-25",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "bank-0065",
+      "source": "bank",
+      "date": "2026-09-26",
+      "text": "Lidl Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "places-0102",
+      "source": "places",
+      "date": "2026-09-26",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0103",
+      "source": "places",
+      "date": "2026-09-26",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "places-0104",
+      "source": "places",
+      "date": "2026-09-27",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "calendar-0037",
+      "source": "calendar",
+      "date": "2026-09-28",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-09-21"
+      }
+    },
+    {
+      "id": "places-0105",
+      "source": "places",
+      "date": "2026-09-28",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0066",
+      "source": "bank",
+      "date": "2026-09-29",
+      "text": "S-Market Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0038",
+      "source": "calendar",
+      "date": "2026-09-29",
+      "text": "Linjär algebra luento",
+      "meta": {
+        "created": "2026-09-22"
+      }
+    },
+    {
+      "id": "calendar-0069",
+      "source": "calendar",
+      "date": "2026-09-29",
+      "text": "Futsal",
+      "meta": {
+        "created": "2026-09-21"
+      }
+    },
+    {
+      "id": "mail-0038",
+      "source": "mail",
+      "date": "2026-09-29",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0106",
+      "source": "places",
+      "date": "2026-09-29",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0107",
+      "source": "places",
+      "date": "2026-09-29",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0067",
+      "source": "bank",
+      "date": "2026-09-30",
+      "text": "Lidl Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0096",
+      "source": "bank",
+      "date": "2026-09-30",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0070",
+      "source": "calendar",
+      "date": "2026-09-30",
+      "text": "Juoksu",
+      "meta": {
+        "created": "2026-09-24"
+      }
+    },
+    {
+      "id": "photos-0011",
+      "source": "photos",
+      "date": "2026-09-30",
+      "text": "Photo: Vasa centrum"
+    },
+    {
+      "id": "places-0108",
+      "source": "places",
+      "date": "2026-09-30",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "bank-0114",
+      "source": "bank",
+      "date": "2026-10-01",
+      "text": "Waltti",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "places-0109",
+      "source": "places",
+      "date": "2026-10-01",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "bank-0068",
+      "source": "bank",
+      "date": "2026-10-02",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0039",
+      "source": "mail",
+      "date": "2026-10-02",
+      "text": "TYY:n viikkotiedote",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0073",
+      "source": "mail",
+      "date": "2026-10-02",
+      "text": "Nettiauto: nya träffar i din bevakning – Toyota Yaris 2014, 6 900 €",
+      "meta": {
+        "from": "Nettiauto"
+      }
+    },
+    {
+      "id": "photos-0012",
+      "source": "photos",
+      "date": "2026-10-02",
+      "text": "Photo: Koti"
+    },
+    {
+      "id": "places-0110",
+      "source": "places",
+      "date": "2026-10-02",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0069",
+      "source": "bank",
+      "date": "2026-10-03",
+      "text": "Lidl Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0115",
+      "source": "bank",
+      "date": "2026-10-03",
+      "text": "Waltti",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0040",
+      "source": "mail",
+      "date": "2026-10-03",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "places-0111",
+      "source": "places",
+      "date": "2026-10-03",
+      "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "bank-0070",
+      "source": "bank",
+      "date": "2026-10-04",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0097",
+      "source": "bank",
+      "date": "2026-10-04",
+      "text": "Hesburger",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "bank-0098",
+      "source": "bank",
+      "date": "2026-10-04",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0071",
+      "source": "calendar",
+      "date": "2026-10-04",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-09-20"
+      }
+    },
+    {
+      "id": "places-0112",
+      "source": "places",
+      "date": "2026-10-04",
+      "text": "Sali"
+    },
+    {
+      "id": "places-0113",
+      "source": "places",
+      "date": "2026-10-04",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0071",
+      "source": "bank",
+      "date": "2026-10-05",
+      "text": "Lidl Brändö",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0072",
+      "source": "calendar",
+      "date": "2026-10-05",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-10-05"
+      }
+    },
+    {
+      "id": "places-0114",
+      "source": "places",
+      "date": "2026-10-05",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0115",
+      "source": "places",
+      "date": "2026-10-05",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0072",
+      "source": "bank",
+      "date": "2026-10-06",
+      "text": "S-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0099",
+      "source": "bank",
+      "date": "2026-10-06",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "bank-0100",
+      "source": "bank",
+      "date": "2026-10-06",
+      "text": "Espresso House",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0039",
+      "source": "calendar",
+      "date": "2026-10-06",
+      "text": "Linjär algebra harjoitukset",
+      "meta": {
+        "created": "2026-09-24"
+      }
+    },
+    {
+      "id": "photos-0013",
+      "source": "photos",
+      "date": "2026-10-06",
+      "text": "Photo: Sandviken"
+    },
+    {
+      "id": "places-0116",
+      "source": "places",
+      "date": "2026-10-06",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0073",
+      "source": "bank",
+      "date": "2026-10-07",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0074",
+      "source": "bank",
+      "date": "2026-10-07",
+      "text": "Lidl Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0101",
+      "source": "bank",
+      "date": "2026-10-07",
+      "text": "Hesburger",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0073",
+      "source": "calendar",
+      "date": "2026-10-07",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-10-07"
+      }
+    },
+    {
+      "id": "places-0117",
+      "source": "places",
+      "date": "2026-10-07",
+      "text": "K-Market Brändö"
+    },
+    {
+      "id": "bank-0075",
+      "source": "bank",
+      "date": "2026-10-08",
+      "text": "S-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0076",
+      "source": "bank",
+      "date": "2026-10-08",
+      "text": "S-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0102",
+      "source": "bank",
+      "date": "2026-10-08",
+      "text": "Kahvila Sirius",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0059",
+      "source": "mail",
+      "date": "2026-10-08",
+      "text": "Pakettisi odottaa noutoa",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "mail-0060",
+      "source": "mail",
+      "date": "2026-10-08",
+      "text": "Order shipped: desk lamp",
+      "meta": {
+        "from": "shop"
+      }
+    },
+    {
+      "id": "places-0118",
+      "source": "places",
+      "date": "2026-10-08",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0077",
+      "source": "bank",
+      "date": "2026-10-09",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "mail-0022",
+      "source": "mail",
+      "date": "2026-10-09",
+      "text": "Luento siirtyy: Linjär algebra",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0041",
+      "source": "mail",
+      "date": "2026-10-09",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0070",
+      "source": "mail",
+      "date": "2026-10-09",
+      "text": "Hyresavtal att underteckna – Studentbyn 12 B 7, Åbo. Hej Elin, hyresavtalet börjar 1.11.2026.",
+      "meta": {
+        "from": "TYS"
+      }
+    },
+    {
+      "id": "places-0119",
+      "source": "places",
+      "date": "2026-10-09",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "places-0120",
+      "source": "places",
+      "date": "2026-10-09",
+      "text": "Sali"
+    },
+    {
+      "id": "bank-0078",
+      "source": "bank",
+      "date": "2026-10-10",
+      "text": "K-Market Vasa centrum",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0074",
+      "source": "calendar",
+      "date": "2026-10-10",
+      "text": "Gym",
+      "meta": {
+        "created": "2026-10-10"
+      }
+    },
+    {
+      "id": "mail-0042",
+      "source": "mail",
+      "date": "2026-10-10",
+      "text": "Ylioppilaskunnan uutiskirje",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0023",
+      "source": "mail",
+      "date": "2026-10-11",
+      "text": "Luento siirtyy: Datastrukturer",
+      "meta": {
+        "from": "Peppi"
+      }
+    },
+    {
+      "id": "mail-0043",
+      "source": "mail",
+      "date": "2026-10-11",
+      "text": "Nyyti ry: hyvinvointiviikko",
+      "meta": {
+        "from": "newsletter"
+      }
+    },
+    {
+      "id": "mail-0074",
+      "source": "mail",
+      "date": "2026-10-11",
+      "text": "Prisförfrågan: Toyota Yaris 1.33 2014 – Bilhuset Laakkonen",
+      "meta": {
+        "from": "dealer"
+      }
+    },
+    {
+      "id": "places-0121",
+      "source": "places",
+      "date": "2026-10-11",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "mail-0071",
+      "source": "mail",
+      "date": "2026-10-12",
+      "text": "Orderbekräftelse: elavtal, Studentbyn 12 B 7, Åbo, från 1.11.2026",
+      "meta": {
+        "from": "Vasa Elektriska"
+      }
+    },
+    {
+      "id": "places-0122",
+      "source": "places",
+      "date": "2026-10-12",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0121",
+      "source": "bank",
+      "date": "2026-10-13",
+      "text": "Finnair",
+      "meta": {
+        "amountBand": "200-500"
+      }
+    },
+    {
+      "id": "calendar-0040",
+      "source": "calendar",
+      "date": "2026-10-13",
+      "text": "Datastrukturer luento",
+      "meta": {
+        "created": "2026-09-30"
+      }
+    },
+    {
+      "id": "mail-0077",
+      "source": "mail",
+      "date": "2026-10-13",
+      "text": "Din bokningsbekräftelse AY1741 Helsingfors–Lissabon 10 jan 2027",
+      "meta": {
+        "from": "Finnair"
+      }
+    },
+    {
+      "id": "places-0123",
+      "source": "places",
+      "date": "2026-10-13",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0119",
+      "source": "bank",
+      "date": "2026-10-14",
+      "text": "Kotipizza",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0120",
+      "source": "bank",
+      "date": "2026-10-14",
+      "text": "Flyttfirma Snabb Ab",
+      "meta": {
+        "amountBand": "200-500"
+      }
+    },
+    {
+      "id": "calendar-0041",
+      "source": "calendar",
+      "date": "2026-10-14",
+      "text": "Ryhmätyö Linjär algebra",
+      "meta": {
+        "created": "2026-10-13"
+      }
+    },
+    {
+      "id": "places-0124",
+      "source": "places",
+      "date": "2026-10-14",
+      "text": "Yliopisto"
+    },
+    {
+      "id": "bank-0079",
+      "source": "bank",
+      "date": "2026-10-15",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0103",
+      "source": "bank",
+      "date": "2026-10-15",
+      "text": "Hesburger",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "mail-0064",
+      "source": "mail",
+      "date": "2026-10-15",
+      "text": "Laskusi on saapunut",
+      "meta": {
+        "from": "official"
+      }
+    },
+    {
+      "id": "places-0125",
+      "source": "places",
+      "date": "2026-10-15",
+      "text": "Koti"
+    },
+    {
+      "id": "places-0126",
+      "source": "places",
+      "date": "2026-10-15",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0080",
+      "source": "bank",
+      "date": "2026-10-16",
+      "text": "K-Market Sandviken",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "bank-0104",
+      "source": "bank",
+      "date": "2026-10-16",
+      "text": "Wolt",
+      "meta": {
+        "amountBand": "0-10"
+      }
+    },
+    {
+      "id": "calendar-0042",
+      "source": "calendar",
+      "date": "2026-10-16",
+      "text": "Ryhmätyö Datastrukturer",
+      "meta": {
+        "created": "2026-10-16"
+      }
+    },
+    {
+      "id": "mail-0072",
+      "source": "mail",
+      "date": "2026-10-16",
+      "text": "Uppsägning mottagen – hyresförhållandet upphör 31.10.2026",
+      "meta": {
+        "from": "VOAS"
+      }
+    },
+    {
+      "id": "mail-0075",
+      "source": "mail",
+      "date": "2026-10-16",
+      "text": "Fråga: vad kostar försäkringen för min första bil? – svar från If kundtjänst",
+      "meta": {
+        "from": "If"
+      }
+    },
+    {
+      "id": "places-0127",
+      "source": "places",
+      "date": "2026-10-16",
+      "text": "Koti"
+    },
+    {
+      "id": "bank-0081",
+      "source": "bank",
+      "date": "2026-10-17",
+      "text": "K-Market Gerby",
+      "meta": {
+        "amountBand": "10-50"
+      }
+    },
+    {
+      "id": "calendar-0075",
+      "source": "calendar",
+      "date": "2026-10-17",
+      "text": "Sali",
+      "meta": {
+        "created": "2026-10-16"
+      }
+    },
+    {
+      "id": "places-0128",
+      "source": "places",
+      "date": "2026-10-17",
+      "text": "Kirjasto"
+    },
+    {
+      "id": "calendar-0079",
+      "source": "calendar",
+      "date": "2026-10-18",
+      "text": "Provkörning Yaris, Laakkonen kl. 14",
+      "meta": {
+        "created": "2026-10-11"
+      }
+    },
+    {
+      "id": "calendar-0078",
+      "source": "calendar",
+      "date": "2026-11-01",
+      "text": "Flytt till Åbo 🚚",
+      "meta": {
+        "created": "2026-10-09"
+      }
+    },
+    {
+      "id": "calendar-0080",
+      "source": "calendar",
+      "date": "2027-01-10",
+      "text": "✈️ Lissabon – utbytestermin (till 30 maj)",
+      "meta": {
+        "created": "2026-10-13"
+      }
+    }
+  ],
+  "truth": [
+    {
+      "type": "move",
+      "date": "2026-11-01",
+      "firstSignal": "2026-10-09",
+      "place": "Åbo"
+    },
+    {
+      "type": "first_car",
+      "date": "2026-10-18",
+      "firstSignal": "2026-10-02"
+    },
+    {
+      "type": "long_trip",
+      "date": "2027-01-10",
+      "firstSignal": "2026-09-20",
+      "place": "Lissabon"
+    }
+  ]
+}

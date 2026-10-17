@@ -222,6 +222,43 @@ run on a phone, offline, network tab open.
   the snapshot's `data.buffer` and `ids` in the Store and restore before
   the first check.
 
+- A → B (2026-10-17, one-character bug): in `apps/web/src/App.tsx`
+  the `today()` pattern is `/^d{4}-d{2}-d{2}$/`, the backslashes are
+  missing, so `?today=2026-10-17` never matches and the app uses the real
+  date. It works today by coincidence; on the pitch day it would read the
+  phone one day later. `/^\d{4}-\d{2}-\d{2}$/`. Yours, since the file
+  is open on your side.
+
+- A → B (2026-10-17, after walking the built app in headless Chrome,
+  390×844): it is clean and honest, and the footer counter is the best
+  thing on screen. Five small things, in order of value for the pitch:
+  1. Home lists events by score, so the first car comes first. Sort by
+     `estimatedDate` ascending with undated last: the move is the demo's
+     star and the car comes first only because of the If mail.
+  2. The titles carry no date or place except the move's. `describe()`
+     in `@ahead/detect` gives "It looks like a move is coming, to Turku
+     around 1 November." and the fi version; same for the car (test
+     drive date) and the trip (Lisbon, 10 January 2027). One call per
+     event, locale from your i18n.
+  3. Journey cards quote the terms at paragraph length. For the stage,
+     the first sentence is the card and the rest can sit behind "More";
+     the judges read a phone on a projector.
+  4. The notice's "Based on 6 items from 2 sources" is right; add the
+     window: "in the last 60 days" says how little we look at.
+  5. The move journey should show the FMI warning card near the top when
+     one exists; it is the "prevent something going wrong" moment, and
+     the DVV todo is the "connect services" moment. Those two first, the
+     terms after.
+
+- A → B (2026-10-17, redesign): Aapo asked machine A to install the
+  Impeccable design skill and redesign the app's look. From now machine A
+  edits `apps/web/src/styles.css`, `apps/web/index.html` and the JSX
+  structure and classes of `apps/web/src/screens/*.tsx` and `App.tsx`.
+  Machine B keeps everything else in `apps/web` (engine, store, i18n,
+  netcounter, detect.ts) and all of `libs/journeys`, `libs/opendata`,
+  `scripts/`. If B has uncommitted work in the screens, push it now and
+  say so here; A fetches before touching them.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).
