@@ -62,6 +62,12 @@ answers to judges' questions are in `apps/what-if/PLAN.md`.
                          (business model, pitch, judge Q&A), README.md
     apps/what-if/data/   the sourced facts and the test ads; sources and
                          the fact-check in its README.md
+    pitch/               the pitch script, judge Q&A, submission text and the
+                         deck (pitch/deck, printed to what-if-deck.pdf);
+                         pitch/demo has the synthetic screenshots for the demo
+    deploy/what-if/      the live site on Cloudflare (D-028, D-029)
+    scripts/what-if-video/  films the live site into the 2-minute video
+    scripts/what-if-deck/   prints the deck to PDF
     CONTEXT.md           the challenge: brief, judging criteria, what we
                          know about If
     DECISIONS.md         every technical, product and legal-design choice,
@@ -79,8 +85,6 @@ Its documents and code stay for reference:
 
     CONCEPT.md, ARCHITECTURE.md, PRIVACY.md, DATA.md, PLAN.md,
     PRODUCT.md, WORK.md  the idea, design, law, data, plan and work split
-    pitch/               Ahead's pitch script, judge Q&A and submission
-                         text
     apps/web, apps/api   the Ahead PWA and its share server
     libs/                synthetic phones, adapters, on-device embedding,
                          detection, open data, journeys

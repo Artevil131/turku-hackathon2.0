@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What if… pitch deck</title>
+<!-- The pitch deck, seven slides; what to say is in pitch/SPEAKER-NOTES.md. scripts/what-if-deck/build.ts prints
+     it to pitch/what-if-deck.pdf in the app's own font. shots/ holds a phone screen and a still from the
+     2-minute video (synthetic ads only, AGENTS.md). -->
+<style>/* font */</style>
+<style>
+  :root {
+    --ground: #f6f2ee; --card: #ffffff; --ink: #331e11; --muted: #74655a; --line: #e7dfd7;
+    --blue: #0054f0; --blue-soft: #eaf0fe; --sand: #efe7de; --pay-bg: #fbeadb; --pay-ink: #8a4a12; --bad: #c2412d;
+  }
+  * { box-sizing: border-box; }
+  @page { size: 1280px 720px; margin: 0; }
+  html, body { margin: 0; }
+  body { font-family: "Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @media screen {
+    body { background: #d9d0c7; padding: 24px 0; }
+    .slide { margin: 0 auto 24px; box-shadow: 0 8px 30px rgba(51, 30, 17, 0.18); }
+  }
+  .slide { width: 1280px; height: 720px; position: relative; overflow: hidden; background: var(--ground); padding: 54px 76px 76px; break-after: page; }
+  .slide:last-child { break-after: auto; }
+  p { margin: 0; }
+  a { color: var(--blue); text-decoration: none; }
+  b { font-weight: 800; }
+
+  .foot { position: absolute; left: 76px; right: 76px; bottom: 26px; display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+  .m { font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .m b, .mark b { color: var(--blue); }
+  .eyebrow { margin: 0 0 10px; font-size: 18px; font-weight: 700; color: var(--blue); }
+  h2 { margin: 0 0 30px; font-size: 46px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+  h3 { margin: 0 0 8px; font-size: 23px; line-height: 1.25; font-weight: 800; }
+  .nb { white-space: nowrap; }
+  .card { background: var(--card); border-radius: 20px; padding: 24px 26px; }
+  .src { font-size: 13px; color: var(--muted); }
+  .n { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 16px; font-weight: 800; margin-bottom: 14px; }
+
+  .phone { flex: none; width: 250px; border: 9px solid var(--ink); border-radius: 32px; overflow: hidden; background: #fff; box-shadow: 0 18px 40px rgba(51, 30, 17, 0.18); }
+  .phone img { display: block; width: 100%; }
+
+  /* 1: title */
+  .title { display: flex; align-items: center; gap: 70px; padding: 0 100px; }
+  .title .text { flex: 1; }
+  .mark { font-weight: 800; letter-spacing: -0.03em; font-size: 132px; line-height: 1; margin-bottom: 20px; }
+  .lede { font-size: 44px; font-weight: 600; line-height: 1.15; margin-bottom: 28px; }
+  .hook { font-size: 24px; line-height: 1.45; color: var(--muted); margin-bottom: 42px; }
+  .who { font-size: 18px; line-height: 1.5; color: var(--muted); margin-bottom: 12px; }
+  .url { font-size: 26px; font-weight: 700; }
+
+  /* 2: imagine */
+  .qs { display: flex; gap: 14px; margin: -8px 0 30px; }
+  .qs span { background: var(--card); border-radius: 999px; padding: 10px 20px; font-size: 21px; font-weight: 600; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 30px; }
+  .case { display: flex; gap: 22px; align-items: flex-start; }
+  .case svg { flex: none; color: var(--ink); }
+  .case .big { font-size: 56px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: var(--bad); margin: 4px 0 8px; }
+  .case p { font-size: 20px; line-height: 1.4; }
+  .case .src { margin-top: 10px; }
+  .then { font-size: 28px; font-weight: 700; }
+
+  /* 3: live demo */
+  .demo { display: flex; gap: 50px; align-items: flex-start; }
+  .demo .still { flex: none; width: 660px; }
+  .still > a { display: block; position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 40px rgba(51, 30, 17, 0.18); }
+  .still img { display: block; width: 100%; }
+  .play { position: absolute; right: 18px; bottom: 18px; display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 14px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 16px; font-weight: 700; }
+  .play::before { content: ""; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent #fff; }
+  .still p { margin-top: 14px; font-size: 18px; font-weight: 700; }
+  .demo .text { flex: 1; min-width: 0; }
+
+  .num { margin: 0; padding: 0; list-style: none; counter-reset: n; display: grid; gap: 18px; }
+  .num li { counter-increment: n; display: flex; gap: 14px; align-items: flex-start; font-size: 22px; line-height: 1.35; }
+  .num li::before { content: counter(n); flex: none; width: 30px; height: 30px; margin-top: 0; border-radius: 50%; background: var(--blue); color: #fff; font-size: 16px; font-weight: 800; display: grid; place-items: center; }
+
+  /* 4: business model */
+  .model { display: grid; grid-template-columns: 340px 1fr 340px; gap: 24px; align-items: stretch; margin-bottom: 20px; }
+  .model .card { padding: 22px 24px; }
+  .model h3 { font-size: 22px; margin-bottom: 12px; }
+  .model h4 { margin: 14px 0 6px; font-size: 15px; font-weight: 700; color: var(--blue); }
+  .model h4:first-of-type { margin-top: 0; }
+  .model ul { margin: 0; padding-left: 20px; }
+  .model li { font-size: 17.5px; line-height: 1.4; margin-bottom: 5px; }
+  .model .gets { background: var(--blue-soft); }
+  .flow { position: relative; width: 330px; height: 370px; margin: 0 auto; }
+  .flow .step { position: absolute; left: 0; width: 278px; height: 64px; border-radius: 16px; background: var(--card); padding: 10px 18px; display: flex; flex-direction: column; justify-content: center; }
+  .flow .step b { font-size: 18px; line-height: 1.2; }
+  .flow .step span { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  .flow .step.if { background: var(--ink); color: #fff; }
+  .flow .step.if span { color: #e9dfd6; }
+  .flow svg { position: absolute; inset: 0; overflow: visible; }
+  .formula { background: var(--ink); color: #fff; border-radius: 16px; padding: 16px 28px; font-size: 23px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .formula span { color: #b8cdfb; font-size: 19px; }
+
+  /* 5: why it works */
+  .works { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+  .works .card { grid-column: span 2; padding: 26px 28px; min-height: 196px; }
+  .works .card.wide { grid-column: span 3; min-height: 0; }
+  .works p { font-size: 20px; line-height: 1.42; }
+  .works .card.honest { background: var(--blue-soft); }
+
+  /* 6: how people find it */
+  .paths { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .paths .card { min-height: 214px; }
+  .paths p { font-size: 19px; line-height: 1.42; }
+  .merge { display: block; margin: 0 auto; overflow: visible; }
+  .goal { width: max-content; margin: 0 auto; background: var(--ink); color: #fff; border-radius: 999px; padding: 16px 34px; font-size: 24px; font-weight: 700; }
+
+  /* 7: launch */
+  .launch { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 26px; }
+  .launch .card { display: flex; gap: 16px; align-items: center; padding: 20px 24px; }
+  .launch .card .n { margin: 0; flex: none; }
+  .launch p { font-size: 21px; line-height: 1.35; }
+  .band { background: var(--ink); color: #fff; border-radius: 20px; padding: 26px 32px; display: flex; justify-content: space-between; align-items: center; gap: 30px; }
+  .band .m { color: #fff; font-size: 44px; }
+  .band .m b { color: #7fa6ff; }
+  .band .tag { font-size: 27px; font-weight: 600; margin-top: 4px; }
+  .band .links { text-align: right; font-size: 18px; line-height: 1.6; }
+  .band .links a { color: #b8cdfb; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<section class="slide title">
+  <div class="text">
+    <div class="mark">What if<b>…</b></div>
+    <p class="lede">See the what-ifs before you sign.</p>
+    <p class="hook">Insurers find out how it ends when the claim comes in.<br>What if… tells you before you sign.</p>
+    <p class="who">Artem, Aapo and Vaishnav<br>JunctionX Turku 2026 · If Insurance Could Do More</p>
+    <a class="url" href="https://what-if.what-if.workers.dev">what-if.what-if.workers.dev</a>
+  </div>
+  <div class="phone"><img src="shots/ad.jpg" alt="A used BMW's ad pasted into What if…"></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Imagine</p>
+  <h2>You’re 18 and about to buy your first car.<br>Or you’re buying your first home.</h2>
+  <div class="qs"><span>What should I ask?</span><span>What will it really cost?</span><span>If something goes wrong, who pays?</span></div>
+  <div class="cases">
+    <div class="card case">
+      <svg width="58" height="58" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 32v-7l6-10h20l8 9h3a2 2 0 0 1 2 2v6"/><path d="M5 32h5m10 0h8m10 0h6"/><circle cx="15" cy="32" r="4.5"/><circle cx="33" cy="32" r="4.5"/><path d="M11 24h28"/>
+      </svg>
+      <div>
+        <h3>A 2009 BMW for €6,900</h3>
+        <p class="big">45.8 %</p>
+        <p>failed their last inspection. A broken gearbox isn’t covered.</p>
+        <p class="src">Traficom, periodic inspections 2025</p>
+      </div>
+    </div>
+    <div class="card case">
+      <svg width="58" height="58" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 22 24 8l18 14"/><path d="M11 18v22h26V18"/><path d="M21 40V30h6v10"/>
+      </svg>
+      <div>
+        <h3>A flat from 1974 for €159,000</h3>
+        <p class="big">≈ €51,600</p>
+        <p>your share if the pipe renovation starts. Not covered either.</p>
+        <p class="src">Isännöintiliitto 2026</p>
+      </div>
+    </div>
+  </div>
+  <p class="then">Today you find out after you’ve signed.</p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Live demo</p>
+  <h2>What if… tells you before you sign</h2>
+  <div class="demo">
+    <div class="still">
+      <a href="https://what-if.what-if.workers.dev" data-video><img src="shots/video.jpg" alt="The 2-minute demo video"><span class="play">The 2-minute demo</span></a>
+      <p><a href="https://what-if.what-if.workers.dev">what-if.what-if.workers.dev</a></p>
+    </div>
+    <div class="text">
+      <ol class="num">
+        <li><span>Paste the ad, or attach screenshots</span></li>
+        <li><span>Three things to ask, and <b>€700 off</b></span></li>
+        <li><span>The real cost: <b>≈ €12,000</b>, not €6,900</span></li>
+        <li><span>Who pays: a crash is covered, a broken gearbox isn’t</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Business model</p>
+  <h2>If earns from better customers, not from fees</h2>
+  <div class="model">
+    <div class="card">
+      <h3>The customer gets</h3>
+      <h4>Free, before signing</h4>
+      <ul><li>What to ask, the real cost, who pays</li></ul>
+      <h4>With If, after signing</h4>
+      <ul>
+        <li>A reminder to check the winter tyres’ tread</li>
+        <li>A reminder to turn the water off before a week away</li>
+        <li>A logbook (huoltokirja)</li>
+        <li>A guarantee behind every who-pays label</li>
+      </ul>
+    </div>
+    <div class="flow">
+      <div class="step" style="top: 0"><b>Free check</b><span>anyone, any ad</span></div>
+      <div class="step" style="top: 102px"><b>If quote, already filled in</b><span>one tap</span></div>
+      <div class="step if" style="top: 204px"><b>If customer</b><span>reminders · logbook · guarantee</span></div>
+      <div class="step" style="top: 306px"><b>Next life event</b><span>a car, a home, a family</span></div>
+      <svg width="330" height="370" aria-hidden="true">
+        <defs><marker id="head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0054f0"/></marker></defs>
+        <g stroke="#0054f0" stroke-width="2.6" fill="none" stroke-linecap="round">
+          <path d="M139 66v28" marker-end="url(#head)"/>
+          <path d="M139 168v28" marker-end="url(#head)"/>
+          <path d="M139 270v28" marker-end="url(#head)"/>
+          <path d="M280 338h26a10 10 0 0 0 10-10V42a10 10 0 0 0-10-10h-20" marker-end="url(#head)"/>
+        </g>
+        <text x="324" y="185" fill="#0054f0" font-size="13" font-weight="700" text-anchor="middle" transform="rotate(90 324 185)" style="font-family: Figtree, sans-serif">the next check, the next policy</text>
+      </svg>
+    </div>
+    <div class="card gets">
+      <h3>If gets</h3>
+      <ul>
+        <li>Customers at the moment they need insurance</li>
+        <li>Longer stays, and a policy at each life event</li>
+        <li>Fewer claims</li>
+        <li>The customers who bring the most money: flat buyers first</li>
+      </ul>
+    </div>
+  </div>
+  <div class="formula">customer value = years × (premiums − claims − costs)<span>What if… moves all four</span></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Why it works</p>
+  <h2>Built, live, and honest</h2>
+  <div class="works">
+    <div class="card"><h3>Live now</h3><p>what-if.what-if.workers.dev, on any phone, nothing to install</p></div>
+    <div class="card"><h3>Real data</h3><p>Traficom, Isännöintiliitto, Finanssiala, Finnish law and If’s own terms</p></div>
+    <div class="card"><h3>Our own AI</h3><p>Every fact must quote the ad: 161 of 162 right, none invented</p></div>
+    <div class="card wide"><h3>Private</h3><p>Only the ad is sent, screenshots after a check, nothing stored. Details go to If when the person asks for a quote.</p></div>
+    <div class="card wide honest"><h3>Honest about who pays</h3><p>Every <span class="nb">what-if</span> says who pays, even when it isn’t insurance</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">How people find it</p>
+  <h2>Where they already are, when they need it</h2>
+  <div class="paths">
+    <div class="card"><span class="n">1</span><h3>Already with If</h3><p>In the If app, at their next car, rental or home</p></div>
+    <div class="card"><span class="n">2</span><h3>Searching first</h3><p>“Is a 2009 BMW reliable?” Pages built from the same data lead into a check</p></div>
+    <div class="card"><span class="n">3</span><h3>Where they sign</h3><p>Landlords, housing managers, car dealers and estate agents</p></div>
+    <div class="card"><span class="n">4</span><h3>On the ad itself</h3><p>Marketplaces, last, paid per policy</p></div>
+  </div>
+  <svg class="merge" width="1128" height="78" viewBox="0 0 1128 78" aria-hidden="true">
+    <defs><marker id="head2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0054f0"/></marker></defs>
+    <g stroke="#0054f0" stroke-width="2.6" fill="none" stroke-linecap="round">
+      <path d="M134 2C134 40 564 22 564 50"/>
+      <path d="M421 2C421 34 564 28 564 50"/>
+      <path d="M707 2C707 34 564 28 564 50"/>
+      <path d="M994 2C994 40 564 22 564 50"/>
+      <path d="M564 50v18" marker-end="url(#head2)"/>
+    </g>
+  </svg>
+  <div class="goal">Every path ends at an If quote, already filled in</div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Next</p>
+  <h2>What If needs to launch it</h2>
+  <div class="launch">
+    <div class="card"><span class="n">1</span><p>Connect the hand-over to If’s quote</p></div>
+    <div class="card"><span class="n">2</span><p>Add If’s claims data, so the risks are exact</p></div>
+    <div class="card"><span class="n">3</span><p>Put the reminders and the logbook in the If app</p></div>
+    <div class="card"><span class="n">4</span><p>A legal review: the labels, the guarantee, privacy</p></div>
+  </div>
+  <div class="band">
+    <div><div class="m">What if<b>…</b></div><p class="tag">See the what-ifs before you sign.</p></div>
+    <div class="links">
+      <a href="https://what-if.what-if.workers.dev">what-if.what-if.workers.dev</a><br>
+      <a href="https://github.com/Artevil131/turku-hackathon2.0">github.com/Artevil131/turku-hackathon2.0</a><br>
+      Artem, Aapo and Vaishnav
+    </div>
+  </div>
+</section>
+
+<script>
+  // A footer with the page number on every slide but the title.
+  const slides = [...document.querySelectorAll(".slide")];
+  slides.forEach((s, i) => {
+    if (s.classList.contains("title")) return;
+    const f = document.createElement("div");
+    f.className = "foot";
+    f.innerHTML = `<span><span class="m">What if<b>…</b></span> · JunctionX Turku 2026 · If Insurance Could Do More</span><span>${i + 1} / ${slides.length}</span>`;
+    s.appendChild(f);
+  });
+</script>
+</body>
+</html>

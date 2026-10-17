@@ -160,7 +160,7 @@ and, once deployed, on our own Cloudflare site with the AI reader.
 
 1. A person and a decision: "I'm about to buy my first car." (Or the flat.)
 2. Paste the ad: the three questions, the real cost, who pays for what.
-3. The safer choice, and "you keep €600".
+3. The safer choice, and "you keep €700".
 4. After you sign: the reminder that prevents the leak or the crash.
 5. The business model, about 45 seconds (below), with the two diagrams.
 6. Close: "See the what-ifs before you sign."

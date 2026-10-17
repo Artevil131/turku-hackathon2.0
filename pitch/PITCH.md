@@ -1,104 +1,93 @@
-# Ahead
+# What if…: the pitch
 
-> Written for **Ahead**, our first concept. Our entry is now **What if…**; its pitch outline is in `apps/what-if/PLAN.md`.
+The two-minute video is required (organisers: "not a second longer than 2 minutes"), and any team may be
+asked to pitch on stage ("demos are better than slideshows"). Both are the live site, with a few words on
+the business. Every number below is what the site shows for its own examples; the ads are synthetic
+(AGENTS.md).
 
-## Spoken script
+## The 2-minute video
 
-Timing follows the three-minute demo in PLAN.md, “Demo script”. Parentheses are source notes, not spoken words. Bracketed text is a stage direction. Emma and the phone records are synthetic. Rehearse with the actual build before presenting; a planned screen is not evidence that a feature ships.
+`scripts/what-if-video/build.ts` films the live site in a phone frame, voices these lines with Kokoro's
+"Michael" (D-030), shows them as captions, and writes `pitch/video/out/what-if-pitch.mp4` (1:58.7) and
+`pitch/video/out/script.txt` (these lines with their times).
 
-### 0:00 | Meet Emma (PLAN.md, “Demo script”)
+| At | Part | Spoken | On screen |
+|---|---|---|---|
+| 0:00 | Title | "Insurers find out how it ends when the claim comes in." | Title card |
+| 0:04 | Title | "What if… tells you before you sign." | Title card |
+| 0:07 | A car | "I'm 18, buying my first car: a 2009 BMW for €6,900." | The BMW ad in the box |
+| 0:15 | A car | "What if… checks the ad against real data." | "Checking…", then the result |
+| 0:19 | A car | "Is the clutch the original? If it slips on the test drive, ask for €700 off." | Question 1 and its tip: ask for €700 off |
+| 0:26 | A car | "Almost half of these BMWs failed their last inspection." | Question 2, the inspection bars: 45.8 %, all 2009 cars 35.9 % |
+| 0:32 | What it costs | "Over two years, it really costs about €12,000." | What it really costs you, ≈ €12,000 |
+| 0:37 | What it costs | "When the seller replies, it writes my answer for me." | "The seller replied?", the answer to the seller |
+| 0:41 | What it costs | "That's €700 in my pocket, before I even own the car." | Offer €6,200, you keep €700 |
+| 0:47 | Who pays | "Every what-if says who pays." | What if something goes wrong: Who pays |
+| 0:50 | Who pays | "What if I crash? Covered with full kasko, after the excess." | "Covered with full kasko · after your excess", ringed in blue |
+| 0:55 | Who pays | "What if the gearbox breaks? That's not covered: I pay." | "Not covered · you pay" on the breakdown, ringed in red |
+| 0:59 | A flat | "Same for a home: if the pipe renovation starts next year, my share is about €51,600." | The flat example, question 1 |
+| 1:09 | How you use it | "All you do is paste the text from the ad, or attach up to 4 screenshots." | The empty box, then two moped screenshots dropped on it |
+| 1:14 | How you use it | "It asks before anything is sent." | "Send these 2 screenshots?" |
+| 1:17 | How you use it | "Our own AI model reads it, and every fact has to quote the ad." | The draft card, who pays |
+| 1:23 | Why If wins | "For If, the check is free, and it reaches people right when they need insurance." | Drive it home: "Get reminders for this car." |
+| 1:29 | Why If wins | "The quote comes already filled in, so winning that customer costs almost nothing." | The car's details already filled in, Get a quote |
+| 1:35 | Why If wins | "After signing, If customers get reminders that prevent claims, a logbook (huoltokirja) for the car or home, and a guarantee behind every who-pays label." | After you buy: "Frost on your route tomorrow", the reminders |
+| 1:46 | Why If wins | "So they stay longer, add a policy at every life event, and claim less: the customers who bring If the most money." | The reminders |
+| 1:54 | End | "What if… See the what-ifs before you sign." | End card with the address |
 
-[Title, then Emma, then the problem. Open the quiet home screen with the network tab visible.]
+### Making it
 
-Meet Emma. They are moving from Oulu to Turku on 1 November (PLAN.md, “Demo script”). Their lease, calendar and mover payment already tell that story. But the tasks are scattered. Who reminds them about electricity, the water hose, or a gap in cover?
+    FFMPEG=…/ffmpeg.exe KOKORO=…/say.mjs node scripts/what-if-video/build.ts --voice kokoro:am_michael --speed 1.05
 
-Ahead brings those tasks together. Help arrives before the event, and you never have to tell anyone your life.
+The voice is Kokoro, a free speech model with open weights (Apache-2.0) that runs on this computer
+(D-030). `scripts/what-if-video/say.mjs` runs it: copy it to a folder of its own, run
+`npm install kokoro-js@1.2.1` there, and point `KOKORO` at the copy. `--voice none` gives a silent,
+captioned version instead. A run takes about two minutes and uses 2 of the team's 120 AI reads an hour.
+Voiced lines are kept in `pitch/video/out/voice`, so only changed lines are voiced again; `--plan` prints
+each line's length and stops, for fitting the script under 2:00 without filming.
 
-### 0:30 | Emma chooses (PLAN.md, “Demo script”)
+### Putting it online
 
-[Show sources. Explain that these are synthetic inputs, not connected accounts.]
+Upload `what-if-pitch.mp4` to YouTube as Public (the organisers ask for a public video), check that it
+plays when signed out, and put the link on the form. Not made for kids; no altered content (that question
+covers making real people or events look real, and the description says the voice is text-to-speech).
 
-Emma chooses which sources Ahead may use. Here, mail, calendar and bank are enabled. Health stays off. Nothing starts enabled. This demo uses generated records, not someone's accounts. The personal records are processed here, on the phone, not sent to If.
+- **Title:** What if… See the what-ifs before you sign (JunctionX Turku 2026, If challenge)
+- **Description:**
 
-### 0:50 | A question, not a verdict (PLAN.md, “Demo script”)
+      What if… is our entry for If's challenge "If Insurance Could Do More" at JunctionX Turku 2026, by
+      Artem, Aapo and Vaishnav.
 
-[Tap check now. Open the evidence, reject a snippet, then confirm the move.]
+      Paste the text of an ad you're about to sign for, or attach up to 4 screenshots of it. Before you
+      sign, you see three things to ask, what it really costs, who pays for each what-if, and the safer
+      choice.
 
-Ahead asks: “Looks like you are moving.” Here is the lease subject, the calendar entry and the mover payment behind that question. Emma can say “not this” to an item, dismiss the notice, or stop move notices altogether.
+      Try it: https://what-if.what-if.workers.dev
+      Code: https://github.com/Artevil131/turku-hackathon2.0
 
-They confirm the move. Confirmation opens help. It does not send the evidence to an insurer, request a quote, or change a price.
+      The ads in the video are made up for the demo. The voice is Kokoro text-to-speech.
 
-### 1:20 | The journey (PLAN.md, “Demo script”)
+## The deck
 
-[Show the move journey, service links, source labels and comparison card.]
+`pitch/deck/deck.html`, seven slides in the app's look, kept short: the title; "Imagine" (a first car at
+18, a first home); the live demo, with a still that links to the video in case the live demo fails; the
+business model (what the customer gets, the loop, what If gets); why it works (live, real data, our own
+AI, private, honest); how people find it; what If needs to launch it. What to say on each slide is in
+`pitch/SPEAKER-NOTES.md`. `node scripts/what-if-deck/build.ts` prints the deck to `pitch/what-if-deck.pdf`
+in about 10 seconds.
 
-Now Emma has a journey, not an insurance sales screen. Here is the move-notification window and the link to the service. Here is electricity. Here are reminders about the washing-machine hose, heating and locks.
+## On stage, about 3 minutes
 
-The cover card points to public policy terms. It is not a decision about Emma's actual cover. Weather information needs its place and update time shown; a future warning must not be passed off as a live forecast.
+The same flow, live, with more time for the business:
 
-Insurance is a card among the tasks. If appears beside competitors. Emma can use the help without buying from If.
+1. **The hook and the car** (45 s): as in the video.
+2. **The flat** (20 s): the pipe renovation share. Then point at "What if something goes wrong": a leak in
+   the flat is covered by home insurance, the renovation isn't.
+3. **Screenshots** (25 s): drop two screenshots. Say what leaves: only the pictures, after the check;
+   nothing is stored.
+4. **The business** (60 s): `apps/what-if/PLAN.md`, "The business model, as said on stage". Customer value =
+   years × (what they pay − what they claim − what they cost); What if… moves all four. The best customers:
+   first-time flat buyers, households heading for several policies, car-loan buyers.
+5. **The close** (10 s): "See the what-ifs before you sign."
 
-### 2:10 | Show the boundary (PLAN.md, “Demo script”)
-
-[Show the ledger, sharing status and erase. Briefly show the phone-boundary picture.]
-
-An on-device embedding links signals; GDPR remains a design obligation, not a compliance claim. This ledger shows the inference and that nothing was shared with If. Emma can erase it. Only a separate choice to share would send a confirmed event, never the evidence.
-
-### 2:30 | Why If would pay (PLAN.md, “Demo script”)
-
-[Business slide.]
-
-In Finland in 2021, there were 34 800 leak damages and 171 M EUR paid (Finanssiala, research/sources.md). Timely prevention gives If a reason to fund help. Retention and acquisition are hypotheses, not measured gains. We would ask If what a pilot must prove before they pay.
-
-### 2:50 | Ask (PLAN.md, “Demo script”)
-
-[Ask slide.]
-
-We would ask If to test prevention and trust. Help arrives before the event, and you never have to tell anyone your life.
-
-## Answers against the judging criteria
-
-Each criterion carries 25 % (CONTEXT.md, “Judging criteria”). The brief repeats wording under the later criteria; feasibility and innovation below use the team's interpretation, pending confirmation from the judges (CONTEXT.md).
-
-### Customer value and relevance
-
-**Answer:** Ahead turns the scattered signs of a move into timely tasks and service links, while Emma keeps control of the evidence.
-
-**Evidence we can show:** The move notice, its evidence, “not this”, confirmation, and the journey linking to move notification and electricity services. Show the quiet home screen as well as the notice. This demonstrates a workflow, not proven demand from real users.
-
-### Business value for If
-
-**Answer:** If could fund prevention and earn consideration at a life change by helping before selling, including when the user is not a customer.
-
-**Evidence we can show:** The leak-prevention task and If beside competitors in the comparison card. The Finnish market recorded 34 800 leak damages and 171 M EUR paid in 2021 (Finanssiala, research/sources.md, primary press release linked there). These are market totals, not If claims or demonstrated savings. We would ask If for preventable-claim costs, retention at moves, acquisition costs and the pilot outcome that would justify paying. We have no If-internal figures.
-
-### Feasibility and implementation, assumed criterion
-
-**Answer:** A working local detector and a template-based journey demonstrate the core path, while account connections and deployment safeguards remain launch work.
-
-**Evidence we can show:** Run detection on synthetic records with the model already loaded, show evidence and the ledger, and inspect network requests during the check. The chosen benchmark setting detected the student move 23 days early, first car 7 days early and long trip 89 days early; the later run reported no false episodes across six synthetic phones (benchmarks/detect/README.md, chosen setting and “Run 4”). These are generated phones and narrow noise, not a public accuracy estimate. A browser demo does not establish native account access or legal compliance.
-
-### Innovation and experience
-
-**Answer:** Ahead makes the phone ask its owner about a possible event before any insurer can receive it, and makes help useful without a purchase.
-
-**Evidence we can show:** Reject evidence, confirm without sharing, inspect the ledger and erase. Then show the comparison card with If beside competitors. The distinction is the separation between noticing, helping and sharing, not an exclusive model or a claim that insurers have never tried prevention.
-
-## Slide list
-
-Use these slides as visual support, not as extra spoken content. Keep the live journey ahead of the technical explanation.
-
-- **Title:** Ahead. “Help arrives before the event, and you never have to tell anyone your life.” Lead immediately into Emma.
-- **Person:** Emma, moving from Oulu to Turku on 1 November (PLAN.md, “Demo script”). Label the persona and phone records synthetic.
-- **Problem:** A lease, a calendar entry and a mover payment sit apart from the tasks they imply. The person bears the coordination work.
-- **Demo:** Sources → question → evidence control → confirmed move → service-linked journey. Show If beside competitors, with source labels rather than an unsupported promise about actual policy cover.
-- **How it works in a picture:** Describe a phone outline containing chosen sources, short snippets, a local similarity matcher, a question and the ledger. Public journey information enters from outside. A separate gate labelled “choose to share” leads from a confirmed event to If. No arrow carries snippets or vectors outside. Reveal only after the journey.
-- **Business value:** “Finland, 2021: 34 800 leak damages / 171 M EUR paid” (Finanssiala, research/sources.md). Connect a prevention task to a claim-cost hypothesis, then retention, acquisition and less retyping when sharing is requested. Label all gains unmeasured. We would ask If to define and price a pilot, not assume a budget or conversion rate.
-- **Privacy by architecture:** Source consent, local inference, evidence control, separate sharing and erase. Show the ledger and network inspection as evidence of the demonstrated path, not proof of all future behaviour. State that pricing and claims assessment must remain separate; legal review is still needed.
-- **Ask:** We would ask If for a pilot partner, privacy review and agreement on what prevention, usefulness and trust would need to show. No request for customer records at the hackathon.
-
-### Demo truth checks
-
-Preload the model and bundled public content before showing an offline check. Do not call the whole app network-free: model downloads, public-data lookups and chosen service links can use a network. A silent network tab supports only the action being inspected.
-
-Show the update time and provenance of weather and policy content. If a planned card, connector, sharing endpoint or erase behaviour is absent, name the gap rather than mime it. Never fill in the policy-duration placeholder from the demo plan or suggest a future freeze warning is already known.
+Questions the judges are likely to ask, with answers: `pitch/QA.md`.

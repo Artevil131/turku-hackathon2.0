@@ -1,53 +1,70 @@
-# Questions to prepare for
+# What if…: questions the judges may ask
 
-> Written for **Ahead**, our first concept. Our entry is now **What if…**; its answers to judges' questions are in `apps/what-if/PLAN.md`.
+Short answers first, then the detail if they ask again. The business model in full is in
+`apps/what-if/PLAN.md`; the decisions are in `DECISIONS.md` (What if…: D-017 onwards).
 
-These answers distinguish the demo from the intended product. Legal interpretations need review, not a claim of compliance.
+### How does If make money from this?
 
-### Can you really say If never sees my data?
+From better customers, not fees. A customer is worth the years they stay × (what they pay − what they claim −
+what they cost). What if… moves all four:
 
-The design keeps evidence and vectors local, with a separate choice before a confirmed event is shared with If. That does not mean every connection is invisible: mail and bank providers handle their connections, and a public-data request can reveal a postcode. The demo can show the local detection path, but a launch still needs connector contracts, a data protection impact assessment and review by If's privacy team (PRIVACY.md, ARCHITECTURE.md).
+- **Win them cheaply:** the check reaches people days before they have to buy insurance anyway, and the quote
+  comes already filled in.
+- **Keep them longer:** reminders, the logbook (huoltokirja) and the who-pays guarantee only work with an If
+  policy, and they grow every year.
+- **More policies:** each life event (a car, a rental, a first home) is another check, and another policy.
+- **Fewer claims:** people choose the safer car or flat and get warned in time. Leaks alone: 34,800 damages
+  and €171 million paid in Finland in 2021, about €4,900 each (Finanssiala).
 
-### What happens when the notice is wrong?
+### Won't people use the free check and buy cheaper insurance elsewhere?
 
-The notice asks a question, shows the evidence and allows dismissal or rejection of an item. The later benchmark reported no false episodes across six synthetic phones, but their template-generated noise is narrower than a real phone's and does not establish a public false-positive rate. We need testing with consenting users before claiming that the notices are rare or useful in daily life (benchmarks/detect/README.md, “Run 4” and “Caveats”; PRIVACY.md; ARCHITECTURE.md).
+Some will, and a check costs almost nothing. If doesn't compete on price; it wins the moment: first in line,
+already filled in, honest about what is and isn't covered, and with a guarantee that only comes on an If
+policy. Those who leave over a few euros would leave again at renewal anyway.
 
-### Why would If pay rather than just let us use a checklist?
+### Won't it attract only the risky buyers?
 
-The proposed value is getting a relevant prevention task in front of a person while they can still act. A detector and journey do not prove fewer claims, better retention or a return on spending. We would ask If which prevention outcome would justify funding a pilot, and keep event evidence away from pricing and claims assessment (ARCHITECTURE.md, journey pipeline; PRIVACY.md, purpose limitation and insurance law).
+The price follows the same facts the buyer confirms: building year, pipe renovation, car model. A risky flat
+costs more to insure, a safe one less, as insurers already price. The tool also steers people to the safer
+choice. Two things never change a price: using the tool, and anything guessed about the person.
 
-### Why not put this inside an If-branded app?
+### Is it AI? Can it make things up?
 
-The local processing boundary could also be built into an If-branded app. Branding is not the privacy safeguard; source consent, evidence control and a separate sharing choice are. Our proposal keeps the help useful without a sale and shows If beside competitors, but we would ask If to test whether users trust that arrangement (ARCHITECTURE.md, phone boundary; PRIVACY.md, consent and marketing).
+Rules first. The page reads the common ad formats with rules, and every number comes from a source. Only
+when the rules can't read an ad (free text, a moped, a boat, a screenshot) does the team's own AI model read
+it, and every field it returns must quote the ad, or it's dropped. In the team's benchmark it got 161 of 162
+fields right and invented none. Costs and who pays never come from the AI.
 
-### How can this work on iOS if apps cannot read each other?
+### What data leaves my phone?
 
-It cannot read other apps' notifications or screens on iOS. A shipping app could request calendar access, accept items through the share sheet, and connect mail or a bank account with permission. Those integrations are not proved by the browser demo, which uses synthetic records rather than access to the user's other apps (ARCHITECTURE.md, signal sources and demo build).
+For the ads the rules read: nothing. Otherwise only the ad's text, without phone numbers or email addresses,
+or a screenshot after a "Send this screenshot?" check. It goes through our server to the AI model on our own
+computer. Nothing is stored. The details go to If only when the person asks for a quote.
 
-### What if the user lies or confirms a move that is not real?
+### Isn't this insurance advice?
 
-Confirmation is the user's answer, not verified evidence of a move. The event may help organise a journey or prefill a requested form, but it must not become an underwriting fact or evidence against a claim. Any later insurance application still needs its own questions and checks, separate from the local inference (ARCHITECTURE.md, sharing boundary; PRIVACY.md, purpose limitation and insurance law).
+No: it states facts ("if this happens, who pays") by kind of cover. Personal advice needs a written needs
+assessment, and that stays in If's own quote.
 
-### Is reading mail and bank activity inherently creepy?
+### Where do the numbers come from?
 
-It can be, even when the processing stays local. Sources start off, permissions can be withdrawn, the notice shows its evidence, and the user can reject an inference or erase it. Those controls do not remove unwanted inferences or the risk of a shared or lost phone, which belong in the privacy assessment and user testing (PRIVACY.md, consent and DPIA outline; ARCHITECTURE.md, local ledger).
+Traficom's 2025 inspection statistics by make, model and year; Isännöintiliitto's 2026 pipe renovation costs;
+Finanssiala's leak damages; AutoJerry's garage prices; Finnish law on Finlex; KKV and FINE; If's published
+terms. Anything else is labelled estimate. With If's own claims data the risks would be exact.
 
-### Does the AI Act make this a high-risk insurance system?
+### Why the clutch and the €700?
 
-Our current reading is that a help-only tool outside pricing is not the life and health insurance risk-assessment use listed as high-risk. That is not legal clearance, and changing the purpose or adding downstream uses would require a fresh assessment. We still disclose automated inference and show evidence, and would ask If's legal team to review the intended deployment (PRIVACY.md, EU AI Act).
+Our sources give no reliable clutch lifetime, so we don't claim one. The buyer checks for slipping on the test
+drive; if it slips, a garage typically charges €719 to change it (AutoJerry 2026), so What if… suggests asking
+for €700 off and writes the reply to the seller.
 
-### What is the business model without selling personal data?
+### What would If need to launch it?
 
-The proposal is that If funds the help because prevention and voluntary customer contact could have value. The architecture does not require selling snippets or vectors, and any optional aggregate count or confirmed-event sharing needs its own choice. There is no validated price or revenue model here, so we would ask If what they would pay to test rather than claim a signed business case (ARCHITECTURE.md, allowed sharing and server side; PRIVACY.md, lawful basis and purpose limitation).
+Connect the hand-over to If's quote, so the details arrive filled in; bring in If's own claims data to make
+the risks exact; put the logbook and reminders in the If app; and get the who-pays labels and the guarantee
+reviewed by legal. It's a web page, so there is nothing to install.
 
-### What in the demo actually runs?
+### Why would a customer trust an insurer's tool?
 
-The documented demo runs the local model and detector over generated phone records, rather than playing a detection result as a video. The journey combines templates with public information, and the network tab can show whether the inspected check sends anything. This does not demonstrate live mail or bank connections, native platform permissions, a deployed sharing service or a production security audit (ARCHITECTURE.md, pipeline, server side and demo build).
-
-### What is synthetic, and are the benchmark results representative?
-
-Emma's personal records and the benchmark phones are synthetic, including the planted events and ordinary-life noise. The benchmark is a replay against known event truth, not a trial with real customers or evidence of prevented claims. Public journey sources are separate from those records, and a staged warning must be labelled rather than presented as current weather (ARCHITECTURE.md, journey and demo build; benchmarks/detect/README.md, method and caveats).
-
-### What must change before real users can rely on this?
-
-We need consented account integrations, platform permission review and testing on real-life variation before judging detection quality. Privacy work includes a data protection impact assessment, local storage protection, limited retention, connector contracts and an audited boundary against pricing and claims use. Sensitive events stay outside this demo, but source text can still contain sensitive information, so we must review minimisation and incidental inference before connecting real accounts (ARCHITECTURE.md, signal sources and open items; PRIVACY.md, minimisation, special categories, platform policy and DPIA outline; benchmarks/detect/README.md, caveats).
+Because it says plainly when insurance won't pay: a breakdown, worn parts, a pipe renovation. That honesty is
+the point, and the guarantee behind the labels backs it on an If policy.
