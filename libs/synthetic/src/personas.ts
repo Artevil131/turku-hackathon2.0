@@ -180,4 +180,91 @@ export const control: Persona = {
   truth: [],
 };
 
-export const personas: Persona[] = [student, family, control];
+/** The same phones over a full year of noise, for a false-notice rate per year. */
+export const controlYear: Persona = {
+  ...control,
+  id: "control-year",
+  seed: 365,
+  from: "2025-10-17",
+  description: `${control.description} A full year.`,
+};
+export const studentYear: Persona = {
+  ...student,
+  id: "student-year",
+  seed: 366,
+  from: "2025-10-17",
+  description: `${student.description} A full year of noise before.`,
+};
+
+/** Emma's Swedish-speaking counterpart in Vasa: the same three events, signals in Swedish. */
+export const studentSv: Persona = {
+  id: "student-sv",
+  seed: 46,
+  description:
+    "Elin, 23, studies in Vasa; moves to Åbo on 1 Nov 2026, looks at a used car in October, leaves for an exchange term in January. Swedish mail and calendar.",
+  from: "2026-07-01",
+  to: "2026-10-17",
+  noise: studentNoise,
+  fills: {
+    course: ["Datastrukturer", "Linjär algebra"],
+    item: ["headphones", "desk lamp"],
+    name: ["Matias", "Hanna"],
+    place: ["Vasa centrum", "Brändö", "Sandviken", "Gerby"],
+  },
+  planted: [
+    {
+      source: "mail",
+      date: "2026-10-09",
+      text: "Hyresavtal att underteckna – Studentbyn 12 B 7, Åbo. Hej Elin, hyresavtalet börjar 1.11.2026.",
+      meta: { from: "TYS" },
+    },
+    { source: "calendar", date: "2026-11-01", text: "Flytt till Åbo 🚚", meta: { created: "2026-10-09" } },
+    {
+      source: "mail",
+      date: "2026-10-12",
+      text: "Orderbekräftelse: elavtal, Studentbyn 12 B 7, Åbo, från 1.11.2026",
+      meta: { from: "Vasa Elektriska" },
+    },
+    { source: "bank", date: "2026-10-14", text: "Flyttfirma Snabb Ab", meta: { amountBand: "200-500" } },
+    { source: "mail", date: "2026-10-16", text: "Uppsägning mottagen – hyresförhållandet upphör 31.10.2026", meta: { from: "VOAS" } },
+    {
+      source: "mail",
+      date: "2026-10-02",
+      text: "Nettiauto: nya träffar i din bevakning – Toyota Yaris 2014, 6 900 €",
+      meta: { from: "Nettiauto" },
+    },
+    { source: "mail", date: "2026-10-11", text: "Prisförfrågan: Toyota Yaris 1.33 2014 – Bilhuset Laakkonen", meta: { from: "dealer" } },
+    { source: "calendar", date: "2026-10-18", text: "Provkörning Yaris, Laakkonen kl. 14", meta: { created: "2026-10-11" } },
+    {
+      source: "mail",
+      date: "2026-10-16",
+      text: "Fråga: vad kostar försäkringen för min första bil? – svar från If kundtjänst",
+      meta: { from: "If" },
+    },
+    {
+      source: "mail",
+      date: "2026-09-20",
+      text: "Nomination confirmed: Erasmus+ exchange, Universidade de Lisboa, spring 2027",
+      meta: { from: "Åbo Akademi" },
+    },
+    {
+      source: "mail",
+      date: "2026-10-13",
+      text: "Din bokningsbekräftelse AY1741 Helsingfors–Lissabon 10 jan 2027",
+      meta: { from: "Finnair" },
+    },
+    { source: "bank", date: "2026-10-13", text: "Finnair", meta: { amountBand: "200-500" } },
+    { source: "calendar", date: "2027-01-10", text: "✈️ Lissabon – utbytestermin (till 30 maj)", meta: { created: "2026-10-13" } },
+  ],
+  traps: [
+    { source: "mail", date: "2026-08-12", text: "Kan du hjälpa mig flytta på lördag? Jag bjuder på pizza 🍕", meta: { from: "Matias" } },
+    { source: "calendar", date: "2026-08-15", text: "Hjälpa Matias flytta", meta: { created: "2026-08-12" } },
+  ],
+  truth: [
+    { type: "move", date: "2026-11-01", firstSignal: "2026-10-09", place: "Åbo" },
+    { type: "first_car", date: "2026-10-18", firstSignal: "2026-10-02" },
+    { type: "long_trip", date: "2027-01-10", firstSignal: "2026-09-20", place: "Lissabon" },
+  ],
+};
+
+export const personas: Persona[] = [student, family, control, controlYear, studentYear, studentSv];

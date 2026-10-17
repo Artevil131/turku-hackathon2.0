@@ -61,6 +61,35 @@ renovation or pet: it does not read the Finnish compound words
 ("kylpyhuoneremontti", "koiranpentu") that carry those events. e5 does,
 and after the two fixes below it is clean.
 
+## Run 4, 2026-10-17: a year of noise, and Swedish
+
+Two phones were extended to a full year of noise before the same events
+(`control-year`, `student-year`, 1 330 snippets each), and a Swedish
+speaking student in Vasa (`student-sv`) was added with the same three
+events written in Swedish, after Swedish prototypes and ordinary-life
+sentences were added. Same parameters as the pick above.
+
+Result: no false episode on any of the six phones, so on this noise the
+false-notice rate is **0 per year**; the Swedish phone is detected with
+exactly the same lead times as the Finnish one (move +23, first car +7,
+long trip +89). The caveat below still applies: the noise is ours.
+
+### e5, six phones
+| floor | thr | control-year: detected (lead d) / false | control: detected (lead d) / false | family: detected (lead d) / false | student-sv: detected (lead d) / false | student-year: detected (lead d) / false | student: detected (lead d) / false |
+|---|---|---|---|---|---|---|---|
+| 0.6 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.6 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.6 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.6 | 4 | – / 0 | – / 0 | renovation +8, pet +46 / 0 | move +20, first_car +2, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.75 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.75 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.75 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.75 | 4 | – / 0 | – / 0 | renovation +8, pet +46 / 0 | move +18, first_car +2, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.9 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.9 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.9 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
+| 0.9 | 4 | – / 0 | – / 0 | renovation +8, pet +46 / 0 | move +18, first_car +2, long_trip +89 / 0 | move +18, first_car +7, long_trip +89 / 0 | move +18, first_car +7, long_trip +89 / 0 |
+
 ## What the earlier runs taught
 
 Run 1 (absolute cosine margins): e5's cosines span a fifth of MiniLM's,
