@@ -1,6 +1,7 @@
 import type { LedgerEntry } from "@ahead/contract";
 import { describe } from "@ahead/detect/describe";
 import { type Key, useI18n } from "../i18n.tsx";
+import { payloadFor } from "../share.ts";
 import { today } from "../today.ts";
 
 interface Props {
@@ -25,7 +26,16 @@ export function Ledger({ ledger, onOpen, onEraseAll }: Props) {
               <button type="button" className="row-button grow" onClick={() => onOpen(e)}>
                 <div className="row-title">{describe(e.event, locale, today()).title}</div>
                 <div className="muted">
-                  {t(`status.${e.status}` as Key)} · {t("ledger.shared", { answer: t(e.shared ? "ledger.yes" : "ledger.no") })}
+                  {t(`status.${e.status}` as Key)} ·{" "}
+                  {e.shared
+                    ? t("ledger.sharedWhat", {
+                        what: [
+                          t(`event.${e.event.type}` as Key),
+                          payloadFor(e.event).date ?? t("share.unknown"),
+                          payloadFor(e.event).municipality ?? t("share.unknown"),
+                        ].join(", "),
+                      })
+                    : t("ledger.shared", { answer: t("ledger.no") })}
                 </div>
               </button>
             </li>

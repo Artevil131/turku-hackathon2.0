@@ -698,3 +698,180 @@ progress {
     transition: none;
   }
 }
+
+/* ---- Share: the one message that can leave the phone ---- */
+.share-card {
+  margin: 28px 0 8px;
+  padding: 20px;
+  border: 1px dashed var(--line-strong, var(--line));
+  border-radius: 14px;
+}
+.share-card p {
+  margin: 0 0 12px;
+}
+.share-button {
+  width: 100%;
+  min-height: 52px;
+  font-weight: 650;
+}
+.shared-line {
+  font-weight: 650;
+  color: var(--accent);
+}
+.payload {
+  margin: 16px 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.payload-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.payload-row dt {
+  color: var(--muted);
+  font-size: 15px;
+  align-self: center;
+}
+.payload-row dd {
+  margin: 0;
+  font-weight: 650;
+  font-size: 18px;
+}
+.error {
+  color: var(--danger);
+}
+
+/* ---- Motion: feedback, continuity, and one authored moment (the share) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .screen {
+    animation: screen-enter 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes screen-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  .event-list > li,
+  .cards > li,
+  .evidence-list > li {
+    animation: row-enter 320ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .event-list > li:nth-child(1),
+  .cards > li:nth-child(1) {
+    animation-delay: 40ms;
+  }
+  .event-list > li:nth-child(2),
+  .cards > li:nth-child(2) {
+    animation-delay: 80ms;
+  }
+  .event-list > li:nth-child(3),
+  .cards > li:nth-child(3) {
+    animation-delay: 120ms;
+  }
+  .event-list > li:nth-child(n + 4),
+  .cards > li:nth-child(n + 4) {
+    animation-delay: 160ms;
+  }
+  @keyframes row-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  button,
+  .switch {
+    transition:
+      transform 120ms ease-out,
+      background-color 150ms ease-out,
+      color 150ms ease-out,
+      border-color 150ms ease-out;
+  }
+  button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  dialog.sheet[open] {
+    animation: sheet-enter 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  dialog.sheet[open]::backdrop {
+    animation: backdrop-enter 320ms ease-out;
+  }
+  @keyframes sheet-enter {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes backdrop-enter {
+    from {
+      opacity: 0;
+    }
+  }
+  /* The share: the three rows lift off the phone in order, then arrive as what If received. */
+  .payload.leaving .payload-row {
+    animation: row-leave 600ms cubic-bezier(0.4, 0, 1, 1) forwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+  @keyframes row-leave {
+    to {
+      opacity: 0;
+      transform: translateY(-28px);
+      filter: blur(2px);
+    }
+  }
+  .payload.arrived .payload-row {
+    animation: row-arrive 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+    border-color: var(--accent);
+  }
+  @keyframes row-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+  /* The counter: the only number that changes when something leaves. It flips once and the pill lights. */
+  .net-count {
+    display: inline-block;
+    animation: count-tick 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes count-tick {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(-10%);
+      opacity: 1;
+    }
+    100% {
+      transform: none;
+    }
+  }
+  .net-live {
+    animation: net-flash 900ms ease-out;
+  }
+  @keyframes net-flash {
+    0%,
+    30% {
+      box-shadow: 0 0 0 3px var(--select, #e8f27a);
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .payload.leaving .payload-row {
+    opacity: 0.4;
+  }
+  .payload.arrived .payload-row {
+    border-color: var(--accent);
+  }
+}

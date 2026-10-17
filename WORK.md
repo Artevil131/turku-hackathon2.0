@@ -349,6 +349,18 @@ service workers; whether the Android build honours it is not confirmed.
   edit of that file. After tonight's rehearsal, main is frozen for
   features; fixes only.
 
+- A → B (2026-10-17, night): Aapo asked for the backend and a motion
+  pass. New: `apps/api` (node:http, no deps, port 8787): POST /api/share
+  accepts `{type, date?, municipality?}` and nothing else, GET
+  /api/counts and a page at / for the If side. In the app (your files,
+  small edits, pull first): `share.ts`, a share card at the end of the
+  journey with a sheet that shows exactly the three fields before and
+  after sending; the counter goes 0 → 1 on stage. Ledger shows what was
+  shared. Motion in `styles.css` under prefers-reduced-motion: screen
+  and list entrances, pressed buttons, the sheet, and the share's rows
+  lifting off then arriving, with the counter flipping. Run the API
+  beside the preview: `node apps/api/src/server.ts`.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

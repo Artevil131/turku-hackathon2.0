@@ -13,6 +13,7 @@ import { Ledger } from "./screens/Ledger.tsx";
 import { Notice } from "./screens/Notice.tsx";
 import { Settings, useTheme } from "./screens/Settings.tsx";
 import { Onboarding, SourceList } from "./screens/Sources.tsx";
+import { type SharePayload, share } from "./share.ts";
 import { type AppStore, createStore } from "./store.ts";
 import { today } from "./today.ts";
 
@@ -167,6 +168,14 @@ export function App() {
     setJourney(next);
   };
 
+  /** The one message that can leave the phone: three fields, after the user pressed Share (apps/api). */
+  const shareEvent = async (entry: LedgerEntry, payload: SharePayload) => {
+    const result = await share(payload);
+    await store.upsertLedger({ ...entry, shared: true });
+    await reload();
+    return result;
+  };
+
   const eraseAll = async () => {
     await store.eraseAll();
     // The stored snapshot is gone with the rest; the detector's in-memory copy goes too.
@@ -203,6 +212,8 @@ export function App() {
   if (!ready) return null;
 
   const current = view?.kind === "notice" ? find(view.eventId) : undefined;
+  // Each destination remounts once, so the screen's entrance plays once per navigation, not per render.
+  const screenKey = settingsOpen ? "settings" : !onboarded ? "onboarding" : view ? `${view.kind}:${view.eventId}` : tab;
 
   let body: React.ReactNode;
   if (settingsOpen) {
@@ -219,7 +230,19 @@ export function App() {
       />
     );
   } else if (view?.kind === "journey") {
-    body = <Journey journey={journey} onBack={() => setView(null)} onToggleDone={toggleDone} />;
+    const entry = find(view.eventId);
+    body = (
+      <Journey
+        journey={journey}
+        entry={entry}
+        onBack={() => setView(null)}
+        onToggleDone={toggleDone}
+        onShare={(payload) => {
+          if (!entry) throw new Error("no event");
+          return shareEvent(entry, payload);
+        }}
+      />
+    );
   } else if (tab === "ledger") {
     body = <Ledger ledger={ledger} onOpen={openFromLedger} onEraseAll={eraseAll} />;
   } else if (tab === "sources") {
@@ -262,12 +285,16 @@ export function App() {
         </button>
       </header>
       <main ref={mainRef} tabIndex={-1}>
-        {body}
+        <div key={screenKey} className="screen">
+          {body}
+        </div>
       </main>
       <footer className="bottom">
-        <div className="net" aria-live="polite">
+        <div className={`net ${outbound > 0 ? "net-live" : ""}`} aria-live="polite">
           <span>{t("net.label")}</span>
-          <strong>{outbound === 1 ? t("net.one") : t("net.requests", { n: outbound })}</strong>
+          <strong key={outbound} className="net-count">
+            {outbound === 1 ? t("net.one") : t("net.requests", { n: outbound })}
+          </strong>
         </div>
         {onboarded && (
           <nav>

@@ -73,3 +73,4 @@ apps/web/certs/
 
 # gpt-worker run reports (local tooling, never committed)
 build/
+data/shared/

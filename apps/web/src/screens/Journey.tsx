@@ -1,15 +1,47 @@
-import type { Journey as JourneyData } from "@ahead/contract";
+import type { Journey as JourneyData, LedgerEntry } from "@ahead/contract";
+import { useEffect, useRef, useState } from "react";
 import { formatDate, type Key, useI18n } from "../i18n.tsx";
+import { payloadFor, type SharePayload, type ShareResult } from "../share.ts";
 
 interface Props {
   journey: JourneyData | undefined;
+  entry: LedgerEntry | undefined;
   onBack(): void;
   onToggleDone(itemId: string): void;
+  onShare(payload: SharePayload): Promise<ShareResult>;
 }
 
+type ShareState =
+  | { kind: "closed" }
+  | { kind: "asking" }
+  | { kind: "sending" }
+  | { kind: "sent"; result: ShareResult }
+  | { kind: "failed"; reason: string };
+
 /** Journey items as cards by kind, each with its due date and source link. */
-export function Journey({ journey, onBack, onToggleDone }: Props) {
+export function Journey({ journey, entry, onBack, onToggleDone, onShare }: Props) {
   const { t, locale } = useI18n();
+  const [shareState, setShareState] = useState<ShareState>({ kind: "closed" });
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (shareState.kind === "closed") dialogRef.current?.close();
+    else if (!dialogRef.current?.open) dialogRef.current?.showModal();
+  }, [shareState.kind]);
+  const payload = entry ? payloadFor(entry.event) : undefined;
+  const rows = (p: SharePayload) => [
+    [t("share.type"), t(`event.${p.type}` as Key)],
+    [t("share.date"), p.date ? formatDate(p.date, locale) : t("share.unknown")],
+    [t("share.place"), p.municipality ?? t("share.unknown")],
+  ];
+  const send = async () => {
+    if (!payload) return;
+    setShareState({ kind: "sending" });
+    try {
+      setShareState({ kind: "sent", result: await onShare(payload) });
+    } catch (e) {
+      setShareState({ kind: "failed", reason: e instanceof Error ? e.message : String(e) });
+    }
+  };
   return (
     <section className="journey-screen">
       <button type="button" className="back quiet" onClick={onBack}>
@@ -83,6 +115,61 @@ export function Journey({ journey, onBack, onToggleDone }: Props) {
               </li>
             ))}
           </ul>
+          {payload && (
+            <div className="share-card">
+              <p>{t("journey.share")}</p>
+              {entry?.shared ? (
+                <p className="shared-line">
+                  {t("ledger.sharedWhat", {
+                    what: rows(payload)
+                      .map((r) => r[1])
+                      .join(", "),
+                  })}
+                </p>
+              ) : (
+                <button type="button" className="share-button" onClick={() => setShareState({ kind: "asking" })}>
+                  {t("journey.shareButton")}
+                </button>
+              )}
+            </div>
+          )}
+          {payload && shareState.kind !== "closed" && (
+            <dialog
+              ref={dialogRef}
+              className="sheet share-sheet"
+              aria-labelledby="share-title"
+              onCancel={() => setShareState({ kind: "closed" })}
+            >
+              <h2 id="share-title">{shareState.kind === "sent" ? t("share.sent") : t("share.title")}</h2>
+              {shareState.kind !== "sent" && <p className="muted">{t("share.lead")}</p>}
+              <dl className={`payload ${shareState.kind === "sending" ? "leaving" : ""} ${shareState.kind === "sent" ? "arrived" : ""}`}>
+                {rows(shareState.kind === "sent" ? shareState.result.received : payload).map(([k, v], i) => (
+                  <div key={k} className="payload-row" style={{ "--i": i } as React.CSSProperties}>
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              {shareState.kind === "asking" && <p className="muted">{t("share.only")}</p>}
+              {shareState.kind === "failed" && <p className="error">{t("share.failed", { reason: shareState.reason })}</p>}
+              <div className="actions">
+                {shareState.kind === "sent" ? (
+                  <button type="button" className="primary" onClick={() => setShareState({ kind: "closed" })}>
+                    {t("share.close")}
+                  </button>
+                ) : (
+                  <>
+                    <button type="button" className="primary" disabled={shareState.kind === "sending"} onClick={send}>
+                      {shareState.kind === "sending" ? t("share.sending") : t("share.confirm")}
+                    </button>
+                    <button type="button" onClick={() => setShareState({ kind: "closed" })}>
+                      {t("share.cancel")}
+                    </button>
+                  </>
+                )}
+              </div>
+            </dialog>
+          )}
         </>
       )}
     </section>
