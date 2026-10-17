@@ -90,6 +90,8 @@ export interface JourneyItem {
   /** Where the fact comes from: an FMI feed, a DVV page, an If T&C clause. Shown to the user. */
   sourceUrl?: string;
   sourceName?: string;
+  /** True when `sourceUrl` is the service that does the task (the card offers to open it), not where a fact comes from. */
+  sourceIsService?: boolean;
   done?: boolean;
 }
 
