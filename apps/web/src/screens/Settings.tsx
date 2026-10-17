@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useI18n } from "../i18n.tsx";
+import { readListingServer, saveListingServer } from "../listing.ts";
 
 export type Theme = "light" | "dark" | "system";
 
@@ -44,6 +45,11 @@ export function Settings({
   onMonth?(): void;
 }) {
   const { t, locale, setLocale } = useI18n();
+  const [server, setServer] = useState(readListingServer);
+  const updateServer = (next: typeof server) => {
+    setServer(next);
+    saveListingServer(next);
+  };
   return (
     <section className="settings-screen">
       <button type="button" className="back quiet" onClick={onBack}>
@@ -73,6 +79,31 @@ export function Settings({
           ))}
         </div>
         <p className="muted">{t("settings.systemHint")}</p>
+      </fieldset>
+      <fieldset className="preference">
+        <legend>{t("settings.server")}</legend>
+        <label className="field">
+          <span>{t("settings.serverUrl")}</span>
+          <input
+            type="url"
+            inputMode="url"
+            autoComplete="off"
+            spellCheck={false}
+            value={server.url}
+            onChange={(e) => updateServer({ ...server, url: e.target.value })}
+          />
+        </label>
+        <label className="field">
+          <span>{t("settings.serverToken")}</span>
+          <input
+            type="password"
+            autoComplete="off"
+            spellCheck={false}
+            value={server.token}
+            onChange={(e) => updateServer({ ...server, token: e.target.value })}
+          />
+        </label>
+        <p className="muted">{t("settings.serverHint")}</p>
       </fieldset>
       {onMonth && (
         <ul className="list plate-links">

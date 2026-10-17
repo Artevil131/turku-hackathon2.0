@@ -240,7 +240,7 @@ export function Listing({ onBack }: { onBack(): void }) {
   const [readingImage, setReadingImage] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [sending, setSending] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<false | "auth" | "busy" | "other">(false);
   const [result, setResult] = useState<ListingAnalysis | null>(null);
   const [consented, setConsented] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -267,8 +267,9 @@ export function Listing({ onBack }: { onBack(): void }) {
     try {
       const analysis = await analyseListing(input, abort.signal);
       if (!abort.signal.aborted) setResult(analysis);
-    } catch {
-      if (!abort.signal.aborted) setFailed(true);
+    } catch (e) {
+      const code = e instanceof Error ? e.message : "";
+      if (!abort.signal.aborted) setFailed(code === "401" ? "auth" : code === "429" ? "busy" : "other");
     } finally {
       if (!abort.signal.aborted) setSending(false);
       if (controller.current === abort) controller.current = null;
@@ -355,7 +356,7 @@ export function Listing({ onBack }: { onBack(): void }) {
       )}
       {failed && (
         <div>
-          <p role="alert">{t("listing.failed")}</p>
+          <p role="alert">{t(failed === "auth" ? "listing.needToken" : failed === "busy" ? "listing.busy" : "listing.failed")}</p>
           <div className="actions">
             <button
               type="button"

@@ -5,7 +5,7 @@ through this repository. Nobody needs an account on the GPU server.
 
 | What you want to change | Where | When it takes effect |
 |---|---|---|
-| What the model is told | `libs/listing/src/prompt.ts` | When the API is restarted from `main` (the demo machine runs `node apps/api/src/server.ts`) |
+| What the model is told | `libs/listing/src/prompt.ts` | Within about five minutes of the merge: the API on chili runs from `main` and restarts on a new commit (deploy/api) |
 | What it must answer (fields, categories, risks it may name) | `libs/listing/src/schema.ts` | Same |
 | What is kept and what is dropped | `libs/listing/src/validate.ts` | Same |
 | Risks, costs, sources | `libs/listing/src/risks.ts`, `timeline.ts`, `lookups.ts` | Same |

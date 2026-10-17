@@ -1643,3 +1643,21 @@ progress {
   outline: 2px solid var(--amber);
   outline-offset: 2px;
 }
+
+/* Settings: the ad analysis server's address and team token. */
+.preference .field {
+  display: block;
+  margin-top: 12px;
+}
+.preference .field input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--ink-2);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+}

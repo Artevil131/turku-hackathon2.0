@@ -12,11 +12,35 @@ export interface ListingAnalysis {
   timeline: Timeline;
 }
 
-/** Uses the same fetch path as sharing, so the outbound counter measures this request too. */
+/** Where the ad goes and the team token it carries, set once in Settings and kept on this device only. */
+export interface ListingServer {
+  url: string;
+  token: string;
+}
+
+const SERVER_KEY = "ahead.listing.server";
+
+export function readListingServer(): ListingServer {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SERVER_KEY) ?? "{}") as Partial<ListingServer>;
+    return { url: saved.url?.trim() || API_URL, token: saved.token?.trim() ?? "" };
+  } catch {
+    return { url: API_URL, token: "" };
+  }
+}
+
+export function saveListingServer(server: ListingServer): void {
+  try {
+    localStorage.setItem(SERVER_KEY, JSON.stringify({ url: server.url.trim(), token: server.token.trim() }));
+  } catch {}
+}
+
+/** Uses the same fetch path as sharing, so the outbound counter measures this request too. Throws "401" or "429" as such. */
 export async function analyseListing(input: ListingInput, signal?: AbortSignal): Promise<ListingAnalysis> {
-  const res = await fetch(`${API_URL}/api/listing`, {
+  const { url, token } = readListingServer();
+  const res = await fetch(`${url.replace(/\/+$/, "")}/api/listing`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...(token ? { authorization: `Bearer ${token}` } : {}) },
     body: JSON.stringify(input),
     signal,
   });

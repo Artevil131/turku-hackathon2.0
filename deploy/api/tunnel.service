@@ -1,0 +1,19 @@
+# systemd user unit on chili: Cloudflare Tunnel to the API on 127.0.0.1:8787.
+# With TUNNEL_TOKEN in ~/.config/ahead/tunnel.env (a named tunnel from the
+# Cloudflare dashboard, with a public hostname pointing at
+# http://127.0.0.1:8787) the address is stable; without it, a quick tunnel
+# gives a random https://*.trycloudflare.com address, printed in the log
+# (journalctl --user -u ahead-tunnel) and new on every restart.
+[Unit]
+Description=turku-hackathon2.0 Cloudflare Tunnel to the API
+After=ahead-api.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm -f ahead-tunnel
+ExecStart=/bin/sh -c 'if grep -qs "^TUNNEL_TOKEN=." %h/.config/ahead/tunnel.env; then exec /usr/bin/docker run --rm --name ahead-tunnel --network host --env-file %h/.config/ahead/tunnel.env cloudflare/cloudflared:latest tunnel --no-autoupdate run; else exec /usr/bin/docker run --rm --name ahead-tunnel --network host cloudflare/cloudflared:latest tunnel --no-autoupdate --url http://127.0.0.1:8787; fi'
+ExecStop=/usr/bin/docker stop ahead-tunnel
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

@@ -9,7 +9,12 @@
 // analyse, as text or a screenshot, sends it to the listing model
 // (AHEAD_LISTING_URL, NInfer on chili through a tunnel) and returns the
 // facts, the risks and the ten-year timeline. Nothing about it is stored.
+// It needs the team token (Authorization: Bearer ...); the server keeps
+// only its SHA-256 (AHEAD_API_TOKEN_SHA256) and limits how many ads an
+// hour it reads, so the GPU cannot be used by anyone who finds the URL.
+// Without a token hash configured the endpoint is closed, not open.
 
+import { createHash, timingSafeEqual } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname, join } from "node:path";
@@ -18,6 +23,10 @@ import { EVENT_TYPES, type EventType, type IsoDate } from "@ahead/contract";
 import { type Extraction, extractFromImage, extractListing, MAX_AD_CHARS, risksFor, timeline } from "@ahead/listing";
 
 const PORT = Number(process.env.AHEAD_API_PORT ?? 8787);
+/** Loopback unless told otherwise: on chili the tunnel reaches it locally, and nothing else should. */
+const HOST = process.env.AHEAD_API_HOST ?? "127.0.0.1";
+const TOKEN_SHA256 = (process.env.AHEAD_API_TOKEN_SHA256 ?? "").trim().toLowerCase();
+const ADS_PER_HOUR = Number(process.env.AHEAD_LISTING_PER_HOUR ?? 120);
 const LISTING = {
   baseUrl: process.env.AHEAD_LISTING_URL ?? "http://127.0.0.1:8010",
   model: process.env.AHEAD_LISTING_MODEL ?? "qwen3.8-27b",
@@ -81,7 +90,7 @@ function json(res: ServerResponse, status: number, body: unknown): void {
 const CORS = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, OPTIONS",
-  "access-control-allow-headers": "content-type",
+  "access-control-allow-headers": "content-type, authorization",
 };
 
 function readBody(req: IncomingMessage, limit = 1000): Promise<string> {
@@ -94,6 +103,27 @@ function readBody(req: IncomingMessage, limit = 1000): Promise<string> {
     req.on("end", () => resolve(body));
     req.on("error", reject);
   });
+}
+
+/** True when the request carries the team token. Compares hashes in constant time; no hash configured means no access. */
+export function authorised(header: string | undefined, sha256 = TOKEN_SHA256): boolean {
+  if (!/^[0-9a-f]{64}$/.test(sha256)) return false;
+  const token = header?.match(/^Bearer\s+(\S+)$/i)?.[1];
+  if (!token) return false;
+  const got = createHash("sha256").update(token).digest();
+  return timingSafeEqual(got, Buffer.from(sha256, "hex"));
+}
+
+/** A sliding hour of request times; false once the limit is reached. */
+export function rateLimiter(perHour: number, now: () => number = Date.now) {
+  const times: number[] = [];
+  return () => {
+    const t = now();
+    while (times.length && (times[0] ?? 0) <= t - 3_600_000) times.shift();
+    if (times.length >= perHour) return false;
+    times.push(t);
+    return true;
+  };
 }
 
 /** An analysed ad as the app shows it: what was read, the facts, the risks, the ten years. */
@@ -143,8 +173,10 @@ function page(rows: readonly Stored[]): string {
 </script>`;
 }
 
-export function start(port = PORT) {
+export function start(port = PORT, host = HOST) {
   mkdirSync(dirname(FILE), { recursive: true });
+  const allowListing = rateLimiter(ADS_PER_HOUR);
+  if (!TOKEN_SHA256) console.log("AHEAD_API_TOKEN_SHA256 not set: /api/listing refuses every request");
   const server = createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", "http://x");
     if (req.method === "OPTIONS") {
@@ -164,6 +196,8 @@ export function start(port = PORT) {
       }
     }
     if (req.method === "POST" && url.pathname === "/api/listing") {
+      if (!authorised(req.headers.authorization)) return json(res, 401, { error: "the team token is missing or wrong" });
+      if (!allowListing()) return json(res, 429, { error: `more than ${ADS_PER_HOUR} ads this hour; try again later` });
       try {
         const ask = parseListingRequest(JSON.parse(await readBody(req, MAX_IMAGE_BYTES)));
         if (!ask) return json(res, 400, { error: "a listing request is {text} or {image: data:image/...}" });
@@ -181,7 +215,7 @@ export function start(port = PORT) {
     }
     json(res, 404, { error: "not found" });
   });
-  server.listen(port, () => console.log(`ahead api on http://localhost:${port}  (file ${FILE})`));
+  server.listen(port, host, () => console.log(`ahead api on http://${host}:${port}  (file ${FILE})`));
   return server;
 }
 

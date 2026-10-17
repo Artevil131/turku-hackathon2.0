@@ -2,7 +2,8 @@
 # Runs on chili from a systemd user timer (sync.timer), installed once by
 # copying (README.md); the installed copy runs, never the checkout's.
 #
-# Every run: fetch main of the public repo into a deploy checkout, read
+# Every run: fetch main of the public repo into a deploy checkout, restart
+# the API on a new commit (deploy/api), read
 # deploy/listing-model/model.env through a whitelist into
 # ~/llm/etc/project-model.env, and if that changed while the project pin
 # (~/llm/autopilot.pin) exists, restart NInfer with it through Slurm.
@@ -30,6 +31,14 @@ fi
 git -C "$CHECKOUT" fetch --quiet --depth 1 origin main
 git -C "$CHECKOUT" reset --quiet --hard FETCH_HEAD
 sha=$(git -C "$CHECKOUT" rev-parse --short HEAD)
+
+# The API (deploy/api/api.service) runs from this checkout: a new main
+# (a prompt, a rule) takes effect when it restarts.
+last="$LLM/etc/project-sha"
+if [ "$(cat "$last" 2>/dev/null)" != "$sha" ]; then
+  echo "$sha" >"$last"
+  if systemctl --user try-restart ahead-api.service 2>/dev/null; then log "main is $sha; API restarted"; fi
+fi
 
 src="$CHECKOUT/deploy/listing-model/model.env"
 [ -f "$src" ] || { log "no $src at $sha; nothing to do"; exit 0; }
