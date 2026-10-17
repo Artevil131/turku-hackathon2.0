@@ -1,6 +1,6 @@
 import type { Snippet } from "@ahead/contract";
 import { describe, expect, it } from "vitest";
-import { changePoints, frequentWords, newNames, recurring } from "./novelty.ts";
+import { changePoints, frequentWords, mergeClusters, newNames, recurring } from "./novelty.ts";
 
 const bank = (id: string, date: string, text: string): Snippet => ({ id, source: "bank", date, text, meta: { amountBand: "10-50" } });
 const mail = (id: string, date: string, from: string): Snippet => ({ id, source: "mail", date, text: `From ${from}`, meta: { from } });
@@ -89,6 +89,20 @@ describe("frequentWords", () => {
       "lineaarialgebra",
       "tentti",
       "harjoitukset",
+    ]);
+  });
+});
+
+describe("mergeClusters", () => {
+  it("joins clusters with the same label, weighting novelty by members, most novel first", () => {
+    const merged = mergeClusters([
+      { label: "A first car", nearest: "first_car", snippetIds: ["a", "b"], novelty: 0.1 },
+      { label: "groceries, market", snippetIds: ["c"], novelty: 0.3 },
+      { label: "A first car", nearest: "first_car", snippetIds: ["d", "e", "f"], novelty: 0.6 },
+    ]);
+    expect(merged).toEqual([
+      { label: "A first car", nearest: "first_car", snippetIds: ["a", "b", "d", "e", "f"], novelty: 0.4 },
+      { label: "groceries, market", snippetIds: ["c"], novelty: 0.3 },
     ]);
   });
 });

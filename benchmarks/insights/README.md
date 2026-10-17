@@ -189,17 +189,18 @@ done in 51657 ms
 Recurring now lists only weekly, fortnightly and monthly names, at most
 eight, most frequent first (the near-daily gym, library and home wifi are
 gone), and a cluster takes an event's name when its single best snippet
-clears the detector's floor: four of the five clusters now carry an event
-name because the move, car and trip snippets are spread across them, so
-the names say what the cluster touches rather than what it is about.
+clears the detector's floor; clusters that end up with the same name are
+merged, so four clusters remain and three of them carry an event name
+because the move, car and trip snippets are spread across them: the names
+say what the cluster touches rather than what it is about.
 
 ```
-student on 2026-10-17: 551 snippets on the phone, 3 events (40039 ms including model load)
+student on 2026-10-17: 551 snippets on the phone, 3 events (9676 ms including model load)
   first_car 2026-10-18 Oulu score 14.088
   long_trip 2027-01-10 Lisbon score 13.607
   move 2026-11-01 Turku score 13.499
 
-== Timeline: move (40048 ms)
+== Timeline: move (9681 ms)
 window 2026-08-18..2026-10-17, threshold 2.5, first fired 2026-10-09, today 13.499
   2026-08-18    1.85  
   2026-08-19    1.81  
@@ -275,14 +276,14 @@ signals:
    2.44  sms       2026-10-16  DVV/Posti: Muuttoilmoituksesi on käsitelty. Uusi osoite on voima
    1.10  calendar  2026-11-01  Muutto Turkuun 🚚
 
-== Contributions: move-2026-10-03 (45140 ms)
+== Contributions: move-2026-10-03 (15173 ms)
   sms       total   5.73  n  2  strongest: Siirto Oy: Muuttoauto tulossa la 31.10. klo 9. Kuljettaja so
   mail      total   4.89  n  4  strongest: Tilausvahvistus: sähkösopimus, Yo-kylä 12 B 7, Turku, alkaen
   wifi      total   1.74  n  1  strongest: Liityit verkkoon TYS-Guest
   bank      total   1.17  n  1  strongest: Muuttopalvelu Siirto Oy
   calendar  total   1.10  n  1  strongest: Muutto Turkuun 🚚
 
-== Novelty 2026-09-18..2026-10-17 (48828 ms)
+== Novelty 2026-09-18..2026-10-17 (16990 ms)
 new senders:   University of Oulu, TYS, Nettiauto, dealer, Turku Energia, Finnair, Siirto Oy, PSOAS, If
 new merchants: Prisma Linnanmaa, Spotify, Lidl Linnanmaa, Waltti, Onnibus, Finnair, Muuttopalvelu Siirto Oy
 new places:    Turku, Yo-kylä, Autotalo Laakkonen, Oulu
@@ -309,18 +310,16 @@ change points:
   wifi      2026-10-07  4.4 -> 8.9 per week
   sms       2026-10-10  2.3 -> 7 per week
 clusters:
-  A first car [first_car]  novelty 0.116  29 snippets
-     Nomination confirmed: Erasmus+ exchange, | Posti: Pakettisi on noudettavissa automa | OP: Vahvistuskoodisi kirjautumiseen. Älä | Your parcel has been delivered to your p | Asuntohakemuksesi on vastaanotettu – TYS | Tilauksesi on toimitettu | +18
   headphones, onnibus, shipped  novelty 0.071  11 snippets
      Sali | Spotify | Order shipped: headphones | Onnibus
-  A first car [first_car]  novelty 0.041  47 snippets
-     Liityit verkkoon eduroam | Liityit verkkoon Koti-WiFi | Laskusi on saapunut | Ylioppilaskunnan uutiskirje | Luento siirtyy: Lineaarialgebra | Tentti: Tietorakenteet ja algoritmit | +23
+  A first car [first_car]  novelty 0.07  76 snippets
+     Liityit verkkoon eduroam | Liityit verkkoon Koti-WiFi | Laskusi on saapunut | Ylioppilaskunnan uutiskirje | Luento siirtyy: Lineaarialgebra | Tentti: Tietorakenteet ja algoritmit | +47
   A long trip [long_trip]  novelty 0.028  30 snippets
      Kirjasto | VR | Koti | Yliopisto | Waltti | Gym | +5
   Moving to Turku [move]  novelty 0.017  49 snippets
      Lidl Tuira | K-Market Keskusta | K-Market Kaijonharju | K-Market Linnanmaa | Prisma Linnanmaa | Espresso House | +14
 
-== Horizon (48842 ms)
+== Horizon (16993 ms)
 2026-10-17..2027-01-15: first_car 2026-10-18, move 2026-11-01, long_trip 2027-01-10
   [lapse] A gap in home cover is possible  (2026-10-31..2026-11-01; move-2026-10-03)
      The old lease ends 31 October 2026 and the new one starts 1 November 2026. If the home insurance is not moved by then, the new home is uncovered from day one.
@@ -329,5 +328,5 @@ clusters:
   [empty-home] The home stands empty while you are away  (2027-01-10..2027-05-30; long_trip-2026-09-20)
      You are away from 10 January 2027 to 30 May 2027, 140 days. An empty home is where leaks and freezes go unnoticed: turn off the water, ask someone to look in, and check that the home insurance covers a long absence.
 
-done in 48988 ms
+done in 17063 ms
 ```

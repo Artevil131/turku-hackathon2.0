@@ -76,7 +76,8 @@ describe("OnDeviceAnalyst on the student phone", () => {
     expect(n.newTopics[0]?.margin ?? 0).toBeGreaterThanOrEqual(n.newTopics[7]?.margin ?? 1);
     expect(n.recurring.length).toBeLessThanOrEqual(8);
     expect(n.recurring.every((r) => r.occurrences >= 3 && r.intervalDays >= 5)).toBe(true);
-    expect(n.clusters.length).toBe(5);
+    expect(n.clusters.length).toBeLessThanOrEqual(5);
+    expect(new Set(n.clusters.map((c) => c.label)).size).toBe(n.clusters.length);
     expect(n.clusters.find((c) => c.nearest === "move")?.label).toBe("Moving to Turku");
     expect(n.clusters.find((c) => c.nearest === "first_car")).toBeDefined();
     for (const c of n.clusters) expect(c.novelty).toBeGreaterThanOrEqual(0);

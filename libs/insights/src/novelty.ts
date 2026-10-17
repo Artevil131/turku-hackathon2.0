@@ -240,7 +240,7 @@ export async function novelty(detector: PrototypeDetector, snippets: readonly Sn
     if (nearest) cluster.nearest = nearest;
     clusters.push(cluster);
   }
-  clusters.sort((a, b) => b.novelty - a.novelty || b.snippetIds.length - a.snippetIds.length);
+  const merged = mergeClusters(clusters);
 
   const window = enteredBetween(snippets, addDays(from, -PERIOD_DAYS), today);
   return {
@@ -252,8 +252,27 @@ export async function novelty(detector: PrototypeDetector, snippets: readonly Sn
     newTopics,
     recurring: recurring(window, today),
     changePoints: changePoints(snippets, today),
-    clusters,
+    clusters: merged,
   };
+}
+
+/**
+ * Clusters that ended up with the same label become one (union of snippets, novelty as the member-weighted
+ * mean), most novel first, at most `CLUSTERS_K`.
+ */
+export function mergeClusters(clusters: readonly Cluster[]): Cluster[] {
+  const byLabel = new Map<string, Cluster>();
+  for (const c of clusters) {
+    const m = byLabel.get(c.label);
+    if (!m) {
+      byLabel.set(c.label, { ...c, snippetIds: [...c.snippetIds] });
+      continue;
+    }
+    const n = m.snippetIds.length + c.snippetIds.length;
+    m.novelty = round3((m.novelty * m.snippetIds.length + c.novelty * c.snippetIds.length) / n);
+    m.snippetIds.push(...c.snippetIds);
+  }
+  return [...byLabel.values()].sort((a, b) => b.novelty - a.novelty || b.snippetIds.length - a.snippetIds.length).slice(0, CLUSTERS_K);
 }
 
 function mostFrequent(xs: readonly string[]): string | undefined {
