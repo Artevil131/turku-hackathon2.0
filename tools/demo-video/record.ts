@@ -269,6 +269,15 @@ try {
     await sleep(250);
   }
   await step("journey-end");
+  // The share: the one message that can leave the phone (PLAN.md demo script, 2:10). Needs apps/api running.
+  if (await click(client, "Share this event with If", [".share-button"], ["Share this event with If", "Jaa tämä tapahtuma"])) {
+    await step("share-sheet");
+    await click(client, "Share with If", ["dialog.share-sheet button.primary"], ["Share with If", "Jaa Ifille"]);
+    await sleep(1800);
+    await step("share-sent");
+    await click(client, "Done", ["dialog.share-sheet button.primary"], ["Done", "Valmis"]);
+    await step("journey-shared");
+  }
   await click(client, "Back", ['[aria-label="Back"]'], ["Back", "← Back"]);
   await scrollToTop(client);
   await step("back");

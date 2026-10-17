@@ -57,7 +57,12 @@ Everything else is a stretch.
    N days; new address from 1 Nov"), FMI freeze warning for Turku on the
    move week, the lock-change card, the comparison card with If beside
    two competitors.
-5. (2:10) The ledger: what was inferred, what was shared (nothing), erase.
+5. (2:10) The share. At the end of the journey: "Share this event with
+   If". The sheet shows exactly three fields, event, date, municipality,
+   and says that is the whole message. Press Share: the footer counter
+   goes from 0 requests to 1 request and the sheet shows what If
+   received. Then the ledger: what was inferred, what was shared (that
+   one line), erase. The If side at localhost:8787 shows one count.
 6. (2:30) Business slide: prevention (Finanssiala 2021: 34 800 leaks,
    171 M€, more than fire), retention at
    the moment of change, acquisition because it is useful before you buy,

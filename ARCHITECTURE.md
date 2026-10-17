@@ -72,7 +72,10 @@ statistics. Never a snippet, never a vector.
 - Open-data proxies: FMI warnings by municipality, a DVV calendar rule,
   Traficom inspection rule. Cached, no user identity in requests beyond a
   postcode.
-- Optional opt-in endpoint for confirmed events and aggregate counts.
+- The opt-in endpoint for confirmed events and aggregate counts, built
+  as `apps/api` (D-016): three fields and nothing else; the app shows
+  them before and after sending, and the counter on screen goes from 0
+  to 1. Templates and open data are bundled with the app, not served.
 - Nothing else. The server cannot infer anything about a user who has not
   shared.
 

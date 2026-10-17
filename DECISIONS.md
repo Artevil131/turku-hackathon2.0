@@ -21,6 +21,7 @@ not deleted: add a new entry and mark the old one `superseded by D-NNN`.
 | D-013 | 2026-10-17 | The app Store is IndexedDB through the `idb` wrapper, so erase-all is one transaction | Team choice, the proposal in Open | Operator (machine B) |
 | D-014 | 2026-10-17 | UI is Finnish and English from the start with a language toggle; the demo runs in English | Team choice, the proposal in Open | Operator (machine B) |
 | D-015 | 2026-10-17 | Everything the on-device model needs is served from the app's own origin: the model files under `/models/` (`libs/embed/scripts/fetch-model.ts`, `useLocalModels`) and the ONNX Runtime WASM files under `/ort/` (`scripts/copy-ort.ts`); both git-ignored, remote model loading off | The first browser run fetched the model from huggingface.co and the runtime from cdn.jsdelivr.net; served locally the demo works without venue wifi and the outbound counter stays at 0 (PLAN.md risk 1) | Aapo (WORK.md) and operator (machine B) |
+| D-016 | 2026-10-17 | The only server is `apps/api` (node:http, no dependencies): POST `/api/share` accepts `{type, date?, municipality?}` and drops everything else; GET `/api/counts` and a page at `/` show counts per municipality and type. The app shows the three fields before and after sending and the outbound counter goes from 0 to 1 | Aapo asked for the backend; the share turns the privacy claim into a demonstration (ARCHITECTURE.md §3) | Aapo |
 
 ## Open (to be decided by the team before code depends on them)
 

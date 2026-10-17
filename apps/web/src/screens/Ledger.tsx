@@ -1,6 +1,6 @@
 import type { LedgerEntry } from "@ahead/contract";
 import { describe } from "@ahead/detect/describe";
-import { type Key, useI18n } from "../i18n.tsx";
+import { formatDate, type Key, useI18n } from "../i18n.tsx";
 import { payloadFor } from "../share.ts";
 import { today } from "../today.ts";
 
@@ -31,7 +31,7 @@ export function Ledger({ ledger, onOpen, onEraseAll }: Props) {
                     ? t("ledger.sharedWhat", {
                         what: [
                           t(`event.${e.event.type}` as Key),
-                          payloadFor(e.event).date ?? t("share.unknown"),
+                          payloadFor(e.event).date ? formatDate(payloadFor(e.event).date as string, locale) : t("share.unknown"),
                           payloadFor(e.event).municipality ?? t("share.unknown"),
                         ].join(", "),
                       })
