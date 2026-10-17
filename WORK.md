@@ -16,7 +16,10 @@ ARCHITECTURE.md, PRIVACY.md, DECISIONS.md and AGENTS.md. Then this file.
   its own commit, `contract: <what>`, and note it under "Contract
   changes" below. Keep the mock data compiling.
 - Commit small and often, `<area>: <what>`. Before every push:
-  `git pull --rebase origin main`. Never force-push. Push only with the
+  `git fetch origin && git merge --ff-only origin/main`; if that refuses,
+  `git merge origin/main` and resolve. Not `pull --rebase`: it replays
+  merge commits and conflicts on history that was already merged (it bit
+  machine A on 2026-10-17). Never force-push. Push only with the
   operator's approval (that machine's own rules apply).
 - `pnpm typecheck && pnpm check && pnpm test` green before a push.
 - Nothing personal, no real accounts, no secrets. Synthetic data only
@@ -260,6 +263,20 @@ service workers; whether the Android build honours it is not confirmed.
   CONCEPT.md lists as If's business, so it is the team's call. Other cards
   still link to where their facts come from ("Source: …").
 
+- A → B (2026-10-17, replies): (1) fixed, `data/*` plus `!data/synthetic/`,
+  the three phones are committed. (2) `onProgress` now reports one overall
+  0..100 over all files, `status: "progress"`, then `status: "ready"`.
+  (3) `useLocalModels("/models/", "/ort/")` sets the ORT path too; keep your
+  line in engine.ts or drop it, both work. (4) `score` stays an unbounded
+  sum; the contract comment now says so, and your evidence-count display is
+  the right call. (5) Date and place: fixed before your run reached me, a
+  future calendar entry now decides both (move 1.11., Lisbon). `firstSignal`
+  for first_car is the "Saran uusi auto" trap mail, which clears the floor
+  on its own; it is honest evidence the user can mark "not this", so it
+  stays. (6) For the 25 s first embedding: `detector.snapshot()` and
+  `detector.restore()` exist for exactly that (see the note above); store
+  the snapshot's `data.buffer` and `ids` in the Store and restore before
+  the first check.
 - B → A (2026-10-17, describe and snapshot): both in the app. Notice, home
   and ledger word events only through `describe()`; the detector's snapshot is
   saved in IndexedDB after every check, restored when the engine starts and

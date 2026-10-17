@@ -23,7 +23,39 @@ export const MODELS = {
 
 export type ModelKey = keyof typeof MODELS;
 
+/**
+ * Download progress for the app's bar. `progress` is 0..100 over every file
+ * of the model together (Transformers.js reports per file; this adds them
+ * up), `file` names the file currently moving, `status` is "progress" while
+ * downloading, "ready" when the model is loaded.
+ */
 export type ProgressCallback = (p: { status: string; progress?: number; file?: string }) => void;
+
+/** Turns the library's per-file events into one overall percentage. */
+function overallProgress(
+  cb: ProgressCallback,
+): (e: { status: string; file?: string; loaded?: number; total?: number; progress?: number }) => void {
+  const files = new Map<string, { loaded: number; total: number }>();
+  return (e) => {
+    if (e.status === "ready") {
+      cb({ status: "ready", progress: 100 });
+      return;
+    }
+    if (!e.file) return;
+    if (e.status === "progress" || e.status === "done" || e.status === "initiate") {
+      const total = e.total ?? files.get(e.file)?.total ?? 0;
+      const loaded = e.status === "done" ? total : (e.loaded ?? files.get(e.file)?.loaded ?? 0);
+      files.set(e.file, { loaded, total });
+      let l = 0;
+      let t = 0;
+      for (const f of files.values()) {
+        l += f.loaded;
+        t += f.total;
+      }
+      cb({ status: "progress", file: e.file, progress: t > 0 ? Math.min(100, Math.round((100 * l) / t)) : 0 });
+    }
+  };
+}
 
 /** Lazily loads the pipeline on first `embed`; vectors are mean-pooled and L2-normalised. */
 export class TransformersEmbedder implements Embedder {
@@ -45,7 +77,7 @@ export class TransformersEmbedder implements Embedder {
     this.pipe ??= pipeline("feature-extraction", this.spec.id, {
       dtype: this.spec.dtype ?? "q8",
       // biome-ignore lint/suspicious/noExplicitAny: the library's progress event type is not exported
-      progress_callback: this.onProgress as any,
+      progress_callback: (this.onProgress ? overallProgress(this.onProgress) : undefined) as any,
     });
     return this.pipe;
   }
@@ -70,12 +102,15 @@ export function embedder(key: ModelKey, onProgress?: ProgressCallback): Transfor
 /**
  * Serve the model from our own server instead of huggingface.co: call it once
  * before the first `embed`. `path` is where `scripts/fetch-model.ts` put the
- * files, as a URL path (browser) or directory (Node).
+ * files, as a URL path (browser) or directory (Node); `ortPath` likewise for
+ * the ONNX Runtime files (the app uses "/ort/").
  */
-export function useLocalModels(path = "/models/"): void {
+export function useLocalModels(path = "/models/", ortPath?: string): void {
   env.allowRemoteModels = false;
   env.allowLocalModels = true;
   env.localModelPath = path;
+  // The ONNX Runtime WASM files are otherwise fetched from a CDN (D-015); `scripts/copy-ort.ts` puts them under /ort/.
+  if (ortPath && env.backends.onnx.wasm) env.backends.onnx.wasm.wasmPaths = ortPath;
 }
 
 /** Cosine similarity of two L2-normalised vectors is their dot product. */

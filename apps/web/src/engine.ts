@@ -42,11 +42,8 @@ export function createMockEngine(): Engine {
  * exists; one detector instance is kept so later checks reuse its vector cache.
  */
 export async function createCoreEngine(onProgress?: EngineProgress): Promise<Engine> {
-  // A glob, not an import: a clone without the generated phone still builds (the file is git-ignored today).
-  const phones = import.meta.glob("../../../data/synthetic/student.json", { import: "default" });
-  const loadPhone = Object.values(phones)[0];
-  if (!loadPhone) throw new Error("data/synthetic/student.json is missing. Generate it with: node libs/synthetic/src/cli.ts");
-  const phone = (await loadPhone()) as { snippets: Snippet[] };
+  // The student phone is committed (data/synthetic); loaded on demand like the model code.
+  const phone = (await import("../../../data/synthetic/student.json")).default as { snippets: Snippet[] };
   const [{ PrototypeDetector }, { embedder, useLocalModels: serveModelsFrom }, { env }] = await Promise.all([
     import("@ahead/detect"),
     import("@ahead/embed"),
@@ -54,9 +51,7 @@ export async function createCoreEngine(onProgress?: EngineProgress): Promise<Eng
   ]);
   // D-015: the model and the ONNX Runtime come from this app, never from huggingface.co or a CDN.
   // Renamed on import: it is not a React hook, whatever its name says.
-  serveModelsFrom("/models/");
-  const wasm = env.backends.onnx.wasm;
-  if (wasm) wasm.wasmPaths = "/ort/";
+  serveModelsFrom("/models/", "/ort/");
   // When the service worker caches everything, the library's own cache would only store the model twice.
   env.useBrowserCache = !navigator.serviceWorker?.controller;
   const detector = new PrototypeDetector(embedder("e5", onProgress));
