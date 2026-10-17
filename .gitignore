@@ -70,3 +70,6 @@ apps/web/certs/
 # impeccable's font index sits in a folder named data/; keep it
 !.claude/skills/impeccable/scripts/data/
 !.agents/skills/impeccable/scripts/data/
+
+# gpt-worker run reports (local tooling, never committed)
+build/

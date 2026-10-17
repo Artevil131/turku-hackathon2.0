@@ -13,7 +13,9 @@
       "!**/public/models",
       "!**/public/ort",
       "!**/models",
-      "!**/models-public"
+      "!**/models-public",
+      "!!.claude/worktrees",
+      "!!build"
     ]
   },
   "formatter": {
