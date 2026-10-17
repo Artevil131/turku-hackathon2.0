@@ -1,0 +1,1024 @@
+{
+  "meta": {
+    "title": "Housing rules for a buyer of a flat in a Finnish housing company (asunto-osakeyhtiö)",
+    "compiledOn": "2026-10-17",
+    "scope": "Renovation life cycles and costs keyed by building year, documents a buyer should ask for and their legal basis, and water leak damage statistics. Data only: no UI, no code.",
+    "statusLegend": {
+      "primary": "Read by us in the original source: law text on Finlex, an Isännöintiliitto or Finanssiala publication, Tilastokeskus, or an RT card value shown in a Rakennustieto webinar deck.",
+      "secondary": "From a named consultancy, company or news article that reports someone else's figures. Use with care.",
+      "estimate": "Our estimate. No primary source was found. The 'basis' field says what it rests on. Replace it when a primary source is found.",
+      "derived": "Arithmetic on sourced numbers, for example a total divided by a count. The inputs are sourced."
+    },
+    "units": "costPerM2 is in euros per m² of the flat's own floor area (asuinneliö, asm²) unless 'unit' says otherwise. A buyer's share of a project is roughly flat m² × costPerM2. The real split follows the payment basis in the articles of association (yhtiöjärjestys); see AOYL 3:4 §.",
+    "howToUse": [
+      "Typical due year = (year of the last renovation of that item, or the building year if none is mentioned) + typicalLifeYears. Treat lifeYearsRange as the window in which the item is commonly done.",
+      "Show costs as a range (low to high) and not as a single number. Where median is null, no defensible point value exists.",
+      "The thresholds in proposedRules are proposals with sources. AGENTS.md requires the team to confirm thresholds before the reader depends on them."
+    ],
+    "factCheck": {
+      "checkedOn": "2026-10-17",
+      "method": "Sources re-opened independently: the Isännöintiliitto, Finanssiala and Rakennustieto PDFs downloaded again and read (tables and slide images), Finlex pages parsed, and web pages fetched.",
+      "confirmed": [
+        "Putkiremonttibarometri 2025 table: 850 (832) / 650 (677) / 1154 (1119); capital region 1128 (1038) / 950 (890) / 1500 (1495); rest of Finland 650 (690) / 540 (552) / 715 (743); water pipes only 198 (180) / 143 (145) / 248 (336)",
+        "Putkiremonttibarometri 2026: medians 832 / 850 / 890 and capital region 1038 / 1128 / 1000; 92 % loan; 33 % one financing offer; 21 % and 42 % undone; building decades; 43 % plot pipes; 49 % electrical; 71 % remote reading",
+        "RT 103765 facade and balcony life values (Sutinen slides 10 and 11, table images)",
+        "Katto- ja julkisivubarometri 2019 building-year statistics",
+        "AOYL 3:4, 3:7, 6:3, 7:27 and 7:28 §, and amendment 152/2023 to 7:27–28 §",
+        "VNa 130/2001 2 § 2 mom. 3 kohta and 8 § 1 mom. 12–15 kohta",
+        "VNa 798/2015 7 §, and the Isännöintiliitto 2020 guide (1922–1992, 1994 ban, 1.1.2016, shareholder pays, drilling exempt)",
+        "Finanssiala 2022 (34,800 damages, 171 M€; Kiinteistöliitto 30–35 and 5–10 years), 2020 (about 36,000, about 163 M€ in 2018), 2014 report figures, 2002 shares",
+        "Tilastokeskus 41.2 and 32.6 €/m² (VAT included) and the planned-renovation shares",
+        "Sustera and Arvonosturi figures as stated; Taloustaito 2024 and 2023 statements"
+      ],
+      "corrected": [
+        "notes[5]: '18 % at risk within 5 years' was wrong; 18 % is the 'don't know' share. The follow-up question gives 11 % at risk and 89 % able to continue.",
+        "buyerChecks[0]: AOYL 3:7 § caps the new owner's liability at an amount equal to six months' charges; it is not limited to charges for those months.",
+        "buyerChecks[2]: the price rule is VNa 130/2001 2 § 2 mom. 3 kohta (confirmed).",
+        "buyerChecks[5]: leaks were the most influential reason to start planning, not 'the most common trigger'.",
+        "buyerChecks[6]: 1962–1982 is the interquartile range, not 'mostly'.",
+        "asbestos rule and buyerChecks[7]: the survey duty covers work that removes or demolishes materials; minor work is exempt.",
+        "drains: the payout for drain leaks is about half overall and under half in apartment buildings; the 650 €/m² difference of medians is not an upper bound (now 'estimate').",
+        "balconies: the card says 'usually up to 1990', not 1960–1990.",
+        "facade costPerM2: the cited source's own ×2 conversion conflicts with our 0.6 ratio; flagged, values left as estimate.",
+        "S_FA_2005: published 2004 by SVK; the 2002 shares are kiinteistövakuutus.",
+        "decades_1970s_1980s: 64 % of the 77 reported projects, not of all renovations."
+      ],
+      "stillUnverified": [
+        "No Finanssiala leak statistics for 2022–2025 were found in this check either.",
+        "Roof, window, balcony, elevator and facade per-flat-m² costs remain estimates (one commercial blog, one consultancy article).",
+        "The column heading of the '5' value (taken as the inspection interval) is not visible in the RT table images."
+      ]
+    }
+  },
+  "sources": {
+    "S_PUTKI2026": {
+      "publisher": "Isännöintiliitto",
+      "title": "Putkiremonttibarometri 2026 – keskeiset tulokset (O. Rekonen)",
+      "year": 2026,
+      "note": "Survey in May 2026; 131 respondents managing about 2,000 housing companies; 77 reported their latest pipe renovation.",
+      "url": "https://www.isannointiliitto.fi/wp-content/uploads/2026/05/Putkiremonttibaro-2026-tulokset.pdf",
+      "type": "primary"
+    },
+    "S_PUTKI2025": {
+      "publisher": "Isännöintiliitto",
+      "title": "Putkiremonttibarometri 2025 – keskeiset tulokset (O. Rekonen)",
+      "year": 2025,
+      "note": "Survey in April–May 2025; 156 respondents managing about 2,800 housing companies; 95 reported their latest pipe renovation. Publishes quartiles; figures in brackets are 2024.",
+      "url": "https://www.isannointiliitto.fi/wp-content/uploads/2025/05/Putkiremonttibaro-2025-tulokset.pdf",
+      "type": "primary"
+    },
+    "S_KJB2019": {
+      "publisher": "Isännöintiliitto",
+      "title": "Katto- ja julkisivubarometri 11/2019 (N=198 property managers, dated 25.11.2019)",
+      "year": 2019,
+      "note": "Building year of the latest roof (N153), facade (N110), door and window (N137) and balcony (N68) project. Contains no cost figures.",
+      "url": "https://www.isannointiliitto.fi/wp-content/uploads/2020/05/katto-ja-julkisivubarometri-2019.pdf",
+      "type": "primary"
+    },
+    "S_RT103765": {
+      "publisher": "Rakennustieto",
+      "title": "RT 103765 Kiinteistön keskimääräiset tekniset käyttöiät ja kunnossapitojaksot. Rakennustekniikka (published 3/2025). Replaces RT 18-10922 (2008). The card is paywalled; we read the values from the table extracts in J. Sutinen (HTT ry), 'Tekniset käyttöiät ja kunnossapitojaksot – otteita rakennustekniikka-osiosta', Rakennustieto webinar 29.8.2025.",
+      "year": 2025,
+      "note": "Life values are given for exposure classes 1 (severe), 2 (normal) and 3 (light).",
+      "url": "https://tiedostot.rakennustieto.fi/290825/Sutinen%20Juha_HTT%20ry_Nostoja%20rakennetekniikan%20osalta%20pa%CC%88ivitetyista%CC%88%20RT-ohjekorteista_29-08-2025.pdf",
+      "cardUrl": "https://kortistot.rakennustieto.fi/kortit/RT%20103765",
+      "type": "primary"
+    },
+    "S_RT_FRIMAN": {
+      "publisher": "Rakennustieto (I. Friman)",
+      "title": "Kiinteistön keskimääräiset tekniset käyttöiät ja kunnossapitojaksot (webinar slides on RT 103765 and RT 103766)",
+      "year": 2025,
+      "date": "2025-08-29",
+      "url": "https://tiedostot.rakennustieto.fi/290825/Friman%20Ilkka_Rakennustieto_Ohjekortit%20on%20laadittu%20yhdessa%CC%88%20alan%20asiantuntijoiden%20kanssa_Ka%CC%88ytto%CC%88ia%CC%88t%20ja%20kunnossapitojaksot_29-08-2025.pdf",
+      "type": "primary"
+    },
+    "S_TALOUSTAITO_2024": {
+      "publisher": "Taloustaito (Suomen Ekonomit), quoting an Isännöintiliitto press release (O. Rekonen) on Putkiremonttibarometri 2024",
+      "title": "Koruton tulos kyselyssä – putkiremontteja jopa 2000-luvulla rakennetuissa taloyhtiöissä",
+      "year": 2024,
+      "date": "2024-07-05",
+      "url": "https://www.taloustaito.fi/koti/2024/koruton-tulos-kyselyssa--putkiremontteja-jopa-2000-luvulla-rakennetuissa-taloyhtioissa/",
+      "type": "secondary"
+    },
+    "S_FA_2022": {
+      "publisher": "Finanssiala ry (press release via STT)",
+      "title": "Vuotovahingot kääntyivät nousuun – putkiremontin suunnittelu kannattaa aloittaa jo ennen kuin putket vanhenevat käsiin",
+      "year": 2022,
+      "date": "2022-05-20",
+      "url": "https://www.sttinfo.fi/tiedote/69941993/vuotovahingot-kaantyivat-nousuun-putkiremontin-suunnittelu-kannattaa-aloittaa-jo-ennen-kuin-putket-vanhenevat-kasiin",
+      "type": "primary"
+    },
+    "S_FA_2020": {
+      "publisher": "Finanssiala ry",
+      "title": "Lausunto 29.1.2020 työ- ja elinkeinoministeriölle (HE-luonnos energiatehokkuuslaeiksi), P. Mero",
+      "year": 2020,
+      "url": "https://www.finanssiala.fi/wp-content/uploads/2020/01/FA_lausunto_29012020_TEM_HE_luonnos_energiatehokkuuslait.pdf",
+      "type": "primary"
+    },
+    "S_FA_2014": {
+      "publisher": "Finanssiala ry",
+      "title": "Vuotovahinkoselvitys 2012–2013 (M. Haapaniemi), 1,287 leak damages from 1.5.2012 to 30.4.2013",
+      "year": 2014,
+      "date": "2014-05-20",
+      "url": "https://www.finanssiala.fi/wp-content/uploads/2014/05/vuotovahinkoselvitys_2013.pdf",
+      "type": "primary"
+    },
+    "S_FA_2005": {
+      "publisher": "Suomen Vakuutusyhtiöiden Keskusliitto (SVK), now Finanssiala; hosted on finanssiala.fi",
+      "title": "Vuotovahinkoselvitys 2002–2003",
+      "year": 2004,
+      "url": "https://www.finanssiala.fi/wp-content/uploads/2005/02/Vuotovahinkoselvitys_2002-2003.pdf",
+      "type": "primary",
+      "note": "The title page says 'SVK, Helsinki 2004'; the 2005/02 in the URL is the upload folder. The 2002 shares refer to kiinteistövakuutus (building insurance)."
+    },
+    "S_AOYL": {
+      "publisher": "Finlex",
+      "title": "Asunto-osakeyhtiölaki 1599/2009 (as in force on 17.10.2026)",
+      "year": 2009,
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2009/1599",
+      "type": "primary"
+    },
+    "S_VNA130": {
+      "publisher": "Finlex",
+      "title": "Valtioneuvoston asetus asuntojen markkinoinnissa annettavista tiedoista 130/2001",
+      "year": 2001,
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2001/130",
+      "type": "primary"
+    },
+    "S_VNA798": {
+      "publisher": "Finlex",
+      "title": "Valtioneuvoston asetus asbestityön turvallisuudesta 798/2015 (7 § Asbestikartoitus)",
+      "year": 2015,
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2015/798",
+      "type": "primary"
+    },
+    "S_IL_ASB2020": {
+      "publisher": "Isännöintiliitto",
+      "title": "Asbestin kartoitusvelvollisuus osakkaan huoneistoremontissa",
+      "year": 2020,
+      "url": "https://www.isannointiliitto.fi/wp-content/uploads/2020/05/osakkaan-asbestiohje.pdf",
+      "type": "primary"
+    },
+    "S_IL_ASB2021": {
+      "publisher": "Isännöintiliitto",
+      "title": "Asbestityöt taloyhtiössä",
+      "year": 2021,
+      "url": "https://www.isannointiliitto.fi/wp-content/uploads/2021/05/asbestityot-taloyhtioissa.pdf",
+      "type": "primary"
+    },
+    "S_STAT_KORA2021": {
+      "publisher": "Tilastokeskus",
+      "title": "Korjausrakentaminen 2021 (press release 16.6.2022)",
+      "year": 2022,
+      "url": "https://stat.fi/fi/julkaisu/ckty3e6f41eud0b99p7vyvbmd",
+      "type": "primary"
+    },
+    "S_SUSTERA_2025": {
+      "publisher": "Sustera Oy (building consultancy)",
+      "title": "Taloyhtiön julkisivuremontin hinta – mistä kustannukset koostuvat?",
+      "year": 2025,
+      "date": "2025-08-06",
+      "url": "https://sustera.fi/ajankohtaista/uutiset/taloyhtion-julkisivuremontin-hinta-mista-kustannukset-koostuvat/",
+      "type": "secondary"
+    },
+    "S_ARVONOSTURI_2021": {
+      "publisher": "Arvonosturi Oy (renovation company blog)",
+      "title": "Taloyhtiön yleisimmät remontit ja kustannukset – top 6",
+      "year": 2021,
+      "date": "2021-05-07",
+      "note": "The company's own estimates, with no study cited. The units are '€/m²' and do not say whether they mean floor area or element area.",
+      "url": "https://arvonosturi.fi/taloyhtion-yleisimmat-remontit/",
+      "type": "secondary"
+    },
+    "S_TALOUSTAITO_2023": {
+      "publisher": "Taloustaito, quoting Pohjola Vakuutus (I. Saranpää) and Finanssiala",
+      "title": "Astianpesukone yleisin vesivahingon aiheuttaja kodeissa – vanhat käyttövesiputket nostavat vuotovahinkojen riskiä",
+      "year": 2023,
+      "date": "2023-07-17",
+      "url": "https://www.taloustaito.fi/koti/2023/astianpesukone-yleisin-vesivahingon-aiheuttaja-kodeissa--vanhat-kayttovesiputket-nostavat-vuotovahinkojen-riskia/",
+      "type": "secondary"
+    }
+  },
+  "renovations": [
+    {
+      "id": "pipe_renovation",
+      "item": "Pipe renovation, traditional (renews domestic water pipes and drains, usually with new bathrooms)",
+      "itemFi": "putkiremontti (perinteinen / linjasaneeraus)",
+      "typicalLifeYears": 50,
+      "lifeYearsRange": [
+        35,
+        60
+      ],
+      "lifeStatus": "secondary (50) / estimate (range)",
+      "lifeBasis": "Isännöintiliitto (O. Rekonen) via Taloustaito 5.7.2024: the common rule that pipes last 50 years holds on average, but it hides large differences between buildings, and water pipes and drains can fall due at different times. The 35–60 range is our estimate from S_PUTKI2026: 39 % of the latest renovations were in 1970s buildings (about 46–55 years old in 2025) and 25 % in 1980s buildings (about 36–45 years old). S_TALOUSTAITO_2024: almost a quarter of the renovations in the 2024 barometer were in buildings from 1980 or later.",
+      "conditionSurvey": {
+        "firstAtAgeYears": [
+          30,
+          35
+        ],
+        "repeatEveryYears": [
+          5,
+          10
+        ],
+        "status": "secondary",
+        "basis": "Kiinteistöliitto's recommendation, quoted in Finanssiala's press release of 20.5.2022 (S_FA_2022)."
+      },
+      "costPerM2": {
+        "low": 650,
+        "median": 890,
+        "high": 1154,
+        "year": 2026,
+        "unit": "€ per residential m² (asuinneliö), total project cost; the barometer does not say whether VAT is included",
+        "measure": "median from the 2026 barometer (national); low and high are the national lower and upper quartiles from the 2025 barometer, because the 2026 summary gives medians only",
+        "status": "primary"
+      },
+      "costHistoryNational": [
+        {
+          "barometerYear": 2024,
+          "median": 832,
+          "lowerQuartile": 677,
+          "upperQuartile": 1119,
+          "source": "S_PUTKI2025 (values in brackets)"
+        },
+        {
+          "barometerYear": 2025,
+          "median": 850,
+          "lowerQuartile": 650,
+          "upperQuartile": 1154,
+          "source": "S_PUTKI2025"
+        },
+        {
+          "barometerYear": 2026,
+          "median": 890,
+          "lowerQuartile": null,
+          "upperQuartile": null,
+          "source": "S_PUTKI2026"
+        }
+      ],
+      "costByRegion": {
+        "capitalRegion": {
+          "label": "Pääkaupunkiseutu (Helsinki, Espoo, Vantaa, Kauniainen)",
+          "median2026": 1000,
+          "median2025": 1128,
+          "lowerQuartile2025": 950,
+          "upperQuartile2025": 1500,
+          "median2024": 1038,
+          "source": "S_PUTKI2026, S_PUTKI2025"
+        },
+        "restOfFinland": {
+          "label": "Muu Suomi",
+          "median2025": 650,
+          "lowerQuartile2025": 540,
+          "upperQuartile2025": 715,
+          "median2024": 690,
+          "source": "S_PUTKI2025 (the 2026 summary has no rest-of-Finland figure)"
+        }
+      },
+      "priceOutlook": "In spring 2026 the largest group of property managers (34 %) expected pipe renovation prices to rise 1–5 % in the next 12 months; 28 % expected 6–10 % (S_PUTKI2026).",
+      "workedExample": {
+        "flatM2": 50,
+        "estimateEUR": 44500,
+        "rangeEUR": [
+          32500,
+          57700
+        ],
+        "status": "derived",
+        "basis": "50 × 890 €/m²; range 50 × 650 to 50 × 1154 €/m²."
+      },
+      "facts": [
+        {
+          "fact": "Pipe leaks were the strongest reason to start planning a pipe renovation.",
+          "source": "S_PUTKI2026"
+        },
+        {
+          "fact": "92 % of the latest pipe renovations were financed with a housing company loan (yhtiölaina). For a buyer this usually means a higher rahoitusvastike or a loan share to pay off.",
+          "source": "S_PUTKI2026"
+        },
+        {
+          "fact": "33 % of projects received only one financing offer (26 % in 2025).",
+          "source": "S_PUTKI2026"
+        },
+        {
+          "fact": "21 % of property managers said pipe renovations had been left undone because of financing problems; 42 % of those working only in declining municipalities said so.",
+          "source": "S_PUTKI2026"
+        },
+        {
+          "fact": "Asked about the future of a housing company whose pipe renovation was left undone for lack of financing, 11 % of these managers expected its operation to be at risk of ending, or the company to be wound down, within 5 years; 89 % expected it to continue normally at least for now.",
+          "source": "S_PUTKI2026 (slide 7)"
+        },
+        {
+          "fact": "The construction phase lasts about half a year on average.",
+          "source": "S_PUTKI2026"
+        },
+        {
+          "fact": "43 % of renovations also renewed the plot pipes (tonttijohdot). About half (49 %) also upgraded the electrical systems, and 71 % added remote reading of water use.",
+          "source": "S_PUTKI2026 (percentages read from a chart in the text extract)"
+        },
+        {
+          "fact": "Building decade of the latest pipe renovations (2026): before 1920 1 %, 1920–39 8 %, 1940s 0 %, 1950s 8 %, 1960s 9 %, 1970s 39 %, 1980s 25 %, 1990s 8 %, 2000s 1 %, 2010s and later 0 %.",
+          "source": "S_PUTKI2026 (read from a chart in the text extract)"
+        }
+      ],
+      "source": [
+        "S_PUTKI2026",
+        "S_PUTKI2025",
+        "S_TALOUSTAITO_2024",
+        "S_FA_2022"
+      ]
+    },
+    {
+      "id": "water_pipes_only",
+      "item": "Renewal of domestic water pipes only",
+      "itemFi": "pelkkien käyttövesiputkien uusiminen",
+      "typicalLifeYears": 50,
+      "lifeYearsRange": [
+        35,
+        60
+      ],
+      "lifeStatus": "secondary / estimate (same basis as pipe_renovation)",
+      "costPerM2": {
+        "low": 143,
+        "median": 198,
+        "high": 248,
+        "year": 2025,
+        "unit": "€ per residential m², national",
+        "measure": "lower quartile / median / upper quartile (2024: 145 / 180 / 336)",
+        "status": "primary"
+      },
+      "facts": [
+        {
+          "fact": "In the 2024 barometer, 96 % of renovations renewed the domestic water pipes and 60 % renewed, relined or coated the drains.",
+          "source": "S_TALOUSTAITO_2024"
+        }
+      ],
+      "source": [
+        "S_PUTKI2025",
+        "S_TALOUSTAITO_2024"
+      ]
+    },
+    {
+      "id": "drains",
+      "item": "Drains and sewers (renewal, relining or coating)",
+      "itemFi": "viemärit (uusiminen, sujutus/sukitus, pinnoitus)",
+      "typicalLifeYears": 50,
+      "lifeYearsRange": [
+        40,
+        60
+      ],
+      "lifeStatus": "estimate",
+      "lifeBasis": "Assumed to follow the pipe cycle (S_TALOUSTAITO_2024 notes that drains and water pipes can fall due at different times). No primary life value was found; the value is in the paywalled RT 103766 (building services).",
+      "costPerM2": {
+        "low": null,
+        "median": null,
+        "high": 650,
+        "year": 2025,
+        "unit": "€ per residential m²",
+        "measure": "rough indication only, not a bound: the traditional national median (850) minus the water-pipes-only median (198) is about 650 €/m². A difference between two medians from different project samples does not bound anything, and it covers drains, wet rooms and everything else a traditional renovation includes.",
+        "status": "estimate"
+      },
+      "includedIn": "pipe_renovation (most traditional renovations include drains)",
+      "facts": [
+        {
+          "fact": "In 2012–13, drain pipes were the most common source of leak damage (21 % of cases) and cold domestic water pipes the second (18 %).",
+          "source": "S_FA_2014"
+        },
+        {
+          "fact": "For drain leaks the insurance payout averaged about half of the total damage cost across all building types, and under half in apartment buildings; for dishwashers, domestic water pipes and fixtures it was 80–90 % (2012–13 survey).",
+          "source": "S_FA_2014"
+        }
+      ],
+      "source": [
+        "S_PUTKI2025",
+        "S_PUTKI2026",
+        "S_FA_2014"
+      ]
+    },
+    {
+      "id": "facade",
+      "item": "Facade renovation (concrete or rendered facades are the most common case)",
+      "itemFi": "julkisivuremontti",
+      "typicalLifeYears": 50,
+      "lifeYearsRange": [
+        30,
+        70
+      ],
+      "lifeStatus": "primary",
+      "lifeByBuildingYear": [
+        {
+          "builtBefore": 1990,
+          "material": "concrete facade (betonijulkisivu)",
+          "lifeYears": {
+            "severe": 30,
+            "normal": 50,
+            "light": 70
+          },
+          "maintenance": "Inspect every 5 years; renew element joints every 15 years; maintain the coatings."
+        },
+        {
+          "builtFrom": 1990,
+          "material": "concrete facade (betonijulkisivu)",
+          "lifeYears": {
+            "severe": 50,
+            "normal": 60,
+            "light": 80
+          },
+          "maintenance": "Inspect every 5 years; renew element joints every 15 years; maintain the coatings."
+        }
+      ],
+      "observedTiming": {
+        "surveyYear": 2019,
+        "buildingYearOfRenovatedProperty": {
+          "mean": 1969,
+          "median": 1972,
+          "lowerQuartile": 1962,
+          "upperQuartile": 1979
+        },
+        "approxAgeAtRenovationYears": 47,
+        "status": "primary (building years) / derived (age = 2019 − median)",
+        "source": "S_KJB2019"
+      },
+      "costPerFacadeM2": {
+        "lightRepair": [
+          100,
+          150
+        ],
+        "heavyRepair": [
+          200,
+          300
+        ],
+        "replacement": [
+          500,
+          800
+        ],
+        "year": 2025,
+        "unit": "€ per m² of facade area (julkisivuneliö)",
+        "status": "secondary",
+        "source": "S_SUSTERA_2025",
+        "note": "A light repair is painting and surface repairs; a heavy repair also renews the surface and related structures; a replacement renews the structure, surfaces and insulation. Of the cost, about 85 % is the contract, 10 % consultants and 5 % management and financing."
+      },
+      "costPerM2": {
+        "low": 60,
+        "median": null,
+        "high": 480,
+        "year": 2025,
+        "unit": "€ per residential m²",
+        "byLevel": {
+          "lightRepair": [
+            60,
+            90
+          ],
+          "heavyRepair": [
+            120,
+            180
+          ],
+          "replacement": [
+            300,
+            480
+          ]
+        },
+        "status": "estimate",
+        "basis": "Sustera's 2025 per-facade-m² prices × an assumed 0.6 m² of facade per m² of flat. The 0.6 is our assumption for a 3–4-storey slab block 12 m deep with 2.9 m storeys, counting both long facades and a net-to-gross floor ratio of 0.8. Arvonosturi (2021) gives 150–500 €/m² with an unclear unit.",
+        "sourceConversionConflict": {
+          "status": "estimate",
+          "note": "Unverified. Sustera's article (S_SUSTERA_2025) says the facade-m² price can in practice be multiplied by two to get the price per flat m² ('Julkisivuneliöhinnan voi kertoa käytännössä kahdella, niin päästään huoneistoneliöihin'). That would give light 200–300, heavy 400–600 and replacement 1,000–1,600 € per flat m², about 3.3 times our 0.6-ratio values. A geometry check of typical 3–8-storey blocks gives 0.6–0.85 m² of facade per flat m², which supports the lower values, but neither conversion has been checked against real project costs. Prefer the per-facade-m² prices with the building's real facade area, or show both ranges.",
+          "byLevelIfSourceRule": {
+            "lightRepair": [
+              200,
+              300
+            ],
+            "heavyRepair": [
+              400,
+              600
+            ],
+            "replacement": [
+              1000,
+              1600
+            ]
+          }
+        }
+      },
+      "source": [
+        "S_RT103765",
+        "S_KJB2019",
+        "S_SUSTERA_2025",
+        "S_ARVONOSTURI_2021"
+      ]
+    },
+    {
+      "id": "balconies",
+      "item": "Balcony renovation (concrete balconies)",
+      "itemFi": "parvekeremontti",
+      "typicalLifeYears": 40,
+      "lifeYearsRange": [
+        30,
+        60
+      ],
+      "lifeStatus": "primary",
+      "lifeByBuildingYear": [
+        {
+          "builtBefore": 1990,
+          "type": "concrete balcony without waterproofing (the card says 'yleensä …1990', usually built up to 1990)",
+          "lifeYears": {
+            "severe": 30,
+            "normal": 40,
+            "light": 50
+          },
+          "maintenance": "Maintenance paint every 10–20 years; renew element joints every 15 years."
+        },
+        {
+          "builtBefore": 1990,
+          "type": "concrete balcony with waterproofing under the surface slab",
+          "lifeYears": {
+            "severe": 40,
+            "normal": 50,
+            "light": 60
+          },
+          "maintenance": "Maintenance paint every 10–20 years."
+        },
+        {
+          "builtFrom": 1990,
+          "type": "concrete balcony without waterproofing",
+          "lifeYears": {
+            "severe": 50,
+            "normal": 50,
+            "light": 50
+          },
+          "maintenance": "Maintenance paint every 10–20 years; renew element joints every 15 years."
+        },
+        {
+          "builtFrom": 1990,
+          "type": "concrete balcony with waterproofing",
+          "lifeYears": {
+            "severe": 50,
+            "normal": 60,
+            "light": 80
+          }
+        }
+      ],
+      "observedTiming": {
+        "surveyYear": 2019,
+        "buildingYearOfRenovatedProperty": {
+          "mean": 1972,
+          "median": 1974,
+          "lowerQuartile": 1963,
+          "upperQuartile": 1982
+        },
+        "approxAgeAtRenovationYears": 45,
+        "status": "primary (building years) / derived (age)",
+        "source": "S_KJB2019"
+      },
+      "costPerM2": {
+        "low": 50,
+        "median": null,
+        "high": 200,
+        "year": 2021,
+        "unit": "€/m² as stated by the source; assumed to mean per residential m²",
+        "status": "estimate",
+        "basis": "Arvonosturi Oy blog (2021): 50–200 €/m². This is a commercial source with an unclear unit, and 2021 prices are likely below today's. No primary cost source was found."
+      },
+      "source": [
+        "S_RT103765",
+        "S_KJB2019",
+        "S_ARVONOSTURI_2021"
+      ]
+    },
+    {
+      "id": "roof",
+      "item": "Roof covering renewal",
+      "itemFi": "vesikattoremontti",
+      "typicalLifeYears": 40,
+      "lifeYearsRange": [
+        20,
+        50
+      ],
+      "lifeStatus": "estimate",
+      "lifeBasis": "Arvonosturi (2021): bitumen felt roofs about 20–30 years, sheet metal and tile roofs about 50 years. Observed timing: in the 2019 barometer the median building year of roof projects was 1977, about 42 years before the survey. The primary values are in the paywalled RT 103765.",
+      "lifeByMaterial": [
+        {
+          "material": "bitumen felt (bitumikermi), typical on flat roofs",
+          "lifeYears": [
+            20,
+            30
+          ],
+          "status": "secondary",
+          "source": "S_ARVONOSTURI_2021"
+        },
+        {
+          "material": "sheet metal or tile",
+          "lifeYears": 50,
+          "status": "secondary",
+          "source": "S_ARVONOSTURI_2021"
+        }
+      ],
+      "observedTiming": {
+        "surveyYear": 2019,
+        "buildingYearOfRenovatedProperty": {
+          "mean": 1977,
+          "median": 1977,
+          "lowerQuartile": 1969,
+          "upperQuartile": 1986
+        },
+        "approxAgeAtRenovationYears": 42,
+        "status": "primary (building years) / derived (age)",
+        "source": "S_KJB2019"
+      },
+      "costPerRoofM2": {
+        "low": 40,
+        "high": 80,
+        "year": 2021,
+        "unit": "€/m² as stated by the source; assumed to mean per m² of roof",
+        "status": "secondary",
+        "source": "S_ARVONOSTURI_2021"
+      },
+      "costPerM2": {
+        "low": 12,
+        "median": null,
+        "high": 36,
+        "year": 2021,
+        "unit": "€ per residential m²",
+        "status": "estimate",
+        "basis": "40–80 € per roof m² (Arvonosturi 2021) × an assumed 0.3–0.45 m² of roof per m² of flat. The ratio is our geometry assumption for a 3–4-storey block (roof ≈ footprint, net-to-gross 0.8)."
+      },
+      "source": [
+        "S_KJB2019",
+        "S_ARVONOSTURI_2021"
+      ]
+    },
+    {
+      "id": "windows",
+      "item": "Window (and balcony door) renewal",
+      "itemFi": "ikkunaremontti",
+      "typicalLifeYears": 40,
+      "lifeYearsRange": [
+        30,
+        50
+      ],
+      "lifeStatus": "estimate",
+      "lifeBasis": "Arvonosturi (2021): wooden windows last almost 30 years, sometimes longer; aluminium windows ('alumiiniset') about 50 years. Observed timing: in the 2019 barometer the median building year of door and window projects was 1977, about 42 years before the survey.",
+      "observedTiming": {
+        "surveyYear": 2019,
+        "buildingYearOfRenovatedProperty": {
+          "mean": 1967,
+          "median": 1977,
+          "lowerQuartile": 1970,
+          "upperQuartile": 1984
+        },
+        "approxAgeAtRenovationYears": 42,
+        "status": "primary (building years, as published) / derived (age)",
+        "source": "S_KJB2019"
+      },
+      "costPerM2": {
+        "low": 50,
+        "median": null,
+        "high": 120,
+        "year": 2021,
+        "unit": "€/m² as stated by the source; assumed to mean per residential m²",
+        "status": "estimate",
+        "basis": "Arvonosturi Oy blog (2021): 50–120 €/m². This is a commercial source and 2021 prices are likely below today's. No primary cost source was found."
+      },
+      "source": [
+        "S_KJB2019",
+        "S_ARVONOSTURI_2021"
+      ]
+    },
+    {
+      "id": "elevator",
+      "item": "Elevator modernisation (existing elevator)",
+      "itemFi": "hissin modernisointi / hissiremontti",
+      "typicalLifeYears": 25,
+      "lifeYearsRange": [
+        20,
+        30
+      ],
+      "lifeStatus": "estimate",
+      "lifeBasis": "Arvonosturi (2021): the electronics of modern elevators age in about 20 years, and lifespans vary widely. The primary values are in the paywalled RT 103766 (building services).",
+      "costPerElevator": {
+        "low": 50000,
+        "high": 90000,
+        "year": 2021,
+        "status": "secondary",
+        "source": "S_ARVONOSTURI_2021"
+      },
+      "newRetrofitElevator": {
+        "low": 125000,
+        "high": 200000,
+        "year": 2021,
+        "status": "secondary",
+        "source": "S_ARVONOSTURI_2021",
+        "note": "A new elevator in a building that has none (jälkiasennushissi) is a separate decision and is often grant-funded by ARA."
+      },
+      "costPerM2": {
+        "low": 50,
+        "median": null,
+        "high": 130,
+        "year": 2021,
+        "unit": "€ per residential m²",
+        "status": "estimate",
+        "basis": "50,000–90,000 € per elevator (Arvonosturi 2021) divided over an assumed 700–1,000 m² of flats served by one elevator. That is our assumption for one stairwell."
+      },
+      "source": [
+        "S_ARVONOSTURI_2021"
+      ]
+    },
+    {
+      "id": "electrical",
+      "item": "Electrical renovation (risers and flat wiring)",
+      "itemFi": "sähköremontti (nousujohdot, huoneistojen sähköt)",
+      "typicalLifeYears": 50,
+      "lifeYearsRange": [
+        40,
+        60
+      ],
+      "lifeStatus": "estimate",
+      "lifeBasis": "No primary value was found; it is in the paywalled RT 103766. The assumption follows the pipe cycle, because about half (49 %) of pipe renovations in the 2026 barometer also upgraded the electrical systems.",
+      "costPerM2": {
+        "low": null,
+        "median": null,
+        "high": null,
+        "year": null,
+        "status": "missing",
+        "basis": "No source found. Usually part of the pipe renovation budget."
+      },
+      "includedIn": "pipe_renovation (often)",
+      "source": [
+        "S_PUTKI2026"
+      ]
+    }
+  ],
+  "proposedRules": [
+    {
+      "id": "asbestos_pre1994",
+      "when": {
+        "buildingYearLessThan": 1994
+      },
+      "say": "Built before 1994: before renovation work that removes or demolishes building materials, such as a bathroom or kitchen renovation, the materials must be surveyed for asbestos (asbestikartoitus), also inside a single flat. Minor work such as drilling holes is exempt. You usually pay for the survey of your own flat.",
+      "status": "primary (law) + primary (interpretation by Isännöintiliitto)",
+      "basis": "VNa 798/2015 7 §: whoever commissions or directs a construction project that may involve removing asbestos must have an asbestos survey made, documented and handed to the contractor. The decree text does not name a year. The cut-off comes from Isännöintiliitto (2020, 2021): asbestos was used in building materials from 1922 to 1992, manufacture and use were fully banned from the start of 1994, and since the new rules of 1.1.2016 materials to be removed in buildings built before 1994 must be surveyed before demolition; minor work such as drilling holes is exempt.",
+      "source": [
+        "S_VNA798",
+        "S_IL_ASB2020",
+        "S_IL_ASB2021"
+      ]
+    },
+    {
+      "id": "concrete_pre1990",
+      "when": {
+        "buildingYearLessThan": 1990
+      },
+      "say": "Concrete facades and balconies from before 1990 have a shorter expected technical life: about 50 years for the facade and 40 years for balconies without waterproofing, under normal exposure.",
+      "status": "primary",
+      "source": [
+        "S_RT103765"
+      ]
+    },
+    {
+      "id": "pipe_condition_survey",
+      "when": {
+        "buildingAgeAtLeast": 30,
+        "pipeRenovationMentioned": false
+      },
+      "say": "Ask whether a pipe condition survey (putkiston kuntotutkimus) exists. Kiinteistöliitto recommends the first one at 30–35 years and an update every 5–10 years.",
+      "status": "secondary",
+      "source": [
+        "S_FA_2022"
+      ]
+    },
+    {
+      "id": "pipe_renovation_ahead",
+      "when": {
+        "buildingAgeAtLeast": 40,
+        "pipeRenovationMentioned": false
+      },
+      "say": "The pipe renovation is probably ahead. Typical cost is flat m² × 890 € (range 650–1,154 €; capital region median 1,000 €), usually financed by a company loan and paid through rahoitusvastike.",
+      "status": "primary (cost) / proposal (age threshold)",
+      "source": [
+        "S_PUTKI2026",
+        "S_PUTKI2025"
+      ]
+    },
+    {
+      "id": "decades_1970s_1980s",
+      "when": {
+        "buildingYearBetween": [
+          1970,
+          1989
+        ]
+      },
+      "say": "In the 2026 barometer, 64 % of the latest pipe renovations reported (77 projects) were in buildings from the 1970s (39 %) or the 1980s (25 %).",
+      "status": "primary",
+      "source": [
+        "S_PUTKI2026"
+      ]
+    },
+    {
+      "id": "envelope_cluster",
+      "when": {
+        "buildingAgeAtLeast": 40
+      },
+      "say": "Facade, balcony, window and roof projects cluster at building ages of about 40–50 years. Ask what the 5-year maintenance-needs report says about each.",
+      "status": "primary (building years) / derived (ages)",
+      "source": [
+        "S_KJB2019"
+      ]
+    }
+  ],
+  "buyerChecks": [
+    {
+      "question": "Can I see a fresh manager's certificate (isännöitsijäntodistus)?",
+      "why": "It is the official summary of the housing company and this flat. By law (AOYL 7:27 §) it must state the company's financial position, what the company knows about the condition of the buildings and of this flat, the owner's overdue unpaid charges, and the loan liabilities where they differ between shareholders; alteration works done in the flat are also reported in it. A new owner is liable, together with the previous owner, for the previous owner's unpaid charges, up to an amount equal to the charges for the month of the transfer and the five months immediately before it (AOYL 3:7 §). The new owner is not liable for unpaid charges that the certificate does not mention and that fell due before its date. That is why a recent certificate protects the buyer.",
+      "source": "Asunto-osakeyhtiölaki 1599/2009, 7 luku 27 § (isännöitsijäntodistus, amended 152/2023) and 3 luku 7 § (uuden omistajan vastuu vanhan omistajan maksulaiminlyönnistä), https://www.finlex.fi/fi/lainsaadanto/2009/1599",
+      "sourceRefs": [
+        "S_AOYL"
+      ]
+    },
+    {
+      "question": "Can I see the board's maintenance-needs report for the next five years (kunnossapitotarveselvitys) and the latest annual general meeting papers?",
+      "why": "By law, each annual general meeting must receive the board's written report on maintenance needed in the five years after the meeting that significantly affects the use of the flats, the charges (yhtiövastike) or other costs. It must also receive a written report on major maintenance and alteration works already done, with dates. This is where coming pipe, facade, roof and window projects show up. A longer-term plan (PTS) is common, but the Act does not mention one (checked on Finlex 17.10.2026); ask for it too.",
+      "source": "Asunto-osakeyhtiölaki 1599/2009, 6 luku 3 § (varsinainen yhtiökokous: what must be presented), https://www.finlex.fi/fi/lainsaadanto/2009/1599",
+      "sourceRefs": [
+        "S_AOYL"
+      ]
+    },
+    {
+      "question": "What are the asking price and the debt-free price (myyntihinta vs velaton hinta)? How big is the flat's share of the company loan, and can I pay it off?",
+      "why": "The debt-free price includes the flat's share of the housing company's loans, which you pay monthly through the financing charge (rahoitusvastike). An ad must state the asking price and the debt-free price if they differ. The sales brochure must state the flat's share of the company's debts and whether it can be paid off.",
+      "source": "VNa 130/2001, 2 § 2 mom. 3 kohta (an ad must state the asking price, myyntihinta, and the debt-free price, velaton hinta, if they differ) and 8 § 1 mom. 13 kohta (the flat's share of debts and the option to pay it off), https://www.finlex.fi/fi/lainsaadanto/2001/130",
+      "sourceRefs": [
+        "S_VNA130"
+      ]
+    },
+    {
+      "question": "What are the monthly charges (hoitovastike, rahoitusvastike, water and other fees), and how will they change after the planned renovations?",
+      "why": "The brochure must list housing costs such as charges and water fees. Most large renovations are financed with a company loan (92 % of pipe renovations), so the financing charge rises for the length of that loan unless you pay your loan share off.",
+      "source": "VNa 130/2001, 8 § 1 mom. 12 kohta, https://www.finlex.fi/fi/lainsaadanto/2001/130; Isännöintiliitto Putkiremonttibarometri 2026 (loan share 92 %), https://www.isannointiliitto.fi/wp-content/uploads/2026/05/Putkiremonttibaro-2026-tulokset.pdf",
+      "sourceRefs": [
+        "S_VNA130",
+        "S_PUTKI2026"
+      ]
+    },
+    {
+      "question": "Which major renovations has the company decided on or knows for certain are coming, when will they happen, and what will they cost me?",
+      "why": "The sales brochure must state decided or otherwise certain major repairs and improvements, with an estimate of their timing and cost to the buyer. It must also state other company obligations that may later cost the buyer money.",
+      "source": "VNa 130/2001, 8 § 1 mom. 14–15 kohta, https://www.finlex.fi/fi/lainsaadanto/2001/130",
+      "sourceRefs": [
+        "S_VNA130"
+      ]
+    },
+    {
+      "question": "When were the pipes renovated, or when is it planned? Is there a pipe condition survey (putkiston kuntotutkimus)?",
+      "why": "Pipes last about 50 years on average, with large variation. The national median cost is 890 €/m² (1,000 €/m² in the capital region), about 44,500 € for a 50 m² flat. In the 2026 barometer, leaks were the most influential reason to start planning a pipe renovation, and insurers reduce leak payouts for old pipes.",
+      "source": "Isännöintiliitto Putkiremonttibarometri 2026 and 2025; Kiinteistöliitto via Finanssiala press release 20.5.2022; Taloustaito 5.7.2024 (age deductions)",
+      "sourceRefs": [
+        "S_PUTKI2026",
+        "S_PUTKI2025",
+        "S_FA_2022",
+        "S_TALOUSTAITO_2024"
+      ]
+    },
+    {
+      "question": "If the building is from before 1990, is there a condition survey (kuntotutkimus) of the facade and balconies?",
+      "why": "Under normal exposure, pre-1990 concrete facades have an expected technical life of about 50 years and balconies without waterproofing about 40 years. In the 2019 barometer, the middle half of facade projects were in buildings from 1962–1979 and of balcony projects in buildings from 1963–1982 (interquartile ranges).",
+      "source": "Rakennustieto RT 103765 (2025), via Sutinen 29.8.2025; Isännöintiliitto Katto- ja julkisivubarometri 2019",
+      "sourceRefs": [
+        "S_RT103765",
+        "S_KJB2019"
+      ]
+    },
+    {
+      "question": "If the building is from before 1994, has an asbestos survey been done? What will a survey cost if I want to renovate the bathroom or kitchen?",
+      "why": "In buildings built before 1994, materials that will be removed or demolished must be surveyed for asbestos before the work starts, also in a renovation inside a single flat. Minor work such as drilling holes is exempt. The shareholder normally pays for their own flat's survey, and the company can approve a renovation notice only after the survey report has been delivered.",
+      "source": "VNa 798/2015, 7 § (https://www.finlex.fi/fi/lainsaadanto/2015/798); Isännöintiliitto 2020 and 2021 asbestos guides",
+      "sourceRefs": [
+        "S_VNA798",
+        "S_IL_ASB2020",
+        "S_IL_ASB2021"
+      ]
+    },
+    {
+      "question": "Has the flat or building had leak or moisture damage, and what work did previous owners do in the flat (renovation notices)?",
+      "why": "Leak damage is among the most common home-insurance claims. The company must keep shareholders' notices of maintenance and alteration works, and alteration works are reported in the manager's certificate, so you can see what earlier owners changed in the flat.",
+      "source": "Asunto-osakeyhtiölaki 1599/2009, 7 luku 27–28 § (amended 152/2023); Finanssiala lausunto 29.1.2020",
+      "sourceRefs": [
+        "S_AOYL",
+        "S_FA_2020"
+      ]
+    }
+  ],
+  "leaks": {
+    "latestNational": {
+      "year": 2021,
+      "leakDamages": 34800,
+      "paidEUR": 171000000,
+      "avgPaidPerDamageEUR": 4914,
+      "avgStatus": "derived (171,000,000 / 34,800)",
+      "scope": "Leak damages reported to insurance companies in Finland. The release does not split home insurance from property insurance.",
+      "source": "S_FA_2022"
+    },
+    "history": [
+      {
+        "year": 2000,
+        "paidEUR": 80000000,
+        "source": "S_FA_2014"
+      },
+      {
+        "year": 2012,
+        "leakDamages": 36100,
+        "paidEUR": 157000000,
+        "avgPaidPerDamageEUR": 4300,
+        "avgStatus": "primary (Finanssialan Keskusliitto figure quoted in the report)",
+        "perDay": "about 100 leak damages and 430,000 € paid per day",
+        "source": "S_FA_2014"
+      },
+      {
+        "year": 2018,
+        "leakDamages": 36000,
+        "paidEUR": 163000000,
+        "avgPaidPerDamageEUR": 4528,
+        "avgStatus": "derived",
+        "scope": "property insurance (omaisuusvakuutus) in total",
+        "source": "S_FA_2020"
+      },
+      {
+        "year": 2021,
+        "leakDamages": 34800,
+        "paidEUR": 171000000,
+        "avgPaidPerDamageEUR": 4914,
+        "avgStatus": "derived",
+        "source": "S_FA_2022"
+      }
+    ],
+    "newerYears": "No Finanssiala leak figures for 2022–2025 were found in public releases (searched 17.10.2026). If may have its own claim data.",
+    "shareOfClaims": {
+      "homeInsurance": {
+        "statement": "Leak damages are among the most common damages paid from home insurance (\"yleisimpiä esimerkiksi kotivakuutuksesta korvattavia vahinkoja\", Finanssiala 2020). In 2014 Finanssiala called them the largest claims cost in both building (kiinteistö-) and home insurance.",
+        "percent": null,
+        "status": "primary (qualitative); no current percentage found",
+        "source": [
+          "S_FA_2020",
+          "S_FA_2014"
+        ]
+      },
+      "propertyInsurance2002": {
+        "shareOfClaimCount": "over 65 %",
+        "shareOfClaimCost": "over 60 %",
+        "status": "primary but old (2002)",
+        "source": "S_FA_2005",
+        "insuranceLine": "kiinteistövakuutus (building insurance), not home insurance"
+      }
+    },
+    "whereAndWhy_2012_2013": {
+      "byBuildingType": {
+        "apartmentBuildings": 0.44,
+        "rowAndSemiDetachedApprox": 0.2,
+        "detachedApprox": 0.3
+      },
+      "byBuildingAge": "Buildings from 1980–1989 had the most leak damages (22 %).",
+      "bySource": {
+        "drainPipes": 0.21,
+        "coldWaterPipes": 0.18,
+        "dishwasher": 0.12,
+        "waterFixtures": 0.1
+      },
+      "byMechanism": "Mechanical breakage 42 %, corrosion 24 %, blockage about 10 %, construction or installation error about 10 %.",
+      "pipeAge": "Leaking pipes were on average 30 years old. In apartment buildings, 73 % of the failed pipes and appliances were original, on average 33 years old.",
+      "totalDamageVsPaid": "The real cost is higher than the payout because of deductibles and age deductions. In apartment buildings, leaks in heating and domestic water networks average about 10,000 € in total damage, and for drain leaks the payout is on average under half of the damage (about half across all building types).",
+      "compensable": "87 % of the surveyed leak damages were fully or partly compensated.",
+      "source": "S_FA_2014"
+    },
+    "ageDeductions": {
+      "statement": "Insurers make age deductions from leak payouts based on the age of the pipes, so a leak from old pipes leaves a larger part of the cost unpaid.",
+      "status": "secondary",
+      "source": [
+        "S_TALOUSTAITO_2024",
+        "S_TALOUSTAITO_2023"
+      ]
+    },
+    "otherFacts": [
+      {
+        "fact": "65 % of compensable leak damages come from domestic water pipes and appliances such as dishwashers and taps (Pohjola Vakuutus statistics, as reported).",
+        "status": "secondary",
+        "source": "S_TALOUSTAITO_2023"
+      },
+      {
+        "fact": "Dishwasher hoses are the most common cause of leaks in homes; the risk of breakage rises from about 4 years of age and is highest at 7 years or more (Taloustaito 2023, in an article based on Pohjola data; the sentence names no study).",
+        "status": "secondary",
+        "source": "S_TALOUSTAITO_2023"
+      },
+      {
+        "fact": "An average leak damage in a detached house costs 8,500 € and can exceed 200,000 € (Pohjola, detached houses only, not flats).",
+        "status": "secondary",
+        "source": "S_TALOUSTAITO_2023"
+      }
+    ]
+  },
+  "notes": [
+    "Correction to the brief: Putkiremonttibarometri 2026 gives a national median of 890 €/m² and 1,000 €/m² for the capital region. The 850 €/m² figure is from the 2025 barometer (spring 2025 survey), and the 2024 barometer gave 832 €/m². [S_PUTKI2026, S_PUTKI2025]",
+    "Context for long-run budgeting: in 2021, renovation spending in apartment buildings averaged 41.2 € per m² of floor area per year (VAT included, own work excluded). The figure was 32.6 €/m² in row houses (Tilastokeskus, Korjausrakentaminen 2021, 16.6.2022). [S_STAT_KORA2021]",
+    "Planned major renovations in the next ten years (share of housing companies, 2021): facade 19 %, roof and yard 17 %, domestic water system 14 %, heating and drains about 13 % each (Tilastokeskus, Korjausrakentaminen 2021). [S_STAT_KORA2021]",
+    "Lifespans are averages. The 2025 RT cards state that reaching the technical life assumes construction to the code of the time, good building practice and proper maintenance. Whether to repair or renew is always decided case by case (S_RT_FRIMAN).",
+    "Costs here are per m² of the flat. The actual share depends on the payment basis in the articles of association (AOYL 3 luku 4 §, yhtiövastikkeen maksuperuste), for example the number of shares or the floor area.",
+    "Financing risk is a real 'what if': in 2026, 21 % of property managers reported pipe renovations left undone for lack of financing (42 % of those working only in declining municipalities). Asked about the future of such a housing company, 11 % expected its operation to be at risk of ending, or the company to be wound down, within 5 years; 89 % expected it to continue normally at least for now (Putkiremonttibarometri 2026, slide 7). [S_PUTKI2026]",
+    "The roof, window, balcony and elevator costs come from a 2021 commercial blog (Arvonosturi) with unclear units. They are marked 'estimate' and should be replaced with a primary source: Rakennustieto/Haahtela cost data, an Isännöintiliitto survey, or real project data from the team or If.",
+    "Life values for pipes, drains, electrical systems, elevators, roofs and windows in the 2025 RT cards (RT 103765 for building, RT 103766 for building services) are paywalled. Only the facade and balcony values were visible in the public webinar deck."
+  ]
+}

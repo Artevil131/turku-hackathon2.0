@@ -1,0 +1,2302 @@
+{
+  "meta": {
+    "title": "Used car in Finland: buyer rights, recurring costs and risks",
+    "area": "car",
+    "retrieved": "2026-10-17",
+    "conventions": {
+      "real": "true = rule or number from a primary/official source (law on Finlex, Traficom, Liikenneturva/OTI, KKV). false = estimate (secondary source or our own derivation); see 'basis'.",
+      "money": "EUR; tax tables in cents per day; eurPer365Days = centsPerDay x 3.65, rounded DOWN to the cent (all 401 rows of Tables 1 and 1 A in the act follow this, e.g. 29.10 c -> 106.21 €; Traficom's 46.90 c -> 171.18 € likewise)",
+      "lawQuotes": "quoteFi fields are verbatim from the Finlex consolidated text retrieved on the date above",
+      "interpretation": "Items with an 'interpretation' field contain our reading of the statute; the team should confirm before showing it as advice."
+    },
+    "factCheck": {
+      "date": "2026-10-17",
+      "method": "Independent re-download of every source into C:\\dev\\tmp-whatif-data\\factcheck-car (Finlex pages and Finlex open-data AKN XML for Ajoneuvoverolaki version fin@20240815, Traficom pages, KKV/Liikenneturva/OTI PDFs, AutoJerry, Taloustaito, A-Katsastus; Yle, MTV and Moottori read via web fetch).",
+      "verified": [
+        "KSL 5:2, 5:2 a, 5:1 3 mom, 5:13, 5:14, 5:15 3 mom (1 year; chapter 5 wording from 1242/2021, in force 1.1.2022 for contracts made from then), 5:15 a, 5:16, 5:16 a (2 months), 5:18, 12:1: quotes match",
+        "Kauppalaki 1, 3, 19 (incl. 2 mom auction), 20, 21, 30, 31, 32, 33 §: quotes match; 32 § has no fixed long-stop period",
+        "Ajoneuvolaki 84 § (7 days), 106 §, 149 § 1 mom 2 and 4 kohta (4 years, then 2, yearly once over 10 years), 149 § 2 mom (40 years), 150 § (30 days), 151 §, 161 § (odometer): match",
+        "Tieliikennelaki 105 §: Nov–Mar if weather/conditions require, 3.0 mm, 5.0 mm heavy, studs Nov–Mar or when conditions require, studs on all wheels: match",
+        "Liikennevakuutuslaki 6, 18 (7 days), 19 and 21 (15 days), 20, 27 (current + 5 previous calendar years), 28 (max 3x) §: match",
+        "Ajoneuvoverolaki 10 § (EV +17.80 c), 11 § (5.5 / 1.9 / 0.95 / 3.6 / 3.1 c), Tables 1 and 1 A (814/2024) and Table 2 (1223/2023): all 400 + 400 + 23 values in this file equal the act",
+        "Traficom: 106.21 and 171.18 €/yr, motive-power rates, tables valid from 1.1.2026, use ban incl. previous owner's unpaid tax, seller pays the day of sale",
+        "Liikenneturva 1/2026 p. 4 (40 / 180 / 2/3 / speeding / seatbelt / drink-driving), OTI 2021 (356, ~1/5, 42 %, 15 % of 493,500, 22 % vs 17 %, 28 % / 22 %), KKV 1/2024 (59 %, 94 %, 87 %, 1,106 cases)",
+        "Taloustaito 17.2.2025 table (all 40 prices, 57-year-old in Nummela, full bonus), Yle 21.10.2024 (5–8 years to full bonus; 'moninkertaisesti'; Corolla, Hämeenlinna), MTV 5.4.2025 (3.6 vs 1.2), Moottori 2022 (5 mm, six winters, 10 years), A-Katsastus (25.5 % VAT, 2.73 € Traficom fee), AutoJerry 2026 (all eight price ranges and averages)"
+      ],
+      "corrected": [
+        "vehicleTax.motivePowerTax.history: 814/2024 entered into force 1.1.2025, but its transitional provision kept the old daily amounts until 31.12.2025; the new rates apply from 1.1.2026 (was: 'in force 1.1.2025')",
+        "wearItems timing belt basis: Taloustaito 2019 quotes are 549.50–740 € at five garages for belt kit + water pump; the 548.16 € figure excluded the water pump (was: '548–740 € ... at six garages')",
+        "wearItems tyre change basis: 'washing adds ~10 €' was not found on the AutoJerry page; removed",
+        "rights public-auction-exception: the exception covers only a 'julkinen huutokauppa' as defined in KSL 5:2 a § (buyers attend or can attend in person); readerHint narrowed",
+        "insurancePrice.uninsured: fees are imposed by Valtiokonttori on Liikennevakuutuskeskus's proposal and invoiced by Liikennevakuutuskeskus (LVL 29 §)",
+        "winterTyres.note: the old fixed December–February rule is now confirmed on Finlex (Asetus ajoneuvojen käytöstä tiellä 1257/1992, no longer in force)",
+        "rights legal-defect-third-party-rights: added the statutory exception (no defect if the contract says the buyer takes the car subject to the third-party right) and the exact quote",
+        "smaller wording fixes: EV example 'on or after 1.10.2021', KKV footnote numbers and data scope (1,106 dealer-sale cases), OTI section number, MTV year (2024), inspection edge case (no first-use date, 150 § 4 mom.), interpretation flags on the 1-year presumption gloss and the 'typical' premium range"
+      ]
+    },
+    "sources": {
+      "KSL": {
+        "name": "Kuluttajansuojalaki 38/1978 (consolidated)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "KL": {
+        "name": "Kauppalaki 355/1987 (consolidated)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "TLL": {
+        "name": "Tieliikennelaki 729/2018 (consolidated)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2018/729",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "AJL": {
+        "name": "Ajoneuvolaki 82/2021 (consolidated)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2021/82",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "LVL": {
+        "name": "Liikennevakuutuslaki 460/2016 (consolidated)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "AVL": {
+        "name": "Ajoneuvoverolaki 1281/2003 (consolidated, incl. amendment 814/2024)",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2003/1281",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "TRAF_TAX_AMOUNT": {
+        "name": "Ajoneuvoveron määrä (page updated 15.10.2026)",
+        "publisher": "Traficom",
+        "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoveron-maara",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "TRAF_TAX": {
+        "name": "Ajoneuvovero (page updated 18.9.2026)",
+        "publisher": "Traficom",
+        "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvovero",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "TRAF_CALC": {
+        "name": "Ajoneuvoverolaskuri (page updated 9.1.2025)",
+        "publisher": "Traficom",
+        "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoverolaskuri",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "LT2026": {
+        "name": "Liikenneturvan selvityksiä 1/2026: Nuorten käyttäytyminen ja asenteet liikenteessä (p. 4; cites Suomen virallinen tilasto 2026 and Salenius & Sihvola 2021)",
+        "publisher": "Liikenneturva",
+        "year": 2026,
+        "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "OTI2021": {
+        "name": "Nuorisoraportti 2021: 18–24-vuotiaiden kuolemaan johtaneet liikenneonnettomuudet ja liikennevakuutuksesta korvatut liikennevahingot",
+        "publisher": "Onnettomuustietoinstituutti OTI (Liikennevakuutuskeskus)",
+        "year": 2021,
+        "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "KKV2024": {
+        "name": "Käytettyjen autojen kaupan kuluttajaongelmat (Järvelä & Saastamoinen), KKV Tutkimusraportteja 1/2024",
+        "publisher": "Kilpailu- ja kuluttajavirasto KKV",
+        "year": 2024,
+        "url": "https://www.kkv.fi/uploads/sites/2/2024-01-tutkimusraportteja-kaytettyjen-autojen-kaupan-kuluttajaongelmat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-17"
+      },
+      "MTV2025": {
+        "name": "Nuorten kuljettajien kuolemanriski on moninkertainen muuhun väestöön verrattuna (5.4.2025, cites a Liikenneturva report)",
+        "publisher": "MTV Uutiset",
+        "year": 2025,
+        "url": "https://www.mtvuutiset.fi/artikkeli/nuorten-kuljettajien-kuolemanriski-on-moninkertainen-muuhun-vaestoon-verrattuna/9132656",
+        "type": "secondary",
+        "retrieved": "2026-10-17"
+      },
+      "YLE2024": {
+        "name": "Katso tarkka vertailu: näin huimasti kuljettajan ikä vaikuttaa auton tai moottoripyörän vakuutukseen (21.10.2024, Riikka Oosi)",
+        "publisher": "Yle",
+        "year": 2024,
+        "url": "https://yle.fi/a/74-20118095",
+        "type": "secondary",
+        "retrieved": "2026-10-17"
+      },
+      "TT2025": {
+        "name": "Autojen vakuutushinnoissa rajut erot – vertailijalle iso säästö (17.2.2025)",
+        "publisher": "Taloustaito (Veronmaksajain Keskusliitto)",
+        "year": 2025,
+        "url": "https://www.taloustaito.fi/vapaalla/2025/autojen-vakuutushinnoissa-rajut-erot--vertailijalle-iso-saasto/",
+        "type": "secondary",
+        "retrieved": "2026-10-17"
+      },
+      "TT2019": {
+        "name": "Merkkiliikkeet tarjoavat halpoja huoltoja iäkkäille autoille (15.5.2019, Juha Partanen)",
+        "publisher": "Taloustaito",
+        "year": 2019,
+        "url": "https://www.taloustaito.fi/vapaalla/merkkiliikkeet-tarjoavat-halpoja-huoltoja-iakkaille-autoille/",
+        "type": "secondary",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_BELT": {
+        "name": "Jakohihnan vaihto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/jakohihnan-vaihto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_CLUTCH": {
+        "name": "Kytkimen vaihto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/kytkimen-vaihto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_PADS": {
+        "name": "Jarrupalojen vaihto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/jarrupalojen-vaihto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_DISCS": {
+        "name": "Jarrulevyjen vaihto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/jarrulevyjen-vaihto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_WINTER": {
+        "name": "Talvirenkaat hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://autojerry.fi/hinnat/talvirenkaat-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_CHANGE": {
+        "name": "Renkaanvaihto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/renkaanvaihto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_HOTEL": {
+        "name": "Rengashotelli hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://autojerry.fi/hinnat/rengashotelli-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "AJ_SERVICE": {
+        "name": "Määräaikaishuolto hinta – 2026 hinnat",
+        "publisher": "AutoJerry (Alma Media Finland Oy)",
+        "year": 2026,
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/",
+        "type": "secondary (price-comparison platform)",
+        "retrieved": "2026-10-17"
+      },
+      "MOOTTORI2022": {
+        "name": "Talvi tulee – tarkista renkaidesi kunto ajoissa (17.10.2022, first published September 2020; quotes Autoliitto training manager Teppo Vesalainen)",
+        "publisher": "Moottori (Autoliitto)",
+        "year": 2022,
+        "url": "https://moottori.fi/uutinen/talvi-tulee-tarkista-renkaidesi-kunto-ajoissa/",
+        "type": "secondary (expert recommendation)",
+        "retrieved": "2026-10-17"
+      },
+      "AKATS": {
+        "name": "Vehicle inspection service prices",
+        "publisher": "A-Katsastus",
+        "url": "https://www.a-katsastus.fi/en/service-points-and-prices/vehicle-inspection-service-prices/",
+        "type": "secondary (operator page)",
+        "retrieved": "2026-10-17"
+      }
+    }
+  },
+  "rights": [
+    {
+      "id": "dealer-scope",
+      "appliesTo": "dealer",
+      "rule": "When a business sells to a consumer, chapter 5 of the Consumer Protection Act applies, and any contract term that is worse for the buyer than chapter 5 is void.",
+      "ruleFi": "Kun myyjä on elinkeinonharjoittaja ja ostaja kuluttaja, sovelletaan KSL 5 lukua; ostajan vahingoksi poikkeava ehto on mitätön.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 1 § 1 mom. ja 2 §",
+      "quoteFi": "Sopimusehto, joka poikkeaa tämän luvun säännöksistä ostajan vahingoksi, on mitätön, jollei jäljempänä toisin säädetä.",
+      "readerHint": "Seller type 'dealer'/'yritys'/'autoliike' or a business ID (Y-tunnus) in the ad -> use dealer rules.",
+      "askBeforeSigning": "Are you selling as a business (company name and Y-tunnus on the contract)?",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 1–2 §"
+      },
+      "real": true
+    },
+    {
+      "id": "dealer-conformity",
+      "appliesTo": "dealer",
+      "rule": "The car must match what was agreed and what the seller said in marketing (including the ad), and be as good and durable as cars of the same type normally are and as the buyer can reasonably expect. If it deviates, it has a defect.",
+      "ruleFi": "Tavaran on vastattava sovittua ja markkinoinnissa annettuja tietoja sekä ominaisuuksia, joita saman tyyppisillä tavaroilla yleensä on; poikkeama on virhe.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 12 § ja 13 § 1 mom.",
+      "quoteFi": "Jos tavara poikkeaa siitä, mitä 12 §:ssä säädetään, siinä on virhe.",
+      "readerHint": "Claims in the ad text (e.g. 'huollettu', 'katsastettu', 'ei ruostetta', km reading) become part of what the seller answers for; keep a copy of the ad.",
+      "askBeforeSigning": "Can you write the ad's promises (service history, km, no known faults) into the contract?",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 12–13 §"
+      },
+      "real": true
+    },
+    {
+      "id": "dealer-as-is-not-enough",
+      "appliesTo": "dealer",
+      "rule": "A specific deviation from normal quality is not a defect only if the buyer was expressly told about that deviation when the contract was made and separately and expressly accepted it. A general 'sold as is' line therefore does not remove the dealer's liability (interpretation of 5:13 together with the mandatory rule in 5:2).",
+      "ruleFi": "Yleisten vaatimusten vastaisuus ei ole virhe vain, jos ostajalle on nimenomaisesti kerrottu poikkeamasta ja hän on hyväksynyt sen erikseen ja nimenomaisesti.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 13 § 2 mom. 1 kohta (as amended by 1242/2021)",
+      "quoteFi": "jos ostajalle on nimenomaisesti annettu sopimuksen tekoajankohtana tieto poikkeamasta ja tämä on poikkeaman erikseen ja nimenomaisesti tällöin hyväksynyt",
+      "readerHint": "Phrases like 'myydään sellaisena kuin on', 'ei takuuta', 'virheistä ei vastata' in a dealer ad -> flag: these do not cancel consumer rights.",
+      "askBeforeSigning": "Which known faults are you listing in the contract? (Only faults listed and separately accepted are excluded.)",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 13 §, 2 §"
+      },
+      "real": true,
+      "interpretation": "The statute text is primary; the conclusion about general 'as is' clauses is our reading and should be checked by the team."
+    },
+    {
+      "id": "dealer-presumption-1-year",
+      "appliesTo": "dealer",
+      "rule": "If a defect appears within one year of handover, it is presumed to have existed at handover, unless the seller shows otherwise or the presumption is incompatible with the nature of the goods or the defect (for a used car: normal wear for its age and mileage).",
+      "ruleFi": "Virheen oletetaan olleen olemassa luovutushetkellä, jos se ilmenee yhden vuoden kuluessa, jollei toisin osoiteta tai oletus ole virheen taikka tavaran luonteen vastainen.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 15 § 3 mom. (as amended by 1242/2021)",
+      "quoteFi": "Virheen oletetaan olleen olemassa tavaran luovutushetkellä, jos se ilmenee yhden vuoden kuluessa tästä ajankohdasta, jollei toisin osoiteta tai oletus ole virheen taikka tavaran luonteen vastainen.",
+      "numbers": {
+        "presumptionMonths": 12
+      },
+      "reminder": {
+        "label": "Dealer presumption period ends",
+        "offsetMonthsFromHandover": 12
+      },
+      "askBeforeSigning": "What is the exact handover date written in the contract? (The one-year presumption counts from it.)",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 15 § 3 mom."
+      },
+      "inForce": "Chapter 5 wording from 1242/2021, in force 1.1.2022; contracts made before that date keep the old rules (Finlex entry-into-force note).",
+      "real": true,
+      "interpretation": "The statute text is quoted exactly; the used-car example in 'rule' (normal wear for age and mileage) is our gloss of 'the nature of the goods or the defect', not statutory text."
+    },
+    {
+      "id": "dealer-notice",
+      "appliesTo": "dealer",
+      "rule": "Tell the seller about a defect within a reasonable time after you noticed it (or should have). A notice within two months of noticing is always in time. It can also be given to a business that brokered the sale.",
+      "ruleFi": "Virheilmoitus kohtuullisessa ajassa; aina ajoissa kahden kuukauden kuluessa havaitsemisesta.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 16 a § 1 mom.",
+      "quoteFi": "Virheilmoitus voidaan kuitenkin aina tehdä kahden kuukauden kuluessa siitä, kun ostaja havaitsi virheen",
+      "numbers": {
+        "safeNoticeMonthsFromDiscovery": 2
+      },
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 16 a §"
+      },
+      "real": true
+    },
+    {
+      "id": "dealer-remedies",
+      "appliesTo": "dealer",
+      "rule": "For a defect the seller is responsible for, the buyer may demand repair or replacement (buyer chooses, unless impossible or unreasonably costly for the seller), then price reduction or cancellation, plus damages, and may withhold payment.",
+      "ruleFi": "Ostaja voi vaatia virheen korjaamista, uutta toimitusta, hinnanalennusta tai purkaa kaupan sekä vaatia vahingonkorvausta ja pidättyä maksusta.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 16 §, 17 §, 18 §, 19 §, 20 §",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 16–20 §"
+      },
+      "real": true
+    },
+    {
+      "id": "dealer-warranty-extra",
+      "appliesTo": "dealer",
+      "rule": "A warranty or a sold 'extra cover' does not limit the statutory liability for defects.",
+      "ruleFi": "Takuu ei rajoita laissa säädettyä virhevastuuta.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 15 a §",
+      "quoteFi": "Takuu ei rajoita tässä laissa säädettyä virhevastuuta.",
+      "readerHint": "Ads offering 'lisäturva'/'takuu' for a fee: legal defect liability applies anyway.",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 15 a §"
+      },
+      "real": true
+    },
+    {
+      "id": "legal-defect-third-party-rights",
+      "appliesTo": "dealer",
+      "rule": "If a third party (e.g. a finance company still registered as owner, or a lien holder) has ownership, pledge or other rights to the car, the car has a legal defect, unless the contract says the buyer takes the car subject to that right. The buyer may also act when a third party claims such a right on probable grounds.",
+      "quoteFi": "Tavarassa on myös virhe, jos sivullisella on omistus-, pantti- tai muu oikeus tavaraan (oikeudellinen virhe), eikä sopimuksesta seuraa, että ostajan on vastaanotettava tavara sivullisen oikeudesta johtuvin rajoituksin.",
+      "ruleFi": "Tavarassa on virhe, jos sivullisella on omistus-, pantti- tai muu oikeus tavaraan.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 14 §",
+      "askBeforeSigning": "Is the seller the registered owner, with no finance company or lien on the car?",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "5 luku 14 §"
+      },
+      "real": true
+    },
+    {
+      "id": "dealer-brokered-private-car",
+      "appliesTo": "dealer-broker",
+      "rule": "A business that brokers a car on behalf of the owner answers to the consumer buyer for the contract under chapter 5 (as if it were the seller), unless it acts for another business and the consumer knew this and its effect when contracting.",
+      "ruleFi": "Välityskaupassa kaupan välittänyt elinkeinonharjoittaja vastaa kuluttajalle sopimuksen täyttämisestä 5 luvun mukaisesti.",
+      "law": "Kuluttajansuojalaki 38/1978, 12 luku 1 § (also 1 luku 1 §)",
+      "quoteFi": "Elinkeinonharjoittaja, joka välittää kulutushyödykettä koskevan sopimuksen hyödykkeen tarjoajan lukuun, vastaa hyödykkeen hankkivalle kuluttajalle sopimuksen täyttämisestä 5, 5 a ja 8 luvun mukaisesti.",
+      "readerHint": "Words like 'välityksessä', 'välitysauto', 'myydään asiakkaan lukuun' -> consumer rules still apply via the broker.",
+      "source": {
+        "ref": "KSL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+        "where": "12 luku 1 §; 1 luku 1 §"
+      },
+      "real": true
+    },
+    {
+      "id": "public-auction-exception",
+      "appliesTo": "dealer-auction",
+      "rule": "Chapter 5 defect rules (except sections 2, 2 a and 3–11) do not apply to a public auction of used goods; the business must tell consumers this clearly. In a private-law sale, a used item sold at auction counts as sold 'as is'.",
+      "ruleFi": "KSL 5 luvun virhesäännöksiä ei sovelleta käytetyn tavaran julkiseen huutokauppaan; kauppalain mukaan huutokaupalla myyty käytetty tavara katsotaan myydyksi 'sellaisena kuin se on'.",
+      "law": "Kuluttajansuojalaki 38/1978, 5 luku 1 § 3 mom.; Kauppalaki 355/1987, 19 § 2 mom.",
+      "readerHint": "Ad for a business's 'huutokauppa' that buyers can attend in person -> warn that consumer defect rules are mostly excluded. Do not apply this to every auction ad: an online-only auction does not fit the KSL definition (see 'definition').",
+      "definition": "KSL 5 luku 2 a § defines a public auction (julkinen huutokauppa) as a sale where an auctioneer runs an open bidding for buyers who take part, or can take part, in the auction in person, and the highest accepted bidder must buy.",
+      "definitionQuoteFi": "myyntimenetelmää, jossa myyjä tarjoaa huutokaupanpitäjän toteuttamalla avoimella tarjouskilpailulla hyödykkeitä ostajille, jotka osallistuvat tai joilla on mahdollisuus osallistua huutokauppatilaisuuteen henkilökohtaisesti, ja jossa hyväksytyn tarjouksen tehneellä on velvollisuus ostaa hyödyke.",
+      "interpretation": "That an online-only auction falls outside the exception is our reading of the 5:2 a § definition; the team should confirm before showing it as advice.",
+      "source": [
+        {
+          "ref": "KSL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+          "where": "5 luku 1 § 3 mom.; 5 luku 2 a § (definition)"
+        },
+        {
+          "ref": "KL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+          "where": "19 § 2 mom."
+        }
+      ],
+      "real": true
+    },
+    {
+      "id": "private-law",
+      "appliesTo": "private",
+      "rule": "A sale between two private persons falls under the Sale of Goods Act, not the Consumer Protection Act chapter 5 (which needs a business seller). The Sale of Goods Act gives way to whatever the parties agree.",
+      "ruleFi": "Yksityishenkilöiden välisessä kaupassa sovelletaan kauppalakia; lain säännökset ovat tahdonvaltaisia.",
+      "law": "Kauppalaki 355/1987, 1 § ja 3 §; Kuluttajansuojalaki 5 luku 1 § 1 mom.",
+      "quoteFi": "Lain säännöksiä ei sovelleta, mikäli sopimuksesta, sopijapuolten omaksumasta käytännöstä taikka kauppatavasta tai muusta tavasta, jota on pidettävä sopijapuolia sitovana, johtuu muuta.",
+      "source": [
+        {
+          "ref": "KL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+          "where": "1 §, 3 §"
+        },
+        {
+          "ref": "KSL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+          "where": "5 luku 1 §"
+        }
+      ],
+      "real": true
+    },
+    {
+      "id": "private-as-is",
+      "appliesTo": "private",
+      "rule": "Even if sold 'as is' ('sellaisena kuin se on'), the car is defective if (1) it does not match information the seller gave before the sale, (2) the seller failed to disclose an essential fact they must have known and the buyer could expect to be told, or (3) it is in substantially worse condition than the buyer could reasonably expect given the price and circumstances.",
+      "ruleFi": "Sellaisena kuin se on -ehdosta huolimatta virhe, jos tiedot eivät pidä, myyjä on salannut olennaisen seikan tai tavara on olennaisesti huonommassa kunnossa kuin hinta huomioon ottaen oli perusteltua edellyttää.",
+      "law": "Kauppalaki 355/1987, 19 § 1 mom.",
+      "quoteFi": "tavara on olennaisesti huonommassa kunnossa kuin ostajalla sen hinta ja muut olosuhteet huomioon ottaen on ollut perusteltua aihetta edellyttää.",
+      "askBeforeSigning": "Which faults do you know of? Please write 'no other known faults' into the contract.",
+      "source": {
+        "ref": "KL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "where": "19 §"
+      },
+      "real": true
+    },
+    {
+      "id": "private-inspection-duty",
+      "appliesTo": "private",
+      "rule": "The buyer cannot rely on a defect they must have known about at the sale. If the buyer inspected the car, or ignored the seller's request to inspect it without good reason, they cannot rely on what that inspection should have revealed, unless the seller acted dishonestly.",
+      "ruleFi": "Ostaja ei saa vedota seikkaan, joka hänen olisi pitänyt tarkastuksessa havaita (ellei myyjä ole menetellyt kunnianvastaisesti ja arvottomasti).",
+      "law": "Kauppalaki 355/1987, 20 §",
+      "quoteFi": "Ostaja ei saa virheenä vedota seikkaan, josta hänen täytyy olettaa tienneen kauppaa tehtäessä.",
+      "askBeforeSigning": "May a mechanic or an inspection station check the car before I sign?",
+      "source": {
+        "ref": "KL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "where": "20 §"
+      },
+      "real": true
+    },
+    {
+      "id": "private-no-presumption",
+      "appliesTo": "private",
+      "rule": "Defects are judged by the car's condition when risk passed to the buyer. The Sale of Goods Act has no one-year presumption like the Consumer Protection Act, so in a private sale the buyer has to show the defect existed at the sale (interpretation: absence of a presumption rule in the act).",
+      "ruleFi": "Virheellisyys arvioidaan vaaranvastuun siirtymisen hetken mukaan; kauppalaissa ei ole KSL:n kaltaista vuoden olettamaa.",
+      "law": "Kauppalaki 355/1987, 21 §",
+      "source": {
+        "ref": "KL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "where": "21 §"
+      },
+      "real": true,
+      "interpretation": "The burden-of-proof conclusion is our reading of the statute text, not a quoted rule."
+    },
+    {
+      "id": "private-notice",
+      "appliesTo": "private",
+      "rule": "Inspect the car as soon as circumstances allow after handover, and notify the seller of a defect within a reasonable time after noticing it (or when you should have). There is no statutory two-month safe harbour. Time limits do not bind if the seller was grossly negligent or dishonest.",
+      "ruleFi": "Tarkasta tavara luovutuksen jälkeen; reklamoi kohtuullisessa ajassa. Määräajat eivät sido, jos myyjä on menetellyt törkeän huolimattomasti tai kunnianvastaisesti.",
+      "law": "Kauppalaki 355/1987, 31 §, 32 §, 33 §",
+      "source": {
+        "ref": "KL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "where": "31–33 §"
+      },
+      "real": true
+    },
+    {
+      "id": "private-remedies",
+      "appliesTo": "private",
+      "rule": "For a defect not caused by the buyer: repair, replacement, price reduction or cancellation, plus damages, and withholding payment.",
+      "ruleFi": "Ostaja voi vaatia korjaamista, uutta toimitusta tai hinnanalennusta, purkaa kaupan, vaatia vahingonkorvausta ja pidättyä maksusta.",
+      "law": "Kauppalaki 355/1987, 30 §",
+      "source": {
+        "ref": "KL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1987/355",
+        "where": "30 §"
+      },
+      "real": true
+    }
+  ],
+  "inspection": {
+    "law": "Ajoneuvolaki 82/2021, 148–151 § and 161 §",
+    "passengerCar": {
+      "firstWithinYearsOfFirstUse": 4,
+      "thenEveryYears": 2,
+      "annualWhenOlderThanYears": 10,
+      "scheduleYears": "4, 6, 8, 10, then every year (11, 12, ...)",
+      "quoteFi": "ensimmäisen kerran viimeistään neljän vuoden kuluttua ajoneuvon ensimmäisen käyttöönoton ajankohdasta ja sen jälkeen viimeistään kahden vuoden kuluttua edellisestä katsastuksesta, yli kymmenen vuoden kuluttua ensimmäisen käyttöönoton ajankohdasta kuitenkin viimeistään vuoden kuluttua edellisestä katsastuksesta",
+      "section": "149 § 1 mom. 4 kohta"
+    },
+    "taxi": {
+      "firstWithinYearsOfFirstUse": 1,
+      "thenEveryYears": 1,
+      "section": "149 § 1 mom. 2 kohta"
+    },
+    "veryOldCars": {
+      "rule": "A non-commercial car whose previous inspection was done more than 40 years after the end of its first-use year: at the latest 2 years after the previous inspection.",
+      "section": "149 § 2 mom."
+    },
+    "timing": {
+      "rule": "Any date may be chosen, but the car must pass by the last inspection day. If it passes at most 30 days before that day, the following deadline does not move.",
+      "earlyWindowDaysWithoutMovingDeadline": 30,
+      "section": "150 § 1–2 mom.",
+      "edgeCase": "If the first-use date is not in the registration certificate, the inspection is due by the end of a calendar month set by the last digit of the registration number (table in 150 § 4 mom.); the reminder algorithm below does not cover this case."
+    },
+    "missedDeadline": {
+      "rule": "Using the car in traffic is prohibited (käyttökielto) until it has passed the periodic inspection; driving to a booked inspection is allowed.",
+      "section": "151 §"
+    },
+    "odometerRecorded": {
+      "rule": "The inspection station records the odometer reading at each periodic inspection in the vehicle register.",
+      "section": "161 § 1 mom.",
+      "readerHint": "Compare the ad's km with the inspection history the seller can show (register printout)."
+    },
+    "reminderAlgorithm": "First deadline = first-use date (käyttöönottopäivä) + 4 years. After that, deadline = previous inspection + 2 years while the car is at most 10 years old on that date; once the car is over 10 years old, deadline = previous inspection + 1 year. Passing at most 30 days before a deadline keeps the anniversary, so in practice deadlines fall on the first-use anniversary at 4, 6, 8, 10, 11, 12, ... years. (Our reading of 149–150 §; confirm edge cases such as very early inspections.)",
+    "costEur": null,
+    "costNote": "No published average price found. A-Katsastus says prices vary by station and time, include 25.5 % VAT and Traficom's 2.73 € fee per inspection (operator page, not an average).",
+    "costSource": {
+      "ref": "AKATS",
+      "url": "https://www.a-katsastus.fi/en/service-points-and-prices/vehicle-inspection-service-prices/"
+    },
+    "source": {
+      "ref": "AJL",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2021/82",
+      "where": "148–151 §, 161 §"
+    },
+    "real": true
+  },
+  "winterTyres": {
+    "law": "Tieliikennelaki 729/2018, 105 §",
+    "rule": "In November–March, winter tyres with main-groove tread depth of at least 3.0 mm must be used when weather or road conditions require it, on passenger cars up to 3.5 t, vans, special cars up to 3.5 t and light vehicle classes.",
+    "ruleFi": "Jos sää tai keli sitä edellyttää, marras-, joulu-, tammi-, helmi- ja maaliskuun aikana on käytettävä talvirenkaita (pääurien syvyys vähintään 3,0 mm).",
+    "quoteFi": "Jos sää tai keli sitä edellyttää, marras-, joulu-, tammi-, helmi- ja maaliskuun aikana on käytettävä talvirenkaita, joiden kulutuspinnan pääurien syvyys on vähintään 3,0 millimetriä",
+    "months": [
+      11,
+      12,
+      1,
+      2,
+      3
+    ],
+    "conditionalOnWeather": true,
+    "fixedCalendarObligation": false,
+    "minTreadMm": 3.0,
+    "heavyVehiclesDrivingAxleMinTreadMm": 5.0,
+    "studdedTyres": {
+      "allowedFrom": "11-01",
+      "allowedTo": "03-31",
+      "otherTimes": "allowed whenever weather or road conditions require it (and for some special vehicles)",
+      "allWheels": true,
+      "rule": "On passenger cars and vans, studded tyres must be fitted on all wheels; stud counts may not differ so much that it causes danger."
+    },
+    "note": "The current act (in force since 1.6.2020) has no fixed December–February obligation. The fixed rule ('joulu-, tammi- ja helmikuun aikana on käytettävä talvirenkaita', 3.0 mm) was in Asetus ajoneuvojen käytöstä tiellä 1257/1992 (chapter 3, tyre rules), which Finlex marks as no longer in force (checked on Finlex 2026-10-17). Some secondary sites, e.g. the AutoJerry winter-tyre page, still state the old Dec–Feb rule; do not use them for the law.",
+    "recommendation": {
+      "replaceAtTreadMm": 5,
+      "replaceAfterWinters": 6,
+      "replaceWhenOlderThanYears": 10,
+      "basis": "Autoliitto training manager's recommendation quoted in Moottori 17.10.2022 (not law)",
+      "source": {
+        "ref": "MOOTTORI2022",
+        "url": "https://moottori.fi/uutinen/talvi-tulee-tarkista-renkaidesi-kunto-ajoissa/"
+      },
+      "real": false
+    },
+    "reminders": [
+      {
+        "label": "Winter tyres may be needed from now on (studs allowed)",
+        "monthDay": "11-01"
+      },
+      {
+        "label": "Studded tyres allowed until today unless conditions require",
+        "monthDay": "03-31"
+      }
+    ],
+    "source": {
+      "ref": "TLL",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2018/729",
+      "where": "105 §"
+    },
+    "real": true
+  },
+  "insurancePrice": {
+    "mandatory": {
+      "rule": "A vehicle whose permanent home is in Finland must have motor liability insurance (liikennevakuutus).",
+      "quoteFi": "Ajoneuvo, jonka pysyvä kotipaikka on Suomessa, on vakuutettava tämän lain mukaan, jollei jäljempänä toisin säädetä.",
+      "source": {
+        "ref": "LVL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+        "where": "6 § 1 mom."
+      },
+      "real": true
+    },
+    "pricingLaw": {
+      "rule": "Each insurer sets its own premium bases, applied uniformly to all policyholders; premiums must be in reasonable proportion to expected claim costs; for passenger cars the bases must define how claims history affects the premium.",
+      "source": {
+        "ref": "LVL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+        "where": "20 §"
+      },
+      "real": true
+    },
+    "claimsHistoryPortable": {
+      "rule": "The policyholder can get a claims-history certificate within 15 days of asking, and on request the old insurer must send the claims history to a new insurer within 15 days.",
+      "numbers": {
+        "certificateDays": 15,
+        "transferDays": 15
+      },
+      "source": {
+        "ref": "LVL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+        "where": "19 §, 21 §"
+      },
+      "real": true
+    },
+    "factors": [
+      {
+        "factor": "policyholder age",
+        "effect": "One of the most significant pricing factors; drivers in their twenties pay many times more than 30-year-olds.",
+        "source": {
+          "ref": "YLE2024",
+          "url": "https://yle.fi/a/74-20118095"
+        },
+        "real": false
+      },
+      {
+        "factor": "claims history (bonus)",
+        "effect": "Required part of the pricing bases for cars (LVL 20 §). Yle: reaching full bonus takes 5–8 years.",
+        "numbers": {
+          "yearsToFullBonusLow": 5,
+          "yearsToFullBonusHigh": 8
+        },
+        "source": [
+          {
+            "ref": "LVL",
+            "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+            "where": "20 § 3 mom."
+          },
+          {
+            "ref": "YLE2024",
+            "url": "https://yle.fi/a/74-20118095"
+          }
+        ],
+        "real": false
+      },
+      {
+        "factor": "vehicle characteristics",
+        "effect": "The vehicle's own characteristics affect the premium (insurer-specific; e.g. a BMW 335i cost 187–369 €/yr across four insurers for the same driver).",
+        "source": [
+          {
+            "ref": "YLE2024",
+            "url": "https://yle.fi/a/74-20118095"
+          },
+          {
+            "ref": "TT2025",
+            "url": "https://www.taloustaito.fi/vapaalla/2025/autojen-vakuutushinnoissa-rajut-erot--vertailijalle-iso-saasto/"
+          }
+        ],
+        "real": false
+      },
+      {
+        "factor": "place of use / municipality",
+        "effect": "The municipality of use affects the premium.",
+        "source": {
+          "ref": "YLE2024",
+          "url": "https://yle.fi/a/74-20118095"
+        },
+        "real": false
+      },
+      {
+        "factor": "insurer",
+        "effect": "Same car and driver can differ by tens to ~180 €/yr between insurers.",
+        "source": {
+          "ref": "TT2025",
+          "url": "https://www.taloustaito.fi/vapaalla/2025/autojen-vakuutushinnoissa-rajut-erot--vertailijalle-iso-saasto/"
+        },
+        "real": false
+      }
+    ],
+    "examplePremiumsExperiencedDriver": {
+      "basis": "Taloustaito 17.2.2025 comparison: 57-year-old in Vihti (Nummela), full bonus, 12-year-old cars (most sold versions); traffic insurance only, EUR/year.",
+      "rangeEurPerYear": [
+        155.88,
+        368.85
+      ],
+      "typicalEurPerYear": [
+        165,
+        260
+      ],
+      "typicalNote": "Our summary of the table, not a figure stated by Taloustaito: 37 of the 40 quotes fall within 165–260 € (outside: 155.88, 163.69 and 368.85).",
+      "rows": [
+        {
+          "car": "VW Golf 1.4 TSI aut.",
+          "If": 216.39,
+          "LahiTapiola": 169.93,
+          "Pohjola": 208.02,
+          "Fennia": 188.15
+        },
+        {
+          "car": "Skoda Octavia 1.8 TSI 4x4 aut.",
+          "If": 228.5,
+          "LahiTapiola": 167.6,
+          "Pohjola": 219.25,
+          "Fennia": 163.69
+        },
+        {
+          "car": "Nissan Qashqai 2.0 4WD aut.",
+          "If": 232.49,
+          "LahiTapiola": 188.66,
+          "Pohjola": 258.78,
+          "Fennia": 188.15
+        },
+        {
+          "car": "Toyota Auris 1.6 aut.",
+          "If": 180.72,
+          "LahiTapiola": 176.96,
+          "Pohjola": 208.02,
+          "Fennia": 188.15
+        },
+        {
+          "car": "Toyota Avensis 1.8 aut.",
+          "If": 200.82,
+          "LahiTapiola": 179.29,
+          "Pohjola": 217.44,
+          "Fennia": 188.15
+        },
+        {
+          "car": "Toyota Yaris 1.3 aut.",
+          "If": 201.21,
+          "LahiTapiola": 172.28,
+          "Pohjola": 204.57,
+          "Fennia": 180.62
+        },
+        {
+          "car": "Ford Focus 1.0 man.",
+          "If": 219.04,
+          "LahiTapiola": 155.88,
+          "Pohjola": 209.78,
+          "Fennia": 191.91
+        },
+        {
+          "car": "VW Passat 1.4 aut.",
+          "If": 230.82,
+          "LahiTapiola": 179.29,
+          "Pohjola": 221.21,
+          "Fennia": 188.15
+        },
+        {
+          "car": "BMW 3-sarja 335 aut.",
+          "If": 205.19,
+          "LahiTapiola": 187.46,
+          "Pohjola": 368.85,
+          "Fennia": 194.56
+        },
+        {
+          "car": "Ford Fiesta 1.0 aut.",
+          "If": 201.21,
+          "LahiTapiola": 167.6,
+          "Pohjola": 208.04,
+          "Fennia": 184.24
+        }
+      ],
+      "source": {
+        "ref": "TT2025",
+        "url": "https://www.taloustaito.fi/vapaalla/2025/autojen-vakuutushinnoissa-rajut-erot--vertailijalle-iso-saasto/"
+      },
+      "real": false
+    },
+    "youngDriverPremium": {
+      "publishedAverageEurPerYear": null,
+      "finding": "No published average traffic-insurance premium for young drivers was found (Finanssiala, Liikennevakuutuskeskus, Finanssivalvonta statistics checked by search). Yle (21.10.2024) asked the three largest insurers for a new Toyota Corolla in Hämeenlinna: a 20-year-old pays 'many times more' than a 30-year-old, at most several hundred euros more (liikenne + kasko); exact figures are only in the article's graphic.",
+      "source": {
+        "ref": "YLE2024",
+        "url": "https://yle.fi/a/74-20118095"
+      },
+      "real": false,
+      "teamDecisionNeeded": "Whether to show a young-driver multiplier at all; no sourced number exists here (AGENTS.md: no reasonable defaults)."
+    },
+    "uninsured": {
+      "rule": "Keeping a car uninsured: the owner or holder must pay a fee equal to a reasonable premium for the uninsured time (at most the current and five previous calendar years) plus a neglect fee of up to 3 times that fee. Valtiokonttori imposes the fees on Liikennevakuutuskeskus's proposal, and Liikennevakuutuskeskus invoices and collects them. The previous owner's policy covers damage for 7 days after a sale if the new owner has not insured the car; that time does not count as neglect.",
+      "numbers": {
+        "maxNeglectMultiplier": 3,
+        "maxBackYears": 5,
+        "previousOwnerCoverDays": 7
+      },
+      "source": {
+        "ref": "LVL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460",
+        "where": "18 §, 27 §, 28 §, 29 §"
+      },
+      "real": true
+    },
+    "privacyNote": "Background for the buyer's own cost estimate only; never route anything the reader infers about a user into If pricing, underwriting or claims (AGENTS.md)."
+  },
+  "vehicleTax": {
+    "law": "Ajoneuvoverolaki 1281/2003, 9 §, 10 §, 11 § and annex tables (consolidated text incl. 814/2024)",
+    "howComputed": "Daily tax = basic tax (perusvero) + motive-power tax (käyttövoimavero); tax for the period = daily sum x days in the tax period (usually 12 months).",
+    "basicTax": {
+      "rule": "For passenger cars and vans up to 3,500 kg, the basic tax depends on the manufacturer's CO2 value in the register: Table 1 for NEDC-measured cars (passenger cars first used on or after 1.1.2001 if <= 2,500 kg, or on or after 1.1.2002 if heavier), Table 1 A for WLTP-measured cars, Table 2 (by total mass) when no valid CO2 value is registered.",
+      "evRule": "Electric or hydrogen car: the lowest amount of its table; if first used on or after 1.10.2021, the lowest amount plus 17.80 cents/day (Traficom: 171.18 €/yr vs 106.21 €/yr).",
+      "measuredAtInspection": "Emissions measured at inspection do not affect the tax (Traficom).",
+      "table1NEDC_centsPerDayByGkm": [
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.2,
+        29.5,
+        29.8,
+        30.1,
+        30.4,
+        30.7,
+        30.9,
+        31.2,
+        31.5,
+        31.8,
+        32.1,
+        32.4,
+        32.8,
+        33.1,
+        33.4,
+        33.7,
+        34.0,
+        34.4,
+        34.7,
+        35.0,
+        35.4,
+        35.7,
+        36.0,
+        36.4,
+        36.7,
+        37.1,
+        37.4,
+        37.8,
+        38.0,
+        38.3,
+        38.6,
+        38.8,
+        39.1,
+        39.4,
+        39.7,
+        39.9,
+        40.2,
+        40.5,
+        40.8,
+        41.0,
+        41.3,
+        41.6,
+        41.9,
+        42.1,
+        42.4,
+        42.7,
+        43.0,
+        43.2,
+        43.5,
+        43.8,
+        44.1,
+        44.3,
+        44.6,
+        44.9,
+        45.1,
+        45.4,
+        45.7,
+        46.0,
+        46.2,
+        46.5,
+        46.8,
+        47.1,
+        47.3,
+        47.6,
+        47.9,
+        48.2,
+        48.4,
+        48.7,
+        49.0,
+        49.3,
+        49.5,
+        49.8,
+        50.1,
+        50.4,
+        50.6,
+        50.9,
+        51.2,
+        51.4,
+        51.7,
+        52.0,
+        52.3,
+        52.5,
+        52.8,
+        53.1,
+        53.4,
+        53.6,
+        53.9,
+        54.2,
+        54.5,
+        54.7,
+        55.0,
+        55.3,
+        55.6,
+        56.6,
+        57.6,
+        58.7,
+        59.7,
+        60.8,
+        61.8,
+        62.8,
+        63.9,
+        64.9,
+        66.0,
+        67.0,
+        68.0,
+        69.1,
+        70.1,
+        71.2,
+        72.2,
+        73.2,
+        74.3,
+        75.3,
+        76.4,
+        77.4,
+        78.5,
+        79.5,
+        80.5,
+        81.6,
+        82.6,
+        83.7,
+        84.7,
+        85.7,
+        86.8,
+        87.8,
+        88.9,
+        89.9,
+        90.9,
+        92.0,
+        93.0,
+        93.5,
+        94.1,
+        94.7,
+        95.3,
+        95.9,
+        96.5,
+        97.1,
+        97.7,
+        98.3,
+        98.9,
+        99.5,
+        100.1,
+        100.7,
+        101.3,
+        101.9,
+        102.5,
+        103.1,
+        103.7,
+        104.3,
+        104.9,
+        105.5,
+        106.2,
+        106.8,
+        107.4,
+        108.0,
+        108.6,
+        109.2,
+        109.8,
+        110.4,
+        111.0,
+        111.6,
+        112.2,
+        112.9,
+        113.5,
+        114.1,
+        114.7,
+        115.3,
+        115.9,
+        116.5,
+        117.1,
+        117.7,
+        118.3,
+        118.9,
+        119.5,
+        120.1,
+        120.7,
+        121.3,
+        121.9,
+        122.5,
+        123.1,
+        123.7,
+        124.3,
+        124.9,
+        125.4,
+        126.0,
+        126.6,
+        127.2,
+        127.8,
+        128.4,
+        128.9,
+        129.5,
+        130.1,
+        130.7,
+        131.2,
+        131.8,
+        132.4,
+        132.9,
+        133.5,
+        134.0,
+        134.6,
+        135.1,
+        135.7,
+        136.3,
+        136.8,
+        137.3,
+        137.9,
+        138.4,
+        139.0,
+        139.5,
+        140.0,
+        140.6,
+        141.1,
+        141.6,
+        142.1,
+        142.6,
+        143.2,
+        143.7,
+        144.2,
+        144.7,
+        145.2,
+        145.7,
+        146.2,
+        146.7,
+        147.2,
+        147.7,
+        148.1,
+        148.6,
+        149.1,
+        149.6,
+        150.1,
+        150.5,
+        151.0,
+        151.4,
+        151.9,
+        152.4,
+        152.8,
+        153.3,
+        153.7,
+        154.2,
+        154.6,
+        155.0,
+        155.5,
+        155.9,
+        156.3,
+        156.7,
+        157.2,
+        157.6,
+        158.0,
+        158.4,
+        158.8,
+        159.2,
+        159.6,
+        160.0,
+        160.4,
+        160.8,
+        161.2,
+        161.6,
+        161.9,
+        162.3,
+        162.7,
+        163.1,
+        163.4,
+        163.8,
+        164.2,
+        164.5,
+        164.9,
+        165.2,
+        165.6,
+        165.9,
+        166.3,
+        166.6,
+        166.9,
+        167.3,
+        167.6,
+        167.9,
+        168.2,
+        168.5,
+        168.9,
+        169.2,
+        169.5,
+        169.8,
+        170.1,
+        170.4,
+        170.7,
+        171.0,
+        171.3,
+        171.6,
+        171.9,
+        172.1,
+        172.4,
+        172.7,
+        173.0,
+        173.2,
+        173.5,
+        173.8,
+        174.0,
+        174.3,
+        174.5,
+        174.8,
+        175.1,
+        175.3,
+        175.5,
+        175.8,
+        176.0,
+        176.3,
+        176.5,
+        176.7,
+        177.0,
+        177.2,
+        177.4,
+        177.6,
+        177.9,
+        178.1,
+        178.3,
+        178.5,
+        178.7,
+        178.9,
+        179.1
+      ],
+      "table1A_WLTP_centsPerDayByGkm": [
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.1,
+        29.3,
+        29.5,
+        29.7,
+        30.0,
+        30.2,
+        30.4,
+        30.7,
+        30.9,
+        31.1,
+        31.4,
+        31.6,
+        31.8,
+        32.1,
+        32.3,
+        32.6,
+        32.8,
+        33.1,
+        33.3,
+        33.6,
+        33.8,
+        34.1,
+        34.4,
+        34.6,
+        34.9,
+        35.2,
+        35.4,
+        35.7,
+        36.0,
+        36.2,
+        36.5,
+        36.8,
+        37.1,
+        37.4,
+        37.7,
+        38.2,
+        38.6,
+        39.1,
+        39.6,
+        40.1,
+        40.5,
+        41.0,
+        41.5,
+        42.0,
+        42.5,
+        43.0,
+        43.5,
+        44.1,
+        44.6,
+        45.1,
+        45.7,
+        46.2,
+        46.7,
+        47.3,
+        47.9,
+        48.4,
+        49.0,
+        49.6,
+        50.2,
+        50.8,
+        51.4,
+        52.0,
+        52.6,
+        53.2,
+        53.9,
+        54.5,
+        55.1,
+        55.8,
+        56.4,
+        57.1,
+        57.8,
+        58.4,
+        59.1,
+        59.8,
+        60.5,
+        61.2,
+        61.9,
+        62.6,
+        63.3,
+        64.1,
+        64.8,
+        65.5,
+        66.3,
+        67.0,
+        67.8,
+        68.5,
+        69.3,
+        70.1,
+        70.9,
+        71.7,
+        72.5,
+        73.3,
+        74.1,
+        74.9,
+        75.7,
+        76.5,
+        77.4,
+        78.2,
+        79.1,
+        79.9,
+        80.8,
+        81.6,
+        82.5,
+        83.4,
+        84.3,
+        85.1,
+        86.0,
+        86.7,
+        87.4,
+        88.1,
+        88.8,
+        89.5,
+        90.2,
+        91.0,
+        91.7,
+        92.4,
+        93.1,
+        93.9,
+        94.6,
+        95.3,
+        96.1,
+        96.8,
+        97.5,
+        98.3,
+        99.0,
+        99.8,
+        100.5,
+        101.3,
+        102.0,
+        102.7,
+        103.5,
+        104.2,
+        105.0,
+        105.8,
+        106.5,
+        107.3,
+        108.0,
+        108.8,
+        109.5,
+        110.3,
+        111.0,
+        111.8,
+        112.5,
+        113.3,
+        114.0,
+        114.8,
+        115.5,
+        116.3,
+        117.1,
+        117.7,
+        118.3,
+        118.9,
+        119.5,
+        120.1,
+        120.7,
+        121.3,
+        121.9,
+        122.5,
+        123.1,
+        123.7,
+        124.3,
+        124.9,
+        125.4,
+        126.0,
+        126.6,
+        127.2,
+        127.8,
+        128.4,
+        128.9,
+        129.5,
+        130.1,
+        130.7,
+        131.2,
+        131.8,
+        132.4,
+        132.9,
+        133.5,
+        134.0,
+        134.6,
+        135.1,
+        135.7,
+        136.3,
+        136.8,
+        137.3,
+        137.9,
+        138.4,
+        139.0,
+        139.5,
+        140.0,
+        140.6,
+        141.1,
+        141.6,
+        142.1,
+        142.6,
+        143.2,
+        143.7,
+        144.2,
+        144.7,
+        145.2,
+        145.7,
+        146.2,
+        146.7,
+        147.2,
+        147.7,
+        148.1,
+        148.6,
+        149.1,
+        149.6,
+        150.1,
+        150.5,
+        151.0,
+        151.4,
+        151.9,
+        152.4,
+        152.8,
+        153.3,
+        153.7,
+        154.2,
+        154.6,
+        155.0,
+        155.5,
+        155.9,
+        156.3,
+        156.7,
+        157.2,
+        157.6,
+        158.0,
+        158.4,
+        158.8,
+        159.2,
+        159.6,
+        160.0,
+        160.4,
+        160.8,
+        161.2,
+        161.6,
+        161.9,
+        162.3,
+        162.7,
+        163.1,
+        163.4,
+        163.8,
+        164.2,
+        164.5,
+        164.9,
+        165.2,
+        165.6,
+        165.9,
+        166.3,
+        166.6,
+        166.9,
+        167.3,
+        167.6,
+        167.9,
+        168.2,
+        168.5,
+        168.9,
+        169.2,
+        169.5,
+        169.8,
+        170.1,
+        170.4,
+        170.7,
+        171.0,
+        171.3,
+        171.6,
+        171.9,
+        172.1,
+        172.4,
+        172.7,
+        173.0,
+        173.2,
+        173.5,
+        173.8,
+        174.0,
+        174.3,
+        174.5,
+        174.8,
+        175.1,
+        175.3,
+        175.5,
+        175.8,
+        176.0,
+        176.3,
+        176.5,
+        176.7,
+        177.0,
+        177.2,
+        177.4,
+        177.6,
+        177.9,
+        178.1,
+        178.3,
+        178.5,
+        178.7,
+        178.9,
+        179.1
+      ],
+      "tableIndexNote": "Array index = CO2 g/km (0–399). 400 g/km or more: 179.30 cents/day (654.44 €/365 days) in both tables. Samples show the euro-per-365-days column exactly as printed in the act.",
+      "table1NEDC_samples": {
+        "0": {
+          "centsPerDay": 29.1,
+          "eurPer365Days": 106.21
+        },
+        "80": {
+          "centsPerDay": 29.1,
+          "eurPer365Days": 106.21
+        },
+        "100": {
+          "centsPerDay": 34.4,
+          "eurPer365Days": 125.56
+        },
+        "120": {
+          "centsPerDay": 40.5,
+          "eurPer365Days": 147.82
+        },
+        "140": {
+          "centsPerDay": 46.0,
+          "eurPer365Days": 167.9
+        },
+        "150": {
+          "centsPerDay": 48.7,
+          "eurPer365Days": 177.75
+        },
+        "160": {
+          "centsPerDay": 51.4,
+          "eurPer365Days": 187.61
+        },
+        "180": {
+          "centsPerDay": 60.8,
+          "eurPer365Days": 221.92
+        },
+        "200": {
+          "centsPerDay": 81.6,
+          "eurPer365Days": 297.84
+        },
+        "250": {
+          "centsPerDay": 116.5,
+          "eurPer365Days": 425.22
+        },
+        "300": {
+          "centsPerDay": 144.7,
+          "eurPer365Days": 528.15
+        },
+        "399": {
+          "centsPerDay": 179.1,
+          "eurPer365Days": 653.71
+        }
+      },
+      "table1A_WLTP_samples": {
+        "0": {
+          "centsPerDay": 29.1,
+          "eurPer365Days": 106.21
+        },
+        "80": {
+          "centsPerDay": 29.1,
+          "eurPer365Days": 106.21
+        },
+        "100": {
+          "centsPerDay": 29.1,
+          "eurPer365Days": 106.21
+        },
+        "120": {
+          "centsPerDay": 33.1,
+          "eurPer365Days": 120.81
+        },
+        "140": {
+          "centsPerDay": 39.1,
+          "eurPer365Days": 142.71
+        },
+        "150": {
+          "centsPerDay": 44.1,
+          "eurPer365Days": 160.96
+        },
+        "160": {
+          "centsPerDay": 49.6,
+          "eurPer365Days": 181.04
+        },
+        "180": {
+          "centsPerDay": 62.6,
+          "eurPer365Days": 228.49
+        },
+        "200": {
+          "centsPerDay": 78.2,
+          "eurPer365Days": 285.43
+        },
+        "250": {
+          "centsPerDay": 116.3,
+          "eurPer365Days": 424.49
+        },
+        "300": {
+          "centsPerDay": 144.7,
+          "eurPer365Days": 528.15
+        },
+        "399": {
+          "centsPerDay": 179.1,
+          "eurPer365Days": 653.71
+        }
+      },
+      "table2ByTotalMassKg": [
+        {
+          "maxKg": 1300,
+          "centsPerDay": 46.8
+        },
+        {
+          "maxKg": 1400,
+          "centsPerDay": 49.8
+        },
+        {
+          "maxKg": 1500,
+          "centsPerDay": 53.0
+        },
+        {
+          "maxKg": 1600,
+          "centsPerDay": 56.4
+        },
+        {
+          "maxKg": 1700,
+          "centsPerDay": 60.0
+        },
+        {
+          "maxKg": 1800,
+          "centsPerDay": 63.8
+        },
+        {
+          "maxKg": 1900,
+          "centsPerDay": 67.8
+        },
+        {
+          "maxKg": 2000,
+          "centsPerDay": 72.0
+        },
+        {
+          "maxKg": 2100,
+          "centsPerDay": 76.4
+        },
+        {
+          "maxKg": 2200,
+          "centsPerDay": 81.0
+        },
+        {
+          "maxKg": 2300,
+          "centsPerDay": 85.8
+        },
+        {
+          "maxKg": 2400,
+          "centsPerDay": 90.8
+        },
+        {
+          "maxKg": 2500,
+          "centsPerDay": 96.0
+        },
+        {
+          "maxKg": 2600,
+          "centsPerDay": 101.4
+        },
+        {
+          "maxKg": 2700,
+          "centsPerDay": 107.0
+        },
+        {
+          "maxKg": 2800,
+          "centsPerDay": 112.8
+        },
+        {
+          "maxKg": 2900,
+          "centsPerDay": 118.8
+        },
+        {
+          "maxKg": 3000,
+          "centsPerDay": 125.0
+        },
+        {
+          "maxKg": 3100,
+          "centsPerDay": 131.4
+        },
+        {
+          "maxKg": 3200,
+          "centsPerDay": 138.0
+        },
+        {
+          "maxKg": 3300,
+          "centsPerDay": 144.8
+        },
+        {
+          "maxKg": 3400,
+          "centsPerDay": 151.8
+        },
+        {
+          "maxKg": null,
+          "minKg": 3401,
+          "centsPerDay": 159.0
+        }
+      ],
+      "tableVersions": "Traficom: from 1.1.2026 Table 1 and Table 1 A as amended by 814/2024; Table 2 per 1223/2023. Values above were read from the Finlex consolidated text (first/current version shown).",
+      "source": [
+        {
+          "ref": "AVL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/2003/1281",
+          "where": "10 § and annex tables 1, 1 A, 2"
+        },
+        {
+          "ref": "TRAF_TAX_AMOUNT",
+          "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoveron-maara"
+        }
+      ],
+      "real": true
+    },
+    "motivePowerTax": {
+      "rule": "Cars using anything other than petrol pay käyttövoimavero per started 100 kg of total mass (kokonaismassa) per day.",
+      "centsPer100kgPerDay": {
+        "diesel": 5.5,
+        "electric": 1.9,
+        "plugInHybridPetrol": 0.95,
+        "plugInHybridDiesel": 3.6,
+        "methane": 3.1,
+        "petrol": 0.0
+      },
+      "history": "Electric 1.5 -> 1.9, PHEV petrol 0.5 -> 0.95, PHEV diesel 4.9 -> 3.6 (diesel 5.5 and methane 3.1 unchanged) by amendment 814/2024. That act entered into force on 1.1.2025, but its transitional provision says the daily tax is computed under the old rules until 31.12.2025, so the new rates apply to tax days from 1.1.2026 (same for the new Tables 1 and 1 A and the EV +17.80 c rule; amendment 815/2024 has the same transitional provision).",
+      "transitionalQuoteFi": "Tämä laki tulee voimaan 1 päivänä tammikuuta 2025. Päivää kohden kannettavan veron määrä lasketaan tämän lain voimaan tullessa voimassa olleiden säännösten mukaisesti 31 päivään joulukuuta 2025.",
+      "source": [
+        {
+          "ref": "AVL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/2003/1281",
+          "where": "11 § 1 mom. 1–2 kohta"
+        },
+        {
+          "ref": "TRAF_TAX_AMOUNT",
+          "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoveron-maara"
+        }
+      ],
+      "real": true
+    },
+    "examples": [
+      {
+        "label": "Petrol car, NEDC 150 g/km",
+        "baseCentsPerDay": 48.7,
+        "motivePowerCentsPerDay": 0.0,
+        "eurPerYear": 177.75,
+        "computed": "from the act's tables and rates; verify with Traficom's calculator"
+      },
+      {
+        "label": "Diesel car, NEDC 120 g/km, total mass 1,900 kg",
+        "baseCentsPerDay": 40.5,
+        "motivePowerCentsPerDay": 104.5,
+        "eurPerYear": 529.25,
+        "computed": "from the act's tables and rates; verify with Traficom's calculator"
+      },
+      {
+        "label": "Electric car first used on or after 1.10.2021, total mass 2,200 kg",
+        "baseCentsPerDay": 46.9,
+        "motivePowerCentsPerDay": 41.8,
+        "eurPerYear": 323.75,
+        "computed": "from the act's tables and rates; verify with Traficom's calculator"
+      }
+    ],
+    "unpaidTax": {
+      "rule": "If the tax is not paid by the due date the vehicle goes into a use ban (käyttökielto); a ban can also follow from the previous owner's or holder's unpaid tax, so check before buying. The seller pays for the day of sale, the new owner from the next day.",
+      "source": {
+        "ref": "TRAF_TAX",
+        "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvovero"
+      },
+      "real": true
+    },
+    "officialCalculator": {
+      "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoverolaskuri",
+      "inputs": [
+        "CO2 value and its method (NEDC/WLTP)",
+        "date of first use (käyttöönottopäivä)",
+        "maximum permitted total mass",
+        "motive power"
+      ],
+      "source": {
+        "ref": "TRAF_CALC",
+        "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvoverolaskuri"
+      }
+    },
+    "readerHint": "Ads often show CO2 g/km, fuel, first registration and sometimes total mass. With CO2 + method -> table lookup; diesel/EV/PHEV -> add motive-power tax from total mass; otherwise link to the calculator."
+  },
+  "wearItems": [
+    {
+      "item": "timing belt (jakohihna) incl. water pump/tensioners where needed",
+      "usualIntervalKm": 100000,
+      "intervalKmRange": [
+        40000,
+        200000
+      ],
+      "usualIntervalYears": null,
+      "intervalYearsRange": [
+        4,
+        10
+      ],
+      "costEurLow": 380,
+      "costEurHigh": 951,
+      "costEurTypical": 555,
+      "basis": "AutoJerry 2026 price guide (thousands of garage offers via the platform; ~50 % labour, 50 % parts; 'typically about 100,000 km', elsewhere on the page 40,000–200,000 km or every 4–10 years depending on make, model and engine; some engines use a chain). Cross-check: Taloustaito 15.5.2019 lists five garages charging 549.50–740 € for belt kit + water pump on a Škoda Superb 1.8 T (the 740 € quote also includes a periodic service); a sixth price, 548.16 € (Metro-Auto), excluded the water pump.",
+      "source": [
+        {
+          "ref": "AJ_BELT",
+          "url": "https://www.autojerry.fi/hinnat/jakohihnan-vaihto-hinta/"
+        },
+        {
+          "ref": "TT2019",
+          "url": "https://www.taloustaito.fi/vapaalla/merkkiliikkeet-tarjoavat-halpoja-huoltoja-iakkaille-autoille/"
+        }
+      ],
+      "real": false
+    },
+    {
+      "item": "clutch (kytkin)",
+      "usualIntervalKm": null,
+      "usualIntervalYears": null,
+      "costEurLow": 450,
+      "costEurHigh": 1285,
+      "costEurTypical": 719,
+      "basis": "AutoJerry 2026 price guide (thousands of garage offers; ~50 % labour). No reliable source found for a typical clutch lifetime; replaced when worn.",
+      "source": {
+        "ref": "AJ_CLUTCH",
+        "url": "https://www.autojerry.fi/hinnat/kytkimen-vaihto-hinta/"
+      },
+      "real": false
+    },
+    {
+      "item": "brake pads (jarrupalat), one axle",
+      "usualIntervalKm": 75000,
+      "intervalKmRange": [
+        50000,
+        100000
+      ],
+      "usualIntervalYears": null,
+      "costEurLow": 96,
+      "costEurHigh": 307,
+      "costEurTypical": 160,
+      "basis": "AutoJerry 2026 price guide: average 160 €, range ~96–307 €; 'vaihtoväli usein n. 50–100 tkm' (usualIntervalKm = midpoint of that range).",
+      "source": {
+        "ref": "AJ_PADS",
+        "url": "https://www.autojerry.fi/hinnat/jarrupalojen-vaihto-hinta/"
+      },
+      "real": false
+    },
+    {
+      "item": "brake discs (jarrulevyt), one axle (pair)",
+      "usualIntervalKm": null,
+      "usualIntervalYears": null,
+      "costEurLow": 120,
+      "costEurHigh": 590,
+      "costEurTypical": 291,
+      "basis": "AutoJerry 2026 price guide: average 291 €, range ~120–590 €; changing pads at the same time does not add labour. No interval given by the source.",
+      "source": {
+        "ref": "AJ_DISCS",
+        "url": "https://www.autojerry.fi/hinnat/jarrulevyjen-vaihto-hinta/"
+      },
+      "real": false
+    },
+    {
+      "item": "winter tyres, set of four (talvirenkaat)",
+      "usualIntervalKm": null,
+      "usualIntervalYears": 6,
+      "costEurLow": 252,
+      "costEurHigh": 798,
+      "costEurTypical": 455,
+      "basis": "Price: AutoJerry 2026 (studded or friction, size and brand dependent; unclear whether fitting is included). Interval: Autoliitto recommendation (Moottori 2022) to replace after six winters, at 5 mm tread, or when over 10 years old; legal minimum 3.0 mm in Nov–Mar when conditions require (Tieliikennelaki 105 §).",
+      "source": [
+        {
+          "ref": "AJ_WINTER",
+          "url": "https://autojerry.fi/hinnat/talvirenkaat-hinta/"
+        },
+        {
+          "ref": "MOOTTORI2022",
+          "url": "https://moottori.fi/uutinen/talvi-tulee-tarkista-renkaidesi-kunto-ajoissa/"
+        },
+        {
+          "ref": "TLL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/2018/729",
+          "where": "105 §"
+        }
+      ],
+      "real": false
+    },
+    {
+      "item": "seasonal tyre change (renkaanvaihto), per change",
+      "usualIntervalKm": null,
+      "usualIntervalYears": 0.5,
+      "costEurLow": 25,
+      "costEurHigh": 55,
+      "costEurTypical": 35,
+      "basis": "AutoJerry 2026 price guide: average 35 €, range ~25–55 € for the tyre change service. Twice a year because of the winter-tyre rule. (An earlier note 'washing adds ~10 €' could not be found on the page on 2026-10-17 and was removed.)",
+      "source": {
+        "ref": "AJ_CHANGE",
+        "url": "https://www.autojerry.fi/hinnat/renkaanvaihto-hinta/"
+      },
+      "real": false
+    },
+    {
+      "item": "tyre hotel (rengashotelli), per season",
+      "usualIntervalKm": null,
+      "usualIntervalYears": 0.5,
+      "costEurLow": 60,
+      "costEurHigh": 120,
+      "costEurTypical": 89,
+      "basis": "AutoJerry 2026: average 89 €, range ~60–120 €; the page also says roughly 60–70 € per season or 120–140 € per year, so the unit is ambiguous.",
+      "source": {
+        "ref": "AJ_HOTEL",
+        "url": "https://autojerry.fi/hinnat/rengashotelli-hinta/"
+      },
+      "real": false
+    },
+    {
+      "item": "periodic service (määräaikaishuolto)",
+      "usualIntervalKm": 15000,
+      "usualIntervalYears": 1,
+      "costEurLow": 159,
+      "costEurHigh": 395,
+      "costEurTypical": 225,
+      "basis": "AutoJerry 2026 price guide (15,000 km given as an example interval; a smaller yearly service for low-mileage cars). Interval is model-specific; the yearly figure is our assumption for low-mileage cars, not a source value.",
+      "source": {
+        "ref": "AJ_SERVICE",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/"
+      },
+      "real": false
+    }
+  ],
+  "youngDrivers": {
+    "summary": "15–24-year-olds remain over-represented in serious road accidents in Finland: on average 40 deaths and 180 seriously injured a year (10-year averages), two thirds of the deaths in passenger cars. 18–24-year-old drivers cause about one fifth of fatal motor-vehicle crashes and 15 % of claims paid from traffic insurance.",
+    "facts": [
+      {
+        "fact": "15–24-year-olds killed in road traffic, average per year (last 10 years)",
+        "value": 40,
+        "unit": "deaths/year",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4"
+        },
+        "real": true
+      },
+      {
+        "fact": "15–24-year-olds seriously injured, average per year (last 10 years; police + hospital data)",
+        "value": 180,
+        "unit": "persons/year",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4"
+        },
+        "real": true
+      },
+      {
+        "fact": "Share of these young people's deaths that happen in a passenger car",
+        "value": "2/3",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4"
+        },
+        "real": true
+      },
+      {
+        "fact": "In fatal crashes, 18–24-year-old drivers speeding by at least 10 km/h",
+        "value": "2 of 3",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4, citing Salenius & Sihvola 2021"
+        },
+        "real": true
+      },
+      {
+        "fact": "Young people killed in passenger cars not wearing a seatbelt",
+        "value": "over half",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4"
+        },
+        "real": true
+      },
+      {
+        "fact": "Young drivers in fatal crashes guilty of drunk driving",
+        "value": "1 in 3",
+        "source": {
+          "ref": "LT2026",
+          "url": "https://www.liikenneturva.fi/wp-content/uploads/2026/06/Liikenneturvan-selvityksia-12026-Nuorten-kayttaytyminen-ja-asenteet-liikenteessa.pdf",
+          "where": "p. 4"
+        },
+        "real": true
+      },
+      {
+        "fact": "Fatal motor-vehicle crashes caused by 18–24-year-old drivers, 2010–2019",
+        "value": 356,
+        "unit": "crashes",
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 1.1"
+        },
+        "real": true
+      },
+      {
+        "fact": "Share of all fatal motor-vehicle crashes caused by 18–24-year-old drivers, 2010–2019",
+        "value": "about one fifth",
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 1.1"
+        },
+        "real": true
+      },
+      {
+        "fact": "Share of 18–19-year-olds among young at-fault drivers in fatal crashes, 2015–2019 (70 of 168)",
+        "value": 0.42,
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 1.2.3 (repeated in the summary)"
+        },
+        "real": true
+      },
+      {
+        "fact": "Share of traffic-insurance-compensated claims caused by 18–24-year-old drivers, 2015–2019 (51,747 of 493,500; driver age unknown in 31 %)",
+        "value": 0.15,
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 2"
+        },
+        "real": true
+      },
+      {
+        "fact": "Personal-injury share of claims caused by young drivers vs 25–64-year-olds, 2015–2019",
+        "value": {
+          "age18to24": 0.22,
+          "age25to64": 0.17
+        },
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 2"
+        },
+        "real": true
+      },
+      {
+        "fact": "Most common claim types caused by young drivers: reversing damage and rear-end collisions",
+        "value": {
+          "reversing": 0.28,
+          "rearEnd": 0.22
+        },
+        "source": {
+          "ref": "OTI2021",
+          "url": "https://lvk.fi/document/175892/B3B2339850C1ACBB5B973345631E57BD837E4C7B3C93EC3FA937A9A36451EE76",
+          "where": "section 2"
+        },
+        "real": true
+      },
+      {
+        "fact": "Car-driver deaths per 100,000 people: age 21–24 vs all driver ages, 2024 (the article of 5.4.2025 says 'viime vuonna', last year)",
+        "value": {
+          "age21to24": 3.6,
+          "allAges": 1.2,
+          "ratio": 3.0
+        },
+        "source": {
+          "ref": "MTV2025",
+          "url": "https://www.mtvuutiset.fi/artikkeli/nuorten-kuljettajien-kuolemanriski-on-moninkertainen-muuhun-vaestoon-verrattuna/9132656"
+        },
+        "real": false,
+        "basis": "News report citing a Liikenneturva report; ratio computed by us."
+      }
+    ],
+    "gaps": "No per-kilometre or per-licence-holder crash risk for 18–24 found in a primary source during this pass."
+  },
+  "extras": {
+    "registration": {
+      "rule": "A change-of-registration notice (e.g. new owner) must be made at the latest 7 days after the change. On transfer, the previous owner must hand over the vehicle certificate (varmenne) or valid registration certificate, or make a transfer notice, and hand over the plates.",
+      "numbers": {
+        "changeNoticeDays": 7
+      },
+      "reminder": {
+        "label": "Register the change of ownership",
+        "offsetDaysFromPurchase": 7
+      },
+      "source": {
+        "ref": "AJL",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2021/82",
+        "where": "84 §, 106 §"
+      },
+      "real": true
+    },
+    "usedCarDisputes": {
+      "facts": [
+        {
+          "fact": "Share of consumer-advice contacts about vehicles in 2023 that concerned used-car purchases",
+          "value": 0.59
+        },
+        {
+          "fact": "Share of those used-car cases where the problem was a defect in the car or in the sale",
+          "value": 0.94
+        },
+        {
+          "fact": "Share of passenger cars acquired in 2023 that were used (cites Autoalan tiedotuskeskus 2024)",
+          "value": 0.87
+        }
+      ],
+      "typicalStory": "Defect shows up very soon after purchase; the seller had praised the car as serviced and inspected; a long dispute over who pays follows. Frequent surprises: windows not working, winter tyres below the legal limit, the car was earlier an insurance write-off (lunastettu), crashed, or imported. In the cheapest cars sellers often refuse to pay, citing age, mileage and normal wear.",
+      "scope": "KKV's qualitative analysis covered 1,106 consumer-advice cases logged in January–February 2023, only sales by businesses (no private sales).",
+      "source": {
+        "ref": "KKV2024",
+        "url": "https://www.kkv.fi/uploads/sites/2/2024-01-tutkimusraportteja-kaytettyjen-autojen-kaupan-kuluttajaongelmat.pdf",
+        "where": "footnotes 2–3 (59 %, 94 %, 87 %), chapter 2 (data), chapter 9 (typical story)"
+      },
+      "real": true
+    },
+    "askBeforeSigningCandidates": [
+      {
+        "ask": "Has the car ever been an insurance write-off (lunastettu), crashed or imported?",
+        "why": "Common surprise in KKV's 2024 analysis of 1,106 complaints about used cars bought from businesses (Jan–Feb 2023).",
+        "source": {
+          "ref": "KKV2024",
+          "url": "https://www.kkv.fi/uploads/sites/2/2024-01-tutkimusraportteja-kaytettyjen-autojen-kaupan-kuluttajaongelmat.pdf",
+          "where": "chapter 9"
+        }
+      },
+      {
+        "ask": "Can you show the service history, including when the timing belt was last changed?",
+        "why": "Timing belt job typically 380–951 € (estimate) and is interval-based.",
+        "source": {
+          "ref": "AJ_BELT",
+          "url": "https://www.autojerry.fi/hinnat/jakohihnan-vaihto-hinta/"
+        }
+      },
+      {
+        "ask": "Are there unpaid vehicle taxes on the car?",
+        "why": "A use ban can follow from the previous owner's unpaid tax.",
+        "source": {
+          "ref": "TRAF_TAX",
+          "url": "https://www.traficom.fi/fi/autoilijat/ajoneuvon-verotus/ajoneuvovero"
+        }
+      },
+      {
+        "ask": "Are you the registered owner, with no finance company on the registration?",
+        "why": "Third-party ownership/pledge is a legal defect (dealer sale) and blocks clean transfer.",
+        "source": {
+          "ref": "KSL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/1978/38",
+          "where": "5 luku 14 §"
+        }
+      },
+      {
+        "ask": "When is the next inspection due, and what were the odometer readings at past inspections?",
+        "why": "Odometer readings are stored at each inspection; a missed inspection means a use ban.",
+        "source": {
+          "ref": "AJL",
+          "url": "https://www.finlex.fi/fi/lainsaadanto/2021/82",
+          "where": "149–151 §, 161 §"
+        }
+      },
+      {
+        "ask": "Do the winter tyres have at least 3 mm tread (5 mm recommended)?",
+        "why": "Legal minimum in Nov–Mar when conditions require; KKV saw illegal tyres as a frequent surprise.",
+        "source": [
+          {
+            "ref": "TLL",
+            "url": "https://www.finlex.fi/fi/lainsaadanto/2018/729",
+            "where": "105 §"
+          },
+          {
+            "ref": "KKV2024",
+            "url": "https://www.kkv.fi/uploads/sites/2/2024-01-tutkimusraportteja-kaytettyjen-autojen-kaupan-kuluttajaongelmat.pdf",
+            "where": "chapter 9"
+          }
+        ]
+      }
+    ]
+  }
+}

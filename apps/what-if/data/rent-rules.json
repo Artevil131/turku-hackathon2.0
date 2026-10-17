@@ -1,0 +1,1915 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "area": "rent",
+    "title": "Renting a flat in Finland: rules, costs and rent levels",
+    "compiled": "2026-10-17",
+    "purpose": "Data and rules for the What if… rule-based reader of rental ads. Data only: no UI, no AI.",
+    "howToRead": {
+      "realField": "true = taken directly from a primary source (law text on Finlex, a public authority, Tilastokeskus, the Consumer Disputes Board, FINE). false = estimate or interpretation; the 'basis' field says what it rests on.",
+      "sourceField": "Ids point into the 'sources' object (URL, publisher, date). A list means several sources support the item. rentLevels and rentTotals entries carry the full citation in 'source' and the id in 'sourceId'.",
+      "lawRef": "Section (§) and subsection (mom = momentti) of Laki asuinhuoneiston vuokrauksesta 481/1995 unless another act is named."
+    },
+    "lawVersion": "481/1995 as amended by 531/2026 (in force 1.10.2026). Current text read from Finlex on 2026-10-17; the pre-reform text read from the Finlex version 'muutoshistoria/20200790'.",
+    "transitional": {
+      "cutoff": "2026-10-01",
+      "rule": "The amended act also applies to leases concluded before 1.10.2026, except that for those leases the old 4 § 2 mom, 8 § 1 mom, 27 §, 32 § 2 mom, 52 § 2 and 4 mom and 68 § keep applying, and the old 8 § 2 mom applies instead of the new 8 § 5 mom, unless the parties agree otherwise after 1.10.2026.",
+      "readerHint": "A flat found through an ad today gets a lease concluded after 1.10.2026, so the new values apply. Use the 'leasesConcludedBefore2026_10_01' values only when the user says the lease was signed before 1.10.2026.",
+      "noticesAndPendingCases": "Notices, demands and warnings given or sent before 1.10.2026 follow the old rules, and rental cases pending on 1.10.2026 are decided under the old rules (same transitional provision).",
+      "source": "finlex-481-1995",
+      "lawRef": "voimaantulosäännös, laki 531/2026",
+      "real": true
+    },
+    "rentLevelsDefinition": {
+      "unit": "EUR per m² per month (StatFin unit 'euroa/neliömetri'; the documentation publishes 'keskineliövuokria kuukaudessa (€/m2/kk)')",
+      "includes": "Separately paid water and heating charges are counted as rent.",
+      "excludes": "Usage fees such as sauna and laundry room. Electricity and internet are not part of rent unless already included in the rent the resident pays.",
+      "method": "Weighted arithmetic means of rents per m². Not adjusted for quality differences between flats.",
+      "allVsNew": "eurPerM2 = all ongoing free-market tenancies. eurPerM2New = new tenancies (started at most six months before the end of the reference quarter, or in the asking-rent data). eurPerM2New is the closer comparison for an ad's asking rent.",
+      "financing": "vapaarahoitteinen = free-market (rent set by the market). valtion tukema = state-subsidised (ARA, cost-based rent). Ads on Oikotie/Etuovi are mostly free-market.",
+      "rooms": "Room count excludes the kitchen. '3+' = three rooms or more.",
+      "areas": "Koko maa excludes Åland. City sub-areas (e.g. Turku 1–3, Helsinki 1–4) follow a postcode classification by price level of old flats: 'Asuntojen vuokratilaston alueluokitus 2025'. Sub-area values are not included in this file (see gaps).",
+      "source": [
+        "statfin-asvu-doc",
+        "statfin-15fa"
+      ],
+      "real": true
+    },
+    "notLegalAdvice": "General rules for orientation, not legal advice. Help: Kuluttajaneuvonta (KKV) advises when the landlord is a company and gives only general advice when the landlord is a private person. The Consumer Disputes Board (Kuluttajariitalautakunta) handles most rental disputes, between private individuals and with company landlords. A claim that a termination is invalid must go to a court; the board cannot handle it (KKV 'Terminating a lease').",
+    "teamDecisionsNeeded": [
+      "What counts as 'expensive' when an ad's rent per m² is compared with the Tilastokeskus averages. No threshold is set here (AGENTS.md: thresholds are a team decision).",
+      "Whether and how to show the rent-reduction benchmarks (estimates drawn from individual, non-binding dispute-board decisions).",
+      "AGENTS.md places data in the repo-level data/ folder; this file sits in apps/what-if/data because the task asked for it."
+    ],
+    "statfinUpdated": {
+      "15fa": "2026-10-15T05:00:00Z",
+      "15fc": "2026-10-15T05:00:00Z"
+    },
+    "factCheck": {
+      "date": "2026-10-17",
+      "method": "Independent re-download of each source (raw text, not the first agent's files) and comparison with the file.",
+      "verified": [
+        "481/1995 current text on Finlex (531/2026 of 16.6.2026, in force 1.10.2026) and the 20200790 version: 8 § 1–5 mom (3-month cap, 14-day return, withholding limit, compensation), 52 § 1–4 mom (1 month tenant; 4/3 months landlord, old 6/3 months), 21 § 2–3 mom (14 days; 6 months; 14-day cancellation; no new period for a new tenant), 23 § 1–3 mom, 25 §, 26 a §, 27 § 2 mom, 36 §, 54 §, 57 §, 68 § (new and old), 68 a §, 4 §, 5 §, 13 §, 17 a §, 27 a §, 37 §, 61 §, 63 § and the 531/2026 transitional provision, word for word.",
+        "All 216 StatFin values in rentLevels and rentTotals against the live PxWeb API (tables 15fa and 15fc, 2026Q3, updated 2026-10-15T05:00:00Z): no differences.",
+        "KKV pages (deposit, terminating, cancelling, obligations, condition), the Consumer Disputes Board rental page (20 €/hour) and decisions D/2288/43/2023, D/3183/43/2023 and 3137/83/07 (percentages, dates, 9.5 % interest), the FINE guide (deductibles 150–200 € and about 500–1,000 €, fixed interiors 5,000–10,000 €, 6-month or 1-year caps), Pelastuslaki 17 § with its two-year transition to 1.1.2026, the Tilastokeskus documentation and release, Taloustaito 29.4.2019 and both Vuokralaiset articles."
+      ],
+      "corrected": [
+        "liability.adjustmentAndMitigation.lawRef: 6 § 2 and 3 mom -> 6 § 3 and 4 mom.",
+        "pipeRenovation.whoPays (belongings during works): the 5 % in KRIL 3137/83/07 was a credit to the tenant, not a storage fee the tenant owed.",
+        "notice.landlord.cannotBeShortened: the void 'notice can start only after a set time' rule applies only to leases concluded on or after 1.10.2026.",
+        "pipeRenovation.howToClaim.disputes and meta.notLegalAdvice: the Consumer Disputes Board also hears cases against company landlords.",
+        "sources.kril-rental.url: updated to the address the old URL redirects to."
+      ]
+    }
+  },
+  "sources": {
+    "finlex-481-1995": {
+      "title": "Laki asuinhuoneiston vuokrauksesta 481/1995 (ajantasainen, sisältää muutoksen 531/2026)",
+      "publisher": "Finlex, oikeusministeriö",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/1995/481",
+      "date": "amended by 531/2026 (16.6.2026), in force 1.10.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: law"
+    },
+    "finlex-481-1995-pre2026": {
+      "title": "Laki asuinhuoneiston vuokrauksesta 481/1995, text before amendment 531/2026",
+      "publisher": "Finlex, oikeusministeriö",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/1995/481/muutoshistoria/20200790",
+      "date": "text in force 23.11.2020–30.9.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: law"
+    },
+    "he-33-2026": {
+      "title": "HE 33/2026 vp, YmVM 8/2026 vp, EV 72/2026 vp (the 2026 reform of the rental acts)",
+      "publisher": "Eduskunta",
+      "url": "https://www.eduskunta.fi/pdf/HE+33/2026",
+      "date": "2026",
+      "accessed": "found via search on 2026-10-17, not read in full; listed for traceability. The numbers HE 33/2026, YmVM 8/2026 and EV 72/2026 are confirmed by the Finlex entry for 531/2026; eduskunta.fi refused automated requests (HTTP 403), so the URL was not opened.",
+      "type": "primary: preparatory work"
+    },
+    "finlex-379-2011": {
+      "title": "Pelastuslaki 379/2011, 17 § (palovaroittimet)",
+      "publisher": "Finlex, oikeusministeriö",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2011/379",
+      "date": "owner's smoke-alarm duty in force 1.1.2026 (two years after the amendment in force 1.1.2024)",
+      "accessed": "2026-10-17",
+      "type": "primary: law"
+    },
+    "kkv-rental": {
+      "title": "Rental apartments",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/",
+      "date": "no page date",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kkv-deposit": {
+      "title": "Security deposit for a rented apartment",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/security-deposit-for-a-rented-apartment/",
+      "date": "no page date; states it is based on legislation in force 1.10.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kkv-obligations": {
+      "title": "Tenant's obligations and liability",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/tenants-obligations-and-liability/",
+      "date": "no page date; states it is based on legislation in force 1.10.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kkv-terminating": {
+      "title": "Terminating a lease",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/terminating-a-lease/",
+      "date": "no page date; states it is based on legislation in force 1.10.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kkv-cancelling": {
+      "title": "Cancelling of a lease",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/cancelling-of-a-lease/",
+      "date": "no page date",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kkv-condition": {
+      "title": "Inadequate condition of a rental apartment",
+      "publisher": "Kilpailu- ja kuluttajavirasto (KKV), Kuluttajaneuvonta",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/inadequate-condition-of-a-rental-apartment/",
+      "date": "no page date",
+      "accessed": "2026-10-17",
+      "type": "primary: authority guidance"
+    },
+    "kril-rental": {
+      "title": "Asunnon vuokraus ja asumisoikeus",
+      "publisher": "Kuluttajariitalautakunta (Consumer Disputes Board)",
+      "url": "https://www.kuluttajariita.fi/yleisimmat-aiheet/asunnon-vuokraus/",
+      "urlNote": "The URL first recorded (https://kuluttajariita.fi/fi/index/yleisimmataiheet/asunnonvuokraus.html) redirects here (checked 2026-10-17). Its notice-period paragraph still describes the old 3 or 6 months; use 481/1995 and KKV for notice periods.",
+      "date": "no page date; newest linked decision 17.7.2026",
+      "accessed": "2026-10-17",
+      "type": "primary: dispute board guidance"
+    },
+    "kril-D-2288-43-2023": {
+      "title": "Vuokranalennus kylpyhuoneen vesivahingon perusteella, D/2288/43/2023",
+      "publisher": "Kuluttajariitalautakunta",
+      "url": "https://www.kuluttajariita.fi/paatokset/vuokranalennus-kylpyhuoneen-vesivahingon-perusteella/",
+      "date": "2025-10-27",
+      "accessed": "2026-10-17",
+      "type": "primary: dispute board decision (non-binding recommendation)"
+    },
+    "kril-D-3183-43-2023": {
+      "title": "Julkisivuremontista johtuvaan asumishaittaan perustuva vuokranalennus ja viivästyskoron määräytyminen, D/3183/43/2023",
+      "publisher": "Kuluttajariitalautakunta",
+      "url": "https://www.kuluttajariita.fi/paatokset/julkisivuremontista-johtuvaan-asumishaittaan-perustuva-vuokranalennus-ja-viivastyskoron-maaraytyminen/",
+      "date": "2026-03-27",
+      "accessed": "2026-10-17",
+      "type": "primary: dispute board decision (non-binding recommendation)"
+    },
+    "kril-3137-83-07": {
+      "title": "Vuokranantajan tekemä kylpyhuoneremontti. Vuokranalennus. 3137/83/07",
+      "publisher": "Kuluttajariitalautakunta",
+      "url": "https://www.kuluttajariita.fi/paatokset/vuokranantajan-tekema-kylpyhuoneremontti-vuokranalennus/",
+      "date": "2008-05-06",
+      "accessed": "2026-10-17",
+      "type": "primary: dispute board decision (non-binding recommendation)"
+    },
+    "fine-insurance-guide": {
+      "title": "Vuokralaisen, osakkaan ja taloyhtiön vakuutukset",
+      "publisher": "FINE Vakuutus- ja rahoitusneuvonta (Finnish Financial Ombudsman Bureau)",
+      "url": "https://www.fine.fi/oppaat/julkaisu/vuokralaisen-osakkaan-ja-taloyhtion-vakuutukset.html",
+      "date": "2020 (article marked © FINE 2020; page footer 2022)",
+      "accessed": "2026-10-17",
+      "type": "primary: independent advisory body guide"
+    },
+    "vuokralaiset-2024-questions": {
+      "title": "Muutto edessä? Kysy tärkeät kysymykset vuokra-asuntoon liittyen!",
+      "publisher": "Vuokralaiset VKL ry",
+      "url": "https://www.vuokralaiset.fi/uutiset/muutto-edessa-kysy-tarkeat-kysymyks/",
+      "date": "2024-08-05",
+      "accessed": "2026-10-17",
+      "type": "secondary: tenants' association"
+    },
+    "vuokralaiset-2021-insurance": {
+      "title": "Kotivakuutus on irtaimistosi tärkein vakuutus (Asuntomme 2/2021)",
+      "publisher": "Vuokralaiset VKL ry, Asuntomme magazine (article produced with POP Vakuutus)",
+      "url": "https://www.vuokralaiset.fi/asuntomme-lehti/asuntomme-2-2021/kotivakuutus-on-irtaimistosi-tarkei/",
+      "date": "2021",
+      "accessed": "2026-10-17",
+      "type": "secondary: sponsored magazine article"
+    },
+    "taloustaito-2019": {
+      "title": "Putkiremontti kotona, mistä sijaisasunto?",
+      "publisher": "Taloustaito (Veronmaksajain Keskusliitto); quotes If's claims director and OP's insurance manager",
+      "url": "https://www.taloustaito.fi/koti/putkiremontti-kotona-mista-sijaisasunto/",
+      "date": "2019-04-29",
+      "accessed": "2026-10-17",
+      "type": "secondary: magazine article"
+    },
+    "statfin-15fa": {
+      "title": "15fa -- Vuokraindeksi (2025=100) ja keskineliövuokrat, neljännesvuosittain, 2025Q1-2026Q3",
+      "publisher": "Tilastokeskus (Statistics Finland), Asuntojen vuokrat",
+      "url": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "date": "2026Q3 data, published 2026-10-15",
+      "accessed": "2026-10-17",
+      "type": "primary: official statistics"
+    },
+    "statfin-15fc": {
+      "title": "15fc -- Vapaarahoitteisten vuokra-asuntojen kokonaisvuokrien jakaumat suurissa kaupungeissa, neljännesvuosittain, 2025Q1-2026Q3",
+      "publisher": "Tilastokeskus (Statistics Finland), Asuntojen vuokrat",
+      "url": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "date": "2026Q3 data, published 2026-10-15",
+      "accessed": "2026-10-17",
+      "type": "primary: official statistics"
+    },
+    "statfin-asvu-doc": {
+      "title": "Asuntojen vuokrat: tilaston dokumentaatio",
+      "publisher": "Tilastokeskus (Statistics Finland)",
+      "url": "https://stat.fi/tilasto/dokumentaatio/asvu",
+      "date": "current documentation",
+      "accessed": "2026-10-17",
+      "type": "primary: official statistics documentation"
+    },
+    "statfin-asvu-release-2026q3": {
+      "title": "Vapaarahoitteiset vuokrat nousivat 0,1 % heinä-syyskuussa 2026 (Asuntojen vuokrat 2026, 3. vuosineljännes)",
+      "publisher": "Tilastokeskus (Statistics Finland)",
+      "url": "https://www.stat.fi/fi/julkaisu/cmfmgo7dw0jvj07w03b9zi2y8",
+      "date": "2026-10-15",
+      "accessed": "2026-10-17",
+      "type": "primary: official statistics release"
+    },
+    "statfin-area-classification": {
+      "title": "Asuntojen vuokratilaston alueluokitus 2025 (postcode areas behind city sub-areas such as Turku 1–3)",
+      "publisher": "Tilastokeskus (Statistics Finland)",
+      "url": "https://stat.fi/fi/luokitukset/alue/alue_44_20260101",
+      "date": "2025 classification",
+      "accessed": "not fetched; named in the statistics documentation",
+      "type": "primary: classification"
+    }
+  },
+  "deposit": {
+    "maxMonthsOfRent": {
+      "value": 3,
+      "rule": "A lease term requiring a deposit larger than three months' rent is void.",
+      "quoteFi": "Ehto, jonka mukaan sopijapuolen on annettava suurempi kuin kolmen kuukauden vuokran määrää vastaava vakuus, on mitätön.",
+      "appliesTo": "All leases: new text 8 § 5 mom; leases concluded before 1.10.2026 keep the old 8 § 2 mom, which has the same three-month cap.",
+      "source": [
+        "finlex-481-1995",
+        "finlex-481-1995-pre2026",
+        "kkv-deposit"
+      ],
+      "lawRef": "8 § 5 mom (old text 8 § 2 mom)",
+      "real": true
+    },
+    "typicalMonthsOfRent": {
+      "min": 1,
+      "max": 3,
+      "rule": "Landlords usually ask for one to three months' rent.",
+      "source": "kkv-deposit",
+      "real": true
+    },
+    "whatItCovers": {
+      "rule": "Unless otherwise agreed, the deposit covers all obligations arising from the tenancy, for example unpaid rent, inadequate final cleaning or damage beyond normal wear. It stays the tenant's money; the landlord must keep it safe and may not spend it.",
+      "leasesConcludedBefore2026_10_01": "Old 8 § 1 mom: a 'reasonable' deposit against loss if the other party fails its obligations may be agreed. The old text has no default saying it covers all obligations, so the lease wording decides what it covers (that last point is an interpretation).",
+      "source": [
+        "finlex-481-1995",
+        "finlex-481-1995-pre2026",
+        "kkv-deposit"
+      ],
+      "lawRef": "8 § 1 mom",
+      "real": true
+    },
+    "notNormalWear": {
+      "rule": "The landlord may not keep the deposit because of normal wear and tear, or for normal maintenance costs.",
+      "source": "kkv-deposit",
+      "real": true
+    },
+    "returnDeadlineDays": {
+      "value": 14,
+      "rule": "The landlord must return or release the deposit, or tell the tenant in writing that it is withheld, without delay and at the latest 14 days after the lease ends (or after a later handover of the flat). With a justified obstacle: 14 days after the obstacle ends. The notice must state the basis of the claim and a reasonable estimate of its amount.",
+      "quoteFi": "viipymättä ja viimeistään 14 päivän määräajassa vuokrasopimuksen päättymisestä",
+      "appliesTo": "All leases (the transitional provision of 531/2026 does not exempt 8 § 2–4 mom; KKV states the rule without a cutoff).",
+      "source": [
+        "finlex-481-1995",
+        "kkv-deposit"
+      ],
+      "lawRef": "8 § 2 mom",
+      "real": true
+    },
+    "withholdingLimit": {
+      "rule": "The landlord may keep at most the amount of the claim or the notified estimate. A deposit held on a rent deposit account (vuokravakuustili) may be kept in full until the amount is clear.",
+      "source": "finlex-481-1995",
+      "lawRef": "8 § 3 mom",
+      "real": true
+    },
+    "withholdingMustBeExplained": {
+      "rule": "Saying that the deposit is withheld is not enough: the landlord must give detailed reasons and evidence, and explain why a defect is beyond normal wear. The landlord's own statement alone is generally not sufficient evidence in a dispute.",
+      "source": [
+        "kkv-deposit",
+        "kril-rental"
+      ],
+      "real": true
+    },
+    "wrongfulWithholding": {
+      "rule": "The tenant may claim compensation for loss caused by unjustified withholding unless the landlord shows it was not the landlord's fault, and statutory late-payment interest on a late return.",
+      "example": "Consumer Disputes Board decision of 27.10.2025 applied statutory late-payment interest of 9.5 % from 1.7.2025.",
+      "exampleNote": "The statutory rate is the reference rate plus 7 percentage points and the reference rate is reset every six months (korkolaki 4 § and 12 §, as quoted in KRIL D/3183/43/2023). 9.5 % is the rate from 1.7.2025, not necessarily today's rate; this file does not hold the current rate.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-deposit",
+        "kril-D-2288-43-2023"
+      ],
+      "lawRef": "8 § 4 mom",
+      "real": true
+    },
+    "forms": {
+      "rule": "Usually a bank transfer to the landlord's account or to a separate deposit account; a personal guarantee or a third-party deposit service (monthly fee paid by the tenant) is also possible. Usually paid before the keys are handed over.",
+      "source": "kkv-deposit",
+      "real": true
+    },
+    "finalRentCannotBeOffset": {
+      "rule": "The tenant may not skip the last month's rent because the landlord holds the deposit; rent is paid as usual until the tenancy ends.",
+      "source": "kkv-deposit",
+      "real": true
+    },
+    "ifDepositNotPaid": {
+      "rule": "If the agreed deposit is not paid in the agreed time, the landlord may cancel the lease, unless the deposit is paid before the tenant receives the cancellation notice.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-cancelling"
+      ],
+      "lawRef": "8 § 1 mom",
+      "real": true
+    },
+    "advanceRentMaxMonths": {
+      "value": 3,
+      "rule": "A term requiring rent in advance for more than three months (or one payment period if that is longer) is void. Advance rent may be agreed only for a special reason when the lease is made, and a term obliging advance payment during the tenancy is void.",
+      "source": "finlex-481-1995",
+      "lawRef": "36 §",
+      "real": true
+    },
+    "readerChecks": [
+      {
+        "id": "deposit-over-legal-max",
+        "when": "depositEur > 3 * monthlyRentEur",
+        "meaning": "The deposit term is void above three months' rent.",
+        "basedOn": "deposit.maxMonthsOfRent",
+        "real": true
+      },
+      {
+        "id": "advance-rent-over-legal-max",
+        "when": "advanceRentMonths > 3",
+        "meaning": "A term requiring more than three months' rent in advance is void.",
+        "basedOn": "deposit.advanceRentMaxMonths",
+        "real": true
+      }
+    ]
+  },
+  "notice": {
+    "tenant": {
+      "months": 1,
+      "rule": "A tenant ends an open-ended lease with one month's notice, whatever the length of the tenancy. A term extending it is void.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "52 § 3 and 4 mom",
+      "real": true
+    },
+    "landlord": {
+      "leasesConcludedFrom2026_10_01": {
+        "monthsIfTenancyAtLeastTwoYears": 4,
+        "monthsOtherwise": 3,
+        "rule": "Four months if the tenancy has lasted without interruption at least two years immediately before the notice, otherwise three months.",
+        "quoteFi": "neljä kuukautta, jos huoneiston vuokrasuhde on välittömästi ennen irtisanomista kestänyt yhtäjaksoisesti vähintään kaksi vuotta, ja muussa tapauksessa kolme kuukautta",
+        "source": [
+          "finlex-481-1995",
+          "kkv-terminating"
+        ],
+        "lawRef": "52 § 2 mom (531/2026)",
+        "real": true
+      },
+      "leasesConcludedBefore2026_10_01": {
+        "monthsIfTenancyAtLeastOneYear": 6,
+        "monthsOtherwise": 3,
+        "rule": "Six months if the tenancy has lasted without interruption at least one year, otherwise three months (old 52 § 2 mom, kept by the transitional provision unless agreed otherwise after 1.10.2026).",
+        "source": [
+          "finlex-481-1995-pre2026",
+          "finlex-481-1995",
+          "kkv-terminating"
+        ],
+        "lawRef": "52 § 2 mom, text before 531/2026",
+        "real": true
+      },
+      "cannotBeShortened": {
+        "rule": "A term shortening the landlord's notice period (or extending the tenant's) is void in every lease. In leases concluded on or after 1.10.2026 a term saying that the notice period can start only after a certain time from the start of the tenancy is also void. In leases concluded before 1.10.2026 such a term stays valid, because the old 52 § 4 mom keeps applying to them.",
+        "source": [
+          "finlex-481-1995",
+          "finlex-481-1995-pre2026",
+          "kkv-terminating"
+        ],
+        "lawRef": "52 § 4 mom (new text; old text for leases concluded before 1.10.2026)",
+        "factCheck": "2026-10-17: the earlier wording said the second rule applied 'from 1.10.2026' to all leases. The 531/2026 transitional provision keeps the old 52 § 4 mom (first sentence only) for older leases, and KKV says such terms remain valid in them.",
+        "real": true
+      },
+      "writtenWithReason": {
+        "rule": "The landlord's notice must be written and state the end date and the reason for termination; otherwise it is ineffective.",
+        "source": "finlex-481-1995",
+        "lawRef": "54 §",
+        "real": true
+      },
+      "badFaithTermination": {
+        "rule": "If the landlord's termination is contrary to good practice in tenancies, the tenant may get moving costs, costs of finding a new home and up to three months' rent as compensation for the inconvenience.",
+        "maxMonthsOfRentAsCompensation": 3,
+        "source": "finlex-481-1995",
+        "lawRef": "57 §",
+        "real": true
+      }
+    },
+    "howCounted": {
+      "rule": "The notice period starts on the last day of the calendar month in which the notice was served, unless otherwise agreed. Rent is paid normally during the notice period.",
+      "algorithm": "endDate = last day of the month that is N months after the month in which notice was served (N = notice months).",
+      "example": "Tenant serves notice on 17.10.2026: period starts 31.10.2026, lease ends 30.11.2026.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "52 § 1 mom; 12 § (counting of months)",
+      "real": true
+    },
+    "howServed": {
+      "rule": "Notice must be in writing and served verifiably, or through two electronic channels agreed individually in writing (the notice plus an alert message). A letter is deemed received on the 7th day after posting and an agreed electronic message on the 3rd day after sending, unless shown otherwise.",
+      "caution": "A letter posted in the last days of a month may count as received the next month, pushing the end date one month later.",
+      "cautionReal": false,
+      "cautionBasis": "Reading of 13 § 3 mom and 13 a § together with 52 § 1 mom.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "13 §, 13 a §, 54 §",
+      "real": true
+    },
+    "fixedTerm": {
+      "rule": "A fixed-term lease binds both parties until it ends; it cannot be ended by ordinary notice except in cases set out in law (39, 44, 46, 55, 90, 91 §). Leaving early generally means compensating the landlord. A court may allow early termination for a special reason (55 §).",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "51 § 2 mom, 55 §",
+      "real": true
+    },
+    "fixedThenOpenEnded": {
+      "rule": "From 1.10.2026 a lease may be fixed for an agreed period and then continue until further notice; notice can then end it at the earliest at the end of the fixed period.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "4 § 2 mom",
+      "real": true
+    },
+    "chainedShortLeases": {
+      "rule": "If fixed terms of at most three months are agreed with the same tenant more than twice in a row, the lease is open-ended despite the fixed-term clause.",
+      "source": "finlex-481-1995",
+      "lawRef": "4 § 1 mom",
+      "real": true
+    },
+    "unwrittenLease": {
+      "rule": "A lease must be in writing; an unwritten lease is deemed open-ended.",
+      "source": "finlex-481-1995",
+      "lawRef": "5 § 1 mom",
+      "real": true
+    },
+    "movingDay": {
+      "leasesConcludedFrom2026_10_01": "The moving day is the day the lease ends; the flat must be empty and cleaned by then.",
+      "leasesConcludedBefore2026_10_01": "The moving day is the weekday after the lease ends: half the flat is left for the landlord that day and the whole flat handed over the next day (old 68 §).",
+      "source": [
+        "finlex-481-1995",
+        "finlex-481-1995-pre2026",
+        "kkv-terminating"
+      ],
+      "lawRef": "68 §",
+      "real": true
+    },
+    "landlordCancellationGrounds": {
+      "withoutWarning": [
+        "agreed deposit not paid",
+        "rent not paid (KKV: e.g. two or three months, or persistently irregular)",
+        "unlawful transfer or subletting"
+      ],
+      "afterWrittenWarning": [
+        "using the flat for another purpose or in another way than agreed",
+        "disturbing neighbours",
+        "neglecting care of the flat",
+        "breaching health or public-order rules",
+        "other extremely compelling reason"
+      ],
+      "note": "Minor breaches do not justify cancellation; a tenant who corrects the conduct without delay after a warning keeps the lease. Eviction needs a court judgment; changing the locks is not allowed.",
+      "source": [
+        "kkv-cancelling",
+        "finlex-481-1995"
+      ],
+      "lawRef": "61–62 §",
+      "real": true
+    },
+    "tenantCancellationGrounds": {
+      "items": [
+        "obvious health hazard from using the flat (63 § 1 mom; evidence such as a municipal health authority statement)",
+        "flat not available on the agreed date, causing substantial harm (16 §)",
+        "significant defect the landlord does not repair in time (20 § 2 mom)",
+        "within 14 days of a six-month renovation notice (21 § 3 mom)"
+      ],
+      "source": [
+        "finlex-481-1995",
+        "kkv-cancelling"
+      ],
+      "real": true
+    }
+  },
+  "pipeRenovation": {
+    "noticeToTenant": {
+      "majorWorksMonths": 6,
+      "minorWorksDays": 14,
+      "urgentWorks": "may be done immediately",
+      "rule": "Works that cannot be postponed without damage may be done at once. Works that cause no substantial harm need 14 days' notice. Other repair or alteration works in the flat (a pipe renovation is typically one) need notice at least six months before the work starts.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-cancelling"
+      ],
+      "lawRef": "21 § 2 and 3 mom",
+      "real": true
+    },
+    "tenantMayLeave": {
+      "windowDays": 14,
+      "rule": "Within 14 days of receiving the six-month notice the tenant may cancel the lease to end when the work may start at the earliest. Minor or urgent work gives no such right.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-cancelling"
+      ],
+      "lawRef": "21 § 3 mom",
+      "real": true
+    },
+    "newTenantGetsNoNewPeriod": {
+      "rule": "If the tenant changes after the six-month notice was given, the new tenant must be told about the work, but no new six-month period starts. A new tenant moving into a building with a renovation already announced may face it sooner than six months.",
+      "source": "finlex-481-1995",
+      "lawRef": "21 § 3 mom",
+      "real": true
+    },
+    "whoPays": [
+      {
+        "item": "Rent while the flat cannot be used or is not in the required condition",
+        "who": "Tenant is released from rent or pays a reasonably reduced rent for that period. Not available if the tenant caused the defect, and not for any time before the landlord knew of the defect.",
+        "source": [
+          "finlex-481-1995",
+          "kkv-condition"
+        ],
+        "lawRef": "23 § 2 mom",
+        "real": true
+      },
+      {
+        "item": "Other harm or loss caused by the landlord's works",
+        "who": "Landlord compensates unless the landlord shows the delay or defect was not caused by the landlord's action, omission or negligence. The landlord must keep the harm to what the work makes necessary.",
+        "source": "finlex-481-1995",
+        "lawRef": "23 § 1 and 3 mom",
+        "real": true
+      },
+      {
+        "item": "The renovation work itself",
+        "who": "Not the tenant. The building owner pays; in a housing company the shareholders (the landlord) pay through the company. No insurance pays for a planned pipe renovation.",
+        "real": false,
+        "basis": "481/1995 gives the tenant rent relief (23 §) and has no provision making the tenant pay for repairs; the owner side follows from housing-company law (asunto-osakeyhtiölaki 1599/2009), not checked in this pass. If's claims director quoted in Taloustaito 29.4.2019: no home or other insurance covers a housing company's pipe renovation.",
+        "source": [
+          "finlex-481-1995",
+          "taloustaito-2019"
+        ]
+      },
+      {
+        "item": "Temporary housing",
+        "who": "Usually arranged by the tenant while the landlord does not charge rent. No duty for the landlord to provide a replacement flat was found in 481/1995. Home insurance pays for living elsewhere only after an insured event (e.g. a sudden leak), not for a planned renovation; such cover is often capped (e.g. 6 or 12 months).",
+        "real": false,
+        "basis": "Taloustaito 29.4.2019 quoting If (landlord typically does not charge rent during a line renovation; tenant usually finds the temporary flat) and OP; FINE guide 2020 (temporary-housing cover only when the move follows from an insured event; caps such as 6 months or 1 year). In KRIL 3137/83/07 the landlord had offered a nearby temporary flat.",
+        "source": [
+          "taloustaito-2019",
+          "fine-insurance-guide",
+          "kril-3137-83-07"
+        ]
+      },
+      {
+        "item": "Keeping own belongings in the flat during works",
+        "who": "If the tenant leaves belongings in a flat that cannot be lived in, the tenant may owe a small share of rent as storage compensation: 10 % of rent in KRIL D/2288/43/2023. It can also go the other way: in KRIL 3137/83/07 the landlord credited the tenants 5 % of rent for the whole works because bathroom items had to be stored in their hallway.",
+        "factCheck": "2026-10-17: the earlier wording said the tenant owed 5 % in KRIL 3137/83/07. The decision says the landlord credited ('hyvitetty') 5 % of rent to the tenants for the hallway used as storage, so it was a reduction in the tenant's favour.",
+        "source": [
+          "kril-D-2288-43-2023",
+          "kril-3137-83-07"
+        ],
+        "real": true
+      },
+      {
+        "item": "Rent increase after the renovation",
+        "who": "Only under an agreed rent-review clause that states the basis; a clause letting the landlord decide alone is void. The increase takes effect at the earliest one month after written notice, from the start of the next payment period, never retroactively (leases from 1.10.2026; older leases keep the old 27 §).",
+        "source": "finlex-481-1995",
+        "lawRef": "27 § 2 mom",
+        "real": true
+      }
+    ],
+    "reductionBenchmarks": [
+      {
+        "situation": "Flat practically uninhabitable during repairs (water damage in bathroom and hallway, mechanical drying); belongings stored in the flat",
+        "reductionPct": 90,
+        "note": "Not a pipe renovation; the remaining 10 % was storage compensation.",
+        "source": "kril-D-2288-43-2023",
+        "real": true
+      },
+      {
+        "situation": "Bathroom completely out of use, no shower (first week of a bathroom moisture repair)",
+        "reductionPct": 70,
+        "note": "Reduction given by the landlord; the board found the landlord's total compensation sufficient.",
+        "source": "kril-3137-83-07",
+        "real": true
+      },
+      {
+        "situation": "Bathroom repair continuing, shared toilet and shower provided",
+        "reductionPct": 40,
+        "note": "Reduction given by the landlord, as with the 70 % above; the landlord also credited 5 % of rent for the whole works for items stored in the hallway. The board found the total sufficient and recommended nothing more.",
+        "source": "kril-3137-83-07",
+        "real": true
+      },
+      {
+        "situation": "Facade renovation: noise and dust, building not wrapped, balcony unusable",
+        "reductionPct": 15,
+        "note": "Tenant asked for 25 %; working from home was not counted as a special factor.",
+        "source": "kril-D-3183-43-2023",
+        "real": true
+      }
+    ],
+    "reductionRangesEstimate": {
+      "uninhabitablePct": [
+        90,
+        100
+      ],
+      "bathroomUnusablePct": [
+        40,
+        70
+      ],
+      "noiseAndDustOnlyPct": [
+        10,
+        20
+      ],
+      "real": false,
+      "basis": "Estimate drawn from the four benchmarks above. Board decisions are non-binding recommendations on single cases; the law sets no percentages and each case is assessed on duration and harm."
+    },
+    "howToClaim": {
+      "rule": "Report the problem to the landlord in writing as soon as possible; the right to a reduction runs only from when the landlord knew. Do not withhold rent on your own: agree the reduction with the landlord (the amount is often settled after the works). The tenant must show that the harm comes from the renovation. A reduction the landlord has accepted may be deducted from rent.",
+      "disputes": "Company landlord: Kuluttajaneuvonta first; the Consumer Disputes Board (Kuluttajariitalautakunta) can also hear the case. Private landlord: Kuluttajaneuvonta gives only general advice; take the dispute to the Consumer Disputes Board. The board's decisions are non-binding recommendations.",
+      "disputesFactCheck": "2026-10-17: the earlier wording sent company-landlord cases only to Kuluttajaneuvonta. The board's rental page lists cases where a private person rented 'from a business or a private individual'.",
+      "source": [
+        "kkv-condition",
+        "kril-rental",
+        "kril-D-3183-43-2023",
+        "finlex-481-1995"
+      ],
+      "lawRef": "23 § 2 mom, 24 §",
+      "real": true
+    },
+    "askBeforeSigning": {
+      "rule": "Ask before deciding whether a pipe renovation or facade repair is planned for the building or the flat.",
+      "source": "vuokralaiset-2024-questions",
+      "real": true
+    },
+    "flatUnusableDuration": {
+      "value": null,
+      "basis": "Not found in a primary source in this pass. OP's insurance manager in Taloustaito 29.4.2019: with new methods a pipe renovation may take 'a few weeks or a month'; traditional line replacement takes longer. The housing company's schedule is the real source.",
+      "source": "taloustaito-2019",
+      "real": false
+    },
+    "landlordAccess": {
+      "rule": "The landlord and its representative may enter the flat when needed for repairs or supervising them, at a time suitable for both; if no time can be agreed because of the tenant, the visit may happen after a reasonable time with advance notice, and a note must be left when visiting at an unagreed time.",
+      "source": "finlex-481-1995",
+      "lawRef": "22 §",
+      "real": true
+    }
+  },
+  "liability": {
+    "dutyOfCare": {
+      "rule": "The tenant must take good care of the flat but is not liable for normal wear from ordinary use when the landlord is responsible for the flat's condition and upkeep.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "25 § 1 mom",
+      "real": true
+    },
+    "damageByTenant": {
+      "rule": "The tenant compensates damage to the flat caused intentionally, by omission or by other negligence.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "25 § 2 mom",
+      "real": true
+    },
+    "damageByGuests": {
+      "rule": "The tenant also compensates damage caused by anyone staying in the flat with the tenant's permission, but not damage caused by workers acting for the landlord or the owner.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "25 § 3 mom",
+      "real": true
+    },
+    "commonAreas": {
+      "rule": "The same liability applies to the building's common spaces and equipment the tenant uses.",
+      "source": "finlex-481-1995",
+      "lawRef": "25 § 4 mom",
+      "real": true
+    },
+    "noStricterTerms": {
+      "rule": "A lease term making the tenant's liability for damage stricter than the act, or limiting the tenant's rights to repairs, rent reduction or damages, is void.",
+      "source": "finlex-481-1995",
+      "lawRef": "26 §",
+      "real": true
+    },
+    "dutyToNotify": {
+      "rule": "The tenant must report damage or defects the landlord must repair without delay, at once if urgent; failing to report makes the tenant liable for the resulting damage. A flat left unused for a long time must be reported and access arranged.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "24 §",
+      "real": true
+    },
+    "wearVersusDamage": {
+      "rule": "Small marks, dents and scratches are generally normal wear; picture-hook holes are usually normal wear; large dents from dropped objects usually are not. Even for negligent damage the tenant pays only what the repair costs beyond the cost of repairing normal wear. Factors: condition at move-in, sudden or gradual damage, the building's age and past renovations, length of tenancy, household size.",
+      "source": "kkv-obligations",
+      "real": true
+    },
+    "burdenOfProof": {
+      "rule": "The landlord must prove the damage exceeds normal wear and arose during this tenancy, with reliable evidence such as photos or inspection records. For old flats, disputes have often assumed some defects predate the tenancy if the landlord lacks proof. Cleaning invoices have often been accepted as evidence of a cleaning need.",
+      "source": [
+        "kkv-obligations",
+        "kril-rental"
+      ],
+      "real": true
+    },
+    "landlordOwnWorkRate": {
+      "eurPerHour": 20,
+      "rule": "When the landlord cleans or repairs personally, the Consumer Disputes Board's practice accepts a claim of about 20 euros per hour.",
+      "source": "kril-rental",
+      "real": true
+    },
+    "smoking": {
+      "rule": "From 1.10.2026 smoking (including heated tobacco and e-cigarettes) is banned by law indoors, on the flat's balcony and in its private yard unless the landlord permits it; it applies to older leases too unless the lease expressly allows smoking. Smoke odour or staining is not normal wear.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "26 a §",
+      "real": true
+    },
+    "keys": {
+      "rule": "Return the same number of keys as received; a key lost through carelessness may mean paying for changing the locks.",
+      "source": "kkv-obligations",
+      "real": true
+    },
+    "leftBelongings": {
+      "rule": "Belongings left after the tenancy pass to the landlord without compensation one month after the landlord's notice (four months after the tenant left if notice cannot be delivered). Waste and clearly worthless items may be disposed of at once, but not photos or documents. The tenant pays necessary storage and disposal costs.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "68 a §",
+      "real": true
+    },
+    "adjustmentAndMitigation": {
+      "rule": "Damages under the act can be adjusted if unreasonable, considering foreseeability, the parties' finances and other factors; the injured party must take reasonable steps to limit the loss.",
+      "source": "finlex-481-1995",
+      "lawRef": "6 § 3 and 4 mom",
+      "lawRefCorrected": "Fact-check 2026-10-17: was '6 § 2 and 3 mom'. The current 6 § has four subsections (1 and 2 mom rewritten by 531/2026); damages adjustment is 3 mom and loss mitigation 4 mom (Finnish and Swedish text on Finlex).",
+      "real": true
+    }
+  },
+  "insurance": {
+    "tenantLegallyRequired": {
+      "value": false,
+      "rule": "The rental act 481/1995 contains no insurance provision (full current text searched for 'vakuutus' on 2026-10-17).",
+      "source": "finlex-481-1995",
+      "real": true
+    },
+    "landlordsOftenRequire": {
+      "value": true,
+      "rule": "Landlords often require valid home and liability insurance as a condition of the lease; housing companies may also expect it.",
+      "quotesFi": [
+        {
+          "text": "Monesti vuokranantaja edellyttääkin vuokralaiselta voimassa olevaa koti- ja vastuuvakuutusta.",
+          "source": "fine-insurance-guide"
+        },
+        {
+          "text": "Monet vuokranantajat edellyttävät kotivakuutuksen ottamista vuokrasopimusta tehtäessä.",
+          "source": "vuokralaiset-2021-insurance"
+        }
+      ],
+      "source": [
+        "fine-insurance-guide",
+        "vuokralaiset-2021-insurance"
+      ],
+      "real": true
+    },
+    "mayALeaseRequireIt": {
+      "value": true,
+      "real": false,
+      "basis": "Interpretation: it is a contract term and nothing in 481/1995 forbids it; 26 § voids only terms making the tenant's damage liability stricter than the act. Not confirmed by an authority page in this pass."
+    },
+    "ifTenantHasNone": {
+      "rule": "The tenant still personally owes compensation for damage caused intentionally or negligently (25 §). Missing insurance is not among the landlord's cancellation grounds listed by KKV.",
+      "real": false,
+      "basis": "25 § and the KKV list of cancellation grounds are primary; the conclusion that a missing policy alone does not allow cancellation is an interpretation, untested here.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-cancelling"
+      ]
+    },
+    "fineRecommendation": {
+      "rule": "A tenant should have at least home insurance and liability insurance.",
+      "source": "fine-insurance-guide",
+      "real": true
+    },
+    "whoInsuresWhat": [
+      {
+        "policy": "Housing company property insurance (kiinteistövakuutus)",
+        "holder": "housing company or building owner",
+        "covers": [
+          "the building and its structures",
+          "fixed building systems such as heating, water, ventilation and lifts",
+          "shared equipment"
+        ],
+        "doesNotCover": [
+          "residents' own belongings (the company cannot insure them)",
+          "gradual damage such as rust or mould",
+          "interrupted housing (asumisen keskeytyminen)"
+        ],
+        "deductibleEur": {
+          "min": 500,
+          "max": 1000,
+          "note": "Starts at roughly 500–1,000 euros and stays in principle with the policyholder (the company)."
+        },
+        "source": "fine-insurance-guide",
+        "real": true
+      },
+      {
+        "policy": "Landlord's own insurance (home insurance on a rented-out flat, or a landlord product)",
+        "holder": "landlord",
+        "covers": [
+          "fixed interiors the landlord answers for",
+          "the landlord's own belongings in the flat"
+        ],
+        "doesNotCover": [
+          "lost rent under ordinary home insurance (some landlord products add rent-loss cover)",
+          "in some policies damage caused by tenants, for example intentional or grossly negligent damage"
+        ],
+        "conditions": [
+          "The insurer must be told that the flat is rented out."
+        ],
+        "source": "fine-insurance-guide",
+        "real": true
+      },
+      {
+        "policy": "Tenant's home insurance (kotivakuutus)",
+        "holder": "tenant",
+        "covers": [
+          "the tenant's own belongings",
+          "often the flat's fixed interiors up to a euro limit (about 5,000–10,000 euros)",
+          "extra costs of living elsewhere only when the move follows from an insured event; the period is often capped (e.g. 6 months or 1 year) and saved costs such as unpaid rent are deducted"
+        ],
+        "doesNotCover": [
+          "normal wear and tear",
+          "moving out because of a non-insured cause such as mould from a construction defect",
+          "a planned renovation (no insured event)"
+        ],
+        "deductibleEur": {
+          "min": 150,
+          "max": 200,
+          "note": "Typical minimum; lower in youth policies."
+        },
+        "source": "fine-insurance-guide",
+        "real": true
+      },
+      {
+        "policy": "Tenant's liability insurance (vastuuvakuutus, usually part of home insurance)",
+        "holder": "tenant",
+        "covers": [
+          "damage the tenant is legally liable for, for example negligent damage to the rented flat or building structures, within the policy conditions"
+        ],
+        "doesNotCover": [
+          "damage outside the policy terms (the tenant can still owe damages personally)",
+          "intentional damage"
+        ],
+        "deductible": "Paid by the policyholder who caused the damage, to the injured party.",
+        "source": "fine-insurance-guide",
+        "real": true
+      }
+    ],
+    "plannedRenovationNotInsured": {
+      "rule": "No home or other insurance pays for a housing company's planned pipe renovation or the temporary housing it causes.",
+      "source": [
+        "taloustaito-2019",
+        "fine-insurance-guide"
+      ],
+      "basis": "Said directly by If's claims centre director and OP's insurance manager in Taloustaito 29.4.2019. FINE (2020) gives the general rules behind it: home insurance pays for living elsewhere only when the move follows from damage the policy covers, and property insurance usually excludes gradual damage such as rust. FINE does not discuss pipe renovations by name.",
+      "real": true
+    }
+  },
+  "moveIn": [
+    {
+      "id": "written-lease",
+      "step": "Get the lease in writing and keep a signed copy.",
+      "why": "An unwritten lease is deemed open-ended.",
+      "source": "finlex-481-1995",
+      "lawRef": "5 § 1 mom",
+      "real": true
+    },
+    {
+      "id": "landlord-right",
+      "step": "Ask on what the landlord's right to rent out the flat is based (owner, tenant subletting, other) and whether anything limits it.",
+      "why": "The landlord must tell you this, and must tell you without delay if that right ends.",
+      "source": "finlex-481-1995",
+      "lawRef": "37 §",
+      "real": true
+    },
+    {
+      "id": "deposit",
+      "step": "Pay a deposit of at most three months' rent by bank transfer (a deposit account is an option) and keep the receipt.",
+      "why": "A higher deposit term is void; the deposit stays your money.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-deposit"
+      ],
+      "lawRef": "8 §",
+      "real": true
+    },
+    {
+      "id": "rent-terms",
+      "step": "Check the rent-increase clause names a basis (for example an index) and that no more than three months' rent is asked in advance.",
+      "why": "Unilateral increases without an agreed basis, and advance rent over three months, are void terms.",
+      "source": "finlex-481-1995",
+      "lawRef": "27 § 2 mom, 36 §",
+      "real": true
+    },
+    {
+      "id": "joint-inspection",
+      "step": "Do a joint move-in inspection with the landlord and write all defects into a report both sign.",
+      "why": "Inspections are advisable, not required; without them, disputes about the deposit turn on evidence.",
+      "source": [
+        "kkv-obligations",
+        "kril-rental"
+      ],
+      "real": true
+    },
+    {
+      "id": "photos",
+      "step": "Photograph or film every room before moving furniture in: floors, walls, kitchen appliances, bathroom, windows, balcony. Keep the dated originals.",
+      "why": "The landlord must prove damage arose during your tenancy; photos taken before the tenancy and after it are the evidence the Consumer Disputes Board asks for.",
+      "source": [
+        "kril-rental",
+        "kkv-obligations"
+      ],
+      "real": true,
+      "listReal": false,
+      "listBasis": "The list of things to photograph is a suggestion; the sources recommend detailed photos or video before the tenancy starts and after it ends."
+    },
+    {
+      "id": "meter-readings",
+      "step": "Photograph the electricity and water meter readings on the first day.",
+      "why": "Separates your consumption from the previous resident's.",
+      "real": false,
+      "basis": "Practical suggestion; not from a source. If the flat has its own water meter, the water charge must follow measured consumption (27 a §)."
+    },
+    {
+      "id": "keys",
+      "step": "Write down how many keys you received.",
+      "why": "You must return the same number; a lost key can mean paying for new locks.",
+      "source": "kkv-obligations",
+      "real": true
+    },
+    {
+      "id": "home-insurance",
+      "step": "Have home insurance with liability cover in force from the move-in day.",
+      "why": "Not required by law, but landlords often require it and FINE recommends it; the landlord's and the housing company's policies do not cover your belongings.",
+      "source": [
+        "fine-insurance-guide",
+        "finlex-481-1995"
+      ],
+      "real": true
+    },
+    {
+      "id": "renovations",
+      "step": "Ask whether a pipe renovation or facade repair is planned.",
+      "why": "A six-month notice given to the previous tenant is not restarted for you.",
+      "source": [
+        "vuokralaiset-2024-questions",
+        "finlex-481-1995"
+      ],
+      "lawRef": "21 § 3 mom",
+      "real": true
+    },
+    {
+      "id": "occupants",
+      "step": "Tell the landlord in writing how many people live in the flat and on what basis; for adults give name, date of birth and contact details. Report later move-ins and move-outs.",
+      "why": "A tenant's duty since 1.10.2026.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-obligations"
+      ],
+      "lawRef": "17 a §",
+      "real": true
+    },
+    {
+      "id": "smoke-alarm",
+      "step": "Check the smoke alarms are there and work; report faults to the building owner without delay.",
+      "why": "Since 1.1.2026 the building owner must fit enough alarms and keep them working; the resident must report faults.",
+      "source": "finlex-379-2011",
+      "lawRef": "Pelastuslaki 379/2011, 17 §",
+      "real": true
+    },
+    {
+      "id": "water-billing",
+      "step": "Ask how water is charged. If the building has flat-specific water meters, the charge must follow measured consumption and you get monthly consumption data free.",
+      "why": "Exception: buildings whose meters were installed under a building permit applied for before 23.11.2020.",
+      "source": "finlex-481-1995",
+      "lawRef": "27 a §; voimaantulosäännös 790/2020",
+      "real": true
+    },
+    {
+      "id": "report-later-defects",
+      "step": "Report any defect found after moving in to the landlord in writing without delay.",
+      "why": "A rent reduction can only run from when the landlord knew of the defect.",
+      "source": "finlex-481-1995",
+      "lawRef": "23 § 2 mom, 24 §",
+      "real": true
+    }
+  ],
+  "moveOut": [
+    {
+      "id": "notice",
+      "step": "Give one month's notice in writing, served verifiably; the period runs from the end of the month of service.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-terminating"
+      ],
+      "lawRef": "52 §, 54 §",
+      "real": true
+    },
+    {
+      "id": "final-inspection",
+      "step": "Do a joint final inspection and take photos again.",
+      "source": [
+        "kkv-obligations",
+        "kril-rental"
+      ],
+      "real": true
+    },
+    {
+      "id": "cleaning",
+      "step": "Leave the flat clean and follow the landlord's cleaning instructions; the landlord need not allow a second cleaning.",
+      "source": "kkv-obligations",
+      "real": true
+    },
+    {
+      "id": "deposit-back",
+      "step": "Expect the deposit back, or a written explanation with an estimate, within 14 days of the lease ending.",
+      "source": [
+        "finlex-481-1995",
+        "kkv-deposit"
+      ],
+      "lawRef": "8 § 2 mom",
+      "real": true
+    },
+    {
+      "id": "belongings",
+      "step": "Take everything with you; belongings left behind can pass to the landlord after one month's notice.",
+      "source": "finlex-481-1995",
+      "lawRef": "68 a §",
+      "real": true
+    }
+  ],
+  "rentLevels": [
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 15.64,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 15768,
+      "eurPerM2New": 15.69,
+      "nNew": 2584,
+      "rentIndexChangeYoYPct": 0.6,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 19.59,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 7360,
+      "eurPerM2New": 20.15,
+      "nNew": 1142,
+      "rentIndexChangeYoYPct": 0.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 14.91,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 6496,
+      "eurPerM2New": 14.95,
+      "nNew": 1118,
+      "rentIndexChangeYoYPct": 0.6,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 13.3,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 1912,
+      "eurPerM2New": 13.64,
+      "nNew": 324,
+      "rentIndexChangeYoYPct": 0.5,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.34,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 6025,
+      "rentIndexChangeYoYPct": 2.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.89,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 2338,
+      "rentIndexChangeYoYPct": 2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.41,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 2640,
+      "rentIndexChangeYoYPct": 2.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 11.59,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 1047,
+      "rentIndexChangeYoYPct": 2.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 21.37,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 43365,
+      "eurPerM2New": 21.97,
+      "nNew": 6862,
+      "rentIndexChangeYoYPct": -0.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 26.7,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 19310,
+      "eurPerM2New": 26.81,
+      "nNew": 3327,
+      "rentIndexChangeYoYPct": -0.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 20.38,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 16450,
+      "eurPerM2New": 20.99,
+      "nNew": 2674,
+      "rentIndexChangeYoYPct": -0.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 18.42,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 7605,
+      "eurPerM2New": 20.15,
+      "nNew": 861,
+      "rentIndexChangeYoYPct": -0.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.31,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 25885,
+      "rentIndexChangeYoYPct": 1.8,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 18.59,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 7242,
+      "rentIndexChangeYoYPct": 2.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.48,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 11306,
+      "rentIndexChangeYoYPct": 1.8,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 14.26,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 7337,
+      "rentIndexChangeYoYPct": 1.6,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 18.86,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 16194,
+      "eurPerM2New": 18.83,
+      "nNew": 2752,
+      "rentIndexChangeYoYPct": 0.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 23.83,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 5600,
+      "eurPerM2New": 23.49,
+      "nNew": 1140,
+      "rentIndexChangeYoYPct": 0,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 18.3,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 6708,
+      "eurPerM2New": 18.38,
+      "nNew": 1124,
+      "rentIndexChangeYoYPct": 0,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 17.1,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 3886,
+      "eurPerM2New": 17.22,
+      "nNew": 488,
+      "rentIndexChangeYoYPct": 0.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.49,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 8843,
+      "rentIndexChangeYoYPct": 1.8,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 18.71,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 2553,
+      "rentIndexChangeYoYPct": 1.8,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.67,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 3812,
+      "rentIndexChangeYoYPct": 1.9,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Espoo-Kauniainen",
+      "areaCode": "049",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 14.44,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 2478,
+      "rentIndexChangeYoYPct": 1.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 16.98,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 20059,
+      "eurPerM2New": 17.4,
+      "nNew": 2852,
+      "rentIndexChangeYoYPct": 0.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 21.09,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 9572,
+      "eurPerM2New": 21.57,
+      "nNew": 1337,
+      "rentIndexChangeYoYPct": 0.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 15.83,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 8010,
+      "eurPerM2New": 16.43,
+      "nNew": 1219,
+      "rentIndexChangeYoYPct": 0.6,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 14.29,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 2477,
+      "eurPerM2New": 15.11,
+      "nNew": 296,
+      "rentIndexChangeYoYPct": 1.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.88,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 7561,
+      "rentIndexChangeYoYPct": 1.4,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.87,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 3247,
+      "rentIndexChangeYoYPct": 1.9,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.95,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 3144,
+      "rentIndexChangeYoYPct": 1.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Tampere",
+      "areaCode": "837",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 12.44,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 1170,
+      "rentIndexChangeYoYPct": 1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 20.12,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 77306,
+      "eurPerM2New": 20.49,
+      "nNew": 12571,
+      "rentIndexChangeYoYPct": -0.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 25.51,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 30280,
+      "eurPerM2New": 25.34,
+      "nNew": 5710,
+      "rentIndexChangeYoYPct": -0.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 19.25,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 31082,
+      "eurPerM2New": 19.61,
+      "nNew": 5021,
+      "rentIndexChangeYoYPct": -0.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 17.5,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 15944,
+      "eurPerM2New": 18.65,
+      "nNew": 1840,
+      "rentIndexChangeYoYPct": -0.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.21,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 41243,
+      "rentIndexChangeYoYPct": 1.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 18.42,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 11521,
+      "rentIndexChangeYoYPct": 1.9,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.32,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 18119,
+      "rentIndexChangeYoYPct": 1.7,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Pääkaupunkiseutu (Helsinki, Espoo, Kauniainen, Vantaa)",
+      "areaCode": "pks",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 14.19,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 11603,
+      "rentIndexChangeYoYPct": 1.6,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "all",
+      "financing": "free-market",
+      "eurPerM2": 15.99,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 217553,
+      "eurPerM2New": 16.72,
+      "nNew": 33327,
+      "rentIndexChangeYoYPct": 0.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "1",
+      "financing": "free-market",
+      "eurPerM2": 20.49,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 91208,
+      "eurPerM2New": 21.11,
+      "nNew": 14615,
+      "rentIndexChangeYoYPct": 0.2,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "2",
+      "financing": "free-market",
+      "eurPerM2": 15.07,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 93128,
+      "eurPerM2New": 15.92,
+      "nNew": 14322,
+      "rentIndexChangeYoYPct": 0.1,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "3+",
+      "financing": "free-market",
+      "eurPerM2": 13.98,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 33217,
+      "eurPerM2New": 14.95,
+      "nNew": 4390,
+      "rentIndexChangeYoYPct": 0,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "all",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.51,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 119579,
+      "rentIndexChangeYoYPct": 1.5,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "1",
+      "financing": "state-subsidised",
+      "eurPerM2": 15.47,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 38866,
+      "rentIndexChangeYoYPct": 1.8,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "2",
+      "financing": "state-subsidised",
+      "eurPerM2": 13.31,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 57643,
+      "rentIndexChangeYoYPct": 1.5,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    },
+    {
+      "city": "Koko maa (whole country excl. Åland)",
+      "areaCode": "SSS",
+      "rooms": "3+",
+      "financing": "state-subsidised",
+      "eurPerM2": 12.81,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "n": 23070,
+      "rentIndexChangeYoYPct": 1.3,
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fa, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px",
+      "sourceId": "statfin-15fa",
+      "real": true
+    }
+  ],
+  "rentTotals": [
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "1",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 520,
+      "medianEur": 568,
+      "upperQuartileEur": 624,
+      "n": 7360,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "2",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 645,
+      "medianEur": 720,
+      "upperQuartileEur": 809,
+      "n": 6496,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    },
+    {
+      "city": "Turku",
+      "areaCode": "853",
+      "rooms": "3+",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 800,
+      "medianEur": 950,
+      "upperQuartileEur": 1109,
+      "n": 1912,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "1",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 680,
+      "medianEur": 730,
+      "upperQuartileEur": 813,
+      "n": 19310,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "2",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 849,
+      "medianEur": 950,
+      "upperQuartileEur": 1100,
+      "n": 16450,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    },
+    {
+      "city": "Helsinki",
+      "areaCode": "091",
+      "rooms": "3+",
+      "financing": "free-market",
+      "unit": "EUR per month, whole rent of the flat",
+      "lowerQuartileEur": 1120,
+      "medianEur": 1292,
+      "upperQuartileEur": 1509,
+      "n": 7605,
+      "year": 2026,
+      "quarter": "2026Q3",
+      "source": "Tilastokeskus, Asuntojen vuokrat, StatFin table 15fc, 2026Q3 (published 2026-10-15): https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fc.px",
+      "sourceId": "statfin-15fc",
+      "real": true
+    }
+  ]
+}
