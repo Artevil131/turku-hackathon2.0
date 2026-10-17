@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "pnpm --filter @ahead/web dev",
+    "demo-video": "node tools/demo-video/record.ts",
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
