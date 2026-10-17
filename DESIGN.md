@@ -1,185 +1,203 @@
 ---
 name: Ahead
-description: Clear choices inside a visible local boundary.
+description: The chart of the sky of your own data: evidence as stars, events as constellations, the months ahead as a plate you can read.
 colors:
-  shell: "#123e48"
-  shell-text: "#f2fbfc"
-  shell-muted: "#c0dce0"
-  pool-ground: "#eaf3f4"
-  surface: "#ffffff"
-  ink: "#123940"
-  secondary-ink: "#48676d"
-  line: "#b6cdd1"
-  action: "#075d70"
-  selected: "#e3f282"
-  selected-ink: "#173c37"
-  selected-ground: "#f1f7cf"
-  danger: "#a42e38"
-  warning: "#80520c"
-  warning-ground: "#fff1cf"
-  dark-ground: "#142f36"
-  dark-surface: "#1c3e46"
-  dark-ink: "#eff9f9"
-  dark-secondary-ink: "#b4cdd0"
-  dark-line: "#526e75"
-  dark-shell: "#102f36"
-  dark-action: "#a1dce6"
-  dark-action-ink: "#10333c"
-  dark-selected-ground: "#344b35"
-  dark-danger: "#ffacb0"
-  dark-warning: "#f8cf7b"
-  dark-warning-ground: "#493e28"
-  backdrop: "rgb(4 27 33 / 55%)"
-  backdrop-share: "rgb(4 27 33 / 30%)"
+  night-sky: "#0a1021"
+  deep-indigo: "#16233d"
+  chart-blue: "#24374f"
+  star-amber: "#ff4d2e"
+  glow-amber: "#ffb36b"
+  stardust: "#f2f2e9"
+  slate: "#a3acbc"
+  fog-veil: "#5a6477"
+  ink-on-amber: "#0a1021"
+  danger: "#ff6b7a"
+  paper-shell: "#e9e9de"
+  paper-hairline: "#c6c8bb"
+  paper-slate: "#4f586b"
+  paper-fog: "#9aa0a8"
+  paper-amber-ink: "#c43a1f"
+  paper-danger: "#b1263a"
+  backdrop: "rgb(10 16 33 / 70%)"
+  backdrop-share: "rgb(10 16 33 / 45%)"
 typography:
   heading:
-    fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
-    fontSize: "clamp(30px, 8.7vw, 40px)"
-    fontWeight: 720
-    lineHeight: 1.12
-    letterSpacing: "-0.035em"
+    fontFamily: '"Instrument Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif'
+    fontSize: "clamp(34px, 9vw, 46px)"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.08
+    letterSpacing: "0"
   sheet-title:
-    fontSize: "28px"
-    fontWeight: 700
-    lineHeight: 1.3
-    letterSpacing: "-0.015em"
-  wordmark:
-    fontSize: "24px"
-    fontWeight: 750
-    letterSpacing: "-0.04em"
-  title:
-    fontSize: "23px"
-    fontWeight: 700
-    lineHeight: 1.25
-    letterSpacing: "-0.02em"
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "30px"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.15
   section:
-    fontSize: "21px"
-    fontWeight: 700
-    lineHeight: 1.3
-    letterSpacing: "-0.015em"
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "28px"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.15
+  wordmark:
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "26px"
+    fontWeight: 400
+    fontStyle: italic
+  card-title:
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "25px"
+    fontWeight: 400
+    fontStyle: italic
+    lineHeight: 1.2
+  constellation-name:
+    fontFamily: '"Instrument Serif", serif'
+    fontSize: "18px"
+    fontWeight: 400
+    fontStyle: italic
   row:
-    fontSize: "20px"
-    fontWeight: 650
+    fontFamily: '"Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif'
+    fontSize: "19px"
+    fontWeight: 400
     lineHeight: 1.35
   body:
-    fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+    fontFamily: '"Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif'
     fontSize: "18px"
+    fontWeight: 400
     lineHeight: 1.5
   secondary:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
     fontSize: "16px"
     lineHeight: 1.5
-  compact:
-    fontSize: "14px"
-    lineHeight: 1.3
+  date-cell:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "15px"
+    lineHeight: 1.5
+    fontVariantNumeric: tabular-nums
+  small-caps:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "12px"
+    fontWeight: 700
+    letterSpacing: "0.08em"
+    textTransform: uppercase
+  plate-tick:
+    fontFamily: '"Atkinson Hyperlegible", sans-serif'
+    fontSize: "11px"
 rounded:
-  small: "4px"
-  control: "8px"
-  surface: "12px"
-  dialog: "18px"
-  pill: "20px"
+  control: "4px"
+  sheet: "8px"
+  chip: "999px"
 spacing:
   compact: "8px"
   group: "12px"
   standard: "16px"
   card: "20px"
   mobile-gutter: "22px"
-  section: "28px"
+  desktop-gutter: "48px"
+  section: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.action}"
-    textColor: "{colors.surface}"
+    backgroundColor: "{colors.star-amber}"
+    textColor: "{colors.ink-on-amber}"
     rounded: "{rounded.control}"
     padding: "10px 18px"
   button-secondary:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: "transparent"
+    textColor: "{colors.stardust}"
+    borderColor: "{colors.stardust}"
     rounded: "{rounded.control}"
     padding: "10px 18px"
   journey-card:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.surface}"
+    backgroundColor: "transparent"
+    textColor: "{colors.stardust}"
+    borderColor: "{colors.chart-blue}"
+    rounded: "{rounded.control}"
     padding: "20px"
+  timetable-row:
+    backgroundColor: "transparent"
+    textColor: "{colors.stardust}"
+    borderColor: "{colors.chart-blue}"
+    padding: "16px 0"
 ---
 
 # Design System: Ahead
 
 ## Overview
 
-**Creative North Star: "The local boundary"**
+**Creative North Star: "The star atlas"**
 
-A phone-first operating interface informed by Finnish swimming-hall wayfinding: clear public instructions, pool-tinted space, petrol framing and sharply legible selected states. The world supplies palette, type, density and one source-selection movement; navigation and controls remain familiar web controls.
+The phone looked at the sky of its own data and found a few bright things. The app is the chart of that sky: every snippet in the window is a star, placed by date and source; an event is a constellation, its signals brightened and joined by hairlines; the months ahead are a plate with the risks drawn on it. It refuses the card stack of equal grey rectangles and the dashboard of tiles. This is an Operate surface: the world lends type, palette, density and one signature move; navigation and controls stay the standard web ones.
 
 **Key Characteristics:**
-- Large task headings, direct actions and readable evidence.
-- A committed colored shell, not isolated accent decoration.
-- Flat work surfaces with visible state and a persistent boundary strip.
+- One material everywhere: hairline coordinate rules and dots on a fixed magnitude ramp, no fills, no shadows, no gradients.
+- Two voices: a light italic serif names things (events, constellations, headings); a hyperlegible sans with tabular figures measures them (dates, counts, body).
+- One amber, for the thing under the eye: the primary action, the selected state, the ringed object, and the counter after a share (in its glow tint).
+- The sky plate is the only chart on Home; lists stay lists.
 
 ## Colors
 
 ### Primary
-Petrol frames the app; action teal identifies buttons and links. Deep ink carries the reading hierarchy. The pool ground keeps the workspace distinct from the shell.
+Night Sky (`#0a1021`) is the ground of every screen and plate. Deep Indigo (`#16233d`) is the shell (header, boundary strip, nav) and the sheets' raised surface. Chart Blue (`#24374f`) draws every hairline: band rules, month rules, card outlines, row dividers.
 
 ### Secondary
-Acid yellow identifies selection only; event dates are muted ink. Its dark selected ink remains constant between themes. Warning and danger colors are semantic, never decoration.
+Star Amber (`#ff4d2e`) is the one hot colour: the primary button's fill (with Night Sky ink on it, 5.8:1), the selected segment, the ringed star and its label, the active nav tab, links, the warning card's outline, the switch when on. Glow Amber (`#ffb36b`) appears once: the outbound counter and its strip after a share, and the arrived payload rows. Danger (`#ff6b7a`) is a cooler red for errors and Erase, never decoration.
 
 ### Neutral
-White surfaces sit on the cool reading ground. Secondary ink and dividing lines retain the same hue family. Dark mode uses the documented dark token family rather than inverting the page.
+Stardust (`#f2f2e9`) is the chalk ink and the constellation stars. Slate (`#a3acbc`) is secondary ink at 8:1 on night: basis lines, dates, band labels, ticks. Fog Veil (`#5a6477`) is reserved for the faint field of unscored stars on the plate; it is never used for text.
 
-**The Boundary Rule.** The shell and its readable outbound counter persist while the work area scrolls.
+### Paper chart (light mode)
+Cream Stardust becomes the ground and Night Sky the ink; the shell is `#e9e9de`, hairlines `#c6c8bb`, secondary ink `#4f586b`, the faint field `#9aa0a8`. Amber fills, rings and selection are unchanged; amber *text* on cream darkens to `#c43a1f` (5.2:1). Dark is the default scene; light is a Settings choice for daylight projectors. The canvas reads its colours from the same custom properties, so the plate changes with the page.
+
+**The One Amber Rule.** Amber marks exactly one thing per screen as the thing under the eye. A second amber on the same screen is either the warning outline (by kind) or a mistake.
 
 ## Typography
 
-One workhorse system sans across the operating UI. This is an Operate surface, not an expressive display page. The ramp, top down: the fluid task heading (30–40px); the sheet title (28); the wordmark (24); card titles, the empty state and the notice's question (23); section headings and legends (21); row titles and the outbound count (20); body and card text (18); secondary text, dates, labels and controls (16); and a compact step (14) only for the boundary strip below 350px. Nothing sits between the steps. Text wraps naturally in both Finnish and English. Numerals in dates and counters are tabular; paragraphs are limited to 68ch, and a card's first sentence is clamped to three lines.
+Two faces, both self-hosted from `apps/web/public/fonts/` (OFL; see its README). **Instrument Serif italic** is the naming voice: the wordmark (26), the task heading (34–46 fluid), sheet titles (30), section headings (28), card titles and the notice's question (25–28), row titles on the plate links and the horizon (24), the empty state (24), and constellation names on the canvas (18). **Atkinson Hyperlegible** is the measuring voice, chosen for the back of a room: rows (19), body (18), secondary (16), date cells (15), small caps for band names, sources and legends (12, bold, 0.08em, uppercase), plate ticks (11). All numerals are tabular. Finnish and English wrap naturally; paragraphs hold 68ch.
+
+**The Two Voices Rule.** Serif italic names; sans measures. A number is never set in the serif; a constellation name is never set in the sans.
 
 ## Layout
 
-A mobile-first flex shell fills 100dvh, at most 780px wide. The header and footer do not scroll; the main work area does. Main content is at most 640px wide. Mobile uses 22px gutters, widened to 48px from 700px. A compact adjustment below 350px preserves narrow-device controls. Safe-area insets pad the shell. Standard bottom navigation has three equal destinations.
+A mobile-first flex shell fills 100dvh, at most 780px wide; the header and boundary strip stay, `main` scrolls. Content is at most 640px wide with 22px gutters (48px from 700px, 16px under 350px). On Home the sky plate is full-bleed and 44dvh tall (300–460px; 380px fixed from 700px, with side hairlines). Dates lead every timetable row in a 7ch cell; the arrow sits in a 24px column at the end.
+
+## The magnitude ramp
+
+Every star has one of five sizes, from the detector's normalised margin: radii 1.4, 2, 2.8, 3.8 and 5 px for margins under 0.25 (or unknown), under 0.5, under 0.75, under 1.25, and above. Stars in a constellation are drawn 0.6px larger in Stardust; the field is Fog Veil at 85%. The anchor of the soonest event (its brightest star) is amber with a ring 6px outside its radius. The same ramp sizes the novelty dots on This month.
 
 ## Elevation & Depth
 
-Flat by default: colored fields, 1px outlines and spacing carry depth. Only the native dialogs lift, with a soft offset shadow (`0 16px 60px rgb(0 20 28 / 25%)`) and a darkened backdrop (55%). The share sheet's backdrop is lighter (30%) so the shell and its counter stay readable while the three rows leave.
+None. Hairlines and spacing carry structure; the sheets lift only by a darkened backdrop (70%; 45% on the share sheet so the counter stays readable). No shadows, no gradients, no glass.
 
 ## Shapes
 
-Four radii: 4px inside segmented controls; 8px on every control, payload row, segmented group and service link; 12px on event, journey and share surfaces; 18px on dialogs. Source switches use a 20px pill track with a circular thumb. No ornamental edge stripes or physical-material imitations.
+4px on every control, card, payload row and plate frame; 8px on dialogs; a 999px pill only for the novelty chips and the switch track. No ornamental edges.
 
 ## Components
 
-- **Buttons:** 48px minimum height; primary actions use action teal, secondary actions a bordered surface. Main Check now and Continue actions are full-width. Hover darkens meaningful controls; focus uses a visible 3px outline.
-- **Source switches:** a 56×44px hit area contains a 32px track. Selection changes the row field and moves the thumb 24px in 160ms with exponential ease-out. Reduced motion removes the transition. The list's top rule belongs to the first row, so it spans the selected field.
-- **Settings:** native radios in segmented groups; selected options use acid yellow. Language and theme choices are not header controls.
-- **Events:** full-width buttons read as timetable rows: a muted, tabular date cell (7ch) in the first column, the title in the second, and a consistent drawn arrow. The detector supplies the wording. With something to answer, "Needs your answer" is the home screen's heading; the tagline is the quiet state's.
-- **Notices:** the inference as the heading, one muted basis line, the question at title size, three full-width answers stacked primary first (48px each, so Finnish never wraps beside a neighbour) above the evidence. Back at the top like a journey.
-- **Journeys:** cards ordered warning, to do, info, compare, insurance, then by due date, so help comes first and insurance is one card among many. No kind label: the warning ground carries the kind, and the word is visually hidden for screen readers. Readable first sentences (three lines at most), expandable detail, due dates, service/source links and todo checkboxes with a visible "Done". A service link fills the card's width; "Done" sits right-aligned on its own line.
-- **Chips:** muted ink, never teal; teal means tappable only.
-- **Navigation:** petrol field, pale labels and a yellow active destination. A small outlined settings action remains in the header.
-- **Boundary strip:** inline label (16px) and outbound-request count (20px), with no oversized metric styling. After a share the strip's outline and count turn acid yellow and stay that way: the one number that changed keeps its mark.
-- **Share card:** a solid surface like the journey cards (1px line, no dashes); its "Share this event with If" is the only teal button on the journey, since it is the only outbound action.
-- **Share sheet:** the three payload rows, one "Share with If" and one "Keep it on this phone", stacked full width; "Done" alone after sending.
+- **Buttons:** 48px minimum height. Primary: amber fill, night ink. Secondary: transparent with a 1px Stardust outline. Quiet (Back): no outline, slate ink. Danger: outline in the danger red. Check now and Continue are full width at 54px.
+- **Sky plate (canvas):** faint coordinate hairlines (band rules, month rules, today dashed), the band names in small caps down the left, the window's snippets as magnitude-ramped dots by date and source band (deterministic jitter inside the band), each detected event's signals brightened and joined in date order, named in the serif with its date in the sans beside its anchor star, labels pushed apart so they never cover each other, the soonest event ringed in amber. The notice shows a 190px plate with the event's constellation alone.
+- **Timetable rows:** date cell | title | amber arrow, a hairline under each; the detector supplies the title. Evidence rows add the source in small caps and a "Not this" outline button.
+- **Contribution bars:** per source, a 10px hairline track with an amber fill proportional to the source's total, the total and signal count in tabular figures, the strongest snippet's text under it.
+- **Evidence timeline (SVG):** the score per day as a 1.5px chalk line, the threshold as a dashed slate rule with its value, month rules, the signals as dots on the line, the fired day ringed in amber with "crossed {date}".
+- **Horizon plate (SVG):** a hairline axis from today to +90 with month rules; events as amber ringed stars with their serif name and sans date; insights as bands under the axis over their periods (amber-outlined for weather and cover gaps, slate for the rest) with their kind as a label.
+- **This month:** new senders, merchants and places as chalk-outline chips; recurring payments as a table with interval, count and last date, an anomaly in amber; change points as a before/after pair of bars (slate, then amber); clusters as named constellations with a novelty dot on the ramp, ringed when near an event type.
+- **Journey cards:** hairline outline, no fill; a warning card's outline is amber with an amber dot before its title. Service links are full-width outlined; source links are amber text.
+- **Source switches:** 56×44px hit area, outlined track, slate thumb; amber track outline and thumb when on, and an amber dot in the margin before the row's title.
+- **Settings:** native radios in an outlined segmented group; the selected segment fills amber.
+- **Boundary strip:** outlined in slate with the count at 20px; after a share the outline and count turn Glow Amber and stay so.
+- **Share sheet:** the three payload rows outlined, "Share with If" the only amber button, "Keep it on this phone" outlined; "Done" alone after sending.
+- **Navigation:** four destinations (Home, Sky, Ledger, Sources) in slate; the active one in amber, bold, with a 6px amber dot under it.
 
 ## Motion
 
-Two moments, nothing else. The event list arriving after Check now (rows rise 10px over 320ms, 40ms apart) and the share: the three rows lift off the phone in order, arrive as what If received, and the counter flips once and lights. Screens do not animate in, and journey cards and evidence rows do not stagger. Buttons press (scale 0.98) and switches slide; reduced motion removes all of it except the end states.
+Two authored moments. **The reveal** after Check now: the field's dots fade in left to right over 420ms, then each constellation draws its lines along their length and brightens its stars over 600ms with an exponential ease-out, 260ms apart in reading order, and the timetable rows rise after the last figure. **The share:** the three rows lift off the chart in order, arrive as what If received, and the counter flips once and lights. Switches slide in 160ms; buttons press to 0.98. Reduced motion shows every end state in place; the canvas draws the sky at once.
 
 ## Do's and Don'ts
 
-- **Do** retain standard web controls and keyboard affordances.
-- **Do** keep the outbound counter visible, including during onboarding and settings.
-- **Do** preserve strong contrast in both themes and long Finnish labels.
-- **Don't** add If branding; insurer names belong only in the relevant content cards.
-- **Don't** replace useful evidence or service links with decoration.
-- **Don't** use a physical-sign costume or novelty navigation.
-
-## Finish review record (2026-10-17)
-
-Independent reviewer, code-led Operate, on 18 recaptures of the demo
-path from a fresh profile plus dark mode. Round 1 `recapture` (the
-capture driver scrolled the window, not `main`). Round 2 `fix`: home date
-cells, the dashed share card, service links wrapping beside Done, the
-abbreviated month in journey titles, uneven notice answers; applied in
-c409d3b. Verdict pass: all five resolved, one regression (home title
-measure) fixed in fbb6963. Final disposition: `ship`, scoped to those
-items. Kept: the petrol shell with the outlined boundary strip, 34 px
-headings and 18 px body, yellow only for selected states, the three-row
-share sheet with its motion, the detector's wording.
+- **Do** keep standard web controls and keyboard affordances; the world lends type, palette, density and the sky.
+- **Do** keep the outbound counter visible on every screen, including onboarding and settings.
+- **Do** keep every number on screen from code: the detector's wording, the contract's dates and margins, the labelled example data.
+- **Don't** add fills, shadows or gradients; a surface is the chart.
+- **Don't** add a second chart to Home; the sky plate owns the field and lists stay lists.
+- **Don't** add If branding; insurers appear by name only on insurance and comparison cards.

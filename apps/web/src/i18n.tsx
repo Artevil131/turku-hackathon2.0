@@ -116,6 +116,54 @@ const en = {
   "status.never": "Never",
   "net.label": "Data leaving this phone",
   "net.requests": "{n} requests",
+  "nav.sky": "Sky",
+  "home.horizon": "The next 90 days",
+  "home.month": "This month",
+  "sky.description": "Sky plate: {dots} signals from {sources} sources, {events} events found.",
+  "sky.unread": "Not read yet. Check now fills the sky.",
+  "sky.window": "Last {days} days",
+  "horizon.title": "The next 90 days",
+  "horizon.lead": "Your events on their dates, and what this phone sees between them.",
+  "horizon.empty": "No dated events in the next 90 days.",
+  "horizon.example": "Example insights, until the analysis runs on this phone.",
+  "horizon.today": "Today",
+  "horizon.insights": "Between the events",
+  "horizon.about": "About {events}",
+  "insight.empty-home": "Empty home",
+  "insight.lapse": "Cover gap",
+  "insight.weather-at-event": "Weather",
+  "insight.same-month": "Same month",
+  "insight.spend-shift": "Spending shift",
+  "month.title": "This month",
+  "month.lead": "The last 30 days against the 30 before, {from} to {to}. Read on this phone.",
+  "month.example": "Example month, until the analysis runs on this phone.",
+  "month.newSenders": "New senders",
+  "month.newMerchants": "New merchants",
+  "month.newPlaces": "New places",
+  "month.none": "None",
+  "month.recurring": "Recurring payments",
+  "month.every": "every {n} days",
+  "month.times": "{n} times",
+  "month.last": "last {date}",
+  "month.stopped": "stopped",
+  "month.changed": "changed",
+  "month.changes": "Change points",
+  "month.perWeek": "{n} a week",
+  "month.before": "before",
+  "month.after": "after",
+  "month.from": "from {date}",
+  "month.clusters": "Constellations",
+  "month.members": "{n} signals",
+  "month.novelty": "novelty",
+  "month.topics": "New topics",
+  "notice.numbers": "Why we think so, as numbers",
+  "notice.signals": "{n} signals",
+  "notice.strongest": "Strongest",
+  "notice.timeline": "Evidence timeline",
+  "notice.threshold": "threshold {n}",
+  "notice.fired": "crossed {date}",
+  "notice.score": "Score per day over the last {days} days; the threshold as a rule; the day it crossed marked.",
+  "notice.plate": "The event's constellation: {n} signals joined.",
   "net.one": "1 request",
 } as const;
 
@@ -238,6 +286,54 @@ const fi: Record<Key, string> = {
   "status.never": "Ei koskaan",
   "net.label": "Puhelimesta lähtenyt data",
   "net.requests": "{n} pyyntöä",
+  "nav.sky": "Taivas",
+  "home.horizon": "Seuraavat 90 päivää",
+  "home.month": "Tässä kuussa",
+  "sky.description": "Taivaskartta: {dots} signaalia {sources} lähteestä, {events} tapahtumaa löydetty.",
+  "sky.unread": "Ei vielä luettu. Tarkista nyt täyttää taivaan.",
+  "sky.window": "Viimeiset {days} päivää",
+  "horizon.title": "Seuraavat 90 päivää",
+  "horizon.lead": "Tapahtumasi päivillään, ja mitä tämä puhelin näkee niiden välissä.",
+  "horizon.empty": "Ei päivättyjä tapahtumia seuraavan 90 päivän aikana.",
+  "horizon.example": "Esimerkkihavaintoja, kunnes analyysi ajetaan tällä puhelimella.",
+  "horizon.today": "Tänään",
+  "horizon.insights": "Tapahtumien välissä",
+  "horizon.about": "Koskee: {events}",
+  "insight.empty-home": "Tyhjä koti",
+  "insight.lapse": "Katko turvassa",
+  "insight.weather-at-event": "Sää",
+  "insight.same-month": "Sama kuukausi",
+  "insight.spend-shift": "Kulutuksen muutos",
+  "month.title": "Tässä kuussa",
+  "month.lead": "Viimeiset 30 päivää edellisiin 30:een verrattuna, {from}–{to}. Luettu tällä puhelimella.",
+  "month.example": "Esimerkkikuukausi, kunnes analyysi ajetaan tällä puhelimella.",
+  "month.newSenders": "Uudet lähettäjät",
+  "month.newMerchants": "Uudet kauppiaat",
+  "month.newPlaces": "Uudet paikat",
+  "month.none": "Ei yhtään",
+  "month.recurring": "Toistuvat maksut",
+  "month.every": "{n} päivän välein",
+  "month.times": "{n} kertaa",
+  "month.last": "viimeksi {date}",
+  "month.stopped": "loppui",
+  "month.changed": "muuttui",
+  "month.changes": "Muutoskohdat",
+  "month.perWeek": "{n} viikossa",
+  "month.before": "ennen",
+  "month.after": "jälkeen",
+  "month.from": "alkaen {date}",
+  "month.clusters": "Tähdistöt",
+  "month.members": "{n} signaalia",
+  "month.novelty": "uutuus",
+  "month.topics": "Uudet aiheet",
+  "notice.numbers": "Miksi päättelimme näin, lukuina",
+  "notice.signals": "{n} signaalia",
+  "notice.strongest": "Vahvin",
+  "notice.timeline": "Perusteiden aikajana",
+  "notice.threshold": "kynnys {n}",
+  "notice.fired": "ylitti {date}",
+  "notice.score": "Pisteet päivää kohden viimeisten {days} päivän ajalta; kynnys viivana; ylityspäivä merkittynä.",
+  "notice.plate": "Tapahtuman tähdistö: {n} signaalia yhdistettynä.",
   "net.one": "1 pyyntö",
 };
 
@@ -288,6 +384,27 @@ export function useI18n(): I18n {
   const v = useContext(Ctx);
   if (!v) throw new Error("I18nProvider missing");
   return v;
+}
+
+/** "2026-10-01" → "Oct" / "loka": the month ticks on a plate. */
+export function formatMonth(iso: string, locale: Locale): string {
+  const [y, m] = iso.split("-").map(Number);
+  const name = new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, 1)).toLocaleDateString(locale === "fi" ? "fi-FI" : "en-GB", {
+    month: "short",
+    timeZone: "UTC",
+  });
+  return name.replace(/\.$/, "").slice(0, 4);
+}
+
+/** "2026-10-01" → "1 Oct" / "1.10.": a short date for a chart tick or a timetable cell. */
+export function formatShort(iso: string, locale: Locale): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  if (locale === "fi") return `${d}.${m}.`;
+  return new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, d ?? 1)).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  });
 }
 
 export function formatDate(iso: string, locale: Locale): string {

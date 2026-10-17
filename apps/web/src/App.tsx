@@ -4,13 +4,16 @@ import { createBuilders } from "@ahead/journeys";
 import type { FmiWarning } from "@ahead/opendata";
 import exampleWarnings from "@ahead/opendata/data/fmi-example-warnings.json" with { type: "json" };
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type Analysis, createAnalysis, type SkyDot } from "./analysis.ts";
 import { checkNow } from "./detect.ts";
 import { createEngine, type Engine, readSnippets, withCalendar } from "./engine.ts";
 import { useI18n } from "./i18n.tsx";
 import { useOutboundCount } from "./netcounter.ts";
 import { Home } from "./screens/Home.tsx";
+import { Horizon } from "./screens/Horizon.tsx";
 import { Journey } from "./screens/Journey.tsx";
 import { Ledger } from "./screens/Ledger.tsx";
+import { Month } from "./screens/Month.tsx";
 import { Notice } from "./screens/Notice.tsx";
 import { Settings, useTheme } from "./screens/Settings.tsx";
 import { Onboarding, SourceList } from "./screens/Sources.tsx";
@@ -18,8 +21,8 @@ import { type SharePayload, share } from "./share.ts";
 import { type AppStore, createStore } from "./store.ts";
 import { today } from "./today.ts";
 
-type Tab = "home" | "ledger" | "sources";
-type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | null;
+type Tab = "home" | "ledger" | "sources" | "sky";
+type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | { kind: "month" } | null;
 
 function wasOnboarded(): boolean {
   try {
@@ -58,6 +61,9 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [calendarFile, setCalendarFile] = useState<number | null>(null);
+  /** The sky: every snippet in the window with its margin, and a counter that replays the reveal after each check. */
+  const [sky, setSky] = useState<SkyDot[]>([]);
+  const [revealKey, setRevealKey] = useState(0);
   /** One engine for the whole session: its detector keeps the vector cache, so later checks are instant. */
   const engineRef = useRef<Promise<Engine> | undefined>(undefined);
   const getEngine = useCallback(() => {
@@ -77,6 +83,12 @@ export function App() {
       });
     return engineRef.current;
   }, [store]);
+  /** One analysis over the session's engine: the plates, the numbers and the two extra views read through it. */
+  const analysisRef = useRef<Promise<Analysis> | undefined>(undefined);
+  const getAnalysis = useCallback(() => {
+    analysisRef.current ??= getEngine().then(createAnalysis);
+    return analysisRef.current;
+  }, [getEngine]);
   const outbound = useOutboundCount();
 
   const reload = useCallback(async () => {
@@ -109,6 +121,7 @@ export function App() {
       engineRef.current = engineRef.current.then((engine) => withCalendar(engine, snippetsFromFile));
     }
     setSnippets([]);
+    setSky([]);
     await reload();
   };
 
@@ -125,8 +138,12 @@ export function App() {
       for (const event of result.events) {
         if (!known.has(event.id)) await store.upsertLedger({ event, status: "pending", rejectedEvidence: [], shared: false });
       }
+      // The sky plate: every snippet scored (the vectors are cached now, so this is instant), then the reveal.
+      const all = (await store.ledger()).map((e) => e.event);
+      setSky(await (await getAnalysis()).sky(result.snippets, all, { score: true }));
       await reload();
       setChecked(true);
+      setRevealKey((k) => k + 1);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -135,15 +152,28 @@ export function App() {
     }
   };
 
-  // A notice opened after a reload has no snippets yet: read them again through the adapters (nothing is stored).
+  // After a reload there are no snippets yet: read them again through the adapters (nothing is stored), so the sky
+  // and a notice have their signals. Without a check this session the dots keep their evidence margins only; the
+  // model is never loaded for the plate alone.
+  const anyOn = sources.some((s) => s.enabled);
   useEffect(() => {
-    if (view?.kind !== "notice" || snippets.length > 0) return;
+    if (!onboarded || !anyOn || snippets.length > 0) return;
     const enabled = sources.filter((s) => s.enabled).map((s) => s.source);
+    let cancelled = false;
     void getEngine()
-      .then((engine) => readSnippets(engine, enabled, today()))
-      .then(setSnippets)
+      .then(async (engine) => {
+        const read = await readSnippets(engine, enabled, today());
+        const dots = await (await getAnalysis()).sky(read, ledger.map((e) => e.event), { score: false });
+        if (cancelled) return;
+        // A check that finished first has scored the sky already; this read never overwrites it.
+        setSnippets((cur) => (cur.length > 0 ? cur : read));
+        setSky((cur) => (cur.length > 0 ? cur : dots));
+      })
       .catch(() => {});
-  }, [view, snippets.length, sources, getEngine]);
+    return () => {
+      cancelled = true;
+    };
+  }, [onboarded, anyOn, snippets.length, sources, ledger, getEngine, getAnalysis]);
 
   const find = (id: string) => ledger.find((e) => e.event.id === id);
 
@@ -207,6 +237,8 @@ export function App() {
     } catch {}
     setOnboarded(false);
     setChecked(false);
+    setSnippets([]);
+    setSky([]);
     setView(null);
     setTab("home");
     await reload();
@@ -235,11 +267,33 @@ export function App() {
 
   const current = view?.kind === "notice" ? find(view.eventId) : undefined;
   // Each destination remounts once, so screen-local state (an open sheet, a share in flight) does not outlive its screen.
-  const screenKey = settingsOpen ? "settings" : !onboarded ? "onboarding" : view ? `${view.kind}:${view.eventId}` : tab;
+  const screenKey = settingsOpen
+    ? "settings"
+    : !onboarded
+      ? "onboarding"
+      : view
+        ? view.kind === "month"
+          ? "month"
+          : `${view.kind}:${view.eventId}`
+        : tab;
 
   let body: React.ReactNode;
   if (settingsOpen) {
-    body = <Settings theme={theme} onTheme={setTheme} onBack={() => setSettingsOpen(false)} />;
+    body = (
+      <Settings
+        theme={theme}
+        onTheme={setTheme}
+        onBack={() => setSettingsOpen(false)}
+        onMonth={
+          onboarded
+            ? () => {
+                setSettingsOpen(false);
+                setView({ kind: "month" });
+              }
+            : undefined
+        }
+      />
+    );
   } else if (!onboarded) {
     body = (
       <Onboarding
@@ -255,11 +309,15 @@ export function App() {
       <Notice
         entry={current}
         snippets={snippets}
+        sky={sky}
+        analysis={getAnalysis}
         onRejectEvidence={(id) => rejectEvidence(current, id)}
         onAnswer={(status) => answer(current, status)}
         onBack={() => setView(null)}
       />
     );
+  } else if (view?.kind === "month") {
+    body = <Month analysis={getAnalysis} onBack={() => setView(null)} />;
   } else if (view?.kind === "journey") {
     const entry = find(view.eventId);
     body = (
@@ -274,6 +332,8 @@ export function App() {
         }}
       />
     );
+  } else if (tab === "sky") {
+    body = <Horizon ledger={ledger} analysis={getAnalysis} onOpen={openFromLedger} />;
   } else if (tab === "ledger") {
     body = <Ledger ledger={ledger} onOpen={openFromLedger} onEraseAll={eraseAll} />;
   } else if (tab === "sources") {
@@ -292,7 +352,10 @@ export function App() {
     body = (
       <Home
         ledger={ledger}
-        anySourceOn={sources.some((s) => s.enabled)}
+        sky={sky}
+        sources={sources}
+        revealKey={revealKey}
+        anySourceOn={anyOn}
         checked={checked}
         checking={checking}
         progress={progress}
@@ -300,6 +363,11 @@ export function App() {
         onCheck={onCheck}
         onOpenNotice={(e) => setView({ kind: "notice", eventId: e.event.id })}
         onOpenJourney={(e) => openJourney(e.event.id)}
+        onHorizon={() => {
+          setTab("sky");
+          setView(null);
+        }}
+        onMonth={() => setView({ kind: "month" })}
       />
     );
   }
@@ -308,11 +376,14 @@ export function App() {
     <div className="app">
       <header className="top">
         <strong className="wordmark">
+          <svg className="brand-mark" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <circle cx="9" cy="9" r="2.4" fill="var(--amber)" />
+            <circle cx="9" cy="9" r="7.5" fill="none" stroke="var(--amber)" strokeWidth="1" />
+          </svg>
           {t("appName")}
-          <span aria-hidden="true" className="brand-mark" />
         </strong>
         <button type="button" className="settings-toggle" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(!settingsOpen)}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
             <path d="M4 7h16M4 17h16" />
             <circle cx="9" cy="7" r="3" fill="var(--shell)" />
             <circle cx="15" cy="17" r="3" fill="var(--shell)" />
@@ -334,7 +405,7 @@ export function App() {
         </div>
         {onboarded && (
           <nav>
-            {(["home", "ledger", "sources"] as const).map((k) => (
+            {(["home", "sky", "ledger", "sources"] as const).map((k) => (
               <button
                 key={k}
                 type="button"

@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#123e48" />
+    <meta name="theme-color" content="#16233d" />
     <meta name="description" content="Help before something goes wrong. Read on your phone. Decided by you." />
     <script>
       try {
         const theme = localStorage.getItem("ahead.theme");
-        document.documentElement.dataset.theme = theme === "light" || theme === "dark" ? theme : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = theme === "light" || theme === "dark" ? theme : theme === "system" && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
         const locale = localStorage.getItem("ahead.locale");
         if (locale === "fi" || locale === "en") document.documentElement.lang = locale;
       } catch {}
     </script>
+    <link rel="preload" href="/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/atkinson-hyperlegible-regular-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>Ahead</title>
   </head>

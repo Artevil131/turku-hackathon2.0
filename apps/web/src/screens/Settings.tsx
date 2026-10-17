@@ -6,9 +6,10 @@ export type Theme = "light" | "dark" | "system";
 function readTheme(): Theme {
   try {
     const saved = localStorage.getItem("ahead.theme");
-    if (saved === "light" || saved === "dark") return saved;
+    if (saved === "light" || saved === "dark" || saved === "system") return saved;
   } catch {}
-  return "system";
+  // The night chart is the default scene; "system" is a choice, not the starting point (PRODUCT.md: projector first).
+  return "dark";
 }
 
 export function useTheme() {
@@ -18,7 +19,7 @@ export function useTheme() {
     const apply = () => {
       const resolved = theme === "system" ? (system.matches ? "dark" : "light") : theme;
       document.documentElement.dataset.theme = resolved;
-      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", resolved === "dark" ? "#102f36" : "#123e48");
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", resolved === "dark" ? "#16233d" : "#f2f2e9");
     };
     apply();
     system.addEventListener("change", apply);
@@ -30,7 +31,18 @@ export function useTheme() {
   return { theme, setTheme };
 }
 
-export function Settings({ theme, onTheme, onBack }: { theme: Theme; onTheme(theme: Theme): void; onBack(): void }) {
+export function Settings({
+  theme,
+  onTheme,
+  onBack,
+  onMonth,
+}: {
+  theme: Theme;
+  onTheme(theme: Theme): void;
+  onBack(): void;
+  /** "This month", reachable from here as well as from Home; absent before onboarding. */
+  onMonth?(): void;
+}) {
   const { t, locale, setLocale } = useI18n();
   return (
     <section className="settings-screen">
@@ -62,6 +74,27 @@ export function Settings({ theme, onTheme, onBack }: { theme: Theme; onTheme(the
         </div>
         <p className="muted">{t("settings.systemHint")}</p>
       </fieldset>
+      {onMonth && (
+        <ul className="list plate-links">
+          <li>
+            <button type="button" className="plate-link" onClick={onMonth}>
+              <span className="row-title serif">{t("home.month")}</span>
+              <svg
+                className="event-arrow"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      )}
       <p className="local-note">{t("settings.local")}</p>
     </section>
   );
