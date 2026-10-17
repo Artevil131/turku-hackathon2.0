@@ -162,7 +162,11 @@ export function createMoveBuilder(options: Partial<BuilderOptions> = {}): Journe
         }),
       );
 
-      items.push(...fmiItems({ locale, place, moveDate, today, options }));
+      // A warning for the new place is the "prevent something going wrong" moment: it leads the journey
+      // (A's review); a "no warnings" note goes last.
+      const fmi = fmiItems({ locale, place, moveDate, today, options });
+      items.unshift(...fmi.filter((i) => i.kind === "warning"));
+      items.push(...fmi.filter((i) => i.kind !== "warning"));
 
       const title = {
         fi: place ? `Muutto: ${place}${moveDate ? ` ${shortDate(moveDate, "fi")}` : ""}` : "Muutto",

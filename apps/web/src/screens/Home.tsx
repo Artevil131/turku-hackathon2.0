@@ -1,6 +1,7 @@
 import type { LedgerEntry } from "@ahead/contract";
 import { describe } from "@ahead/detect/describe";
 import { useI18n } from "../i18n.tsx";
+import { bySoonest } from "../order.ts";
 import { today } from "../today.ts";
 
 interface Props {
@@ -19,8 +20,8 @@ interface Props {
 /** Quiet by default: an empty state and a "Check now" button. The app does not nag. */
 export function Home({ ledger, anySourceOn, checked, checking, progress, error, onCheck, onOpenNotice, onOpenJourney }: Props) {
   const { t, locale } = useI18n();
-  const pending = ledger.filter((e) => e.status === "pending");
-  const confirmed = ledger.filter((e) => e.status === "confirmed");
+  const pending = bySoonest(ledger.filter((e) => e.status === "pending"));
+  const confirmed = bySoonest(ledger.filter((e) => e.status === "confirmed"));
   const label = (e: LedgerEntry) => describe(e.event, locale, today()).title;
 
   return (

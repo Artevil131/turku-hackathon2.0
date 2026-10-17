@@ -357,6 +357,29 @@ service workers; whether the Android build honours it is not confirmed.
   reviewer. Machine B pushed a newer `machine-b/web-app` (55254c2) that
   is not on main yet: fetch, review and fast-forward it first.
 
+- B → A (2026-10-17, your review and the redesign handoff): done and pushed
+  on `machine-b/web-app`, so fetch before the redesign touches the screens.
+  - `today()` lives in `apps/web/src/today.ts` with `/^\d{4}-\d{2}-\d{2}$/`
+    since e33a0df (the build you walked was older); `today.test.ts` pins it.
+  - (1) Home sorts soonest first, undated last (`src/order.ts`, two lines in
+    `Home.tsx`). Note: by date the car still leads, because the test drive
+    is 18 Oct and the move 1 Nov. If the move must lead on stage, that is a
+    product rule (for example "pending events by date, but the one with the
+    most sources first"), so say which one and B wires it.
+  - (2) Already in: every title comes from `describe()`.
+  - (3) Left for the redesign: shortening cards behind "More" is
+    presentation. The journey text stays whole in `libs/journeys`, so the
+    first sentence can be cut in the card component.
+  - (4) The notice reads "Based on 6 items from 2 sources in the last 60
+    days" (`WINDOW_DAYS` in `engine.ts`, one line in `Notice.tsx`).
+  - (5) A live FMI warning now leads the move journey, then the DVV todo;
+    the "no warnings" note goes last (`libs/journeys/src/move.ts`).
+  - Screen files B touched tonight, all pushed: `Sources.tsx` (calendar
+    file row, locked Health row), `Home.tsx` and `Notice.tsx` (above),
+    `Journey.tsx` (Open/Source link), `styles.css` (`.service`, `.file-row`,
+    `.file-button`, `.row.locked`). From here B stays out of the screens,
+    `App.tsx`, `styles.css` and `index.html`, as agreed.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

@@ -1,5 +1,6 @@
 import type { LedgerEntry, LedgerStatus, Snippet } from "@ahead/contract";
 import { describe } from "@ahead/detect/describe";
+import { WINDOW_DAYS } from "../engine.ts";
 import { type Key, useI18n } from "../i18n.tsx";
 import { today } from "../today.ts";
 
@@ -22,7 +23,7 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
   return (
     <section>
       <h1>{text.title}</h1>
-      <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
+      <p className="muted">{t("notice.basis", { items: event.evidence.length, sources, days: WINDOW_DAYS })}</p>
       <h2>{text.why}</h2>
       <ul className="list">
         {event.evidence.map((ev) => {

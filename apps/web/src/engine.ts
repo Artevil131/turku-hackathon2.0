@@ -79,9 +79,12 @@ export function withCalendar(engine: Engine, calendar: readonly Snippet[] | unde
   return { ...engine, adapters, baseAdapters: base };
 }
 
+/** How far back the adapters read (D-009); the notice says it. */
+export const WINDOW_DAYS = 60;
+
 /** Reads the enabled sources through their adapters over the default window (D-009). */
 export function readSnippets(engine: Engine, enabled: readonly Source[], today: IsoDate): Promise<Snippet[]> {
-  return readEnabled(engine.adapters, new Set(enabled), windowEnding(today));
+  return readEnabled(engine.adapters, new Set(enabled), windowEnding(today, WINDOW_DAYS));
 }
 
 export type { DetectedEvent };

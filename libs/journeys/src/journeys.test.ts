@@ -67,6 +67,8 @@ test("FMI warnings for the new place become warning cards", async () => {
   expect(w?.due).toBe("2026-10-30");
   expect(w?.sourceUrl).toContain("ilmatieteenlaitos");
   expect(j?.items.some((i) => i.id === "fmi-none")).toBe(false);
+  expect(j?.items[0]?.title).toBe("Frost warning");
+  expect(j?.items[1]?.id).toBe("dvv");
 });
 
 test("no FMI warnings says so rather than inventing one", async () => {
