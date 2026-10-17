@@ -95,8 +95,8 @@ summary {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  min-height: 80px;
-  padding: calc(12px + env(safe-area-inset-top)) 22px 12px;
+  min-height: 68px;
+  padding: calc(8px + env(safe-area-inset-top)) 22px 8px;
   color: var(--shell-text);
   background: var(--shell);
 }
@@ -104,7 +104,7 @@ summary {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 750;
   letter-spacing: -0.04em;
 }
@@ -114,12 +114,13 @@ summary {
   height: 9px;
   border-radius: 50%;
   background: var(--selected);
-  margin-top: 8px;
+  margin-top: 6px;
 }
 button.settings-toggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
   padding-inline: 10px;
   color: var(--shell-text);
   background: transparent;
@@ -184,6 +185,14 @@ p + p {
   margin-top: 14px;
   margin-bottom: 28px;
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .muted {
   color: var(--muted);
   font-size: 16px;
@@ -197,7 +206,7 @@ h1 + .muted {
   padding-block: 24px;
   border-block: 1px solid var(--line);
   color: var(--muted);
-  font-size: 24px;
+  font-size: 23px;
   line-height: 1.4;
 }
 .list,
@@ -226,12 +235,12 @@ h1 + .muted {
 .row-title + .muted {
   margin-top: 6px;
 }
-.source-list {
-  border-top: 1px solid var(--line);
-}
 .source-row {
   margin-inline: -10px;
   padding-inline: 10px;
+}
+.source-row:first-child {
+  border-top: 1px solid var(--line);
 }
 .source-row.enabled {
   background: var(--selected-ground);
@@ -250,6 +259,11 @@ h1 + .muted {
   text-align: left;
   width: 100%;
   color: var(--text);
+}
+.ledger-screen .row-button {
+  background: transparent;
+  border: 0;
+  padding-inline: 0;
 }
 .event-list {
   display: grid;
@@ -270,7 +284,7 @@ h1 + .muted {
   color: var(--selected-text);
   border-radius: 4px;
   padding: 2px 8px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
 }
@@ -384,9 +398,18 @@ button:disabled {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.sheet .actions > .primary:only-child {
+  grid-column: 1 / -1;
+}
+.share-sheet .actions {
+  grid-template-columns: 1fr;
+}
+.share-sheet::backdrop {
+  background: rgb(4 27 33 / 30%);
+}
 .bottom {
   flex: none;
-  padding: 12px 16px calc(8px + env(safe-area-inset-bottom));
+  padding: 10px 16px calc(8px + env(safe-area-inset-bottom));
   background: var(--shell);
   color: var(--shell-text);
 }
@@ -395,10 +418,10 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border: 1px solid var(--shell-muted);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.3;
 }
 .net span {
@@ -406,14 +429,21 @@ button:disabled {
 }
 .net strong {
   white-space: nowrap;
-  font-size: 16px;
+  font-size: 20px;
   font-variant-numeric: tabular-nums;
+}
+/* After a share the strip stays marked: the one count that changed keeps its lime. */
+.net-live {
+  border-color: var(--selected);
+}
+.net-live strong {
+  color: var(--selected);
 }
 nav {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 nav button {
   border: 0;
@@ -443,13 +473,20 @@ nav button.active {
 }
 .chip {
   display: inline-block;
-  color: var(--accent);
-  font-size: 15px;
+  color: var(--muted);
+  font-size: 16px;
   font-weight: 700;
   margin-bottom: 8px;
 }
 .notice-screen > h2 {
   font-size: 21px;
+}
+.notice-screen .question {
+  margin-top: 20px;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 .answer-actions {
   padding-bottom: 12px;
@@ -487,9 +524,6 @@ nav button.active {
 .card.kind-warning {
   background: var(--warning-ground);
 }
-.kind-warning .chip {
-  color: var(--warn);
-}
 .card-head {
   display: flex;
   justify-content: space-between;
@@ -498,14 +532,21 @@ nav button.active {
   margin-bottom: 8px;
 }
 .card-head .muted {
-  font-size: 15px;
+  font-size: 16px;
   font-variant-numeric: tabular-nums;
 }
 .card h3 {
   margin-bottom: 12px;
 }
 .card p {
-  font-size: 17px;
+  font-size: 18px;
+}
+/* The first sentence stays short on the card; the rest lives behind Read more. */
+.card > p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 .card-foot {
   display: flex;
@@ -534,24 +575,26 @@ a {
   align-items: center;
   min-height: 48px;
   padding: 10px 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--accent);
   color: var(--accent-text);
   text-decoration: none;
   font-weight: 650;
 }
 .check {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
+  gap: 10px;
+  min-height: 44px;
+  padding-inline: 4px;
+  font-size: 16px;
+  font-weight: 650;
   cursor: pointer;
 }
 .check input {
   width: 24px;
   height: 24px;
+  margin: 0;
   cursor: pointer;
 }
 .card.done h3 {
@@ -577,7 +620,7 @@ summary {
   min-width: 0;
 }
 .preference legend {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 700;
   margin-bottom: 14px;
 }
@@ -586,7 +629,7 @@ summary {
   grid-template-columns: repeat(3, 1fr);
   padding: 5px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--surface);
   gap: 4px;
 }
@@ -610,7 +653,7 @@ summary {
   justify-content: center;
   align-items: center;
   min-height: 50px;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 16px;
   font-weight: 600;
 }
@@ -667,9 +710,6 @@ progress {
   .bottom {
     padding-inline: 48px;
   }
-  .net {
-    font-size: 16px;
-  }
   .source-row {
     padding-block: 24px;
   }
@@ -683,11 +723,11 @@ progress {
   }
   .net {
     gap: 6px;
-    font-size: 12px;
+    font-size: 14px;
     padding-inline: 8px;
   }
   .net strong {
-    font-size: 14px;
+    font-size: 16px;
   }
   .segmented span {
     font-size: 14px;
@@ -703,8 +743,8 @@ progress {
 .share-card {
   margin: 28px 0 8px;
   padding: 20px;
-  border: 1px dashed var(--line-strong, var(--line));
-  border-radius: 14px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
 }
 .share-card p {
   margin: 0 0 12px;
@@ -729,13 +769,13 @@ progress {
   grid-template-columns: 1fr 2fr;
   gap: 12px;
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--bg);
   border: 1px solid var(--line);
 }
 .payload-row dt {
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
   align-self: center;
 }
 .payload-row dd {
@@ -747,36 +787,21 @@ progress {
   color: var(--danger);
 }
 
-/* ---- Motion: feedback, continuity, and one authored moment (the share) ---- */
+/* ---- Motion: feedback, one arrival (events after Check now) and one authored moment (the share) ---- */
 @media (prefers-reduced-motion: no-preference) {
-  .screen {
-    animation: screen-enter 240ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  @keyframes screen-enter {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-  }
-  .event-list > li,
-  .cards > li,
-  .evidence-list > li {
+  .event-list > li {
     animation: row-enter 320ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
-  .event-list > li:nth-child(1),
-  .cards > li:nth-child(1) {
+  .event-list > li:nth-child(1) {
     animation-delay: 40ms;
   }
-  .event-list > li:nth-child(2),
-  .cards > li:nth-child(2) {
+  .event-list > li:nth-child(2) {
     animation-delay: 80ms;
   }
-  .event-list > li:nth-child(3),
-  .cards > li:nth-child(3) {
+  .event-list > li:nth-child(3) {
     animation-delay: 120ms;
   }
-  .event-list > li:nth-child(n + 4),
-  .cards > li:nth-child(n + 4) {
+  .event-list > li:nth-child(n + 4) {
     animation-delay: 160ms;
   }
   @keyframes row-enter {
@@ -860,7 +885,7 @@ progress {
   @keyframes net-flash {
     0%,
     30% {
-      box-shadow: 0 0 0 3px var(--select, #e8f27a);
+      box-shadow: 0 0 0 3px var(--selected);
     }
     100% {
       box-shadow: 0 0 0 0 transparent;

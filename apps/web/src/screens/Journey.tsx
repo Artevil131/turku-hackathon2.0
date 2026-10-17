@@ -18,9 +18,15 @@ type ShareState =
   | { kind: "sent"; result: ShareResult }
   | { kind: "failed"; reason: string };
 
+/** Help first, insurance one card among many (PRODUCT.md): warnings, then tasks, then facts; insurance and comparison last. */
+const KIND_RANK: Record<JourneyData["items"][number]["kind"], number> = { warning: 0, todo: 1, info: 2, compare: 3, insurance: 4 };
+
 /** Journey items as cards by kind, each with its due date and source link. */
 export function Journey({ journey, entry, onBack, onToggleDone, onShare }: Props) {
   const { t, locale } = useI18n();
+  const items = [...(journey?.items ?? [])].sort(
+    (a, b) => KIND_RANK[a.kind] - KIND_RANK[b.kind] || (a.due ?? "9999").localeCompare(b.due ?? "9999"),
+  );
   const [shareState, setShareState] = useState<ShareState>({ kind: "closed" });
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -54,12 +60,15 @@ export function Journey({ journey, entry, onBack, onToggleDone, onShare }: Props
           <h1>{journey.title}</h1>
           <p className="muted">{t("journey.private")}</p>
           <ul className="cards">
-            {journey.items.map((item) => (
+            {items.map((item) => (
               <li key={item.id} className={`card kind-${item.kind} ${item.done ? "done" : ""}`}>
-                <div className="card-head">
-                  <span className="chip">{t(`kind.${item.kind}` as Key)}</span>
-                  {item.due && <span className="muted">{t("journey.due", { date: formatDate(item.due, locale) })}</span>}
-                </div>
+                {/* The kind shows as the card's ground (warning amber, insurance beside the rest); the word is for screen readers only. */}
+                <span className="visually-hidden">{t(`kind.${item.kind}` as Key)}</span>
+                {item.due && (
+                  <div className="card-head">
+                    <span className="muted">{t("journey.due", { date: formatDate(item.due, locale) })}</span>
+                  </div>
+                )}
                 <h3>{item.title}</h3>
                 <p>{item.body.split(/(?<=[.!?])\s/)[0]}</p>
                 {item.body.split(/(?<=[.!?])\s/).length > 1 && (
@@ -109,6 +118,7 @@ export function Journey({ journey, entry, onBack, onToggleDone, onShare }: Props
                         checked={!!item.done}
                         onChange={() => onToggleDone(item.id)}
                       />
+                      <span aria-hidden="true">{t("journey.doneShort")}</span>
                     </label>
                   )}
                 </div>

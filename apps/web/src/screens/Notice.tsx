@@ -8,10 +8,11 @@ interface Props {
   snippets: Snippet[];
   onRejectEvidence(snippetId: string): void;
   onAnswer(status: Exclude<LedgerStatus, "pending">): void;
+  onBack(): void;
 }
 
 /** A detected event as a question, with the evidence behind it. The wording is A's templates (`describe`). */
-export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
+export function Notice({ entry, snippets, onRejectEvidence, onAnswer, onBack }: Props) {
   const { t, locale } = useI18n();
   const { event } = entry;
   const text = describe(event, locale, today());
@@ -21,10 +22,12 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
 
   return (
     <section className="notice-screen">
+      <button type="button" className="back quiet" onClick={onBack}>
+        {t("journey.back")}
+      </button>
       <h1>{text.title}</h1>
       <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
-      <p className="muted">{t("notice.window")}</p>
-      <p>{text.question}</p>
+      <p className="question">{text.question}</p>
       <div className="actions answer-actions">
         <button type="button" className="primary" onClick={() => onAnswer("confirmed")}>
           {text.answers.confirm}
@@ -32,7 +35,7 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
         <button type="button" onClick={() => onAnswer("dismissed")}>
           {text.answers.notNow}
         </button>
-        <button type="button" className="quiet" onClick={() => onAnswer("never")}>
+        <button type="button" onClick={() => onAnswer("never")}>
           {text.answers.never}
         </button>
       </div>

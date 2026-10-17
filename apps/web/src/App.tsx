@@ -212,7 +212,7 @@ export function App() {
   if (!ready) return null;
 
   const current = view?.kind === "notice" ? find(view.eventId) : undefined;
-  // Each destination remounts once, so the screen's entrance plays once per navigation, not per render.
+  // Each destination remounts once, so screen-local state (an open sheet, a share in flight) does not outlive its screen.
   const screenKey = settingsOpen ? "settings" : !onboarded ? "onboarding" : view ? `${view.kind}:${view.eventId}` : tab;
 
   let body: React.ReactNode;
@@ -227,6 +227,7 @@ export function App() {
         snippets={snippets}
         onRejectEvidence={(id) => rejectEvidence(current, id)}
         onAnswer={(status) => answer(current, status)}
+        onBack={() => setView(null)}
       />
     );
   } else if (view?.kind === "journey") {

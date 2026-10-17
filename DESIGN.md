@@ -29,6 +29,8 @@ colors:
   dark-danger: "#ffacb0"
   dark-warning: "#f8cf7b"
   dark-warning-ground: "#493e28"
+  backdrop: "rgb(4 27 33 / 55%)"
+  backdrop-share: "rgb(4 27 33 / 30%)"
 typography:
   heading:
     fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
@@ -36,15 +38,29 @@ typography:
     fontWeight: 720
     lineHeight: 1.12
     letterSpacing: "-0.035em"
+  sheet-title:
+    fontSize: "28px"
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: "-0.015em"
+  wordmark:
+    fontSize: "24px"
+    fontWeight: 750
+    letterSpacing: "-0.04em"
+  title:
+    fontSize: "23px"
+    fontWeight: 700
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
   section:
     fontSize: "21px"
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: "-0.015em"
-  title:
-    fontSize: "23px"
-    lineHeight: 1.25
-    letterSpacing: "-0.02em"
+  row:
+    fontSize: "20px"
+    fontWeight: 650
+    lineHeight: 1.35
   body:
     fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
     fontSize: "18px"
@@ -52,11 +68,15 @@ typography:
   secondary:
     fontSize: "16px"
     lineHeight: 1.5
+  compact:
+    fontSize: "14px"
+    lineHeight: 1.3
 rounded:
   small: "4px"
   control: "8px"
   surface: "12px"
   dialog: "18px"
+  pill: "20px"
 spacing:
   compact: "8px"
   group: "12px"
@@ -110,7 +130,7 @@ White surfaces sit on the cool reading ground. Secondary ink and dividing lines 
 
 ## Typography
 
-One workhorse system sans across the operating UI. This is an Operate surface, not an expressive display page. Headings use the documented fluid size; section headings, event titles, body and metadata form distinct steps. Text wraps naturally in both Finnish and English. Numerals in dates and counters are tabular; paragraphs are limited to 68ch.
+One workhorse system sans across the operating UI. This is an Operate surface, not an expressive display page. The ramp, top down: the fluid task heading (30–40px); the sheet title (28); the wordmark (24); card titles, the empty state and the notice's question (23); section headings and legends (21); row titles and the outbound count (20); body and card text (18); secondary text, dates, labels and controls (16); and a compact step (14) only for the boundary strip below 350px. Nothing sits between the steps. Text wraps naturally in both Finnish and English. Numerals in dates and counters are tabular; paragraphs are limited to 68ch, and a card's first sentence is clamped to three lines.
 
 ## Layout
 
@@ -118,21 +138,28 @@ A mobile-first flex shell fills 100dvh, at most 780px wide. The header and foote
 
 ## Elevation & Depth
 
-Flat by default: colored fields, 1px outlines and spacing carry depth. Only the native consent dialog lifts, with a soft offset shadow (`0 16px 60px rgb(0 20 28 / 25%)`) and a darkened backdrop.
+Flat by default: colored fields, 1px outlines and spacing carry depth. Only the native dialogs lift, with a soft offset shadow (`0 16px 60px rgb(0 20 28 / 25%)`) and a darkened backdrop (55%). The share sheet's backdrop is lighter (30%) so the shell and its counter stay readable while the three rows leave.
 
 ## Shapes
 
-Controls have modest rounded corners; event and journey surfaces use the larger surface radius. Source switches use a pill track with a circular thumb. No ornamental edge stripes or physical-material imitations.
+Four radii: 4px inside segmented controls and on date cells; 8px on every control, payload row, segmented group and service link; 12px on event, journey and share surfaces; 18px on dialogs. Source switches use a 20px pill track with a circular thumb. No ornamental edge stripes or physical-material imitations.
 
 ## Components
 
 - **Buttons:** 48px minimum height; primary actions use action teal, secondary actions a bordered surface. Main Check now and Continue actions are full-width. Hover darkens meaningful controls; focus uses a visible 3px outline.
-- **Source switches:** a 56×44px hit area contains a 32px track. Selection changes the row field and moves the thumb 24px in 160ms with exponential ease-out. Reduced motion removes the transition.
+- **Source switches:** a 56×44px hit area contains a 32px track. Selection changes the row field and moves the thumb 24px in 160ms with exponential ease-out. Reduced motion removes the transition. The list's top rule belongs to the first row, so it spans the selected field.
 - **Settings:** native radios in segmented groups; selected options use acid yellow. Language and theme choices are not header controls.
-- **Events:** full-width buttons with date cells and a consistent drawn arrow. The detector supplies the wording.
-- **Journeys:** kind labels, readable first sentences, expandable detail, due dates, service/source links and labelled todo checkboxes.
+- **Events:** full-width buttons with date cells and a consistent drawn arrow. The detector supplies the wording. With something to answer, "Needs your answer" is the home screen's heading; the tagline is the quiet state's.
+- **Notices:** the inference as the heading, one muted basis line, the question at title size, three answers above the evidence. Back at the top like a journey.
+- **Journeys:** cards ordered warning, to do, info, compare, insurance, then by due date, so help comes first and insurance is one card among many. No kind label: the warning ground carries the kind, and the word is visually hidden for screen readers. Readable first sentences (three lines at most), expandable detail, due dates, service/source links and todo checkboxes with a visible "Done".
+- **Chips:** muted ink, never teal; teal means tappable only.
 - **Navigation:** petrol field, pale labels and a yellow active destination. A small outlined settings action remains in the header.
-- **Boundary strip:** inline label and outbound-request count, with no oversized metric styling.
+- **Boundary strip:** inline label (16px) and outbound-request count (20px), with no oversized metric styling. After a share the strip's outline and count turn acid yellow and stay that way: the one number that changed keeps its mark.
+- **Share sheet:** the three payload rows, one "Share with If" and one "Keep it on this phone", stacked full width; "Done" alone after sending.
+
+## Motion
+
+Two moments, nothing else. The event list arriving after Check now (rows rise 10px over 320ms, 40ms apart) and the share: the three rows lift off the phone in order, arrive as what If received, and the counter flips once and lights. Screens do not animate in, and journey cards and evidence rows do not stagger. Buttons press (scale 0.98) and switches slide; reduced motion removes all of it except the end states.
 
 ## Do's and Don'ts
 

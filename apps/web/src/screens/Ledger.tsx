@@ -13,15 +13,17 @@ interface Props {
 /** Every event ever inferred, its status, what was shared (by default nothing), and one-tap erase. */
 export function Ledger({ ledger, onOpen, onEraseAll }: Props) {
   const { t, locale } = useI18n();
+  // Soonest first, undated last: the same order as Home.
+  const entries = [...ledger].sort((a, b) => (a.event.estimatedDate ?? "9999").localeCompare(b.event.estimatedDate ?? "9999"));
   return (
     <section className="ledger-screen">
       <h1>{t("ledger.title")}</h1>
       <p className="screen-lead">{t("ledger.lead")}</p>
-      {ledger.length === 0 ? (
-        <p className="muted">{t("ledger.empty")}</p>
+      {entries.length === 0 ? (
+        <p className="empty">{t("ledger.empty")}</p>
       ) : (
         <ul className="list">
-          {ledger.map((e) => (
+          {entries.map((e) => (
             <li key={e.event.id} className="row">
               <button type="button" className="row-button grow" onClick={() => onOpen(e)}>
                 <div className="row-title">{describe(e.event, locale, today()).title}</div>

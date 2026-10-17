@@ -63,7 +63,7 @@ export function SourceList({ sources, onChange }: Props) {
       {sheet && (
         <dialog ref={dialogRef} className="sheet" aria-labelledby="consent-title" onCancel={() => setSheet(null)}>
           <h2 id="consent-title">{t(sheet === "mail" ? "consent.mail.title" : "consent.bank.title")}</h2>
-          <p className="muted">{t("consent.body")}</p>
+          <p className="muted">{t(sheet === "mail" ? "consent.mail.body" : "consent.bank.body")}</p>
           <div className="actions">
             <button
               type="button"
