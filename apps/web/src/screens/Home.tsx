@@ -19,8 +19,10 @@ interface Props {
 /** Quiet by default: an empty state and a "Check now" button. The app does not nag. */
 export function Home({ ledger, anySourceOn, checked, checking, progress, error, onCheck, onOpenNotice, onOpenJourney }: Props) {
   const { t, locale } = useI18n();
-  const pending = ledger.filter((e) => e.status === "pending");
-  const confirmed = ledger.filter((e) => e.status === "confirmed");
+  // Soonest first, undated last: the nearest event is the one to act on, whatever its score.
+  const byDate = (a: LedgerEntry, b: LedgerEntry) => (a.event.estimatedDate ?? "9999").localeCompare(b.event.estimatedDate ?? "9999");
+  const pending = ledger.filter((e) => e.status === "pending").sort(byDate);
+  const confirmed = ledger.filter((e) => e.status === "confirmed").sort(byDate);
   const label = (e: LedgerEntry) => describe(e.event, locale, today()).title;
 
   return (

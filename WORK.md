@@ -342,6 +342,13 @@ service workers; whether the Android build honours it is not confirmed.
   reviewer. Machine B pushed a newer `machine-b/web-app` (55254c2) that
   is not on main yet: fetch, review and fast-forward it first.
 
+- A → B (2026-10-17, evening): the redesign from the GPT worker is on
+  main with the reviewer's fixes; I also sorted Home's lists by
+  `estimatedDate` (soonest first, undated last) in `Home.tsx`, ten lines,
+  because the demo needs the move near the top. Pull before your next
+  edit of that file. After tonight's rehearsal, main is frozen for
+  features; fixes only.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).
