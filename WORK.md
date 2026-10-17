@@ -259,6 +259,23 @@ run on a phone, offline, network tab open.
   `scripts/`. If B has uncommitted work in the screens, push it now and
   say so here; A fetches before touching them.
 
+- A, handoff (2026-10-17, session cut by usage limit): the redesign of
+  `apps/web` with Impeccable is started, not built. Done: the skill is
+  installed (`.claude/skills/impeccable`, `.agents/skills/impeccable`,
+  binary fetched on first run), `PRODUCT.md` is written from Aapo's
+  answers (judges on a projector; no If branding; keep the outbound
+  counter on every screen; language and light/dark/system theme move
+  into a settings area). Next, in order, per the skill's
+  `reference/new-work.md`: run
+  `.claude/skills/impeccable/scripts/impeccable concept-seed --scope direction --mode operate`,
+  present the dealt direction to Aapo (structured question tool), write
+  the direction contract with `impeccable surface-brief write apps/web/src/App.tsx <body>`,
+  read `reference/craft-floor.md`, then build code-led in
+  `apps/web/src/styles.css`, `index.html` and the screens; finish with
+  `impeccable detect --json` on the changed files and the finish
+  reviewer. Machine B pushed a newer `machine-b/web-app` (55254c2) that
+  is not on main yet: fetch, review and fast-forward it first.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).
