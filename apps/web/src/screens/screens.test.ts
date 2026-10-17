@@ -46,14 +46,18 @@ describe("redesigned task screens", () => {
     expect(after).not.toContain("Share this event with If");
   });
 
-  it("keeps all six labelled source switches and locked Health", () => {
+  it("keeps all eight labelled source switches and locked Health", () => {
     const sources = mockSources.map((source) => ({ ...source, enabled: false }));
     const html = render(createElement(SourceList, { sources, onChange: noop }));
-    for (const label of ["Calendar", "Mail", "Bank", "Places", "Photos", "Notifications", "Health"]) {
+    for (const label of ["Calendar", "Mail", "Bank", "Places", "Photos", "Notifications", "Messages", "Wi-Fi", "Health"]) {
       expect(html).toContain(`aria-label="${label}"`);
     }
-    expect(html.match(/aria-checked="false"/g)).toHaveLength(7);
+    expect(html.match(/aria-checked="false"/g)).toHaveLength(9);
     expect(html).toContain('aria-disabled="true"');
+    // Each new source says what is read; sms carries the same Android-only note as notifications.
+    expect(html).toContain("Texts from services only, never from people (Android only).");
+    expect(html).toContain("Names of networks this phone joined, no traffic.");
+    expect(html.match(/\(Android only\)/g)).toHaveLength(2);
   });
 
   it("renders language and all theme choices as labelled radios", () => {
