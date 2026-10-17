@@ -123,6 +123,15 @@ async function click(cdp: CDP, label: string, selectors: string[], texts: string
   return found;
 }
 
+async function scrollToTop(cdp: CDP) {
+  await cdp.evaluate(`(() => {
+    window.scrollTo(0, 0);
+    for (const el of document.querySelectorAll('main, main *, #root, body')) {
+      if (el.scrollTop) el.scrollTop = 0;
+    }
+  })()`);
+}
+
 if (!existsSync(join(root, "apps/web/dist/index.html"))) {
   throw new Error("apps/web/dist is missing. Run pnpm --filter @ahead/web assets && pnpm --filter @ahead/web build first.");
 }
@@ -218,6 +227,7 @@ try {
     await step(source.toLowerCase());
   }
   await click(client, "Continue", [], ["Continue"]);
+  await scrollToTop(client);
   await step("home");
   await click(client, "Check now", [], ["Check now"]);
   await step("checking");
@@ -234,6 +244,7 @@ try {
     '[data-testid="event-card"]',
     "[data-event-id]",
   ]);
+  await scrollToTop(client);
   await step("evidence");
   await click(client, "Not this", [], ["Not this"]);
   await step("evidence-rejected");
@@ -242,22 +253,30 @@ try {
   if (await client.evaluate<boolean>(`!![...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Not this')`)) {
     await click(client, "notice primary", ["main button.primary", "button.primary"]);
   }
+  await scrollToTop(client);
   await step("journey");
   // Scroll the page or a redesigned app's nested scrolling main, in small timed increments.
-  for (let i = 0; i < 60; i++) {
-    await client.evaluate(`(() => {
+  for (let i = 0; i < 160; i++) {
+    const moved = await client.evaluate<boolean>(`(() => {
       const el = [...document.querySelectorAll('main, main *, #root, body')].find(el =>
-        el.scrollHeight > el.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(el).overflowY));
-      if (el) el.scrollBy(0, 32); else window.scrollBy(0, 32);
+        el.scrollHeight > el.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(el).overflowY)) || document.scrollingElement;
+      if (!el) return false;
+      const before = el.scrollTop;
+      el.scrollBy(0, 48);
+      return el.scrollTop > before;
     })()`);
+    if (!moved) break;
     await sleep(250);
   }
   await step("journey-end");
   await click(client, "Back", ['[aria-label="Back"]'], ["Back", "← Back"]);
+  await scrollToTop(client);
   await step("back");
   await click(client, "Ledger", ['[aria-label="Ledger"]'], ["Ledger"]);
+  await scrollToTop(client);
   await step("ledger");
   await click(client, "Settings (Sources in the current app)", ['[aria-label="Settings"]'], ["Settings", "Sources"]);
+  await scrollToTop(client);
   await step("settings");
   recording = false;
   await capture;
