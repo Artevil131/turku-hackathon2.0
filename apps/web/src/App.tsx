@@ -14,6 +14,7 @@ import { Home } from "./screens/Home.tsx";
 import { Horizon } from "./screens/Horizon.tsx";
 import { Journey } from "./screens/Journey.tsx";
 import { Ledger } from "./screens/Ledger.tsx";
+import { Listing } from "./screens/Listing.tsx";
 import { Month } from "./screens/Month.tsx";
 import { Notice } from "./screens/Notice.tsx";
 import { Settings, useTheme } from "./screens/Settings.tsx";
@@ -23,7 +24,7 @@ import { type AppStore, createStore } from "./store.ts";
 import { today } from "./today.ts";
 
 type Tab = "home" | "ledger" | "sources" | "sky";
-type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | { kind: "month" } | null;
+type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | { kind: "month" } | { kind: "listing" } | null;
 
 function wasOnboarded(): boolean {
   try {
@@ -235,7 +236,7 @@ export function App() {
     setJourney(next);
   };
 
-  /** The one message that can leave the phone: three fields, after the user pressed Share (apps/api). */
+  /** The confirmed event share: three fields, after the user pressed Share (apps/api). */
   const shareEvent = async (entry: LedgerEntry, payload: SharePayload) => {
     const result = await share(payload);
     await store.upsertLedger({ ...entry, shared: true });
@@ -288,8 +289,8 @@ export function App() {
     : !onboarded
       ? "onboarding"
       : view
-        ? view.kind === "month"
-          ? "month"
+        ? view.kind === "month" || view.kind === "listing"
+          ? view.kind
           : `${view.kind}:${view.eventId}`
         : tab;
 
@@ -332,6 +333,8 @@ export function App() {
         onBack={() => setView(null)}
       />
     );
+  } else if (view?.kind === "listing") {
+    body = <Listing onBack={() => setView(null)} />;
   } else if (view?.kind === "month") {
     body = <Month analysis={getAnalysis} snippets={snippets} onBack={() => setView(null)} />;
   } else if (view?.kind === "journey") {
@@ -384,6 +387,7 @@ export function App() {
           setView(null);
         }}
         onMonth={() => setView({ kind: "month" })}
+        onListing={() => setView({ kind: "listing" })}
       />
     );
   }
