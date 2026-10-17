@@ -127,8 +127,18 @@ building). Public data covers the rest (Traficom inspections, Isännöintiliitto
 
 Live at https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (single file: `index.html`, works offline).
 
-- Reads real car, flat-for-sale and rental ads with rules, no AI (`index.html`; data built by
-  `tools/build-data.mjs` from `data/`; tested by `test/reader.test.mjs`, 12 of 12 sample ads pass).
+- Reads real car, motorcycle, flat-for-sale and rental ads with rules, no AI (`index.html`; data built by
+  `tools/build-data.mjs` from `data/`; tested by `test/reader.test.mjs`, 17 of 17 sample ads pass).
+- Motorcycles (Nettimoto or free text):
+  - the licence class as a fact about the bike (A1, A2, A);
+  - no periodic inspection, so "inspected" becomes a question;
+  - what modifications need an inspection, and that If's kasko doesn't cover lowering springs;
+  - who pays: your own injuries are paid by your bike's traffic insurance even when you caused the crash;
+    your riding gear is not; theft needs kasko and a locked bike;
+  - no vehicle tax; ABS as the safer choice;
+  - winter storage as an If-customer reminder.
+  
+  Mopeds, snowmobiles and ATVs get "comes in the full version".
 - Every what-if carries its who-pays label; the end card hands over to an If quote with the details filled in.
 - Next, being explored by Aapo: an LLM that reads messier ads and drafts the risk factors (see `README.md`).
 

@@ -14,6 +14,9 @@ const code = html.slice(html.indexOf("/* engine:start */"), html.indexOf("/* eng
 const createEngine = new Function(`${code}\nreturn createEngine;`)();
 const engine = createEngine(data, new Date("2026-10-17T12:00:00"));
 const samples = JSON.parse(readFileSync(join(root, "data", "sample-ads.json"), "utf8"));
+const motoSamples = JSON.parse(readFileSync(join(root, "data", "sample-ads-moto.json"), "utf8"));
+// In the motorcycle samples a null means "must not be read" (moto-4 has no year: the result asks for it).
+const tests = [...samples.tests, ...motoSamples.tests.map((t) => ({ ...t, strictNull: true }))];
 const show = process.argv.includes("--show");
 
 // The fields the rules use. Only fields with a non-null expected value are compared.
@@ -23,6 +26,7 @@ const CORE = {
   home: ["buildingYear", "livingAreaM2", "debtFreePrice", "sellingPrice", "debtShare", "maintenanceCharge", "financingCharge", "plotRentCharge",
     "city", "district", "rooms", "pipeRenovation.status", "pipeRenovation.years"],
   rent: ["rent", "deposit", "depositMonths", "buildingYear", "livingAreaM2", "homeInsuranceRequired", "city", "district", "rooms"],
+  moto: ["make", "model", "year", "km", "price", "officeFee", "engineCc", "powerKw", "licence", "sellerType", "city", "lastInspection", "abs", "modified"],
 };
 const get = (o, path) => path.split(".").reduce((v, k) => (v == null ? v : v[k]), o);
 const same = (a, b) => {
@@ -33,15 +37,16 @@ const same = (a, b) => {
 
 let pass = 0, fail = 0;
 const failures = [];
-for (const t of samples.tests) {
+for (const t of tests) {
   const got = engine.read(t.text);
   const bad = [];
   if (got.kind !== t.kind) bad.push(`kind: expected ${t.kind}, got ${got.kind}`);
   else {
     for (const f of CORE[t.kind]) {
       const want = get(t.expected, f);
-      if (want == null) continue;
       const have = get(got, f);
+      if (want === null && t.strictNull && f in t.expected) { if (have != null) bad.push(`${f}: expected null, got ${JSON.stringify(have)}`); continue; }
+      if (want == null) continue;
       if (!same(want, have)) bad.push(`${f}: expected ${JSON.stringify(want)}, got ${JSON.stringify(have)}`);
     }
   }
@@ -54,7 +59,7 @@ for (const t of samples.tests) {
 // Every sample must also give a full result: three asks, each with who pays, the hand-over, known sources.
 const strip = (s) => String(s).replace(/<[^>]+>/g, "");
 const results = [];
-for (const t of samples.tests) results.push([t.id, t.text]);
+for (const t of tests) results.push([t.id, t.text]);
 // The curated examples' texts, as if someone edited them: they go through the reader then.
 for (const m of html.matchAll(/^\s*ad: ("(?:[^"\\]|\\.)*"),$/gm)) results.push([`curated ${JSON.parse(m[1]).slice(0, 18)}…`, JSON.parse(m[1]) + "\n"]);
 const EXTRA = [
@@ -63,11 +68,12 @@ const EXTRA = [
   ["Mercedes, no seller", "Mercedes-Benz C 220 CDI\n2011\n265 000 km\nDiesel\nAutomaatti\nHinta 7 450 €\nVantaa"],
   ["old home, no pipes", "Myydään kaksio Pori\nKerrostalo, rakennusvuosi 1968\n52 m²\nVelaton hinta 79 000 €\nMyyntihinta 79 000 €\nHoitovastike 260 € / kk"],
   ["capital-region rental", "Vuokrataan yksiö, Helsinki Kallio\nKerrostalo 1961\n27 m²\nVuokra 890 €/kk\nVakuus 3 kk:n vuokra\nKotivakuutus vaaditaan"],
+  ["motorbike, short", "Yamaha MT-07 689 cm³\n2019\n15 000 km\nMoottoripyörä, katupyörä\nHinta 5 900 €\nTampere"],
 ];
 const ODD = [
   ["link", "https://www.nettiauto.com/skoda/octavia/16000001", /link to Nettiauto/],
-  ["motorbike link", "https://www.nettimoto.com/yamaha/mt-07/1234567", /link to Nettimoto.*full version|full version/],
-  ["motorbike ad", "Yamaha MT-07 689 cm³\n2019\n15 000 km\nMoottoripyörä, katupyörä\nHinta 5 900 €\nTampere", /motorbike/],
+  ["motorbike link", "https://www.nettimoto.com/yamaha/mt-07/1234567", /link to Nettimoto.*paste it here/],
+  ...motoSamples.notSupported.map((x) => [x.id, x.text, new RegExp(`looks like an? ${x.want === "atv" ? "ATV" : x.want}.*full version`)]),
   ["detached house", "Omakotitalo, Kaarina\n5h, k, s, 142 m²\nRakennusvuosi 1979\nHinta 245 000 €\nTontti 1 200 m², oma", /house or cottage/],
   // Oikotie puts the house type far down the page, under the site's own menu.
   ["house, Oikotie", "Kirjaudu\nMyytävät asunnot\nTurku\nTurku\nEsimerkkitie 1, 20900 Turku\nPalaa hakutuloksiin\n557 000 €\n●\n142,5 m²\nMyyntihinta\n557 000 €\nAsuinpinta-ala\n142,5 m²\nRakennusvuosi\n2026\nRakennuksen tyyppi\nOmakotitalo\nKohde on\nKiinteistö\nTontin omistus\nVuokralla", /house or cottage/],
@@ -91,7 +97,7 @@ const check = (label, r) => {
     console.log(`\n=== ${label}: ${strip(r.stamp)} · ${strip(r.name)} · ${strip(r.specs)}`);
     r.asks.forEach((a, i) => console.log(`  ${i + 1}. ${strip(a.q)}  [${strip(a.who)}]  ${a.cost || ""}\n     ${strip(a.why)}\n     ${strip(a.whatif)}`));
     if (r.costs) console.log("  costs: " + r.costs.map((c) => `${c.what} ${c.eur == null ? "(quote)" : Math.round(c.eur)}`).join(" | "));
-    if (r.safer) console.log("  safer: " + r.safer.bars.map((b) => `${strip(b.label)} ${b.pct}`).join(" | "));
+    if (r.safer) console.log("  safer: " + (r.safer.bars ? r.safer.bars.map((b) => `${strip(b.label)} ${b.pct}`) : r.safer.points).join(" | "));
     console.log("  later: " + r.later.list.map((l) => `${l.when}: ${l.text}`).join(" | "));
   }
 };
@@ -112,6 +118,12 @@ if (!real.flags?.timingChain) realBad.push("ketjukone not read as a timing chain
 if (real.flags?.rustMentioned) realBad.push("'no rust found' read as rust");
 if (realBad.length) structural++;
 console.log(`${realBad.length ? "FAIL" : "pass"}  real-page car    ${realBad.join("; ")}`);
+
+// Vaishnav's YZF-R125 ad has no year: the result asks for it instead of guessing.
+const yzf = engine.analyse(motoSamples.tests.find((t) => t.id === "moto-4").text);
+const yzfOk = !yzf.message && /year/i.test(yzf.asks?.[0]?.q ?? "");
+if (!yzfOk) structural++;
+console.log(`${yzfOk ? "pass" : "FAIL"}  no year, asks     ${yzf.message ?? strip(yzf.asks?.[0]?.q ?? "")}`);
 
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],

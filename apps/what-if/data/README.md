@@ -1,6 +1,6 @@
 # Data for the "What if…" ad reader
 
-These five files feed the rule-based reader (no AI). The reader pulls fields out of an ad, then looks up rules and real numbers here.
+These files feed the rule-based reader (no AI). The reader pulls fields out of an ad, then looks up rules and real numbers here. The two motorcycle files were added later the same day (see the end of the table).
 
 Everything was gathered on 17 October 2026. A second agent then fact-checked each file. It downloaded every source again, compared the values and fixed the file in place. Each file records that check in a fact-check block: `factCheck` at the top level of the Traficom file, `meta.factCheck` in the others.
 
@@ -13,6 +13,10 @@ All files are UTF-8 JSON with a 2-space indent. None holds personal data. Raw do
 | `car-rules.json` (82 KB) | Buyer rights, inspection, tyres, insurance, tax and wear costs for a used car | `real: false` with a `basis`. Our reading of a law is in an `interpretation` field. |
 | `rent-rules.json` (84 KB) | Rental law, insurance, moving in and out, and rent levels | `real: false` with a `basis` |
 | `sample-ads.json` (119 KB) | How the ad sites write their fields, plus 12 test ads | Site observations are real. Test ads are synthetic. Labels not seen on a site are listed in `assumptions`. |
+| `moto-rules.json` (13 KB) | Used motorcycle: no periodic inspection, what modifications need an inspection, licence classes, who pays (traffic insurance, kasko, wear), winter storage, vehicle tax, ABS | Every fact has a `source` id from its `sources` block, checked on 17 October 2026 against Finlex, Traficom, LVK, EUR-Lex and If's published terms. Nothing unverified is in it: there is no published price for a modification or registration inspection, so none is given. |
+| `sample-ads-moto.json` (6 KB) | Nettimoto's labels, plus 5 motorcycle test ads and 4 ads that must stay unsupported (mopeds, a snowmobile, an ATV) | Nettimoto's labels were read from a public ad page. Test ads are synthetic, except moto-4, which is Vaishnav's example. |
+
+`moto-rules.json` also records a correction: Valtioneuvoston asetus 1455/2019, which `traficom-inspections.json` cites for the inspection schedule, was repealed by the Vehicles Act 82/2021. The schedule itself is unchanged; the duties are now in the Act.
 
 ## traficom-inspections.json
 

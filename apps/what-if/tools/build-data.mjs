@@ -11,6 +11,8 @@ const trafi = read("traficom-inspections.json");
 const housing = read("housing-rules.json");
 const car = read("car-rules.json");
 const rent = read("rent-rules.json");
+// Motorcycle facts are used as they are: every fact the page shows carries its own source id.
+const { meta: _motoMeta, notes: _motoNotes, ...moto } = read("moto-rules.json");
 
 const fold = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
@@ -100,6 +102,7 @@ const data = {
     inspectionFee: { walkIn: fee.periodicInspection, booked: fee.periodicInspectionBooked, year: fee.year, url: srcUrl(trafi.sources, "traficom-tilannekatsaus-2025") },
     disputes: { usedShare: disputes.facts[0].value, defectShare: disputes.facts[1].value, url: disputes.source.url },
     rentDepositMaxMonths: rent.deposit.maxMonthsOfRent.value,
+    moto,
   },
 };
 
