@@ -1,5 +1,7 @@
 # Concept: help arrives before the event
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md).
+
 Working name: **Ahead** (placeholder; see DECISIONS.md open items).
 
 ## The human need

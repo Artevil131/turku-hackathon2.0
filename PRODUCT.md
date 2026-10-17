@@ -2,6 +2,8 @@
 
 <!-- impeccable:product-schema 1 -->
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md).
+
 ## Platform
 
 web

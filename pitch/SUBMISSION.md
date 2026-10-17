@@ -1,5 +1,7 @@
 # Submission text
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md); this text has not been rewritten for it yet.
+
 For the organisers' form. One paragraph, then the facts they usually ask.
 
 ## Description

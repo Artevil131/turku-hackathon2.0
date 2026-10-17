@@ -1,5 +1,7 @@
 # Plan: the remaining weekend
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…**; its plan is `apps/what-if/PLAN.md` (D-017 in DECISIONS.md).
+
 Status 2026-10-17. Times are placeholders until the organisers' deadline
 is confirmed (CONTEXT.md question 7). The first entry is already in;
 this one gets the time that is left, so the scope is a convincing

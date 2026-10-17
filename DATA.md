@@ -1,5 +1,7 @@
 # Data: open sources and the synthetic phone
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md); its data is described in `apps/what-if/data/README.md`.
+
 No customer or confidential insurance data is used or needed. Two kinds
 of data appear: public data that fills the journeys, and synthetic
 personal data that stands in for a real phone in the demo.

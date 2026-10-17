@@ -1,5 +1,7 @@
 # Questions to prepare for
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…**; its answers to judges' questions are in `apps/what-if/PLAN.md`.
+
 These answers distinguish the demo from the intended product. Legal interpretations need review, not a claim of compliance.
 
 ### Can you really say If never sees my data?

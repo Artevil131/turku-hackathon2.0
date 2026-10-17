@@ -33,7 +33,7 @@ fees: more customers, who stay longer, hold more policies, claim less, and cost 
 | Layer | Who | What they get | Why it pays for If |
 |---|---|---|---|
 | **The check** | Everyone, free, anonymous, runs in the browser | Three things to ask, the real cost, who pays for each what-if, the safer choice, help with the price | The cheapest ad If can buy, shown at the moment of need. A check costs almost nothing. Nothing leaves the browser until the person presses "Get a quote" |
-| **After you sign** | If customers | Reminders at the right moment; a **logbook** for the home or car (like a car's service book: every inspection, repair, receipt and photo in one place, ready if something happens and handy when you sell); the **who-pays guarantee** (If stands behind its labels on an If policy); a lower excess for proven prevention (a stop valve, a new dishwasher hose) | It needs a policy to work. It is the reason to pick If over a cheaper price, and to stay |
+| **After you sign** | If customers | Reminders at the right moment; a **logbook (huoltokirja)** for the home or car, like a car's service book: every inspection, repair, receipt and photo in one place, ready if something happens and handy when you sell; the **who-pays guarantee** (If stands behind its labels on an If policy); a lower excess for proven prevention (a stop valve, a new dishwasher hose) | It needs a policy to work. It is the reason to pick If over a cheaper price, and to stay |
 
 ### How If makes money
 
@@ -104,11 +104,16 @@ building and home policies).
 - Never price on tool use or on anything inferred.
 - The labels and the guarantee get a legal review.
 
-### Open decisions for the team
+### Decided
 
-- If only, or If beside competitors? The old Ahead documents show If beside competitors; this plan shows
-  If only. Decide before the pitch.
-- Wording of the logbook and the guarantee (compliance).
+- If only: the hand-over and the quote are If's, with no other insurers beside them (D-022).
+- The record If customers keep after signing is the logbook (huoltokirja) (D-023).
+
+### Still open
+
+- Wording of the who-pays guarantee (compliance).
+- If Aapo's LLM reads the ads online, what the page says instead of "nothing leaves the browser". We
+  decide that when the LLM is ready.
 
 ## Honest about who pays (the judge's point)
 
@@ -155,7 +160,7 @@ Live at https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (single file: `index.h
 
 "The check is free for everyone, because it happens days before people have to buy insurance anyway: no
 traffic insurance, no driving home. It's the cheapest ad If could buy, at exactly the right moment.
-Everything after you sign is for If customers: the reminders, a logbook for your home or car, and a
+Everything after you sign is for If customers: the reminders, a logbook (huoltokirja) for your home or car, and a
 guarantee behind every 'who pays' label.
 
 If doesn't earn from fees. It earns from better customers. A customer is worth how long they stay, times
