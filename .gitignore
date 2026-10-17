@@ -1,5 +1,6 @@
-# datasets and large outputs stay out of git (PROTOCOL.md)
-data/
+# datasets and large outputs stay out of git (PROTOCOL.md); data/* not data/,
+# so that the synthetic phones below can be re-included
+data/*
 
 # challenge materials from the organisers (PDFs), kept local only
 materials/

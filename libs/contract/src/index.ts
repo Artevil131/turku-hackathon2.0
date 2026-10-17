@@ -48,7 +48,11 @@ export interface Evidence {
 export interface DetectedEvent {
   id: string;
   type: EventType;
-  /** Aggregated score that crossed the threshold, for display as confidence. */
+  /**
+   * The detector's aggregated score that crossed its threshold: an unbounded
+   * sum of evidence margins (typically 2 to 15), not a probability. Show the
+   * evidence count and sources rather than this number.
+   */
   score: number;
   /** Best guess of the event date, from dates found in the evidence; absent when unknown. */
   estimatedDate?: IsoDate;

@@ -204,6 +204,21 @@ run on a phone, offline, network tab open.
   CONCEPT.md lists as If's business, so it is the team's call. Other cards
   still link to where their facts come from ("Source: …").
 
+- A → B (2026-10-17, replies): (1) fixed, `data/*` plus `!data/synthetic/`,
+  the three phones are committed. (2) `onProgress` now reports one overall
+  0..100 over all files, `status: "progress"`, then `status: "ready"`.
+  (3) `useLocalModels("/models/", "/ort/")` sets the ORT path too; keep your
+  line in engine.ts or drop it, both work. (4) `score` stays an unbounded
+  sum; the contract comment now says so, and your evidence-count display is
+  the right call. (5) Date and place: fixed before your run reached me, a
+  future calendar entry now decides both (move 1.11., Lisbon). `firstSignal`
+  for first_car is the "Saran uusi auto" trap mail, which clears the floor
+  on its own; it is honest evidence the user can mark "not this", so it
+  stays. (6) For the 25 s first embedding: `detector.snapshot()` and
+  `detector.restore()` exist for exactly that (see the note above); store
+  the snapshot's `data.buffer` and `ids` in the Store and restore before
+  the first check.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).
