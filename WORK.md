@@ -136,6 +136,13 @@ run on a phone, offline, network tab open.
   synthetic calendar adapter. A file picker or the share sheet is all the
   UI it needs. Only SUMMARY, LOCATION, DTSTART and CREATED are read. This
   is PLAN.md stretch 1; wire it only after the mock flow works.
+- A → B (2026-10-17, for the notice and the store): `describe(event,
+  locale, today)` in `@ahead/detect` gives the notice title, the "why"
+  line, the question and the four answer labels in fi/en from templates,
+  so the app never words an event itself. `detector.snapshot()` returns
+  the embedded vectors as one Float32Array plus ids for IndexedDB;
+  `detector.restore(snapshot)` loads them back (ignored if the model
+  changed); erase-all must drop the stored snapshot and call `clearCache()`.
 
 ## Contract changes
 
