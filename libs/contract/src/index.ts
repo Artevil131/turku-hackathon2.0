@@ -3,9 +3,15 @@
 // in its own small commit and tell the other side (WORK.md).
 
 /** Where a snippet came from. Each source is a separate consent toggle. */
-export type Source = "calendar" | "mail" | "bank" | "places" | "photos" | "notifications";
+/**
+ * Where a snippet came from. Each source is a separate consent toggle.
+ * `sms` (Android: messages from services, never from people) and `wifi`
+ * (networks the phone joined: a new network is a new place) are read on
+ * the device like the rest; both are off by default and absent on iOS.
+ */
+export type Source = "calendar" | "mail" | "bank" | "places" | "photos" | "notifications" | "sms" | "wifi";
 
-export const SOURCES: readonly Source[] = ["calendar", "mail", "bank", "places", "photos", "notifications"];
+export const SOURCES: readonly Source[] = ["calendar", "mail", "bank", "places", "photos", "notifications", "sms", "wifi"];
 
 /** Life events the detector knows. The first three are the demo (PLAN.md). */
 export type EventType = "move" | "first_car" | "long_trip" | "child" | "pet" | "renovation";
@@ -163,3 +169,17 @@ export interface Store {
   /** The erase button. Everything, including cached snippets and vectors. */
   eraseAll(): Promise<void>;
 }
+
+export type {
+  Analyst,
+  ChangePoint,
+  Cluster,
+  CrossInsight,
+  CrossInsightKind,
+  EventTimeline,
+  Horizon,
+  Novelty,
+  Recurring,
+  SourceContribution,
+  TimelineSignal,
+} from "./insights.ts";
