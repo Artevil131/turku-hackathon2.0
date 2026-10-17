@@ -48,15 +48,26 @@ Everything else is a stretch.
    empty home screen, network tab open and silent.
 2. (0:30) Show the sources screen: mail, calendar, bank on; health off
    and greyed; "everything stays on this phone".
-3. (0:50) Tap "check now". The notice appears: "Looks like you are
+3. (0:50) Tap "check now". The sky plate fills: every item of the last
+   60 days a faint dot by date and source, then three of them brighten
+   and join into constellations with names and dates: the car, the move,
+   the trip. Nothing left the phone; the counter still says 0. Open the
+   move. The notice appears: "Looks like you are
    moving around 1 November" with the lease mail, the calendar entry and
    the mover payment as evidence. Tap "not this" on one snippet to show
    control. Confirm.
+3b. (1:10) Scroll the notice: "Why we think so, as numbers", the share
+   of each source, and the score curve of the last 60 days crossing the
+   line on 9 October when the lease arrived. Confirm.
 4. (1:20) The move journey: DVV window, electricity, the insurance
    overlap card ("your current policy covers your things in transit for
    N days; new address from 1 Nov"), FMI freeze warning for Turku on the
    move week, the lock-change card, the comparison card with If beside
    two competitors.
+4b. (2:00) "The next 90 days": the move and the trip on one axis, the
+   frost band on the move week, the gap between the old lease and the
+   new cover, the flat empty from January. Then "This month": what
+   changed, from new senders to the rent still arriving every 30 days.
 5. (2:10) The share. At the end of the journey: "Share this event with
    If". The sheet shows exactly three fields, event, date, municipality,
    and says that is the whole message. Press Share: the footer counter

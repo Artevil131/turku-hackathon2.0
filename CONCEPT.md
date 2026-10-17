@@ -98,6 +98,38 @@ DVV move notification, Posti's forwarding, the electricity contract,
 the mover's booking, the inspection booking, the comparison. The app
 is the thread; the services stay where they are.
 
+## What the phone works out, on the phone
+
+Beyond noticing an event, the same snippets and vectors feed four
+analyses, all on the device, all erased with the rest:
+
+- **How the phone saw it.** For each event, the detector is replayed day
+  by day over the window, giving a score curve with the day it crossed
+  the threshold, and the signals behind it as a timetable. On screen the
+  signals are stars sized by their weight, joined into the event's
+  constellation.
+- **Why we think so, as numbers.** Each source's share of the score
+  (mail, calendar, bank, places, messages, Wi-Fi) and its strongest
+  single item, so a judge sees the arithmetic, not a slogan.
+- **What changed this month.** The last 30 days against the 30 before:
+  new senders, merchants and places; recurring payments found by
+  interval regularity (and flagged when one stops or jumps); shifts in
+  how much a source is used, found by a change-point test on daily
+  counts; the month's items grouped by k-means over their embeddings and
+  named by the nearest life-event prototype or their common words, with a
+  novelty score against the previous month. This runs even when no
+  event fires, so the app has something true to say on a quiet month.
+- **The next 90 days.** Rules over the detected events and open data:
+  the flat left empty during a trip; a move and a car in the same month;
+  an FMI warning on an event's week; a possible gap between the old
+  lease and the new cover; a spending shift. Each insight names its
+  source and the events it rests on.
+
+Two more sources, both local: service text messages (Android, never
+messages from people) and the names of Wi-Fi networks the phone joined
+(a new network is a new place). PRIVACY.md and ARCHITECTURE.md §1 say
+what each platform really allows.
+
 ## Why it is not "another insurance app"
 
 - The product is the help, and it works for people who never buy
