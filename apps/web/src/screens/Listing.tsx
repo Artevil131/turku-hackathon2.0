@@ -113,7 +113,9 @@ function CostTimeline({ timeline }: { timeline: Timeline }) {
         )}
       </figure>
       <p className="listing-total">{t("listing.total", { cost: formatEuro(timeline.total, locale) })}</p>
-      {timeline.unpriced > 0 && <p className="muted">{t("listing.floor", { n: timeline.unpriced })}</p>}
+      {timeline.unpriced > 0 && (
+        <p className="muted">{timeline.unpriced === 1 ? t("listing.floorOne") : t("listing.floor", { n: timeline.unpriced })}</p>
+      )}
       <details>
         <summary>{t("listing.table")}</summary>
         <div className="listing-table-wrap">
