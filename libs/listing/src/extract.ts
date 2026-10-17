@@ -1,5 +1,5 @@
 // Calls to an OpenAI-compatible chat endpoint (NInfer serving
-// Qwen3.8-27B on chili, D-017). The engine has no constrained decoding,
+// Qwen3.8-27B on chili, D-024). The engine has no constrained decoding,
 // so the schema is in the prompt and validate.ts enforces it; a reply that
 // is not JSON is retried once. The ad goes in as data inside tags, and the
 // prompt says so: an ad that contains instructions is still only an ad.

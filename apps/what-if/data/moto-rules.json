@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Used motorcycle in Finland: inspection, modifications, licence classes, who pays and storage",
+    "retrieved": "2026-10-17",
+    "method": "Checked on 2026-10-17 against Finlex (consolidated laws and Traficom's regulation), Traficom, Liikennevakuutuskeskus, EUR-Lex and If's published motorcycle terms. Every fact the page shows has a source id below. Anything that could not be confirmed was left out: there is no published average price for a modification or registration inspection, and the rules don't single out engine tuning.",
+    "conventions": "Strings in 'rule', 'note' and 'who' are shown on the page as they are. 'source' is one id or a list of ids from 'sources'. 'where' is the section in the source.",
+    "corrections": "Valtioneuvoston asetus 1455/2019 was repealed by Ajoneuvolaki 82/2021 (in force 15.1.2021, with parts from 1.3.2021); inspection duties are now in the Vehicles Act itself."
+  },
+  "sources": {
+    "ajl": { "name": "Vehicles Act 82/2021: inspections, registration and change of owner", "publisher": "Finlex", "url": "https://www.finlex.fi/fi/lainsaadanto/2021/82" },
+    "traficom-schedule": { "name": "Traficom: inspection times by vehicle class", "publisher": "Traficom", "url": "https://www.traficom.fi/fi/liikenne/autoilijat/katsastus/katsastusajankohdat-ajoneuvoluokittain" },
+    "traficom-l-mod": { "name": "Traficom regulation on modifying L-class vehicles (TRAFICOM/497838/03.04.03.00/2019)", "publisher": "Traficom via Finlex", "url": "https://www.finlex.fi/api/media/authority-regulation/539833/mainPdf/main.pdf" },
+    "traficom-modification": { "name": "Traficom: modification inspection", "publisher": "Traficom", "url": "https://traficom.fi/fi/autoilijat/katsastus/muutoskatsastus" },
+    "akl": { "name": "Driving Licence Act 386/2011", "publisher": "Finlex", "url": "https://www.finlex.fi/fi/lainsaadanto/2011/386" },
+    "traficom-classes": { "name": "Traficom: vehicle classes", "publisher": "Traficom", "url": "https://www.traficom.fi/fi/autoilijat/vinkkeja-liikenteeseen/ajoneuvoluokat" },
+    "lvl": { "name": "Motor Liability Insurance Act 460/2016", "publisher": "Finlex", "url": "https://www.finlex.fi/fi/lainsaadanto/2016/460" },
+    "lvk": { "name": "Liikennevakuutuskeskus: how traffic damage is paid", "publisher": "Liikennevakuutuskeskus", "url": "https://www.lvk.fi/korvaukset/liikennevahinkojen-korvaaminen/" },
+    "if-moto-guide": { "name": "If: motorcycle insurance guide (valid from 1.1.2026)", "publisher": "If", "url": "https://www.if.fi/globalassets/fi/pdf/opas/moottoripyoravakuutusopas.pdf" },
+    "if-kasko": { "name": "If: kasko insurance terms (AUT 640.35)", "publisher": "If", "url": "https://www.if.fi/globalassets/fi/pdf/ehdot/kaskovakuutusehdot.pdf" },
+    "if-out-of-use": { "name": "If: taking a vehicle out of traffic use", "publisher": "If", "url": "https://www.if.fi/henkiloasiakkaat/vakuutukset/ajoneuvot/liikennekaytostapoisto" },
+    "traficom-out-of-use": { "name": "Traficom: taking a vehicle out of traffic use", "publisher": "Traficom", "url": "https://traficom.fi/fi/autoilijat/poista-ajoneuvo-liikennekaytosta" },
+    "vsl": { "name": "Insurance Contracts Act 543/1994", "publisher": "Finlex", "url": "https://www.finlex.fi/fi/lainsaadanto/1994/543" },
+    "avl": { "name": "Vehicle Tax Act 1281/2003", "publisher": "Finlex", "url": "https://www.finlex.fi/fi/lainsaadanto/2003/1281" },
+    "eu-168": { "name": "EU Regulation 168/2013 on two- and three-wheel vehicles", "publisher": "EUR-Lex", "url": "https://eur-lex.europa.eu/legal-content/FI/TXT/?uri=CELEX:32013R0168" },
+    "rizzi-2015": { "name": "Rizzi et al. 2015, motorcycle ABS and crashes in Europe (Traffic Injury Prevention)", "publisher": "Chalmers research", "url": "https://research.chalmers.se/en/publication/205714" },
+    "traficom-new-owner": { "name": "Traficom: report a change of owner", "publisher": "Traficom", "url": "https://traficom.fi/fi/autoilijat/ajoneuvon-osto-ja-myynti/ostaja-tee-ajoneuvon-omistajanvaihdos-luovutusilmoituksen-perusteella" }
+  },
+  "inspection": {
+    "periodic": false,
+    "rule": "Motorcycles have no periodic inspection in Finland.",
+    "otherInspections": "A registration inspection before a bike is first registered in Finland, or before it goes back on the register after an insurer had it removed as damaged; a modification inspection; an inspection ordered by the police; roadside checks.",
+    "source": ["ajl", "traficom-schedule"],
+    "where": "Ajoneuvolaki 82/2021 148 § (the list of classes with periodic inspection has no L3e), 133–134 §, 143 §, 165 §, 200 §",
+    "quoteFi": "M-, N-, O2-, O3-, O4-, L6e- ja L7e-luokan ajoneuvo sekä luvanvaraisessa tavaraliikenteessä käytettävä T1b- … on esitettävä määräaikaiskatsastukseen"
+  },
+  "modification": {
+    "loweredSuspension": {
+      "rule": "Lowering a motorcycle doesn’t need a modification inspection, as long as the wheels still turn freely in every position. If’s kasko terms don’t cover lowering springs or other aftermarket chassis parts.",
+      "source": ["traficom-l-mod", "if-kasko"],
+      "where": "Traficom regulation 4.1, 5.2 and 8.2; If AUT 640.35, 2.1 kohta 5",
+      "quoteFi": "Moottoripyörää ja mopoa ei tarvitse esittää muutoskatsastukseen, jos rungon korkeutta suhteessa pyörien keskiöön suurennetaan enintään 60 mm tai pienennetään."
+    },
+    "aftermarketExhaust": {
+      "rule": "An approved silencer made for this bike needs no inspection. Any other silencer, or a modified one, needs a modification inspection with noise and emission evidence.",
+      "source": ["traficom-l-mod", "traficom-modification"],
+      "where": "Traficom regulation 8.1, 8.2 and 8.5",
+      "quoteFi": "ajoneuvoon vaihdetaan siihen tarkoitettu alkuperäistä osaa korvaava EY-, EU- tai E-hyväksytty varaosakatalysaattori tai -äänenvaimennin"
+    }
+  },
+  "riskIncrease": {
+    "rule": "When the policy terms ask for it, changes that raise the risk must be told to the insurer; if not, a kasko payout can be cut or refused.",
+    "trafficInsurance": "For traffic insurance the consequence is a higher premium charged afterwards, for the current year and up to five years back, not a smaller payout (LVL 15 §).",
+    "source": ["vsl", "lvl"],
+    "where": "Vakuutussopimuslaki 543/1994 26 §; Liikennevakuutuslaki 460/2016 15 §",
+    "quoteFi": "Jos vakuutuksenottaja tahallisesti tai huolimattomuudesta, jota ei voida pitää vähäisenä, laiminlyö 2 momentissa säädetyn velvollisuutensa, korvausta voidaan alentaa tai se evätä."
+  },
+  "licences": {
+    "source": "akl",
+    "where": "Ajokorttilaki 386/2011 4 § 1 mom 1–4 kohta, 5 § 1 mom 1–4 kohta, 7 § 3 mom",
+    "AM": { "minAge": 15, "covers": "mopeds with a design speed over 25 and up to 45 km/h, and light quadricycles" },
+    "A1": { "minAge": 16, "maxCc": 125, "maxKw": 11, "maxKwPerKg": 0.1 },
+    "A2": { "minAge": 18, "maxKw": 35, "maxKwPerKg": 0.2, "notConvertedFromMoreThanTimes": 2 },
+    "A": { "minAge": 24, "minAgeAfterTwoYearsOfA2": 20 },
+    "includes": "A includes A2 and A1; A2 includes A1.",
+    "quoteFi": "A2, johon kuuluvat moottoripyörät, joiden enimmäisteho on 35 kW, teho/painosuhde enintään 0,2 kW/kg ja joita ei ole muunnettu ajoneuvosta, jonka teho on yli kaksi kertaa niin suuri"
+  },
+  "moped": {
+    "maxKmh": 45, "maxCc": 50, "maxKw": 4,
+    "rule": "A moped (L1e-B) has a design speed of at most 45 km/h, at most 50 cm³ with a combustion engine and at most 4 kW. A two-wheeler above those limits is a motorcycle (L3e).",
+    "source": ["traficom-classes", "eu-168"]
+  },
+  "insurance": {
+    "others": {
+      "note": "Damage to another vehicle is paid when your side was to blame.",
+      "source": ["lvl", "lvk"],
+      "where": "LVL 31 §, 33 §, 37–38 §"
+    },
+    "ownInjuries": {
+      "note": "Not if you rode drunk or high, and it can be cut for gross negligence. Not in races or track practice.",
+      "source": ["lvl", "lvk"],
+      "where": "LVL 31 §, 33 § 3 mom, 34 §, 41 a §, 47 §, 48 §; HE 10/2024",
+      "quoteFi": "liikennevakuutuksesta korvataan … myös vahingon aiheuttaneen ajoneuvon kuljettajan henkilövahinko"
+    },
+    "gear": {
+      "who": "Your own traffic insurance doesn’t pay",
+      "tone": "pay",
+      "note": "If another vehicle was to blame, its traffic insurance pays. If’s kasko covers the helmet and helmet phone, not the riding suit.",
+      "source": ["lvl", "if-moto-guide"],
+      "where": "LVL 40 § 1–2 mom; If guide p. 10"
+    },
+    "ownDamage": {
+      "who": "Covered only with full kasko · after your excess",
+      "note": "At If, collision cover comes with full kasko, with a €200 or €500 excess. If another vehicle was to blame, its traffic insurance pays.",
+      "source": ["if-kasko", "if-moto-guide"],
+      "where": "LVL 40 § 1 mom; If AUT 640.35, 3.1; If guide p. 6–7"
+    },
+    "theft": {
+      "who": "Covered with kasko · after your excess",
+      "note": "At If, only if the bike was locked, with a €200 excess. Traffic insurance never covers theft.",
+      "lockRequired": true, "excessEur": 200,
+      "source": ["if-moto-guide", "if-kasko"],
+      "where": "If guide p. 3 and 8; If AUT 640.35, 3.2–3.2.1"
+    },
+    "wear": {
+      "rule": "Wear and other slowly developing damage isn’t covered.",
+      "source": "if-kasko",
+      "where": "If AUT 640.35, section 4 kohdat 2–3"
+    }
+  },
+  "outOfUse": {
+    "rule": "A bike can be taken out of traffic use for the winter. At If, its theft, fire and vandalism cover stays on while it’s stored.",
+    "ridingWhileOut": "Riding it while it’s out of traffic use can cost up to three times the traffic insurance premium.",
+    "source": ["if-out-of-use", "traficom-out-of-use", "lvl"],
+    "where": "If's page on liikennekäytöstäpoisto; Traficom; LVL 8 § and 22 §"
+  },
+  "vehicleTax": {
+    "taxed": false,
+    "note": "Motorcycles pay no annual vehicle tax · Vehicle Tax Act 1281/2003, 4 §",
+    "source": "avl",
+    "quoteFi": "Ajoneuvoveroa on suoritettava rekisteriin merkityistä luokkiin M ja N kuuluvista ajoneuvoista."
+  },
+  "abs": {
+    "over125From": "2017-01-01",
+    "newTypesFrom": "2016-01-01",
+    "upTo125": "ABS or combined brakes",
+    "exempt": "enduro and trial bikes",
+    "source": "eu-168",
+    "where": "Regulation (EU) 168/2013, Annex VIII and Annex IV 2.3.3",
+    "effect": {
+      "text": "A European study found that ABS cut injury crashes by 24–34% and severe or fatal ones by 34–42%.",
+      "short": "Rizzi et al. 2015",
+      "source": "rizzi-2015"
+    }
+  },
+  "newOwner": {
+    "rule": "Traffic insurance is the new owner’s duty from the day of the sale: the seller’s covers only the first seven days.",
+    "registerDays": 7,
+    "source": ["traficom-new-owner", "lvl", "ajl"],
+    "where": "Ajoneuvolaki 84 § 5 mom; LVL 6 § and 18 §"
+  }
+}

@@ -1,6 +1,6 @@
 import type { DetectedEvent, EventType, IsoDate } from "@ahead/contract";
 
-/** The confirmed event sent only when the user presses Share (apps/api); ad analysis is separate (D-017/D-018). */
+/** The confirmed event sent only when the user presses Share (apps/api); ad analysis is separate (D-024/D-025). */
 export interface SharePayload {
   type: EventType;
   date?: IsoDate;

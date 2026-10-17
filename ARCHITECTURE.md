@@ -1,5 +1,7 @@
 # Architecture: the phone is the boundary
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md).
+
 Everything that reads personal data runs on the phone. The server side
 holds only public things (open data, If's public T&Cs, the journey
 templates) and, if the user opts in, confirmed events. This file describes

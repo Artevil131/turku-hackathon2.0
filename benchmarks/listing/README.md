@@ -9,7 +9,7 @@ extracted though the ad does not state it; the free `title` is not
 scored) and every risk the ad mentions (found, status right, missed,
 invented). `--images` renders each ad as a phone-sized page in headless
 Chrome and sends the screenshot instead: transcription, then extraction. The model server is
-NInfer on chili (D-017); reach it with `ssh -N -L 8010:127.0.0.1:8010 chili`.
+NInfer on chili (D-024); reach it with `ssh -N -L 8010:127.0.0.1:8010 chili`.
 
 ## Run 1, 2026-10-17: Qwen3.8-27B NVFP4, thinking off
 

@@ -5,7 +5,7 @@
 // id, no snippet, no vector, no cookie. Usage: node apps/api/src/server.ts
 // (port 8787, or AHEAD_API_PORT).
 //
-// One exception (D-017): POST /api/listing takes an ad the user chose to
+// One exception (D-024): POST /api/listing takes an ad the user chose to
 // analyse, as text or a screenshot, sends it to the listing model
 // (AHEAD_LISTING_URL, NInfer on chili through a tunnel) and returns the
 // facts, the risks and the ten-year timeline. Nothing about it is stored.

@@ -1,5 +1,7 @@
 # Work split: two machines, one repository
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md).
+
 Two people's Claude Code sessions build at the same time. Machine A is
 Aapo's laptop; machine B is the second PC. Each owns directories; neither
 touches the other's. The shared contract is `libs/contract` (D-006).

@@ -1,5 +1,7 @@
 # Ahead
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…**; its pitch outline is in `apps/what-if/PLAN.md`.
+
 ## Spoken script
 
 Timing follows the three-minute demo in PLAN.md, “Demo script”. Parentheses are source notes, not spoken words. Bracketed text is a stage direction. Emma and the phone records are synthetic. Rehearse with the actual build before presenting; a planned screen is not evidence that a feature ships.

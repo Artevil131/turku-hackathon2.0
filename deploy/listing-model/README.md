@@ -1,6 +1,6 @@
 # The listing model: how to change the AI
 
-The "Analyse an ad" feature (D-017) has two halves, and both are changed
+The "Analyse an ad" feature (D-024), an experimental AI reader beside the If entry What if… (`apps/what-if`, rule-based, D-017, D-018), has two halves, and both are changed
 through this repository. Nobody needs an account on the GPU server.
 
 | What you want to change | Where | When it takes effect |

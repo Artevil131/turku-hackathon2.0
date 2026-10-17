@@ -1,0 +1,2978 @@
+{
+  "meta": {
+    "title": "How Finnish ad sites format car, flat-for-sale and rental ads, plus 12 synthetic test ads for the rule-based reader",
+    "observed": "2026-10-17",
+    "method": "Public listing and ad pages were opened without logging in: plain HTTP download for Autotalli, Etuovi, Oikotie and Vuokraovi, and a normal browser for Nettiauto (it answers plain HTTP clients with a Cloudflare 'Just a moment...' page). Labels were read from the rendered page text. About 30 pages were examined in all.",
+    "privacy": "No names, phone numbers, e-mail addresses or street addresses were collected. Real ads show agent, property-manager and private-seller contact details. A reader must skip them. In the test ads, streets are placeholders (Esimerkkikatu, Esimerkkitie, Esimerkkikuja), plates are placeholders (ABC-123) and sellers are generic.",
+    "sourceStatus": "Site labels, value formats and quirks are primary observations from the sites on the date above. All test ads are synthetic: their prices, kilometres and fees are plausible values made up for testing and are NOT market data. Wherever a test uses a label that was not seen on the site, its 'assumptions' field says so.",
+    "fieldKeys": {
+      "note": "Proposed normalized keys for the reader's output. Rename freely; this is a proposal, not a decision.",
+      "money": "EUR as a number (no thousands separators, decimal point). Per-month charges are EUR/month unless 'per' says otherwise.",
+      "area": "m² as a number",
+      "dates": "ISO: YYYY-MM-DD, or YYYY-MM when the ad gives only month and year. 'available' may also be 'now'.",
+      "missing": "null means the ad does not state it. The reader should not guess.",
+      "enums": {
+        "fuel": [
+          "petrol",
+          "diesel",
+          "hybrid-petrol",
+          "plugin-hybrid",
+          "electric"
+        ],
+        "gearbox": [
+          "manual",
+          "automatic"
+        ],
+        "drive": [
+          "fwd",
+          "rwd",
+          "awd"
+        ],
+        "sellerType": [
+          "dealer",
+          "private"
+        ],
+        "buildingType": [
+          "block-of-flats",
+          "terraced",
+          "semi-detached",
+          "detached"
+        ],
+        "condition": [
+          "new",
+          "good",
+          "satisfactory",
+          "passable"
+        ],
+        "plotOwnership": [
+          "own",
+          "leased"
+        ],
+        "contractType": [
+          "open-ended",
+          "fixed-term",
+          "fixed-then-open-ended"
+        ],
+        "pipeRenovation.status": [
+          "done",
+          "planned",
+          "not-mentioned"
+        ],
+        "waterFee.per": [
+          "person/month",
+          "month"
+        ]
+      },
+      "keysUsedInTests": {
+        "car": [
+          "make",
+          "model",
+          "variant",
+          "price",
+          "previousPrice",
+          "officeFee",
+          "year",
+          "firstRegistration",
+          "firstUseDate",
+          "km",
+          "engineLitres",
+          "fuel",
+          "gearbox",
+          "drive",
+          "bodyType",
+          "lastInspection",
+          "sellerType",
+          "city",
+          "roadworthy",
+          "flags",
+          "engineCc",
+          "powerKw",
+          "doors",
+          "lastService"
+        ],
+        "home": [
+          "buildingType",
+          "city",
+          "district",
+          "layout",
+          "rooms",
+          "livingAreaM2",
+          "totalAreaM2",
+          "floor",
+          "floorsTotal",
+          "elevator",
+          "buildingYear",
+          "debtFreePrice",
+          "sellingPrice",
+          "debtShare",
+          "pricePerM2",
+          "maintenanceCharge",
+          "financingCharge",
+          "plotRentCharge",
+          "totalCharge",
+          "waterFee",
+          "otherFees",
+          "sauna",
+          "balcony",
+          "condition",
+          "plotOwnership",
+          "plotAreaM2",
+          "energyClass",
+          "energyClassScale",
+          "pipeRenovation",
+          "renovationsDone",
+          "renovationsPlanned",
+          "buildingSauna",
+          "heating",
+          "storeys",
+          "plotLessor",
+          "plotLeaseEnds",
+          "available",
+          "bedrooms",
+          "maintenanceChargePerM2",
+          "financingChargePerM2"
+        ],
+        "rent": [
+          "rent",
+          "deposit",
+          "depositMonths",
+          "depositNote",
+          "waterFee",
+          "contractType",
+          "available",
+          "rentDueDay",
+          "buildingType",
+          "city",
+          "district",
+          "layout",
+          "rooms",
+          "livingAreaM2",
+          "floor",
+          "floorsTotal",
+          "buildingYear",
+          "furnished",
+          "petsAllowed",
+          "smokingAllowed",
+          "homeInsuranceRequired",
+          "subsidized",
+          "landlordType",
+          "balcony",
+          "condition",
+          "buildingSauna",
+          "energyClass",
+          "energyClassScale",
+          "rentIncludes",
+          "electricityContractByTenant",
+          "fixedTermMonths",
+          "availableQualifier",
+          "bedrooms",
+          "earliestTerminationMonths",
+          "noticePeriodMonths",
+          "elevator",
+          "heating",
+          "waterIncluded",
+          "otherFees",
+          "minTermMonths"
+        ]
+      }
+    },
+    "factCheck": {
+      "date": "2026-10-17",
+      "method": "Re-opened the source pages live: plain HTTP for Etuovi, Oikotie, Vuokraovi and Autotalli; a browser for Nettiauto (plain HTTP got HTTP 403 'Just a moment...' again); Finlex for the energy-certificate act.",
+      "confirmed": [
+        "Etuovi 59008973: Hinta 298 000 € = Velaton hinta; 237 215,27 + 60 784,73 = 298 000,00; Neliöhinta 5 008,40 = 298 000 / 59,5; 238,00 + 370,69 = 608,69; Vesimaksu 16,00 € / hlö / kk. Etuovi 55362582: 139 416,62 + 5 583,38 = 145 000,00; 260,10 + 49,06 = 309,16. Etuovi 80542928: no Velkaosuus, Myyntihinta = Velaton hinta = 55 000,00",
+        "Oikotie 24573699: 128 508,50 + 10 491,50 = 139 000; 172,80 + 100,80 = 273,60; Neliöhinta 3 861,11. Oikotie 24528440 (2024): 144 835,95 + 330 164,05 = 475 000 (debt share 69,5 %); 365,40 + 1 741,51 = 2 106,91; 'Hoitovastike(€/m2/kk) 4.2000'",
+        "Oikotie Turku rentals: page title 'Vuokra-asunnot Turku: 1922 kpl'; numeric Vakuus on 3 of 6 ads, Qasa no-deposit text on 2 of 6",
+        "Vuokraovi insurance widget: If's laaja kotivakuutus, 250 € omavastuu; 11 €/kk for 42,5 m², 17 €/kk for 80 m²; English 'Kaksio' shown as '1 bedroom'; 'By 31/12/2026'; 'Vuokra 1 020 € / kk' vs 'Vakuus 1020 €'",
+        "Nettiauto 15930032: 'alk. 260,94 €/kk' / 'offer 260.94 €/m', Toimistomaksu 349 €; Toimistomaksu 194 € on toyota/avensis/15933372; reduced price shows current then struck-through old price (600 € / 800 €)",
+        "Autotalli 40411853: header '37 900' + '€' and '52 000 km' (U+00A0), table '37900 €' and '52000 km'",
+        "English versions: Etuovi, Oikotie and Autotalli /en return 404; Etuovi has featureFlags.enableEnglishLocale false",
+        "Test arithmetic: all sums, prices per m² and deposits in the 12 tests add up"
+      ],
+      "corrected": [
+        "formats.energyClass: 'Ei lain edellyttämää energiatodistusta' means no class is given, not 'no certificate required'",
+        "Oikotie 'Pinta-alojen lisätiedot' example was the 'Huoneiston kokoonpano' value",
+        "Nettiauto Toimistomaksu: not every dealer ad has one; values 60–349 € seen",
+        "Thousands separators: Nettiauto ad pages use U+0020 before '€'; Oikotie plot area uses U+0020 between groups",
+        "Nettiauto English 'Seller' label was seen; the login redirect to auth.nettix.fi and shared Etuovi/Vuokraovi ad ids are unconfirmed"
+      ]
+    }
+  },
+  "formats": {
+    "thousandsSeparator": {
+      "rule": "A space of some kind. Accept U+0020, U+00A0 (no-break space) and U+202F/U+2009 (narrow and thin spaces) between digit groups. Some fields use no separator at all.",
+      "observed": [
+        "Etuovi, Oikotie: U+00A0 between digit groups in prices and charges ('298 000 €'; Etuovi plot size '3 140 m²'), and U+00A0 or U+0020 before '€'. Oikotie's plot area uses U+0020 between groups ('Tontin pinta-ala 1 675 m²') (fact-check 2026-10-17).",
+        "Autotalli: U+00A0 in the header ('37 900 €', '52 000 km') but NO separator in the Perustiedot table ('37900 €', '52000 km')",
+        "Nettiauto search-result cards: U+0020 between groups and U+00A0 before '€' ('13 990 €'). On the ad page itself (header and Perustiedot) both are U+0020 ('16 390 €', '158 000 km'), and the dealer's other-ads cards on the same page print prices with no separator ('9940 €') (fact-check 2026-10-17, DOM text of nettiauto.com/volkswagen/golf and /volkswagen/golf/15930032).",
+        "Vuokraovi: '1 020 € / kk' in one field and '1020 €' (no separator) in Vakuus on the same ad"
+      ],
+      "note": "Copy-paste may or may not keep U+00A0. It depends on the browser and OS, so do not rely on it."
+    },
+    "decimalMark": {
+      "rule": "Finnish UI uses a decimal comma ('59,5 m²', '238,00 € / kk'). Some fields use a decimal point even in Finnish UI, and English UIs switch to a point.",
+      "observed": [
+        "Autotalli technical fields: '6.0 s', '16.6 kWh/100km'",
+        "Oikotie vastike breakdown free text: 'Hoitovastike(€/m2/kk)   4.2000'",
+        "Nettiauto English UI: 'Engine 1.5 l, Petrol', 'offer 260.94 €/m' (Finnish UI: '1,5 l, Bensiini', 'alk. 260,94 €/kk')",
+        "English free text written by people may use '€1,234.56' (comma = thousands). This is the general English convention, not something seen on these sites (fact-check 2026-10-17)."
+      ]
+    },
+    "currency": [
+      "'298 000 €' (sign after number)",
+      "free text: '730 e/kk', '1300e', '35e/kk', 'eur'",
+      "English: sign before the number, as in the Nettiauto English UI boilerplate 'Price from €2.90'. '€640/month' is an illustrative free-text example, not an observed ad (fact-check 2026-10-17)."
+    ],
+    "periods": [
+      "'€ / kk' and '€/kk' = per month",
+      "'€ / hlö / kk', '€/hlö/kk', '€/kk/hlö', 'e/kk/henkilö' = per person per month",
+      "'€ / vuosi' = per year",
+      "'€ / kertamaksu' = one-off",
+      "'€/m²', '€ / m²' = per m²",
+      "English UI: '€ / month', '€/month', '€ / person / month'; Nettiauto EN '€/m' = per month"
+    ],
+    "area": [
+      "'m²' (superscript two); free text often 'm2'",
+      "Etuovi header 'Koko 59,5 / 90 m²' = living area / total area",
+      "Oikotie 'Tontin pinta-ala' and 'Tontin koko' are plot sizes, not the flat"
+    ],
+    "dates": [
+      "'dd.mm.yyyy' (21.03.2018), 'd.m.yyyy' (1.1.2029)",
+      "Nettiauto 'Katsastettu 3/2025' = m/yyyy; 'ensirek. 3-2018' = m-yyyy",
+      "Vuokraovi EN 'By 31/12/2026' = dd/mm/yyyy ('mennessä' in Finnish)",
+      "Oikotie 'Lisätietoa vapautumisesta 2026-10-31 – Toistaiseksi voimassa' = ISO",
+      "words: 'Heti vapaa' (available now), 'Sopimuksen mukaan' (by agreement)"
+    ],
+    "floor": [
+      "Etuovi 'Kerrokset 2/3', Oikotie 'Kerros 1 / 7', Vuokraovi 'Kerros 2/7' = floor / floors in building; sometimes only '3'"
+    ],
+    "roomWords": {
+      "Yksiö": 1,
+      "Kaksio": 2,
+      "Kolmio": 3,
+      "N huonetta": "N",
+      "note": "Finnish room counts include the living room. Vuokraovi English shows Kaksio as '1 bedroom', so rooms = bedrooms + 1. An English '2-bedroom apartment' is a Finnish kolmio."
+    },
+    "layoutAbbreviations": {
+      "h": "huone (room)",
+      "k": "keittiö (kitchen)",
+      "kk": "keittokomero (kitchenette)",
+      "kt": "keittotila (kitchen area)",
+      "avok": "avokeittiö (open kitchen)",
+      "s": "sauna",
+      "kph": "kylpyhuone (bathroom)",
+      "wc / erill.wc": "toilet / separate toilet",
+      "p / parv / parveke": "balcony",
+      "las.parv": "glazed balcony",
+      "et": "eteinen (hall)",
+      "var": "varasto (storage)",
+      "vh": "vaatehuone (walk-in closet)",
+      "parvi": "loft",
+      "lämm.ullakko": "heated attic",
+      "Yh: 2h+kk": "layout as written in the housing company's articles (Oikotie)"
+    },
+    "buildingTypes": {
+      "Kerrostalo": "block-of-flats (Vuokraovi EN 'Block of flats')",
+      "Rivitalo": "terraced",
+      "Paritalo": "semi-detached",
+      "Omakotitalo": "detached",
+      "Erillistalo": "detached (in a housing company)"
+    },
+    "energyClass": [
+      "Etuovi/Vuokraovi 'E (2018)', 'D (2018), Energiatodistuksen voimassaoloaika 1.1.2029'",
+      "Oikotie 'B2018' or 'Energialuokka: B2018, Energiatodistuksen voimassaoloaika: 08.07.2032'",
+      "letter = class, year = scale (2013 or 2018). 'Ei lain edellyttämää energiatodistusta' means the ad gives no energy class (energyClass null). It does NOT mean the building is exempt. Vuokraovi's English UI renders it 'Legally required energy certificate not available', Etuovi's UI-string key for it is 'energyCertificate.NOT_AVAILABLE', and it was seen on a 2023 block of flats, which needed a certificate already for its building permit (Laki rakennuksen energiatodistuksesta 50/2013, 5 §). Public sale and rental ads must state the class except in the cases of 6 § 2 mom (sale within a group, sale for demolition, fixed-term rental of at most one year, subletting). Sources: https://www.finlex.fi/fi/lainsaadanto/2013/50 (6 § 'Energiatodistus myynti- ja vuokraustilanteissa'), vuokraovi.com/kohde/ct8278 and /en/item/ct8278, etuovi.com/kohde/59008973 page HTML (fact-check 2026-10-17). Corrected from 'no certificate required'."
+    ],
+    "renovationLines": [
+      "Etuovi: '2025: text' or '2018 text'",
+      "Oikotie: '2022 Vesijohto- ja sähkösaneeraus'; planned items may carry year ranges and a long-term-plan (PTS) code: '2027 - 2031 2.5.1.1 - Hissit: Hissien peruskorjaus'",
+      "Pipe-renovation words to look for: putkiremontti, linjasaneeraus, LVIS-saneeraus, LVI-saneeraus, käyttövesiputket, viemärit, 'Putkiremontoitu' (an Etuovi search keyword). Relining words ('viemäripinnoitus', 'sukitus') mean pipes were coated, not replaced."
+    ],
+    "copyPasteShape": [
+      "Copying a whole page gives one label per line with its value on the next line. Section headings sit between them.",
+      "The same value often appears twice: once in the summary at the top and again in the details.",
+      "An empty field is followed straight away by the next label or section heading (Autotalli 'Viimeisin huolto' followed by 'Lisätiedot'). Do not take a heading as the value.",
+      "A subscript splits a label across lines: Autotalli 'CO\n2\npäästöt'.",
+      "Every page carries boilerplate with numbers: financing offers, insurance price estimates and history-check prices ('Hinta alkaen 2,90 €'). None of these are ad values."
+    ]
+  },
+  "sites": [
+    {
+      "site": "nettiauto.com",
+      "kind": "car",
+      "uiLanguages": [
+        "fi",
+        "en (same ad under /en/)"
+      ],
+      "urlPatterns": {
+        "list": "https://www.nettiauto.com/<make>/<model>",
+        "ad": "https://www.nettiauto.com/<make>/<model>/<id>",
+        "adEnglish": "https://www.nettiauto.com/en/<make>/<model>/<id>"
+      },
+      "sources": [
+        "https://www.nettiauto.com/volkswagen/golf (observed 2026-10-17)",
+        "https://www.nettiauto.com/toyota/avensis (observed 2026-10-17)",
+        "https://www.nettiauto.com/toyota/auris (observed 2026-10-17)",
+        "https://www.nettiauto.com/volkswagen/golf/15930032 and /en/volkswagen/golf/15930032 (dealer ad, observed 2026-10-17)",
+        "4 ad pages in all: 2 dealer, 1 private, 1 in the English UI",
+        "Re-checked in a browser (fact-check 2026-10-17): /volkswagen/golf/15930032 and /en/volkswagen/golf/15930032 (dealer, Toimistomaksu 349 €, 'alk. 260,94 €/kk', 'offer 260.94 €/m'); /toyota/avensis/16043719 (private, '600 €' then struck-through '800 €'); Toimistomaksu on /toyota/avensis/15933372 (194 €), /15893829 (120 €), /16025675 (99 €), /16050821 (60 €); no Toimistomaksu on dealer ads /toyota/avensis/16051217 and /15969025"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "Rekisterinumero",
+          "en": "Registration number",
+          "field": "registrationNumber",
+          "section": "Perustiedot / Basic information",
+          "example": "ABC-123",
+          "note": "Not needed by the reader; do not store."
+        },
+        {
+          "fi": "Mittarilukema",
+          "en": "Mileage",
+          "field": "km",
+          "section": "Perustiedot / Basic information",
+          "example": "158 000 km"
+        },
+        {
+          "fi": "Moottori",
+          "en": "Engine",
+          "field": "engineLitres + fuel",
+          "section": "Perustiedot / Basic information",
+          "example": "1,5 l, Bensiini | EN: 1.5 l, Petrol"
+        },
+        {
+          "fi": "Vuosimalli",
+          "en": "Year model",
+          "field": "year (+ firstRegistration)",
+          "section": "Perustiedot / Basic information",
+          "example": "2018 (ensirek. 3-2018) | EN: 2018 (first reg. 3-2018)"
+        },
+        {
+          "fi": "Käyttöönottopäivä",
+          "en": "First usage date",
+          "field": "firstUseDate",
+          "section": "Perustiedot / Basic information",
+          "example": "21.03.2018"
+        },
+        {
+          "fi": "Vaihteisto",
+          "en": "Gearbox",
+          "field": "gearbox",
+          "section": "Perustiedot / Basic information",
+          "example": "Automaatti | Manuaali | EN: Automatic"
+        },
+        {
+          "fi": "Vetotapa",
+          "en": "Drive type",
+          "field": "drive",
+          "section": "Perustiedot / Basic information",
+          "example": "Etuveto | Neliveto | Takaveto (seen on a search card) | EN: Front wheel"
+        },
+        {
+          "fi": "Toimistomaksu",
+          "en": "Office fee",
+          "field": "officeFee",
+          "section": "Perustiedot / Basic information",
+          "example": "349 €",
+          "note": "Admin fee that some dealers add on top of the price. Seen: 60, 99, 120, 194 and 349 €. Not every dealer ad has it (two dealer Toyota Avensis ads had none), and none of 26 private ads checked had it (fact-check 2026-10-17)."
+        },
+        {
+          "fi": "Katsastettu",
+          "en": "Inspection date",
+          "field": "lastInspection",
+          "section": "Perustiedot / Basic information",
+          "example": "3/2025 (m/yyyy)"
+        },
+        {
+          "fi": "Korimalli",
+          "en": "Sub Type",
+          "field": "bodyType",
+          "section": "Perustiedot / Basic information",
+          "example": "Farmari | EN: Station wagon"
+        },
+        {
+          "fi": "Auton tyyppi",
+          "en": "Car type",
+          "field": "vehicleType",
+          "section": "Perustiedot / Basic information",
+          "example": "Henkilöauto | EN: Car"
+        },
+        {
+          "fi": "Väri",
+          "en": "Color",
+          "field": "color",
+          "section": "Perustiedot / Basic information",
+          "example": "Harmaa metalliväri | EN: Gray metallic"
+        },
+        {
+          "fi": "VIN-numero",
+          "en": "VIN",
+          "field": "vin",
+          "section": "Perustiedot / Basic information",
+          "example": "17 characters",
+          "note": "Not needed by the reader; do not store."
+        },
+        {
+          "fi": "Energiamerkintä",
+          "en": "Energy label",
+          "field": "energyLabel + co2",
+          "section": "Tekniset tiedot / Technical information",
+          "example": "B\n110 g/km"
+        },
+        {
+          "fi": "Rahoitus",
+          "en": "Financing",
+          "field": null,
+          "section": "Rahoitus / Financing",
+          "example": "Rahoitus alkaen 260,94 €/kk. | EN: Financing from 260.94 €/month.",
+          "note": "Loan offer, not the price."
+        },
+        {
+          "fi": "Lisätiedot",
+          "en": "Notes",
+          "field": "description",
+          "section": "Lisätiedot / Notes",
+          "example": "free text; stays Finnish in the English UI"
+        },
+        {
+          "fi": "Myyjä",
+          "en": "Seller",
+          "field": "sellerType",
+          "section": "Myyjä",
+          "example": "Autoliike, Jäsenenä 8 kuukautta (dealer) | private: 'Jäsenenä 2 viikkoa' then the seller's name, with 'Yksityinen myyjä' in the contact card | EN: Dealer, Member since 8 months",
+          "note": "The value line also carries the seller's membership time ('Jäsenenä 2 vuotta'), which is not the car's age. 'Seller' was seen in the English UI on a dealer ad; the English private-seller wording was not seen (fact-check 2026-10-17)."
+        },
+        {
+          "fi": "Päivitetty",
+          "en": "Last updated",
+          "field": "updated",
+          "section": "header",
+          "example": "Päivitetty 14.10.2026"
+        },
+        {
+          "fi": "ID",
+          "en": "ID",
+          "field": "adId",
+          "section": "header",
+          "example": "ID 15930032"
+        },
+        {
+          "fi": "Turvallisuus / Sisätilat ja mukavuudet / Elektroniikka / Muut",
+          "en": "Safety / Interior and comforts / Electronics / Other",
+          "field": "equipment",
+          "section": "equipment",
+          "example": "lists"
+        },
+        {
+          "fi": "alk. … €/kk (under the price)",
+          "en": "offer … €/m",
+          "field": null,
+          "section": "header",
+          "example": "alk. 260,94 €/kk | EN: offer 260.94 €/m",
+          "note": "Monthly financing estimate. Never the price."
+        },
+        {
+          "fi": "TOIMITETAAN / KAMPANJA / PÄIVITETTY 24H",
+          "en": "DELIVERY AVAILABLE / CAMPAIGN",
+          "field": null,
+          "section": "header tags",
+          "example": "chips"
+        },
+        {
+          "fi": "card line",
+          "en": "card line",
+          "field": "year, km, fuel, gearbox, drive",
+          "section": "search result card",
+          "example": "2018 ● 158 000 km ● Bensiini ● Automaatti ● Etuveto"
+        }
+      ],
+      "notes": [
+        "Ad page header, top to bottom: make + model, price, [old price when reduced], variant text, 'alk. X €/kk' financing, 'Päivitetty dd.mm.yyyy', 'City, Region', 'ID n', then chips: fuel, year, km, gearbox. The variant text and the financing line can swap places: one ad read '600 €', '800 €', 'alk. 12,16 €/kk', 'T25', 'Ei tieliikennekelpoinen' (fact-check 2026-10-17).",
+        "A reduced price shows two prices one after the other ('600 €' then '800 €'). The first is the current price and the second is the struck-through old price.",
+        "Search result card: make + model / price / 'alk. X €/kk' / '<engine litres>, <variant>' / 'year ● km ● fuel ● gearbox ● drive' / free text / 'City, seller'.",
+        "The variant text can carry flags and promotions: 'Ei tieliikennekelpoinen' (not roadworthy, often with very low prices), 'Pakettiauto' (van-registered), '**Korko alk. 1,99%**', 'Katsastettu 04/2026!'.",
+        "Fuel values seen: Bensiini, Diesel, 'Hybridi (bensiini/sähkö)'. Drive values seen: Etuveto, Neliveto, and Takaveto on a search card (fact-check 2026-10-17). Gearbox values seen: Automaatti, Manuaali.",
+        "The English UI translates labels and fixed values ('Petrol', 'Station wagon', 'Automatic') but leaves the variant text and 'Notes' in Finnish ('DSG-automaatti', '96 kW (130 hv)').",
+        "Boilerplate on every ad: Rekkari.fi history checks ('Hinta alkaen 2,90 €', 'Tarjoushinta -20 %') and the financing block. None of it is ad data.",
+        "Same network as Autotalli: Autotalli's ad page links to Nettiauto, Nettimoto, Nettivene, Nettikone, Nettikaravaani and Rekkari, and Nettiauto ad pages link to Alma Ajo account services (oma.almaajo.fi, tili.almaajo.fi). The earlier claim that Nettiauto login redirects to auth.nettix.fi could not be confirmed: no auth.nettix.fi link was in the ad-page HTML (fact-check 2026-10-17).",
+        "Plain HTTP clients get a Cloudflare challenge page (HTTP 403, 'Just a moment...'). This supports reading pasted text rather than fetching URLs.",
+        "A whole-page copy also picks up other cars: the dealer's other ads ('BMW 530 / 9940 € / alk. 169,22 €/kk / Diesel 2011 340 000 km Takaveto') and 'SUOSITUT' cards ('Volvo 740 / 2 000 € / 1988'). Their prices, years and kilometres are not this car's. Dealer free text can also carry prices of add-on products ('Bilar-Turvalla - alkaen vain 14,90€/kk') (fact-check 2026-10-17)."
+      ]
+    },
+    {
+      "site": "autotalli.com",
+      "kind": "car",
+      "uiLanguages": [
+        "fi"
+      ],
+      "urlPatterns": {
+        "list": "https://www.autotalli.com/vaihtoautot/listaa",
+        "ad": "https://www.autotalli.com/vaihtoauto/<id>/<make>/<model>/<year>/<city>"
+      },
+      "sources": [
+        "https://www.autotalli.com/vaihtoautot/listaa (observed 2026-10-17)",
+        "https://www.autotalli.com/vaihtoauto/40411853/toyota/rav4/2021/tampere (dealer ad, observed 2026-10-17)",
+        "https://www.autotalli.com/vaihtoauto/40483660/skoda/octavia/2023/tampere (dealer ad, observed 2026-10-17)"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "Kohdenumero",
+          "en": null,
+          "field": "adId",
+          "section": "Perustiedot",
+          "example": "40411853"
+        },
+        {
+          "fi": "Rekisterinumero",
+          "en": null,
+          "field": "registrationNumber",
+          "section": "Perustiedot",
+          "example": "ABC-123",
+          "note": "Not needed by the reader; do not store."
+        },
+        {
+          "fi": "Hinta",
+          "en": null,
+          "field": "price",
+          "section": "Perustiedot",
+          "example": "37900 € (no separator; the header shows '37 900 €')"
+        },
+        {
+          "fi": "Mittarilukema",
+          "en": null,
+          "field": "km",
+          "section": "Perustiedot",
+          "example": "52000 km (no separator; the header shows '52 000 km')"
+        },
+        {
+          "fi": "Vuosimalli",
+          "en": null,
+          "field": "year",
+          "section": "Perustiedot",
+          "example": "2021"
+        },
+        {
+          "fi": "Katsastettu",
+          "en": null,
+          "field": "lastInspection",
+          "section": "Perustiedot",
+          "example": "23.06.2026 (dd.mm.yyyy)"
+        },
+        {
+          "fi": "Korimalli",
+          "en": null,
+          "field": "bodyType",
+          "section": "Perustiedot",
+          "example": "Maastoauto | Farmari"
+        },
+        {
+          "fi": "Ovien lkm",
+          "en": null,
+          "field": "doors",
+          "section": "Perustiedot",
+          "example": "4"
+        },
+        {
+          "fi": "Henkilömäärä",
+          "en": null,
+          "field": "seats",
+          "section": "Perustiedot",
+          "example": "5"
+        },
+        {
+          "fi": "Vaihteisto",
+          "en": null,
+          "field": "gearbox",
+          "section": "Perustiedot",
+          "example": "Automaatti"
+        },
+        {
+          "fi": "Vaihteiden lkm",
+          "en": null,
+          "field": "gears",
+          "section": "Perustiedot",
+          "example": "Ei tiedossa"
+        },
+        {
+          "fi": "Vetotapa",
+          "en": null,
+          "field": "drive",
+          "section": "Perustiedot",
+          "example": "Neliveto | Etuveto"
+        },
+        {
+          "fi": "Väri",
+          "en": null,
+          "field": "color",
+          "section": "Perustiedot",
+          "example": "Valkoinen"
+        },
+        {
+          "fi": "Kaupunki",
+          "en": null,
+          "field": "city",
+          "section": "Perustiedot",
+          "example": "Tampere"
+        },
+        {
+          "fi": "Viimeisin huolto",
+          "en": null,
+          "field": "lastService",
+          "section": "Perustiedot",
+          "example": "(often empty)"
+        },
+        {
+          "fi": "Lisätiedot",
+          "en": null,
+          "field": "description",
+          "section": "Lisätiedot",
+          "example": "free text"
+        },
+        {
+          "fi": "Käyttövoima",
+          "en": null,
+          "field": "fuel",
+          "section": "Tarkat tiedot",
+          "example": "Plugin-hybridi"
+        },
+        {
+          "fi": "CO2 päästöt",
+          "en": null,
+          "field": "co2",
+          "section": "Tarkat tiedot",
+          "example": "- (copied as 'CO\n2\npäästöt')"
+        },
+        {
+          "fi": "Kaupunkikulutus / Maantiekulutus / Yhdistetty kulutus",
+          "en": null,
+          "field": "consumption",
+          "section": "Tarkat tiedot",
+          "example": "-"
+        },
+        {
+          "fi": "Moottorin tilavuus",
+          "en": null,
+          "field": "engineCc",
+          "section": "Tarkat tiedot",
+          "example": "2487 cm3"
+        },
+        {
+          "fi": "Teho",
+          "en": null,
+          "field": "powerKw + powerHp",
+          "section": "Tarkat tiedot",
+          "example": "225 kW / 306 hp"
+        },
+        {
+          "fi": "Renkaat",
+          "en": null,
+          "field": "tyres",
+          "section": "Tarkat tiedot",
+          "example": "-"
+        },
+        {
+          "fi": "Ahdin",
+          "en": null,
+          "field": "charger",
+          "section": "Tarkat tiedot",
+          "example": "Ei tiedossa"
+        },
+        {
+          "fi": "Huippunopeus (km/h)",
+          "en": null,
+          "field": "topSpeed",
+          "section": "Tarkat tiedot",
+          "example": "180 km/h"
+        },
+        {
+          "fi": "Kiihtyvyys (0-100/s)",
+          "en": null,
+          "field": "acceleration",
+          "section": "Tarkat tiedot",
+          "example": "6.0 s (decimal point)"
+        },
+        {
+          "fi": "Vääntö",
+          "en": null,
+          "field": "torque",
+          "section": "Tarkat tiedot",
+          "example": "-"
+        },
+        {
+          "fi": "Vetomassa (jarrullinen/kg)",
+          "en": null,
+          "field": "towBrakedKg",
+          "section": "Tarkat tiedot",
+          "example": "1500 kg"
+        },
+        {
+          "fi": "Vetomassa (ei jarruja/kg)",
+          "en": null,
+          "field": "towUnbrakedKg",
+          "section": "Tarkat tiedot",
+          "example": "750 kg"
+        },
+        {
+          "fi": "Toimintasäde",
+          "en": null,
+          "field": "evRangeKm",
+          "section": "Sähköautotiedot",
+          "example": "74 km"
+        },
+        {
+          "fi": "Akun kapasiteetti",
+          "en": null,
+          "field": "batteryKwh",
+          "section": "Sähköautotiedot",
+          "example": "18 kWh"
+        },
+        {
+          "fi": "Sähkön kulutus",
+          "en": null,
+          "field": "evConsumption",
+          "section": "Sähköautotiedot",
+          "example": "16.6 kWh/100km"
+        },
+        {
+          "fi": "Lataustyypit / Suurin latausteho DC / Suurin latausteho AC",
+          "en": null,
+          "field": "charging",
+          "section": "Sähköautotiedot",
+          "example": "Type 2 / - / 7 kW"
+        },
+        {
+          "fi": "Akkutakuu (km) / Akkutakuu (kk)",
+          "en": null,
+          "field": "batteryWarranty",
+          "section": "Sähköautotiedot",
+          "example": "100000 km / 60 kk"
+        },
+        {
+          "fi": "Varusteet",
+          "en": null,
+          "field": "equipment",
+          "section": "Varusteet",
+          "example": "lists"
+        },
+        {
+          "fi": "Kysy väliraha",
+          "en": null,
+          "field": null,
+          "section": "header",
+          "example": "button text (ask for a trade-in offer)",
+          "note": "Not a value."
+        }
+      ],
+      "notes": [
+        "Finnish only. No English version was seen.",
+        "Ad header: make + model, variant, '37 900 €', 'Kysy väliraha', then chips: body type, year, gearbox, fuel, '52 000 km', last-inspection date, dealer and city.",
+        "Search list card: '<make model variant…>' / year / ',' / km / 'km,' / price / '€' on separate lines. Read as: '2021, 52000 km, 37900 €'.",
+        "Mostly dealer stock; the cars on the first list page were 2021–2024 models.",
+        "The fixed disclaimer under Lisätiedot ('Tiedot ovat myyjän antamia…') says the seller supplied the data. It is not ad text."
+      ]
+    },
+    {
+      "site": "etuovi.com",
+      "kind": "home",
+      "uiLanguages": [
+        "fi"
+      ],
+      "urlPatterns": {
+        "list": "https://www.etuovi.com/myytavat-asunnot",
+        "ad": "https://www.etuovi.com/kohde/<id>"
+      },
+      "sources": [
+        "https://www.etuovi.com/myytavat-asunnot (observed 2026-10-17)",
+        "3 ad pages (rivitalo Helsinki, kerrostalo Salo, rivitalo Tuusula) at https://www.etuovi.com/kohde/<id> (observed 2026-10-17)",
+        "Etuovi ad-page HTML embeds the Finnish UI strings (keys like 'announcement.price.*'). Labels marked 'from UI strings' come from there (observed 2026-10-17)"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "Hinta (header)",
+          "en": null,
+          "field": "debtFreePrice",
+          "section": "header",
+          "example": "298 000 €",
+          "note": "The header 'Hinta' is the debt-free price (velaton hinta), not the selling price."
+        },
+        {
+          "fi": "Koko (header)",
+          "en": null,
+          "field": "livingAreaM2 / totalAreaM2",
+          "section": "header",
+          "example": "59,5 / 90 m²"
+        },
+        {
+          "fi": "Vuosi (header)",
+          "en": null,
+          "field": "buildingYear",
+          "section": "header",
+          "example": "1993 or '-'"
+        },
+        {
+          "fi": "Kohdenumero",
+          "en": null,
+          "field": "adId",
+          "section": "Asunnon perustiedot",
+          "example": "59008973"
+        },
+        {
+          "fi": "Sijainti",
+          "en": null,
+          "field": "city, district",
+          "section": "Asunnon perustiedot",
+          "example": "City / district / sub-district / street + postcode on separate lines (do not store the street)"
+        },
+        {
+          "fi": "Tyyppi",
+          "en": null,
+          "field": "buildingType",
+          "section": "Asunnon perustiedot",
+          "example": "Kerrostalo\n(huoneisto) | Rivitalo\n(huoneisto)"
+        },
+        {
+          "fi": "Omistusmuoto",
+          "en": null,
+          "field": "ownership",
+          "section": "Asunnon perustiedot",
+          "example": "Omistusasunto"
+        },
+        {
+          "fi": "Huoneistoselitelmä",
+          "en": null,
+          "field": "layout",
+          "section": "Asunnon perustiedot",
+          "example": "2 h, k, s, kph, erill.wc + lämm.ullakko, yht. 90 m²"
+        },
+        {
+          "fi": "Huoneita",
+          "en": null,
+          "field": "rooms",
+          "section": "Asunnon perustiedot",
+          "example": "Kaksio | 3 huonetta"
+        },
+        {
+          "fi": "Asuintilojen pinta-ala",
+          "en": null,
+          "field": "livingAreaM2",
+          "section": "Asunnon perustiedot",
+          "example": "59,5 m²"
+        },
+        {
+          "fi": "Muiden tilojen pinta-ala",
+          "en": null,
+          "field": "otherAreaM2",
+          "section": "Asunnon perustiedot",
+          "example": "30,5 m²"
+        },
+        {
+          "fi": "Kokonaispinta-ala",
+          "en": null,
+          "field": "totalAreaM2",
+          "section": "Asunnon perustiedot",
+          "example": "90 m²"
+        },
+        {
+          "fi": "Lisätietoja pinta-alasta",
+          "en": null,
+          "field": null,
+          "section": "Asunnon perustiedot",
+          "example": "Yhtiöjärjestyksen mukainen"
+        },
+        {
+          "fi": "Kerrokset",
+          "en": null,
+          "field": "floor / floorsTotal",
+          "section": "Asunnon perustiedot",
+          "example": "2/3"
+        },
+        {
+          "fi": "Asuinkerrosten määrä",
+          "en": null,
+          "field": "storeys",
+          "section": "Asunnon perustiedot",
+          "example": "1 (yksitasoinen)"
+        },
+        {
+          "fi": "Rakennusvuosi",
+          "en": null,
+          "field": "buildingYear",
+          "section": "Asunnon perustiedot",
+          "example": "1993"
+        },
+        {
+          "fi": "Käyttöönottovuosi",
+          "en": null,
+          "field": "firstUseYear",
+          "section": "Asunnon perustiedot",
+          "example": "1993"
+        },
+        {
+          "fi": "Vapautuminen",
+          "en": null,
+          "field": "available",
+          "section": "Asunnon perustiedot",
+          "example": "Sopimuksen mukaan. | free text, e.g. sold with a tenant"
+        },
+        {
+          "fi": "Myyntihinta",
+          "en": null,
+          "field": "sellingPrice",
+          "section": "Hinta ja kustannukset",
+          "example": "237 215,27 €"
+        },
+        {
+          "fi": "Velkaosuus",
+          "en": null,
+          "field": "debtShare",
+          "section": "Hinta ja kustannukset",
+          "example": "60 784,73 €",
+          "note": "Absent when there is no debt."
+        },
+        {
+          "fi": "Velaton hinta",
+          "en": null,
+          "field": "debtFreePrice",
+          "section": "Hinta ja kustannukset",
+          "example": "298 000,00 €"
+        },
+        {
+          "fi": "Velaton lähtöhinta",
+          "en": null,
+          "field": "debtFreeStartingPrice",
+          "section": "Hinta ja kustannukset",
+          "example": "(from UI strings; open-bid sales)"
+        },
+        {
+          "fi": "Neliöhinta",
+          "en": null,
+          "field": "pricePerM2",
+          "section": "Hinta ja kustannukset",
+          "example": "5 008,40 €/m²",
+          "note": "= velaton hinta / asuintilojen pinta-ala"
+        },
+        {
+          "fi": "Hoitovastike",
+          "en": null,
+          "field": "maintenanceCharge",
+          "section": "Vastike",
+          "example": "238,00 € / kk"
+        },
+        {
+          "fi": "Pääomavastike",
+          "en": null,
+          "field": "financingCharge",
+          "section": "Vastike",
+          "example": "370,69 € / kk",
+          "note": "Ad texts often call it 'rahoitusvastike'."
+        },
+        {
+          "fi": "Erityisvastike",
+          "en": null,
+          "field": "specialCharge",
+          "section": "Vastike",
+          "example": "(from UI strings)"
+        },
+        {
+          "fi": "Tontin vuokravastike",
+          "en": null,
+          "field": "plotRentCharge",
+          "section": "Vastike",
+          "example": "(from UI strings)"
+        },
+        {
+          "fi": "Yhtiövastike yhteensä",
+          "en": null,
+          "field": "totalCharge",
+          "section": "Vastike",
+          "example": "608,69 € / kk"
+        },
+        {
+          "fi": "Käyttövastike",
+          "en": null,
+          "field": "useCharge",
+          "section": "Vastike",
+          "example": "(from UI strings; right-of-occupancy flats only)"
+        },
+        {
+          "fi": "Lisätietoa vastikkeista",
+          "en": null,
+          "field": null,
+          "section": "Vastike",
+          "example": "free text"
+        },
+        {
+          "fi": "Vesimaksu",
+          "en": null,
+          "field": "waterFee",
+          "section": "Muut maksut",
+          "example": "16,00 € / hlö / kk"
+        },
+        {
+          "fi": "Saunamaksu",
+          "en": null,
+          "field": "otherFees",
+          "section": "Muut maksut",
+          "example": "(from UI strings)"
+        },
+        {
+          "fi": "Autopaikkamaksu",
+          "en": null,
+          "field": "otherFees",
+          "section": "Muut maksut",
+          "example": "8,00 € / kk"
+        },
+        {
+          "fi": "Sähkölämmityskulut",
+          "en": null,
+          "field": "otherFees",
+          "section": "Muut maksut",
+          "example": "1 550,00 € / vuosi"
+        },
+        {
+          "fi": "Talopesulamaksu",
+          "en": null,
+          "field": "otherFees",
+          "section": "Muut maksut",
+          "example": "25,00 € / kertamaksu"
+        },
+        {
+          "fi": "Lisätietoa maksuista",
+          "en": null,
+          "field": null,
+          "section": "Muut maksut",
+          "example": "e.g. 'Vesimaksu: Vesimaksuennakko 25 € / kk / hlö (Ennakko, tasaus kulutuksen mukaan)'"
+        },
+        {
+          "fi": "Sauna",
+          "en": null,
+          "field": "sauna",
+          "section": "Asunnon lisätiedot",
+          "example": "Asunnossa on sauna"
+        },
+        {
+          "fi": "Parveke",
+          "en": null,
+          "field": "balcony",
+          "section": "Asunnon lisätiedot",
+          "example": "Asunnossa on parveke"
+        },
+        {
+          "fi": "Tehdyt remontit (flat)",
+          "en": null,
+          "field": "renovationsDone",
+          "section": "Asunnon lisätiedot",
+          "example": "Sauna ja pesutila remontoitu 2016."
+        },
+        {
+          "fi": "Asunnon kunto",
+          "en": null,
+          "field": "condition",
+          "section": "Asunnon lisätiedot",
+          "example": "Hyvä | Tyydyttävä"
+        },
+        {
+          "fi": "Asbestikartoitus",
+          "en": null,
+          "field": "asbestosSurvey",
+          "section": "Asunnon lisätiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Lämmitysjärjestelmän kuvaus",
+          "en": null,
+          "field": "heating",
+          "section": "Asunnon lisätiedot",
+          "example": "Lämmitystapa: Kaukolämpö"
+        },
+        {
+          "fi": "Ilmanvaihto",
+          "en": null,
+          "field": "ventilation",
+          "section": "Asunnon lisätiedot",
+          "example": "Koneellinen poisto"
+        },
+        {
+          "fi": "Keittiön / Kylpyhuoneen / WC-tilojen / Saunan / Olohuoneen / Makuuhuoneiden kuvaus",
+          "en": null,
+          "field": null,
+          "section": "Asunnon tilat ja materiaalit",
+          "example": "free text"
+        },
+        {
+          "fi": "Taloyhtiön nimi",
+          "en": null,
+          "field": "housingCompany",
+          "section": "Taloyhtiö",
+          "example": "Asunto Oy …"
+        },
+        {
+          "fi": "Isännöitsijän yhteystiedot / Isännöitsijä / Isännöintitoimisto",
+          "en": null,
+          "field": null,
+          "section": "Taloyhtiö",
+          "example": "names and phone numbers",
+          "note": "Personal data. Skip."
+        },
+        {
+          "fi": "Huolto / Huoltoyhtiö",
+          "en": null,
+          "field": null,
+          "section": "Taloyhtiö",
+          "example": "Asukkaat itse | company name"
+        },
+        {
+          "fi": "Rakennus- ja pintamateriaalit / Kattotyyppi / Kattomateriaali",
+          "en": null,
+          "field": null,
+          "section": "Taloyhtiö",
+          "example": "Puurunko, tiiliverhous. / Harjakatto / Tiili"
+        },
+        {
+          "fi": "Tehdyt remontit (building)",
+          "en": null,
+          "field": "renovationsDone",
+          "section": "Taloyhtiö",
+          "example": "2025: Ilmanvaihtojärjestelmän kunnon tarkastus…"
+        },
+        {
+          "fi": "Tulevat remontit",
+          "en": null,
+          "field": "renovationsPlanned",
+          "section": "Taloyhtiö",
+          "example": "2027: Laholautojen uusiminen."
+        },
+        {
+          "fi": "Energialuokka",
+          "en": null,
+          "field": "energyClass + energyClassScale",
+          "section": "Taloyhtiö",
+          "example": "E (2018) | D (2018), Energiatodistuksen voimassaoloaika 1.1.2029 | D (2018), Energialuokka: D2018, Energiatodistuksen voimassaoloaika: 13.12.2033 (fact-check 2026-10-17, etuovi.com/kohde/80542928)"
+        },
+        {
+          "fi": "Tontin koko",
+          "en": null,
+          "field": "plotAreaM2",
+          "section": "Taloyhtiö",
+          "example": "3 140 m²"
+        },
+        {
+          "fi": "Tontin omistus",
+          "en": null,
+          "field": "plotOwnership",
+          "section": "Taloyhtiö",
+          "example": "Oma | Vuokra"
+        },
+        {
+          "fi": "Tontin vuokra / Tontin vuokra-aika päättyy / Tontin vuokraaja",
+          "en": null,
+          "field": "plotRent / plotLeaseEnds / plotLessor",
+          "section": "Taloyhtiö",
+          "example": "(from UI strings)"
+        },
+        {
+          "fi": "Kaavoitustilanne",
+          "en": null,
+          "field": null,
+          "section": "Taloyhtiö",
+          "example": "Asemakaava"
+        },
+        {
+          "fi": "Asunnon käytössä olevat autopaikat",
+          "en": null,
+          "field": "parking",
+          "section": "Muut lisätiedot",
+          "example": "Autokatospaikka sähköpistokkeella"
+        }
+      ],
+      "notes": [
+        "Ad pages are Finnish only. The HTML lists only a fi-FI language version, and no English switch was visible on the page, although the UI strings include 'In English'. The page config has 'featureFlags.enableEnglishLocale': false, and https://www.etuovi.com/en returns 404 (fact-check 2026-10-17).",
+        "Header: '<Type> | <layout>' / street, district, city / 'Hinta' + price / 'Koko' + area / 'Vuosi' + year, then the description.",
+        "Check: Myyntihinta + Velkaosuus = Velaton hinta. This held on all 3 ads (237 215,27 + 60 784,73 = 298 000,00).",
+        "Check: Hoitovastike + Pääomavastike (+ Erityisvastike + Tontin vuokravastike) = Yhtiövastike yhteensä (238,00 + 370,69 = 608,69).",
+        "When there is no debt, Velkaosuus is missing and Myyntihinta = Velaton hinta.",
+        "Agent and property-manager contacts appear under 'Kohdetta myy', 'Esittelijänä', 'Isännöitsijän yhteystiedot' and 'Tiedustelut'. They are personal data, so skip them.",
+        "Sale ads can say 'Huoneisto myydään vuokrattuna, vuokra 730 e/kk' (sold with a tenant). The rent there is free text, not a price.",
+        "Page boilerplate includes a home-insurance offer ('Löydä paras ja edullisin kotivakuutus kotiisi. Laske hinta'), Urakkamaailma renovation prices and broadband offers. None of it is ad data.",
+        "Etuovi and Vuokraovi run on the same platform (both pages carry '© Alma Media Oyj' and the same section names). The earlier claim that some ad ids appear on both sites is unconfirmed: etuovi.com/kohde/60499747 (a Vuokraovi id) and vuokraovi.com/kohde/59008973 (an Etuovi id) both returned 404 (fact-check 2026-10-17)."
+      ]
+    },
+    {
+      "site": "asunnot.oikotie.fi (myytävät asunnot)",
+      "kind": "home",
+      "uiLanguages": [
+        "fi"
+      ],
+      "urlPatterns": {
+        "list": "https://asunnot.oikotie.fi/myytavat-asunnot/<city>",
+        "ad": "https://asunnot.oikotie.fi/myytavat-asunnot/<city>/<id>"
+      },
+      "sources": [
+        "https://asunnot.oikotie.fi/myytavat-asunnot/turku (observed 2026-10-17)",
+        "2 ad pages (Turku: 1962 kerrostalo, 2024 new build) at https://asunnot.oikotie.fi/myytavat-asunnot/turku/<id> (observed 2026-10-17)"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "(header line)",
+          "en": null,
+          "field": "debtFreePrice, livingAreaM2, layout",
+          "section": "header",
+          "example": "139 000 € ● 36 m² ● <address> ● 2 h + kk + kph (Yh: 2h+kk)"
+        },
+        {
+          "fi": "Velaton hinta",
+          "en": null,
+          "field": "debtFreePrice",
+          "section": "summary + Hinta",
+          "example": "139 000 €"
+        },
+        {
+          "fi": "Hoitovastike",
+          "en": null,
+          "field": "maintenanceCharge",
+          "section": "summary + Vastikkeet",
+          "example": "172,80 € / kk"
+        },
+        {
+          "fi": "Asuinpinta-ala",
+          "en": null,
+          "field": "livingAreaM2",
+          "section": "summary + Perustiedot",
+          "example": "36 m²"
+        },
+        {
+          "fi": "Huoneita",
+          "en": null,
+          "field": "rooms",
+          "section": "summary + Perustiedot",
+          "example": "2"
+        },
+        {
+          "fi": "Kerros",
+          "en": null,
+          "field": "floor / floorsTotal",
+          "section": "summary + Perustiedot",
+          "example": "1 / 7"
+        },
+        {
+          "fi": "Kerroksen lisätiedot",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Alin kerros"
+        },
+        {
+          "fi": "Rakennusvuosi",
+          "en": null,
+          "field": "buildingYear",
+          "section": "summary + Talon ja tontin tiedot",
+          "example": "1962"
+        },
+        {
+          "fi": "Rakennuksen tyyppi",
+          "en": null,
+          "field": "buildingType",
+          "section": "summary + Talon ja tontin tiedot",
+          "example": "Kerrostalo"
+        },
+        {
+          "fi": "Kaupunginosa / Kaupunki / Postitoimipaikka",
+          "en": null,
+          "field": "district / city",
+          "section": "summary + Perustiedot",
+          "example": "Keskusta / Turku / TURKU"
+        },
+        {
+          "fi": "Sijainti",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "street, postcode, city on separate lines (do not store the street)"
+        },
+        {
+          "fi": "Kohdenumero",
+          "en": null,
+          "field": "adId",
+          "section": "Perustiedot",
+          "example": "620773"
+        },
+        {
+          "fi": "Tontin pinta-ala / Tontin koko",
+          "en": null,
+          "field": "plotAreaM2",
+          "section": "Perustiedot / Talon ja tontin tiedot",
+          "example": "1 675 m²",
+          "note": "Plot size, not the flat."
+        },
+        {
+          "fi": "Kokonaispinta-ala",
+          "en": null,
+          "field": "totalAreaM2",
+          "section": "Perustiedot",
+          "example": "36 m²"
+        },
+        {
+          "fi": "Pinta-alojen lisätiedot",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Pinta-alan peruste: Isännöitsijäntodistuksen mukainen ja yhtiöjärjestyksen mukainen. Ei tarkistusmitattu. Pinta-ala voi siis olla edellä mainittua pienempi tai suurempi.",
+          "note": "Free text on how the area was measured. Corrected: the earlier example '2h+kt+työtila+kph+s+wc' is the 'Huoneiston kokoonpano' value of the same ad (fact-check 2026-10-17, asunnot.oikotie.fi/myytavat-asunnot/turku/24528440)."
+        },
+        {
+          "fi": "Huoneiston kokoonpano",
+          "en": null,
+          "field": "layout",
+          "section": "Perustiedot",
+          "example": "2 h + kk + kph (Yh: 2h+kk) | 2h+kt+työtila+kph+s+wc"
+        },
+        {
+          "fi": "Kunto",
+          "en": null,
+          "field": "condition",
+          "section": "Perustiedot",
+          "example": "Hyvä"
+        },
+        {
+          "fi": "Lisätietoa vapautumisesta",
+          "en": null,
+          "field": "available",
+          "section": "Perustiedot",
+          "example": "Sopimuksen mukaan."
+        },
+        {
+          "fi": "Keittiön varusteet / Kylpyhuoneen varusteet / Säilytystilat / Näkymät",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "free text"
+        },
+        {
+          "fi": "Parveke / Parvekkeen lisätiedot",
+          "en": null,
+          "field": "balcony",
+          "section": "Perustiedot",
+          "example": "Ei | Parvekkeen tyyppi: Lasitettu"
+        },
+        {
+          "fi": "Tulevat remontit",
+          "en": null,
+          "field": "renovationsPlanned",
+          "section": "Perustiedot",
+          "example": "2026 - 2031 1.2.4 - Julkisivut: Julkisivun ja parvekkeiden saneeraus"
+        },
+        {
+          "fi": "Tehdyt remontit",
+          "en": null,
+          "field": "renovationsDone",
+          "section": "Perustiedot",
+          "example": "2022 Vesijohto- ja sähkösaneeraus"
+        },
+        {
+          "fi": "Asunnossa sauna / Saunan lisätiedot",
+          "en": null,
+          "field": "sauna",
+          "section": "Perustiedot",
+          "example": "Ei | Kiuas: Sähkökiuas"
+        },
+        {
+          "fi": "Asumistyyppi",
+          "en": null,
+          "field": "tenure",
+          "section": "Perustiedot",
+          "example": "Omistus"
+        },
+        {
+          "fi": "Kohde on",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Osakehuoneisto"
+        },
+        {
+          "fi": "Vuokrattu",
+          "en": null,
+          "field": "currentlyRented",
+          "section": "Perustiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Kiinteistötunnus",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "853-3-19-9"
+        },
+        {
+          "fi": "Myyntihinta",
+          "en": null,
+          "field": "sellingPrice",
+          "section": "Hinta",
+          "example": "128 508,50 €"
+        },
+        {
+          "fi": "Velkaosuus",
+          "en": null,
+          "field": "debtShare",
+          "section": "Hinta",
+          "example": "10 491,50 €"
+        },
+        {
+          "fi": "Lainaosuuden maksu",
+          "en": null,
+          "field": null,
+          "section": "Hinta",
+          "example": "free text (option to pay off the loan share)"
+        },
+        {
+          "fi": "Neliöhinta",
+          "en": null,
+          "field": "pricePerM2",
+          "section": "Hinta",
+          "example": "3 861,11 € / m²"
+        },
+        {
+          "fi": "Lunastuspykälä",
+          "en": null,
+          "field": "redemptionClause",
+          "section": "Hinta",
+          "example": "Taloyhtiöllä ei lunastusoikeutta. Osakkailla ei lunastusoikeutta."
+        },
+        {
+          "fi": "Pääomavastike",
+          "en": null,
+          "field": "financingCharge",
+          "section": "Vastikkeet",
+          "example": "100,80 € / kk"
+        },
+        {
+          "fi": "Yhtiövastike yhteensä",
+          "en": null,
+          "field": "totalCharge",
+          "section": "Vastikkeet",
+          "example": "273,60 € / kk"
+        },
+        {
+          "fi": "Lisätietoa vastikkeista",
+          "en": null,
+          "field": null,
+          "section": "Vastikkeet",
+          "example": "Hoitovastike(€/m2/kk)   4.2000 (decimal point)"
+        },
+        {
+          "fi": "Vesimaksu / Vesimaksun lisätiedot",
+          "en": null,
+          "field": "waterFee",
+          "section": "Muut maksut",
+          "example": "15,00 € / hlö / kk"
+        },
+        {
+          "fi": "Muut kustannukset",
+          "en": null,
+          "field": "otherFees",
+          "section": "Muut maksut",
+          "example": "free text"
+        },
+        {
+          "fi": "Uudiskohde",
+          "en": null,
+          "field": "newBuild",
+          "section": "Talon ja tontin tiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Taloyhtiön nimi",
+          "en": null,
+          "field": "housingCompany",
+          "section": "Talon ja tontin tiedot",
+          "example": "Asunto Oy …"
+        },
+        {
+          "fi": "Huoneistojen lukumäärä / Liikehuoneistojen lukumäärä / Liiketilojen pinta-ala",
+          "en": null,
+          "field": null,
+          "section": "Talon ja tontin tiedot",
+          "example": "33 / 0 / 0 m²"
+        },
+        {
+          "fi": "Rakennuksen käyttöönottovuosi",
+          "en": null,
+          "field": "firstUseYear",
+          "section": "Talon ja tontin tiedot",
+          "example": "1962"
+        },
+        {
+          "fi": "Kerroksia",
+          "en": null,
+          "field": "floorsTotal",
+          "section": "Talon ja tontin tiedot",
+          "example": "7"
+        },
+        {
+          "fi": "Hissi",
+          "en": null,
+          "field": "elevator",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kyllä | Ei"
+        },
+        {
+          "fi": "Taloyhtiössä on sauna",
+          "en": null,
+          "field": "buildingSauna",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kyllä"
+        },
+        {
+          "fi": "Rakennusmateriaali / Kattomateriaali / Kattotyyppi",
+          "en": null,
+          "field": null,
+          "section": "Talon ja tontin tiedot",
+          "example": "Betoni / Pelti (kupari) / Harjakatto loiva"
+        },
+        {
+          "fi": "Kiinteistönhoito / Isännöinti",
+          "en": null,
+          "field": null,
+          "section": "Talon ja tontin tiedot",
+          "example": "company names",
+          "note": "Contact people can appear here; skip them."
+        },
+        {
+          "fi": "Kaavoitustiedot / Kaavatilanne",
+          "en": null,
+          "field": null,
+          "section": "Talon ja tontin tiedot",
+          "example": "Asemakaava."
+        },
+        {
+          "fi": "Lämmitys / Lämmönjakelu / Lisätietoja lämmityksestä",
+          "en": null,
+          "field": "heating",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kaukolämpö / Vesikiertoinen patterilämmitys"
+        },
+        {
+          "fi": "Energialuokka / Energiatodistus",
+          "en": null,
+          "field": "energyClass + energyClassScale",
+          "section": "Talon ja tontin tiedot",
+          "example": "B2018 | Energialuokka: B2018, Energiatodistuksen voimassaoloaika: 08.07.2032"
+        },
+        {
+          "fi": "Ilmanvaihto",
+          "en": null,
+          "field": "ventilation",
+          "section": "Talon ja tontin tiedot",
+          "example": "Koneellinen ilmanvaihto"
+        },
+        {
+          "fi": "Tontin omistus",
+          "en": null,
+          "field": "plotOwnership",
+          "section": "Talon ja tontin tiedot",
+          "example": "Oma"
+        },
+        {
+          "fi": "Kunnan numero",
+          "en": null,
+          "field": null,
+          "section": "Talon ja tontin tiedot",
+          "example": "853"
+        },
+        {
+          "fi": "Vesi ja jätevesi / Viemäröinti",
+          "en": null,
+          "field": null,
+          "section": "Tekniset tiedot",
+          "example": "Vesijohto: Kunnallisvesi."
+        }
+      ],
+      "notes": [
+        "Finnish only. The UI showed no English option and the HTML lists no other language.",
+        "Page order: breadcrumb (Myytävät asunnot / city / district), header line, summary block, description, Perustiedot, Hinta, Vastikkeet, Muut maksut, Talon ja tontin tiedot, Tilat ja materiaalit, Tekniset tiedot.",
+        "The header price and the summary 'Velaton hinta' are the debt-free price. Search-engine snippets of the same ad can be out of date: 149 000 € in a snippet against 139 000 € on the page.",
+        "Check: Myyntihinta + Velkaosuus = Velaton hinta. It held on both ads, including a new build where the debt share was about 70 % of the price (144 835,95 + 330 164,05 = 475 000).",
+        "Check: Hoitovastike + Pääomavastike = Yhtiövastike yhteensä (365,40 + 1 741,51 = 2 106,91).",
+        "Right-of-occupancy flats (asumisoikeus) appear in searches with a low 'price' (one search snippet: 19 576 € with a 679,62 €/kk charge; unverified, the ad page was gone). That figure is a right-of-occupancy fee, not a purchase price.",
+        "Pages of removed ads return HTTP 410. Some say 'Tämä kohde on poistunut palvelustamme.'; others show a generic page ('Voi harmi, että Oikotie ei löytänyt perille.'). Both were seen on removed Turku rental ads (vuokra-asunnot/turku/24536424 and /24627773, fact-check 2026-10-17). Several ads found through search on the observation date had already been removed.",
+        "The agent's name is printed near the top of the ad. Skip it."
+      ]
+    },
+    {
+      "site": "asunnot.oikotie.fi (vuokra-asunnot)",
+      "kind": "rent",
+      "uiLanguages": [
+        "fi"
+      ],
+      "urlPatterns": {
+        "list": "https://asunnot.oikotie.fi/vuokra-asunnot/<city>",
+        "ad": "https://asunnot.oikotie.fi/vuokra-asunnot/<city>/<id>"
+      },
+      "sources": [
+        "https://asunnot.oikotie.fi/vuokra-asunnot/turku (observed 2026-10-17; 1922 ads that day)",
+        "6 ad pages (Turku) at https://asunnot.oikotie.fi/vuokra-asunnot/turku/<id> (observed 2026-10-17)"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "Vuokra/kk",
+          "en": null,
+          "field": "rent",
+          "section": "summary + Hinta",
+          "example": "650 € / kk"
+        },
+        {
+          "fi": "Vakuus",
+          "en": null,
+          "field": "deposit",
+          "section": "Hinta",
+          "example": "569 €",
+          "note": "Present on 3 of the 6 ads."
+        },
+        {
+          "fi": "Lisätietoa vakuudesta",
+          "en": null,
+          "field": "depositNote / depositMonths",
+          "section": "Hinta",
+          "example": "1 kk vuokra | Ei vakuutta, kun käytät Qasan vuokrasopimusta ja sinulla on moitteettomat luottotiedot."
+        },
+        {
+          "fi": "Lisätietoa vuokra-ajasta",
+          "en": null,
+          "field": "contractType / minTermMonths",
+          "section": "Hinta",
+          "example": "Toistaiseksi voimassa oleva | 12 kk | 12kk"
+        },
+        {
+          "fi": "Vapautuu",
+          "en": null,
+          "field": "available",
+          "section": "summary + Perustiedot",
+          "example": "01.11.2026 | Heti vapaa"
+        },
+        {
+          "fi": "Lisätietoa vapautumisesta",
+          "en": null,
+          "field": "available / contractType",
+          "section": "Perustiedot",
+          "example": "2026-10-31 – Toistaiseksi voimassa (ISO date)"
+        },
+        {
+          "fi": "Asuinpinta-ala / Kokonaispinta-ala",
+          "en": null,
+          "field": "livingAreaM2",
+          "section": "summary + Perustiedot",
+          "example": "36,5 m²"
+        },
+        {
+          "fi": "Huoneiston kokoonpano",
+          "en": null,
+          "field": "layout",
+          "section": "Perustiedot",
+          "example": "2h+k+kph+r.parv"
+        },
+        {
+          "fi": "Huoneita",
+          "en": null,
+          "field": "rooms",
+          "section": "summary + Perustiedot",
+          "example": "2"
+        },
+        {
+          "fi": "Kerros",
+          "en": null,
+          "field": "floor / floorsTotal",
+          "section": "Perustiedot",
+          "example": "1 / 4"
+        },
+        {
+          "fi": "Kunto",
+          "en": null,
+          "field": "condition",
+          "section": "Perustiedot",
+          "example": "Hyvä"
+        },
+        {
+          "fi": "Keittiön varusteet / Kylpyhuoneen varusteet / Säilytystilat",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Pakastin, Uuni, Liesi, Jääkaappi"
+        },
+        {
+          "fi": "Parveke",
+          "en": null,
+          "field": "balcony",
+          "section": "Perustiedot",
+          "example": "Kyllä"
+        },
+        {
+          "fi": "Vuokrataan kalustettuna",
+          "en": null,
+          "field": "furnished",
+          "section": "Perustiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Asunnossa sauna",
+          "en": null,
+          "field": "sauna",
+          "section": "Perustiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Asumistyyppi",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Vuokra"
+        },
+        {
+          "fi": "Lemmikkieläimet sallittu",
+          "en": null,
+          "field": "petsAllowed",
+          "section": "Perustiedot",
+          "example": "Kyllä"
+        },
+        {
+          "fi": "Muut ehdot",
+          "en": null,
+          "field": "smokingAllowed / homeInsuranceRequired",
+          "section": "Perustiedot",
+          "example": "Tupakointi kielletty, Kotivakuutus vaaditaan",
+          "note": "Also free text for contract terms, e.g. 'Toistaiseksi voimassa oleva sopimus, jossa ensimmäinen irtisanomisajan alkamisajankohta on 11 kuukautta sopimuksen alkamisen jälkeen.' (fact-check 2026-10-17, vuokra-asunnot/turku/24693746)"
+        },
+        {
+          "fi": "Vuokralaistyyppi",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Päävuokralainen"
+        },
+        {
+          "fi": "Linkit",
+          "en": null,
+          "field": null,
+          "section": "Perustiedot",
+          "example": "Vuokraa tästä (link to a Qasa contract)"
+        },
+        {
+          "fi": "Vesimaksu",
+          "en": null,
+          "field": "waterFee",
+          "section": "Muut maksut",
+          "example": "20 € / kk"
+        },
+        {
+          "fi": "Vesimaksun lisätiedot",
+          "en": null,
+          "field": "waterFee",
+          "section": "Muut maksut",
+          "example": "20 € / hlö / kk | Vesimaksuennakko 25,00 €/kk/hlö"
+        },
+        {
+          "fi": "Rakennuksen tyyppi / Rakennusvuosi / Kerroksia / Hissi / Uudiskohde",
+          "en": null,
+          "field": "buildingType / buildingYear / floorsTotal / elevator",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kerrostalo / 2020 / 4 / Ei / Ei"
+        },
+        {
+          "fi": "Taloyhtiössä on sauna",
+          "en": null,
+          "field": "buildingSauna",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kyllä"
+        },
+        {
+          "fi": "Energialuokka",
+          "en": null,
+          "field": "energyClass",
+          "section": "Talon ja tontin tiedot",
+          "example": "B2018"
+        },
+        {
+          "fi": "Lämmitys",
+          "en": null,
+          "field": "heating",
+          "section": "Talon ja tontin tiedot",
+          "example": "Kaukolämpö"
+        }
+      ],
+      "notes": [
+        "Same page layout as the sale ads: breadcrumb (Vuokra-asunnot / city / district), header '819 € / kk ● 44 m² ● <address> ● <layout>', summary, description, Perustiedot, Hinta, Muut maksut, Talon ja tontin tiedot.",
+        "Search card: '<address>, <district>, <city> | 739 € / kk | 36,5 m² | Huoneita 2 | Kerros 1/4 | Kerrostalo, 2020'.",
+        "Deposits come in many forms: a number ('Vakuus 569 €'), months ('1 kk vuokra'), none with a Qasa contract (2 of 6 ads) or free text in the description (the sixth ad: 'vuokravakuus on 0 €'). On the 3 ads with a numeric Vakuus, the deposit was one month's rent each time (685/685, 819/819 and 569/569 €; fact-check 2026-10-17). Search snippets also showed 'Vakuus 1 540 €. Myös kk-maksullinen digivakuus mahdollinen', 'Vuokravakuus kahden kuukauden vuokra' and '(1300e)' (unverified, snippets only).",
+        "'Lisätietoa vuokra-ajasta: 12 kk' is a minimum or fixed term. It is not a deposit.",
+        "'Kotivakuutus vaaditaan' (home insurance required) appears in 'Muut ehdot' (1 of the 6 ads); another ad required it in the description ('Laaja kotivakuutus vastuuosineen vaaditaan') (fact-check 2026-10-17).",
+        "Descriptions often repeat the fees in free text: '-Vesimaksu 27e/kk/henkilö', '-Autopaikka 35e/kk', '-Irtisanomisaika 1kk'.",
+        "Ads are often removed within weeks (HTTP 410), so ads found through search engines are frequently gone.",
+        "The landlord's name or company appears under 'Kohdetta vuokraa'. Skip it."
+      ]
+    },
+    {
+      "site": "vuokraovi.com",
+      "kind": "rent",
+      "uiLanguages": [
+        "fi",
+        "en (/en/item/<id>)"
+      ],
+      "urlPatterns": {
+        "list": "https://www.vuokraovi.com/vuokra-asunnot",
+        "ad": "https://www.vuokraovi.com/kohde/<id>",
+        "adEnglish": "https://www.vuokraovi.com/en/item/<id>"
+      },
+      "sources": [
+        "https://www.vuokraovi.com/vuokra-asunnot (observed 2026-10-17)",
+        "2 ad pages (Vantaa private landlord; Joensuu) at https://www.vuokraovi.com/kohde/<id>, plus one of them at /en/item/<id> (observed 2026-10-17)"
+      ],
+      "fieldLabels": [
+        {
+          "fi": "Vuokra (header)",
+          "en": "Rent (header)",
+          "field": "rent",
+          "section": "header",
+          "example": "840 €/kk | EN: 840 €/month"
+        },
+        {
+          "fi": "Koko (header)",
+          "en": "Size (header)",
+          "field": "livingAreaM2",
+          "section": "header",
+          "example": "42,5 m²"
+        },
+        {
+          "fi": "Vuosi (header)",
+          "en": "Year (header)",
+          "field": "buildingYear",
+          "section": "header",
+          "example": "2023"
+        },
+        {
+          "fi": "Kohdenumero",
+          "en": "Rental number",
+          "field": "adId",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "ct8278"
+        },
+        {
+          "fi": "Sijainti",
+          "en": "Location",
+          "field": "district, city",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "district / city / street / postcode (do not store the street)"
+        },
+        {
+          "fi": "Tyyppi",
+          "en": "Type",
+          "field": null,
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Asuinhuoneisto | EN: Apartment"
+        },
+        {
+          "fi": "Asumismuoto",
+          "en": "Living form",
+          "field": "subsidized",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Vapaarahoitteinen | EN: Non-subsidized"
+        },
+        {
+          "fi": "Talotyyppi",
+          "en": "Housing type",
+          "field": "buildingType",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Kerrostalo | EN: Block of flats"
+        },
+        {
+          "fi": "Huoneistoselitelmä",
+          "en": "Flat layout",
+          "field": "layout",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "2 h + kt | 4h, k, p"
+        },
+        {
+          "fi": "Huoneita",
+          "en": "Number of rooms",
+          "field": "rooms / bedrooms",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Kaksio | 4 huonetta | EN: 1 bedroom (for Kaksio)"
+        },
+        {
+          "fi": "Asuintilojen pinta-ala",
+          "en": "Living area",
+          "field": "livingAreaM2",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "42,5 m² | 80,0 m²"
+        },
+        {
+          "fi": "Rakennusvuosi",
+          "en": "Construction year",
+          "field": "buildingYear",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "2023"
+        },
+        {
+          "fi": "Kerros",
+          "en": "Floor",
+          "field": "floor / floorsTotal",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "2/7 | 3"
+        },
+        {
+          "fi": "Kalustettu",
+          "en": "Furnished",
+          "field": "furnished",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Ei | EN: No"
+        },
+        {
+          "fi": "Lemmikit sallittu",
+          "en": "Pets allowed",
+          "field": "petsAllowed",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Ei tiedossa | EN: Not known"
+        },
+        {
+          "fi": "Tupakointi sallittu",
+          "en": "Smoking allowed",
+          "field": "smokingAllowed",
+          "section": "Asunnon perustiedot / Basic info about property",
+          "example": "Ei | EN: No"
+        },
+        {
+          "fi": "Vuokra",
+          "en": "Rent",
+          "field": "rent",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "840 € / kk | 1 020 € / kk | EN: 840 € / month"
+        },
+        {
+          "fi": "Vuokranmaksupäivä",
+          "en": "Rent payment day",
+          "field": "rentDueDay",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "Kuukauden 2. päivä (stays Finnish in EN)"
+        },
+        {
+          "fi": "Vapautuminen",
+          "en": "Availability",
+          "field": "available",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "31.12.2026 mennessä | sopimuksen mukaan | EN: By 31/12/2026"
+        },
+        {
+          "fi": "Vuokrasopimuksen voimassaolo",
+          "en": "Agreement period",
+          "field": "contractType",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "Määräaikainen, jonka jälkeen toistaiseksi voimassa oleva | EN: Fixed-term, then open-ended"
+        },
+        {
+          "fi": "Lisätietoja vuokrasopimuksesta",
+          "en": null,
+          "field": null,
+          "section": "Vuokrasopimus ja kustannukset",
+          "example": "free text"
+        },
+        {
+          "fi": "Vakuus",
+          "en": "Deposit",
+          "field": "deposit / depositMonths",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "1 kk:n kokonaisvuokra | 1020 € (free text stays Finnish in EN)"
+        },
+        {
+          "fi": "Vesimaksu",
+          "en": "Water fee",
+          "field": "waterFee",
+          "section": "Vuokrasopimus ja kustannukset / Rent and costs",
+          "example": "25 € / hlö / kk | EN: 25 € / person / month"
+        },
+        {
+          "fi": "Lisätiedot maksuista",
+          "en": null,
+          "field": null,
+          "section": "Vuokrasopimus ja kustannukset",
+          "example": "Vesimaksu: Tasataan kulutuksen mukaan."
+        },
+        {
+          "fi": "Asunnossa on sauna",
+          "en": null,
+          "field": "sauna",
+          "section": "Asunnon lisätiedot",
+          "example": "Ei"
+        },
+        {
+          "fi": "Parveke",
+          "en": "Balcony",
+          "field": "balcony",
+          "section": "Asunnon lisätiedot / Apartment details",
+          "example": "Kyllä | EN: Yes"
+        },
+        {
+          "fi": "Asunnon kunto",
+          "en": "Property condition",
+          "field": "condition",
+          "section": "Asunnon lisätiedot / Apartment details",
+          "example": "Hyvä | EN: Good"
+        },
+        {
+          "fi": "Lämmitysjärjestelmä",
+          "en": null,
+          "field": "heating",
+          "section": "Asunnon lisätiedot",
+          "example": "Kaukolämpö"
+        },
+        {
+          "fi": "Lisätietoa asunnosta",
+          "en": "Additional information about the apartment",
+          "field": null,
+          "section": "Asunnon lisätiedot / Apartment details",
+          "example": "free text"
+        },
+        {
+          "fi": "Keittiön kuvaus / Kylpyhuoneen kuvaus",
+          "en": "Kitchen description / Bathroom description",
+          "field": null,
+          "section": "Asunnon tilat ja materiaalit / Residential space and materials",
+          "example": "free text"
+        },
+        {
+          "fi": "Taloyhtiön nimi / Huolto / Ominaisuudet",
+          "en": null,
+          "field": null,
+          "section": "Taloyhtiö / Housing company",
+          "example": "Kuivaushuone, Talopesula/itsepalvelupesula"
+        },
+        {
+          "fi": "Taloyhtiössä on sauna",
+          "en": "The housing company has a sauna",
+          "field": "buildingSauna",
+          "section": "Taloyhtiö / Housing company",
+          "example": "(statement line)"
+        },
+        {
+          "fi": "Tehdyt remontit / Tulevat remontit",
+          "en": null,
+          "field": "renovationsDone / renovationsPlanned",
+          "section": "Taloyhtiö",
+          "example": "Vesikaton kuntotarkastus 2026-2029."
+        },
+        {
+          "fi": "Energialuokka",
+          "en": "Energy class",
+          "field": "energyClass",
+          "section": "Taloyhtiö / Housing company",
+          "example": "E (2018) | Ei lain edellyttämää energiatodistusta | EN: Legally required energy certificate not available",
+          "note": "'Ei lain edellyttämää energiatodistusta' / 'Legally required energy certificate not available' means no class is given; it does not mean the building is exempt (it was seen on a 2023 block of flats). See formats.energyClass."
+        },
+        {
+          "fi": "Lisätietoa auton säilytyksestä",
+          "en": "More information about car storage",
+          "field": "parking",
+          "section": "Muut lisätiedot / Other information",
+          "example": "free text"
+        },
+        {
+          "fi": "Yksityinen vuokranantaja",
+          "en": "Private lessor",
+          "field": "landlordType",
+          "section": "contact block",
+          "example": "(label)"
+        },
+        {
+          "fi": "Laske hinta-arvio kotivakuutukselle … Hinta-arvio*: 11 €/kk",
+          "en": "Calculate price estimate for home insurance … Price estimate*: 11 € / month",
+          "field": null,
+          "section": "widget",
+          "example": "Insurance price widget",
+          "note": "Never a rent or fee. See notes."
+        }
+      ],
+      "notes": [
+        "Vuokraovi has an English UI under /en/item/<id>. It translates labels and fixed values but leaves free text in Finnish (Vakuus '1 kk:n kokonaisvuokra', Vuokranmaksupäivä 'Kuukauden 2. päivä', and the description).",
+        "In the English UI 'Huoneita: Kaksio' becomes 'Number of rooms: 1 bedroom', so rooms = bedrooms + 1. Only Kaksio was seen; other room words are assumed to follow the same rule.",
+        "The English page title says 'For sale Block of flats 1 bedroom - …' on a rental ad, so do not use the page title to decide whether an ad is a sale or a rental.",
+        "The header shows '840 €/kk' with no spaces; the details show '840 € / kk'.",
+        "On one ad 'Vuokra 1 020 € / kk' had a thousands separator but 'Vakuus 1020 €' did not.",
+        "Ad pages carry a home-insurance price widget. Its footnote says the estimate is for If's broad home insurance ('laaja kotivakuutus') with a 250 € deductible, for flats in blocks of flats and terraced houses. The figures seen were 11 €/kk for 42,5 m² and 17 €/kk for 80 m². These are the site's own estimates (observed 2026-10-17); a reader must not take them for rent or fees. Re-checked: the footnote reads '*Hinta on laskettu Ifin laajalle kotivakuutukselle 250€ omavastuulla kerros-ja rivitaloasuntoihin.' (EN: '*The price is calculated for If's comprehensive home insurance with a deductible of €250 for apartment and terraced houses.'), 11 €/kk on /kohde/ct8278 and 17 €/kk on /kohde/60499747 (fact-check 2026-10-17).",
+        "Shares a platform with Etuovi (both pages carry '© Alma Media Oyj'). The claim that some ad ids appear on both sites is unconfirmed (two cross-checks returned 404, fact-check 2026-10-17).",
+        "The landlord's name appears next to 'Yksityinen vuokranantaja'. Skip it."
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "car-1",
+      "kind": "car",
+      "site": "nettiauto.com",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "dealer office fee",
+        "financing line under price",
+        "first registration inside Vuosimalli",
+        "m/yyyy inspection",
+        "km figure in free text that is not the mileage"
+      ],
+      "text": "Myydään\nSkoda\nOctavia\nIlmoitus\nSkoda Octavia\n9 990 €\nCombi 1,6 TDI Elegance DSG-automaatti\nalk. 158,40 €/kk\nPäivitetty 12.10.2026\nTampere, Pirkanmaa\nID 16000001\nKAMPANJA\nTOIMITETAAN\nDiesel\n2015\n189 000 km\nAutomaatti\n| Suomi-auto | Webasto kaukosäädöllä | Vetokoukku | 2x renkaat | Huoltokirja |\nPerustiedot\nRekisterinumero\nABC-123\nMittarilukema\n189 000 km\nMoottori\n1,6 l, Diesel\nVuosimalli\n2015 (ensirek. 5-2015)\nKäyttöönottopäivä\n18.05.2015\nVaihteisto\nAutomaatti\nVetotapa\nEtuveto\nToimistomaksu\n199 €\nKatsastettu\n4/2026\nKorimalli\nFarmari\nAuton tyyppi\nHenkilöauto\nVäri\nValkoinen\nTekniset tiedot\nEnergiamerkintä\nB\n106 g/km\nRahoitus\nVertaile rahoitustarjouksia Nettiauton rahoituskumppaneilta. Rahoitus alkaen 158,40 €/kk.\nNäytä rahoitustarjoukset\nLisätiedot\nJakohihna ja vesipumppu vaihdettu 160 000 km kohdalla. Huoltokirja leimattu. Kahdet renkaat alumiinivanteilla.\nMyyjä\nAutoliike",
+      "expected": {
+        "make": "Skoda",
+        "model": "Octavia",
+        "variant": "Combi 1,6 TDI Elegance DSG-automaatti",
+        "price": 9990,
+        "previousPrice": null,
+        "officeFee": 199,
+        "year": 2015,
+        "firstRegistration": "2015-05",
+        "firstUseDate": "2015-05-18",
+        "km": 189000,
+        "engineLitres": 1.6,
+        "fuel": "diesel",
+        "gearbox": "automatic",
+        "drive": "fwd",
+        "bodyType": "station-wagon",
+        "lastInspection": "2026-04",
+        "sellerType": "dealer",
+        "city": "Tampere",
+        "roadworthy": true,
+        "flags": {
+          "serviceBook": true,
+          "timingBeltReplaced": true
+        }
+      },
+      "distractors": [
+        {
+          "text": "alk. 158,40 €/kk",
+          "isNot": "price",
+          "why": "monthly financing estimate"
+        },
+        {
+          "text": "160 000 km",
+          "isNot": "km",
+          "why": "service milestone in the description; mileage is 'Mittarilukema'"
+        },
+        {
+          "text": "106 g/km",
+          "isNot": "km",
+          "why": "CO2 figure"
+        }
+      ]
+    },
+    {
+      "id": "car-2",
+      "kind": "car",
+      "site": "nettiauto.com",
+      "uiLanguage": "en",
+      "format": "ad page in the English UI (/en/), whole-page copy",
+      "synthetic": true,
+      "features": [
+        "English labels with Finnish free text",
+        "decimal point in English UI",
+        "reduced price: two prices in a row",
+        "private seller"
+      ],
+      "text": "Toyota Avensis\n6 200 €\n6 900 €\n2,0 Valvematic Linea Sol Wagon\noffer 98.52 €/m\nLast updated 15.10.2026\nKuopio, Pohjois-Savo\nID 16000002\nShare\nComparison\nPetrol\n2010\n243 000 km\nManual\nHyvin pidetty perheauto, myydään uudemman tieltä.\nBasic information\nRegistration number\nABC-124\nMileage\n243 000 km\nEngine\n2.0 l, Petrol\nYear model\n2010 (first reg. 2-2010)\nFirst usage date\n04.02.2010\nGearbox\nManual\nDrive type\nFront wheel\nInspection date\n9/2026\nSub Type\nStation wagon\nCar type\nCar\nColor\nGray metallic\nTechnical information\nEnergy label\nD\n154 g/km\nFinancing\nCompare offers from Nettiauto's financing partners. Financing from 98.52 €/month.\nNotes\nJakoketju, ei hihnaa. Vetokoukku. Nastarenkaat vanteilla. Pientä pintaruostetta takalokasuojissa. Kaksi avainta.\nSeller\nPrivate seller\nKuopio",
+      "expected": {
+        "make": "Toyota",
+        "model": "Avensis",
+        "variant": "2,0 Valvematic Linea Sol Wagon",
+        "price": 6200,
+        "previousPrice": 6900,
+        "officeFee": null,
+        "year": 2010,
+        "firstRegistration": "2010-02",
+        "firstUseDate": "2010-02-04",
+        "km": 243000,
+        "engineLitres": 2.0,
+        "fuel": "petrol",
+        "gearbox": "manual",
+        "drive": "fwd",
+        "bodyType": "station-wagon",
+        "lastInspection": "2026-09",
+        "sellerType": "private",
+        "city": "Kuopio",
+        "roadworthy": true,
+        "flags": {
+          "timingChain": true,
+          "rustMentioned": true
+        }
+      },
+      "distractors": [
+        {
+          "text": "6 900 €",
+          "isNot": "price",
+          "why": "old price, struck through"
+        },
+        {
+          "text": "offer 98.52 €/m",
+          "isNot": "price",
+          "why": "monthly financing estimate"
+        }
+      ],
+      "assumptions": [
+        "'Manual' as the English gearbox value and the 'Private seller' wording were not seen in the English UI; they are assumed. The 'Seller' label was seen in English on a dealer ad ('Dealer, Member since 8 months'). Seen in English: 'Automatic', 'Front wheel', 'Station wagon', 'Gray metallic'."
+      ]
+    },
+    {
+      "id": "car-3",
+      "kind": "car",
+      "site": "autotalli.com",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "no-break spaces in the header, no separators in the table",
+        "dd.mm.yyyy inspection date",
+        "empty field followed by a section heading",
+        "label split by subscript (CO\n2\npäästöt)",
+        "decimal point in technical fields",
+        "km in a warranty that is not the mileage"
+      ],
+      "text": "Autotalli.com\nKohdesivu\nEtusivu\n/\nVaihtoautot\n/\nVolvo\n/\nVolvo V70\n/\nABC-125\nVolvo V70\nD5 AWD Summum aut. *Webasto, Koukku, Nahat*\n13 900\n€\nKysy väliraha\nFarmari\n2012\nAutomaatti\nDiesel\n231 000 km\n14.03.2026\nAutoliike Esimerkki, Lahti\nKUVAT\nPERUSTIEDOT\nLISÄTIEDOT\nTARKAT TIEDOT\nOTA YHTEYTTÄ\nOminaisuudet\nKohdenumero\n40000001\nPerustiedot\nRekisterinumero\nABC-125\nHinta\n13900 €\nHaluatko tietää, kun hinta laskee?\nJätä hintavahti\nMittarilukema\n231000 km\nVuosimalli\n2012\nKatsastettu\n14.03.2026\nKorimalli\nFarmari\nOvien lkm\n5\nHenkilömäärä\n5\nVaihteisto\nAutomaatti\nVaihteiden lkm\n6\nVetotapa\nNeliveto\nVäri\nMusta\nKaupunki\nLahti\nViimeisin huolto\nLisätiedot\nMerkkihuollettu, huoltokirja. Jakohihna vaihdettu 2023. Kahdet renkaat. Takuu 3 kk / 3 000 km.\nTiedot ovat myyjän antamia. Varmista ilmoitustietojen oikeellisuus myyjältä.\nTARKAT TIEDOT\nKäyttövoima\nDiesel\nCO\n2\npäästöt\n-\nKaupunkikulutus\n-\nMaantiekulutus\n-\nYhdistetty kulutus\n-\nMoottorin tilavuus\n2400 cm3\nTeho\n158 kW / 215 hp\nRenkaat\n-\nAhdin\nEi tiedossa\nHuippunopeus (km/h)\n210 km/h\nKiihtyvyys (0-100/s)\n8.5 s\nVääntö\n440 Nm\nVetomassa (jarrullinen/kg)\n1800 kg\nVetomassa (ei jarruja/kg)\n750 kg",
+      "expected": {
+        "make": "Volvo",
+        "model": "V70",
+        "variant": "D5 AWD Summum aut. *Webasto, Koukku, Nahat*",
+        "price": 13900,
+        "previousPrice": null,
+        "officeFee": null,
+        "year": 2012,
+        "km": 231000,
+        "engineCc": 2400,
+        "engineLitres": 2.4,
+        "powerKw": 158,
+        "fuel": "diesel",
+        "gearbox": "automatic",
+        "drive": "awd",
+        "bodyType": "station-wagon",
+        "doors": 5,
+        "lastInspection": "2026-03-14",
+        "lastService": null,
+        "sellerType": "dealer",
+        "city": "Lahti",
+        "roadworthy": true,
+        "flags": {
+          "serviceBook": true,
+          "timingBeltReplaced": true,
+          "dealerWarranty": "3 kk / 3 000 km"
+        }
+      },
+      "distractors": [
+        {
+          "text": "3 000 km",
+          "isNot": "km",
+          "why": "warranty limit"
+        },
+        {
+          "text": "Viimeisin huolto\nLisätiedot",
+          "isNot": "lastService",
+          "why": "empty field; the next line is a section heading"
+        },
+        {
+          "text": "210 km/h",
+          "isNot": "km",
+          "why": "top speed"
+        }
+      ],
+      "assumptions": [
+        "The 'engineLitres' value 2.4 is derived from 2400 cm3; the reader may leave it out."
+      ]
+    },
+    {
+      "id": "car-4",
+      "kind": "car",
+      "site": "nettiauto.com",
+      "uiLanguage": "fi",
+      "format": "search result card (short copy)",
+      "synthetic": true,
+      "features": [
+        "compact card line with ● separators",
+        "engine size before the variant",
+        "inspection date inside free-text variant",
+        "hybrid fuel value"
+      ],
+      "text": "Toyota Auris\n10 490 €\nalk. 172,30 €/kk\n1,8, 1,8 Hybrid Active 5ov / Peruutuskamera / Lohkolämmitin + sisäpistoke / Katsastettu 03/2026!\n2014 ● 168 000 km ● Hybridi (bensiini/sähkö) ● Automaatti ● Etuveto\nSuosikki\nVertaile\nJuuri huollettu. Hybridiakku tarkastettu huollon yhteydessä.\nTurku, Autoliike Esimerkki",
+      "expected": {
+        "make": "Toyota",
+        "model": "Auris",
+        "variant": "1,8 Hybrid Active 5ov / Peruutuskamera / Lohkolämmitin + sisäpistoke / Katsastettu 03/2026!",
+        "price": 10490,
+        "previousPrice": null,
+        "officeFee": null,
+        "year": 2014,
+        "km": 168000,
+        "engineLitres": 1.8,
+        "fuel": "hybrid-petrol",
+        "gearbox": "automatic",
+        "drive": "fwd",
+        "lastInspection": "2026-03",
+        "sellerType": null,
+        "city": "Turku",
+        "roadworthy": true,
+        "flags": {
+          "hybridBatteryChecked": true
+        }
+      },
+      "distractors": [
+        {
+          "text": "alk. 172,30 €/kk",
+          "isNot": "price",
+          "why": "monthly financing estimate"
+        }
+      ],
+      "assumptions": [
+        "sellerType is null because a card shows only 'City, seller name', and the name alone does not say dealer or private."
+      ]
+    },
+    {
+      "id": "home-1",
+      "kind": "home",
+      "site": "etuovi.com",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "no-break spaces",
+        "header price is the debt-free price",
+        "selling price + debt share = debt-free price",
+        "charges add up",
+        "pipe renovation done (building renovation list)",
+        "per-person water fee"
+      ],
+      "text": "Kerrostalo | 3h, k, kph, s, las.parv, yht. 74,5 m²\nEsimerkkikatu 4 B, Kaleva, Tampere\nHinta\n189 000 €\nKoko\n74,5 m²\nVuosi\n1974\n\nValoisa ja hyväkuntoinen kolmio Kalevassa, lyhyt matka keskustaan. Taloyhtiössä putkiremontti valmistunut 2018.\nAsunnon perustiedot\nKohdenumero\n12345678\nSijainti\nTampere\nKaleva\nEsimerkkikatu 4 B, 33500\nTyyppi\nKerrostalo\n(huoneisto)\nOmistusmuoto\nOmistusasunto\nHuoneistoselitelmä\n3h, k, kph, s, las.parv\nHuoneita\nKolmio\nAsuintilojen pinta-ala\n74,5 m²\nKokonaispinta-ala\n74,5 m²\nLisätietoja pinta-alasta\nYhtiöjärjestyksen mukainen\nKerrokset\n4/8\nRakennusvuosi\n1974\nKäyttöönottovuosi\n1974\nVapautuminen\nSopimuksen mukaan.\nHinta ja kustannukset\nHinta\nMyyntihinta\n176 412,30 €\nVelkaosuus\n12 587,70 €\nVelaton hinta\n189 000,00 €\nNeliöhinta\n2 536,91 €/m²\nVastike\nHoitovastike\n298,00 € / kk\nPääomavastike\n104,30 € / kk\nYhtiövastike yhteensä\n402,30 € / kk\nMuut maksut\nVesimaksu\n22,00 € / hlö / kk\nSaunamaksu\n15,00 € / kk\nAutopaikkamaksu\n12,00 € / kk\nAsunnon lisätiedot\nSauna\nAsunnossa on sauna\nParveke\nAsunnossa on parveke\nAsunnon kunto\nHyvä\nTehdyt remontit\nKylpyhuone uusittu putkiremontin yhteydessä 2018.\nTaloyhtiö\nTaloyhtiön nimi\nAsunto Oy Esimerkkikatu 4\nHuolto\nHuoltoyhtiö\nTehdyt remontit\n2018: Putkiremontti (käyttövesi- ja viemäriputket uusittu, kylpyhuoneet ja sähköt uusittu).\n2016: Ikkunoiden ja parvekeovien uusiminen.\n2012: Vesikaton uusiminen.\nTulevat remontit\n2027: Julkisivujen ja parvekkeiden kuntotutkimus.\n2029: Hissien modernisointi.\nEnergialuokka\nD (2018)\nTontin koko\n4 210 m²\nTontin omistus\nOma\nKaavoitustilanne\nAsemakaava",
+      "expected": {
+        "buildingType": "block-of-flats",
+        "city": "Tampere",
+        "district": "Kaleva",
+        "layout": "3h, k, kph, s, las.parv",
+        "rooms": 3,
+        "livingAreaM2": 74.5,
+        "totalAreaM2": 74.5,
+        "floor": 4,
+        "floorsTotal": 8,
+        "elevator": null,
+        "buildingYear": 1974,
+        "debtFreePrice": 189000,
+        "sellingPrice": 176412.3,
+        "debtShare": 12587.7,
+        "pricePerM2": 2536.91,
+        "maintenanceCharge": 298.0,
+        "financingCharge": 104.3,
+        "plotRentCharge": null,
+        "totalCharge": 402.3,
+        "waterFee": {
+          "amount": 22.0,
+          "per": "person/month"
+        },
+        "otherFees": [
+          {
+            "name": "Saunamaksu",
+            "amount": 15.0,
+            "per": "month"
+          },
+          {
+            "name": "Autopaikkamaksu",
+            "amount": 12.0,
+            "per": "month"
+          }
+        ],
+        "sauna": true,
+        "balcony": true,
+        "condition": "good",
+        "plotOwnership": "own",
+        "plotAreaM2": 4210,
+        "energyClass": "D",
+        "energyClassScale": 2018,
+        "pipeRenovation": {
+          "status": "done",
+          "years": [
+            2018
+          ]
+        },
+        "renovationsDone": [
+          {
+            "year": 2018,
+            "text": "Putkiremontti (käyttövesi- ja viemäriputket uusittu, kylpyhuoneet ja sähköt uusittu)."
+          },
+          {
+            "year": 2016,
+            "text": "Ikkunoiden ja parvekeovien uusiminen."
+          },
+          {
+            "year": 2012,
+            "text": "Vesikaton uusiminen."
+          }
+        ],
+        "renovationsPlanned": [
+          {
+            "from": 2027,
+            "to": 2027,
+            "text": "Julkisivujen ja parvekkeiden kuntotutkimus."
+          },
+          {
+            "from": 2029,
+            "to": 2029,
+            "text": "Hissien modernisointi."
+          }
+        ]
+      },
+      "distractors": [
+        {
+          "text": "4 210 m²",
+          "isNot": "livingAreaM2",
+          "why": "plot size (Tontin koko)"
+        },
+        {
+          "text": "Esimerkkikatu 4 B, 33500",
+          "isNot": "anything to keep",
+          "why": "street address: do not store"
+        }
+      ],
+      "assumptions": [
+        "'elevator' is null because no Hissi field is present, even though a lift renovation is planned. The reader should not infer it."
+      ]
+    },
+    {
+      "id": "home-2",
+      "kind": "home",
+      "site": "asunnot.oikotie.fi",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "no-break spaces",
+        "summary block repeats the details",
+        "pipe renovation planned with a year range",
+        "no debt share (0 €)",
+        "no lift on the 3rd floor",
+        "energy class written as 'E2018'"
+      ],
+      "text": "Myytävät asunnot\nTurku\nNummi\nEsimerkkitie 12 B, 20540 Turku\n119 000 €\n●\n55,5 m²\nEsimerkkitie 12 B, Nummi, Turku\n●\n2h + k + kph + parv\nKatso kaikki kuvat\nVelaton hinta\n119 000 €\nHoitovastike\n249,75 € / kk\nAsuinpinta-ala\n55,5 m²\nHuoneita\n2\nKerros\n3 / 4\nRakennusvuosi\n1966\nRakennuksen tyyppi\nKerrostalo\nKaupunginosa\nNummi\nKaupunki\nTurku\nJaa tämä kohde\nHyvällä paikalla Nummessa sijaitseva kaksio. Taloyhtiössä on suunnitteilla putkiremontti, katso tulevat remontit.\nPerustiedot\nSijainti\nEsimerkkitie 12 B\n,\n20540\nTurku\nKaupunginosa\nNummi\nKohdenumero\n123456\nKerros\n3 / 4\nAsuinpinta-ala\n55,5 m²\nKokonaispinta-ala\n55,5 m²\nHuoneiston kokoonpano\n2h + k + kph + parv\nHuoneita\n2\nKunto\nTyydyttävä\nLisätietoa vapautumisesta\nKaupanteon jälkeen sopimuksen mukaan.\nParveke\nKyllä\nTulevat remontit\n2027 - 2028 Putkiremontti (LVIS-saneeraus), hankesuunnittelu käynnissä\n2026 Ikkunoiden kuntotutkimus\nTehdyt remontit\n2019 Vesikatto uusittu\n2015 Julkisivujen ja parvekkeiden korjaus\n2009 Lämmönvaihdin uusittu\nAsunnossa sauna\nEi\nAsumistyyppi\nOmistus\nKohde on\nOsakehuoneisto\nHinta\nVelaton hinta\n119 000 €\nMyyntihinta\n119 000 €\nNeliöhinta\n2 144,14 € / m²\nVelkaosuus\n0 €\nVastikkeet\nHoitovastike\n249,75 € / kk\nYhtiövastike yhteensä\n249,75 € / kk\nMuut maksut\nVesimaksun lisätiedot\n20,00 € / hlö / kk\nTalon ja tontin tiedot\nUudiskohde\nEi\nTaloyhtiön nimi\nAsunto Oy Esimerkkitie 12\nRakennuksen tyyppi\nKerrostalo\nRakennusvuosi\n1966\nHuoneistojen lukumäärä\n24\nKerroksia\n4\nHissi\nEi\nTaloyhtiössä on sauna\nKyllä\nLämmitys\nKaukolämpö\nEnergialuokka\nE2018\nTontin omistus\nOma",
+      "expected": {
+        "buildingType": "block-of-flats",
+        "city": "Turku",
+        "district": "Nummi",
+        "layout": "2h + k + kph + parv",
+        "rooms": 2,
+        "livingAreaM2": 55.5,
+        "totalAreaM2": 55.5,
+        "floor": 3,
+        "floorsTotal": 4,
+        "elevator": false,
+        "buildingYear": 1966,
+        "debtFreePrice": 119000,
+        "sellingPrice": 119000,
+        "debtShare": 0,
+        "pricePerM2": 2144.14,
+        "maintenanceCharge": 249.75,
+        "financingCharge": null,
+        "plotRentCharge": null,
+        "totalCharge": 249.75,
+        "waterFee": {
+          "amount": 20.0,
+          "per": "person/month"
+        },
+        "otherFees": [],
+        "sauna": false,
+        "buildingSauna": true,
+        "balcony": true,
+        "condition": "satisfactory",
+        "plotOwnership": "own",
+        "energyClass": "E",
+        "energyClassScale": 2018,
+        "heating": "district",
+        "pipeRenovation": {
+          "status": "planned",
+          "years": [
+            2027,
+            2028
+          ]
+        },
+        "renovationsDone": [
+          {
+            "year": 2019,
+            "text": "Vesikatto uusittu"
+          },
+          {
+            "year": 2015,
+            "text": "Julkisivujen ja parvekkeiden korjaus"
+          },
+          {
+            "year": 2009,
+            "text": "Lämmönvaihdin uusittu"
+          }
+        ],
+        "renovationsPlanned": [
+          {
+            "from": 2027,
+            "to": 2028,
+            "text": "Putkiremontti (LVIS-saneeraus), hankesuunnittelu käynnissä"
+          },
+          {
+            "from": 2026,
+            "to": 2026,
+            "text": "Ikkunoiden kuntotutkimus"
+          }
+        ]
+      },
+      "distractors": [
+        {
+          "text": "123456",
+          "isNot": "price",
+          "why": "ad number (Kohdenumero)"
+        },
+        {
+          "text": "20540",
+          "isNot": "price",
+          "why": "postcode"
+        }
+      ]
+    },
+    {
+      "id": "home-3",
+      "kind": "home",
+      "site": "etuovi.com",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "terraced house",
+        "leased plot with a plot-rent charge",
+        "no debt share shown",
+        "water fee paid in advance and settled later",
+        "no pipe renovation mentioned"
+      ],
+      "text": "Rivitalo | 3h, k, s, kph, wc, var, terassi, yht. 79 m²\nEsimerkkikuja 3 C, Kuokkala, Jyväskylä\nHinta\n165 000 €\nKoko\n79 m²\nVuosi\n1985\n\nRauhallinen päätyasunto omalla pihalla Kuokkalassa. Lähellä koulut, päiväkodit ja Kuokkalan palvelut.\nAsunnon perustiedot\nKohdenumero\n12345679\nSijainti\nJyväskylä\nKuokkala\nEsimerkkikuja 3 C, 40520\nTyyppi\nRivitalo\n(huoneisto)\nOmistusmuoto\nOmistusasunto\nHuoneistoselitelmä\n3h, k, s, kph, wc, var, terassi\nHuoneita\nKolmio\nAsuintilojen pinta-ala\n79 m²\nKokonaispinta-ala\n79 m²\nAsuinkerrosten määrä\n1 (yksitasoinen)\nRakennusvuosi\n1985\nKäyttöönottovuosi\n1985\nVapautuminen\nHeti vapaa\nHinta ja kustannukset\nHinta\nMyyntihinta\n165 000,00 €\nVelaton hinta\n165 000,00 €\nNeliöhinta\n2 088,61 €/m²\nVastike\nHoitovastike\n308,10 € / kk\nTontin vuokravastike\n63,20 € / kk\nYhtiövastike yhteensä\n371,30 € / kk\nMuut maksut\nVesimaksu\n25,00 € / hlö / kk\nLisätietoa maksuista\nVesimaksu ennakko, tasataan kulutuksen mukaan.\nAsunnon lisätiedot\nSauna\nAsunnossa on sauna\nAsunnon kunto\nTyydyttävä\nTehdyt remontit\nKylpyhuone remontoitu 2009.\nTaloyhtiö\nTaloyhtiön nimi\nAsunto Oy Esimerkkikuja 3\nRakennus- ja pintamateriaalit\nPuurunko, tiiliverhous.\nKattotyyppi\nHarjakatto\nKattomateriaali\nBetonitiili\nTehdyt remontit\n2020: Salaojien uusiminen.\n2014: Vesikaton uusiminen.\nTulevat remontit\n2026: Kuntoarvio. Märkätilojen kuntotutkimus.\n2028: Ikkunoiden uusiminen.\nEnergialuokka\nE (2018)\nTontin koko\n6 500 m²\nTontin omistus\nVuokra\nTontin vuokraaja\nJyväskylän kaupunki\nTontin vuokra-aika päättyy\n31.12.2045",
+      "expected": {
+        "buildingType": "terraced",
+        "city": "Jyväskylä",
+        "district": "Kuokkala",
+        "layout": "3h, k, s, kph, wc, var, terassi",
+        "rooms": 3,
+        "livingAreaM2": 79,
+        "totalAreaM2": 79,
+        "storeys": 1,
+        "floor": null,
+        "floorsTotal": null,
+        "elevator": null,
+        "buildingYear": 1985,
+        "debtFreePrice": 165000,
+        "sellingPrice": 165000,
+        "debtShare": 0,
+        "pricePerM2": 2088.61,
+        "maintenanceCharge": 308.1,
+        "financingCharge": null,
+        "plotRentCharge": 63.2,
+        "totalCharge": 371.3,
+        "waterFee": {
+          "amount": 25.0,
+          "per": "person/month",
+          "advance": true
+        },
+        "otherFees": [],
+        "sauna": true,
+        "condition": "satisfactory",
+        "plotOwnership": "leased",
+        "plotLessor": "Jyväskylän kaupunki",
+        "plotLeaseEnds": "2045-12-31",
+        "available": "now",
+        "energyClass": "E",
+        "energyClassScale": 2018,
+        "pipeRenovation": {
+          "status": "not-mentioned",
+          "years": []
+        },
+        "renovationsDone": [
+          {
+            "year": 2009,
+            "text": "Kylpyhuone remontoitu 2009.",
+            "scope": "flat"
+          },
+          {
+            "year": 2020,
+            "text": "Salaojien uusiminen."
+          },
+          {
+            "year": 2014,
+            "text": "Vesikaton uusiminen."
+          }
+        ],
+        "renovationsPlanned": [
+          {
+            "from": 2026,
+            "to": 2026,
+            "text": "Kuntoarvio. Märkätilojen kuntotutkimus."
+          },
+          {
+            "from": 2028,
+            "to": 2028,
+            "text": "Ikkunoiden uusiminen."
+          }
+        ]
+      },
+      "distractors": [
+        {
+          "text": "6 500 m²",
+          "isNot": "livingAreaM2",
+          "why": "plot size"
+        },
+        {
+          "text": "31.12.2045",
+          "isNot": "available",
+          "why": "end of the plot lease"
+        }
+      ],
+      "assumptions": [
+        "Velkaosuus is not shown. debtShare 0 is derived from Velaton hinta − Myyntihinta.",
+        "The labels 'Tontin vuokraaja' and 'Tontin vuokra-aika päättyy' come from Etuovi's UI strings; their layout on a live page was not seen."
+      ]
+    },
+    {
+      "id": "home-4",
+      "kind": "home",
+      "site": "free text (English)",
+      "uiLanguage": "en",
+      "format": "seller-written English description, pasted (e.g. from an ad description or a social-media post)",
+      "synthetic": true,
+      "features": [
+        "English number style (€312,000; €4.20)",
+        "charges given per m² and per month",
+        "'2-bedroom' = 3 rooms in Finnish counting",
+        "large housing-company loan share",
+        "leased plot"
+      ],
+      "text": "FOR SALE: Modern 2-bedroom apartment in Espoo (Tapiola area)\n\nBuilt 2020, 3rd floor of 6, lift. 68 m² + glazed balcony.\nDebt-free price: €312,000\nSelling price: €118,560 (housing company loan share €193,440)\nMaintenance charge: €4.20/m²/month (€285.60/month)\nCapital charge (rahoitusvastike): €13.90/m²/month (€945.20/month). The loan share can be paid off to drop this charge.\nWater: €22/person/month (advance payment)\nEnergy class B2018. District heating. Plot is leased from the City of Espoo.\nSauna in the building, parking space €45/month.\nViewings by appointment.",
+      "expected": {
+        "buildingType": "block-of-flats",
+        "city": "Espoo",
+        "district": "Tapiola",
+        "rooms": 3,
+        "bedrooms": 2,
+        "livingAreaM2": 68,
+        "floor": 3,
+        "floorsTotal": 6,
+        "elevator": true,
+        "buildingYear": 2020,
+        "balcony": true,
+        "debtFreePrice": 312000,
+        "sellingPrice": 118560,
+        "debtShare": 193440,
+        "pricePerM2": null,
+        "maintenanceCharge": 285.6,
+        "maintenanceChargePerM2": 4.2,
+        "financingCharge": 945.2,
+        "financingChargePerM2": 13.9,
+        "plotRentCharge": null,
+        "totalCharge": 1230.8,
+        "waterFee": {
+          "amount": 22,
+          "per": "person/month",
+          "advance": true
+        },
+        "otherFees": [
+          {
+            "name": "parking",
+            "amount": 45,
+            "per": "month"
+          }
+        ],
+        "buildingSauna": true,
+        "plotOwnership": "leased",
+        "energyClass": "B",
+        "energyClassScale": 2018,
+        "heating": "district",
+        "pipeRenovation": {
+          "status": "not-mentioned",
+          "years": []
+        }
+      },
+      "distractors": [
+        {
+          "text": "€4.20/m²/month",
+          "isNot": "maintenanceCharge",
+          "why": "per-m² rate; the monthly amount is €285.60"
+        }
+      ],
+      "assumptions": [
+        "Etuovi and Oikotie have no English UI, so English sale ads appear only as free text like this. 'totalCharge' 1230.80 is derived (285.60 + 945.20)."
+      ]
+    },
+    {
+      "id": "rent-1",
+      "kind": "rent",
+      "site": "vuokraovi.com",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "deposit given in months, not euros",
+        "insurance-price widget with a number",
+        "header '€/kk' vs details '€ / kk'",
+        "home insurance required (in the description)"
+      ],
+      "text": "Vuokrataan Kerrostalo Kaksio - Oulu Keskusta Esimerkkikatu 7\nKerrostalo | 2h + kt + parveke\nEsimerkkikatu 7, Keskusta, Oulu\nVuokra\n790 €/kk\nKoko\n48,5 m²\nVuosi\n1979\nRemontoitu kaksio keskustassa, kaikki palvelut kävelymatkan päässä.\n* Vuokra 790 €/kk\n* Vesimaksu 24 €/hlö/kk\n* Laajakaista sisältyy vuokraan\n* Vuokralainen tekee oman sähkösopimuksen\n* Kotivakuutus vaaditaan\nAsunnon perustiedot\nKohdenumero\nzz0001\nSijainti\nKeskusta\nOulu\nEsimerkkikatu 7\n,\n90100\nTyyppi\nAsuinhuoneisto\nAsumismuoto\nVapaarahoitteinen\nTalotyyppi\nKerrostalo\nHuoneistoselitelmä\n2h + kt + parveke\nHuoneita\nKaksio\nAsuintilojen pinta-ala\n48,5 m²\nRakennusvuosi\n1979\nKerros\n3/5\nKalustettu\nEi\nLemmikit sallittu\nKyllä\nTupakointi sallittu\nEi\nLaske hinta-arvio\nkotivakuutukselle\nAsunnon koko:\nm²\nHinta-arvio*:\n12\n€/kk\nLaske tarkka hinta\nVuokrasopimus ja kustannukset\nVuokra\n790 € / kk\nVuokranmaksupäivä\nKuukauden 5. päivä\nVapautuminen\n1.12.2026\nVuokrasopimuksen voimassaolo\nToistaiseksi voimassa oleva\nVakuus\n2 kk:n vuokra\nVesimaksu\n24 € / hlö / kk\nAsunnon lisätiedot\nParveke\nKyllä\nAsunnon kunto\nHyvä\nTaloyhtiö\nTaloyhtiössä on sauna\nEnergialuokka\nD (2018)\nYksityinen vuokranantaja",
+      "expected": {
+        "rent": 790,
+        "deposit": 1580,
+        "depositMonths": 2,
+        "depositNote": "2 kk:n vuokra",
+        "waterFee": {
+          "amount": 24,
+          "per": "person/month"
+        },
+        "contractType": "open-ended",
+        "available": "2026-12-01",
+        "rentDueDay": 5,
+        "buildingType": "block-of-flats",
+        "city": "Oulu",
+        "district": "Keskusta",
+        "layout": "2h + kt + parveke",
+        "rooms": 2,
+        "livingAreaM2": 48.5,
+        "floor": 3,
+        "floorsTotal": 5,
+        "buildingYear": 1979,
+        "furnished": false,
+        "petsAllowed": true,
+        "smokingAllowed": false,
+        "homeInsuranceRequired": true,
+        "subsidized": false,
+        "landlordType": "private",
+        "balcony": true,
+        "condition": "good",
+        "buildingSauna": true,
+        "energyClass": "D",
+        "energyClassScale": 2018,
+        "rentIncludes": [
+          "broadband"
+        ],
+        "electricityContractByTenant": true
+      },
+      "distractors": [
+        {
+          "text": "Hinta-arvio*:\n12\n€/kk",
+          "isNot": "rent or any fee",
+          "why": "the site's home-insurance price estimate"
+        },
+        {
+          "text": "90100",
+          "isNot": "price",
+          "why": "postcode"
+        }
+      ],
+      "assumptions": [
+        "'deposit' 1580 is derived (2 × 790)."
+      ]
+    },
+    {
+      "id": "rent-2",
+      "kind": "rent",
+      "site": "vuokraovi.com",
+      "uiLanguage": "en",
+      "format": "ad page in the English UI (/en/item/), whole-page copy",
+      "synthetic": true,
+      "features": [
+        "English labels with Finnish free-text values",
+        "'2 bedrooms' = 3 rooms",
+        "dd/mm/yyyy with 'By'",
+        "fixed term, then open-ended",
+        "page title says 'For sale' on a rental"
+      ],
+      "text": "For sale Block of flats 2 bedrooms - Tampere Hervanta Esimerkkitie 2 A\nBlock of flats | 3h + k + kph + las.parv\nEsimerkkitie 2 A, Hervanta, Tampere\nRent\n1 090 €/month\nSize\n71 m²\nYear\n2008\nTilava kolmio Hervannassa, lyhyt matka kampukselle ja ratikalle. Sopimus ensin 12 kk määräaikainen.\nBasic info about property\nRental number\nzz0002\nLocation\nHervanta\nTampere\nEsimerkkitie 2 A\n,\n33720\nType\nApartment\nLiving form\nNon-subsidized\nHousing type\nBlock of flats\nFlat layout\n3h + k + kph + las.parv\nNumber of rooms\n2 bedrooms\nLiving area\n71 m²\nConstruction year\n2008\nFloor\n4/6\nFurnished\nNo\nPets allowed\nNo\nSmoking allowed\nNo\nCalculate price estimate for\nhome insurance\nSize of home:\nm²\nPrice estimate*:\n15\n€ / month\nCalculate exact price\nRent and costs\nRent\n1 090 € / month\nRent payment day\nKuukauden 2. päivä\nAvailability\nBy 01/12/2026\nAgreement period\nFixed-term, then open-ended\nDeposit\n2 180 €\nWater fee\n25 € / person / month\nApartment details\nBalcony\nYes\nProperty condition\nGood\nHousing company\nThe housing company has a sauna\nEnergy class\nC (2013)\nPrivate lessor",
+      "expected": {
+        "rent": 1090,
+        "deposit": 2180,
+        "depositMonths": 2,
+        "waterFee": {
+          "amount": 25,
+          "per": "person/month"
+        },
+        "contractType": "fixed-then-open-ended",
+        "fixedTermMonths": 12,
+        "available": "2026-12-01",
+        "availableQualifier": "by",
+        "rentDueDay": 2,
+        "buildingType": "block-of-flats",
+        "city": "Tampere",
+        "district": "Hervanta",
+        "layout": "3h + k + kph + las.parv",
+        "rooms": 3,
+        "bedrooms": 2,
+        "livingAreaM2": 71,
+        "floor": 4,
+        "floorsTotal": 6,
+        "buildingYear": 2008,
+        "furnished": false,
+        "petsAllowed": false,
+        "smokingAllowed": false,
+        "homeInsuranceRequired": null,
+        "subsidized": false,
+        "landlordType": "private",
+        "balcony": true,
+        "condition": "good",
+        "buildingSauna": true,
+        "energyClass": "C",
+        "energyClassScale": 2013
+      },
+      "distractors": [
+        {
+          "text": "Price estimate*:\n15\n€ / month",
+          "isNot": "rent or any fee",
+          "why": "the site's home-insurance price estimate"
+        },
+        {
+          "text": "For sale",
+          "isNot": "kind",
+          "why": "the English page title says 'For sale' even on rentals"
+        }
+      ],
+      "assumptions": [
+        "'2 bedrooms' for Kolmio is assumed by analogy with the observed 'Kaksio' → '1 bedroom'.",
+        "'depositMonths' 2 is derived (2180 / 1090). 'fixedTermMonths' 12 comes from the Finnish description."
+      ]
+    },
+    {
+      "id": "rent-3",
+      "kind": "rent",
+      "site": "asunnot.oikotie.fi",
+      "uiLanguage": "fi",
+      "format": "ad page, whole-page copy",
+      "synthetic": true,
+      "features": [
+        "deposit as a number plus a note in months",
+        "water fee per flat vs per person (the note wins)",
+        "home insurance required in 'Muut ehdot'",
+        "'Heti vapaa'",
+        "minimum term inside the contract text"
+      ],
+      "text": "Vuokra-asunnot\nKuopio\nKeskusta\nEsimerkkikatu 15 B, 70100 Kuopio\n695 € / kk\n●\n34,5 m²\nEsimerkkikatu 15 B, Keskusta, Kuopio\n●\n1h + kk + kph + parv\nKatso kaikki kuvat\nVuokra/kk\n695 € / kk\nVapautuu\nHeti vapaa\nAsuinpinta-ala\n34,5 m²\nHuoneita\n1\nRakennusvuosi\n1972\nRakennuksen tyyppi\nKerrostalo\nKaupunginosa\nKeskusta\nKaupunki\nKuopio\nJaa tämä kohde\nSiisti yksiö aivan torin tuntumassa. Hissitalo, oma parveke pihan puolelle.\n-Vesimaksu 22e/kk/henkilö\n-Irtisanomisaika 1kk\nPerustiedot\nSijainti\nEsimerkkikatu 15 B\n,\n70100\nKuopio\nKaupunginosa\nKeskusta\nKohdenumero\n123458\nKerros\n2 / 5\nAsuinpinta-ala\n34,5 m²\nHuoneiston kokoonpano\n1h + kk + kph + parv\nHuoneita\n1\nKunto\nHyvä\nVapautuu\nHeti vapaa\nParveke\nKyllä\nVuokrataan kalustettuna\nEi\nAsumistyyppi\nVuokra\nLemmikkieläimet sallittu\nEi\nMuut ehdot\nTupakointi kielletty, Kotivakuutus vaaditaan\nVuokralaistyyppi\nPäävuokralainen\nHinta\nVuokra/kk\n695 € / kk\nVakuus\n1 390 €\nLisätietoa vakuudesta\n2 kk vuokra\nLisätietoa vuokra-ajasta\nToistaiseksi voimassa oleva, ensimmäinen mahdollinen irtisanominen 12 kk sopimuksen alusta\nMuut maksut\nVesimaksu\n22 € / kk\nVesimaksun lisätiedot\n22 € / hlö / kk\nTalon ja tontin tiedot\nRakennuksen tyyppi\nKerrostalo\nRakennusvuosi\n1972\nKerroksia\n5\nHissi\nKyllä\nTaloyhtiössä on sauna\nKyllä\nEnergialuokka\nE2018\nLämmitys\nKaukolämpö",
+      "expected": {
+        "rent": 695,
+        "deposit": 1390,
+        "depositMonths": 2,
+        "depositNote": "2 kk vuokra",
+        "waterFee": {
+          "amount": 22,
+          "per": "person/month"
+        },
+        "contractType": "open-ended",
+        "earliestTerminationMonths": 12,
+        "noticePeriodMonths": 1,
+        "available": "now",
+        "buildingType": "block-of-flats",
+        "city": "Kuopio",
+        "district": "Keskusta",
+        "layout": "1h + kk + kph + parv",
+        "rooms": 1,
+        "livingAreaM2": 34.5,
+        "floor": 2,
+        "floorsTotal": 5,
+        "elevator": true,
+        "buildingYear": 1972,
+        "furnished": false,
+        "petsAllowed": false,
+        "smokingAllowed": false,
+        "homeInsuranceRequired": true,
+        "balcony": true,
+        "condition": "good",
+        "buildingSauna": true,
+        "energyClass": "E",
+        "energyClassScale": 2018,
+        "heating": "district"
+      },
+      "distractors": [
+        {
+          "text": "12 kk",
+          "isNot": "depositMonths",
+          "why": "earliest termination point of the contract"
+        },
+        {
+          "text": "Vesimaksu\n22 € / kk",
+          "isNot": "per-flat water fee",
+          "why": "'Vesimaksun lisätiedot' says per person, and that wins"
+        }
+      ]
+    },
+    {
+      "id": "rent-4",
+      "kind": "rent",
+      "site": "asunnot.oikotie.fi",
+      "uiLanguage": "fi+en",
+      "format": "ad page, whole-page copy; Finnish labels with an English description",
+      "synthetic": true,
+      "features": [
+        "no deposit when renting through Qasa",
+        "ISO date in 'Lisätietoa vapautumisesta'",
+        "'12 kk' term that is not a deposit",
+        "water included in the rent",
+        "parking fee in the English text",
+        "furnished"
+      ],
+      "text": "Vuokra-asunnot\nTurku\nKupittaa\nEsimerkkikatu 21, 20520 Turku\n640 € / kk\n●\n29 m²\nEsimerkkikatu 21, Kupittaa, Turku\n●\n1h + kt + kph\nKatso kaikki kuvat\nVuokra/kk\n640 € / kk\nVapautuu\n01.11.2026\nAsuinpinta-ala\n29 m²\nHuoneita\n1\nRakennusvuosi\n2015\nRakennuksen tyyppi\nKerrostalo\nKaupunginosa\nKupittaa\nKaupunki\nTurku\nJaa tämä kohde\nBright studio next to Kupittaa station, 10 min walk to the university campuses.\nRent includes water and a 100M broadband. The tenant makes their own electricity contract.\nFurnished: bed, sofa, desk and chairs. Parking space available for 40 €/month.\nMinimum lease 12 months, notice period 1 month. Home insurance is required.\nPerustiedot\nSijainti\nEsimerkkikatu 21\n,\n20520\nTurku\nKaupunginosa\nKupittaa\nKohdenumero\n123457\nAsuinpinta-ala\n29 m²\nHuoneiston kokoonpano\n1h + kt + kph\nHuoneita\n1\nKunto\nHyvä\nVapautuu\n01.11.2026\nLisätietoa vapautumisesta\n2026-11-01 – Toistaiseksi voimassa\nVuokrataan kalustettuna\nKyllä\nAsumistyyppi\nVuokra\nLemmikkieläimet sallittu\nEi\nMuut ehdot\nTupakointi kielletty, Kotivakuutus vaaditaan\nLinkit\nVuokraa tästä\nHinta\nVuokra/kk\n640 € / kk\nLisätietoa vakuudesta\nEi vakuutta, kun käytät Qasan vuokrasopimusta ja sinulla on moitteettomat luottotiedot.\nLisätietoa vuokra-ajasta\n12 kk\nMuut maksut\nVesimaksun lisätiedot\nSisältyy vuokraan\nTalon ja tontin tiedot\nRakennuksen tyyppi\nKerrostalo\nRakennusvuosi\n2015\nKerroksia\n6\nHissi\nKyllä\nEnergialuokka\nC2013\nLämmitys\nKaukolämpö",
+      "expected": {
+        "rent": 640,
+        "deposit": null,
+        "depositMonths": null,
+        "depositNote": "No deposit with a Qasa rental contract and a clean credit record",
+        "waterIncluded": true,
+        "waterFee": null,
+        "rentIncludes": [
+          "water",
+          "broadband"
+        ],
+        "electricityContractByTenant": true,
+        "otherFees": [
+          {
+            "name": "parking",
+            "amount": 40,
+            "per": "month",
+            "optional": true
+          }
+        ],
+        "contractType": "open-ended",
+        "minTermMonths": 12,
+        "noticePeriodMonths": 1,
+        "available": "2026-11-01",
+        "buildingType": "block-of-flats",
+        "city": "Turku",
+        "district": "Kupittaa",
+        "layout": "1h + kt + kph",
+        "rooms": 1,
+        "livingAreaM2": 29,
+        "floor": null,
+        "floorsTotal": 6,
+        "elevator": true,
+        "buildingYear": 2015,
+        "furnished": true,
+        "petsAllowed": false,
+        "smokingAllowed": false,
+        "homeInsuranceRequired": true,
+        "condition": "good",
+        "energyClass": "C",
+        "energyClassScale": 2013,
+        "heating": "district"
+      },
+      "distractors": [
+        {
+          "text": "12 kk",
+          "isNot": "depositMonths",
+          "why": "minimum lease"
+        },
+        {
+          "text": "40 €/month",
+          "isNot": "rent",
+          "why": "optional parking"
+        },
+        {
+          "text": "100M",
+          "isNot": "anything",
+          "why": "broadband speed"
+        }
+      ],
+      "assumptions": [
+        "The Qasa no-deposit sentence is quoted as seen on Oikotie (2 of 6 ads). 'Sisältyy vuokraan' as the water note is assumed wording."
+      ]
+    }
+  ]
+}

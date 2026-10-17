@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "title": "Motorcycle test ads for the rule-based reader, in the same shape as sample-ads.json",
+    "observed": "2026-10-17",
+    "method": "Nettimoto's labels were read from the rendered text of a public ad page (www.nettimoto.com/yamaha/yzf-r6/…): the same layout as Nettiauto, plus 'Ajoneuvolaji' (vehicle class), 'Moottori' as '600 cm³, 4-tahti', 'Vetotapa' 'Ketjuveto' and 'Ajoneuvon tyyppi'. The page starts with a menu that lists every class in the plural ('Mopot', 'Moottorikelkat', 'Mönkijät', 'Skootterit'), so a reader must not treat those words as the ad's class. The first header price is the current one; the second, struck through, is the old one and can be lower.",
+    "privacy": "All ads are synthetic except moto-4, which is Vaishnav's own example text. No names, phone numbers or street addresses."
+  },
+  "tests": [
+    {
+      "id": "moto-1",
+      "kind": "moto",
+      "site": "nettimoto.com",
+      "uiLanguage": "fi",
+      "synthetic": true,
+      "features": ["the site's menu with plural class names before the ad", "engine size inside 'Moottori'", "class in 'Ajoneuvolaji'", "aftermarket exhaust in the free text", "power in kW in the free text"],
+      "text": "Siirry sisältöön\nNettimoto\nSister sites\nPikalinkit\nKirjaudu\nMyy motosi\nHaku\nUusimmat\nPikalinkit\nCafe Racerit\nKatsotuimmat\nKevarit\nMaksiskootterit\nMoottorikelkat\nMoottoripyörät\nMopoautot\nMopot\nMönkijät\nSkootterit\nTieliikennemönkijät\nMyydään\nYamaha\nMT-07\nIlmoitus\nYamaha MT-07\n6 490 €\nalk. 129,10 €/kk\nPäivitetty 14.10.2026\nTampere, Pirkanmaa\nID 3400001\nPerustiedot\nRekisterinumero\nABC-12\nVaihteisto\nManuaali\nIlmoitustyyppi\nMyydään\nMittarilukema\n15 400 km\nVäri\nSininen\nMoottori\n689 cm³, 4-tahti\nAjoneuvolaji\nMoottoripyörä\nVetotapa\nKetjuveto\nAjoneuvon tyyppi\nKatu / matka / sport\nVuosimalli\n2019 (ensirek. 4-2019)\nLisätiedot\nABS. Akrapovic-pakoputkisto, alkuperäinen mukana. Huollettu merkkiliikkeessä, huoltokirja. Uudet renkaat 2025. Teho 55 kW.\nMyyjä\nJäsenenä 4 vuotta\nTunnistettu yksityinen myyjä valmiina Fiksuihin kauppoihin.\nTampere, Pirkanmaa",
+      "expected": {"make": "Yamaha", "model": "MT-07", "year": 2019, "km": 15400, "price": 6490, "engineCc": 689, "powerKw": 55, "licence": "A", "sellerType": "private", "city": "Tampere", "abs": true, "modified": true}
+    },
+    {
+      "id": "moto-2",
+      "kind": "moto",
+      "site": "free text (English)",
+      "uiLanguage": "en",
+      "synthetic": true,
+      "features": ["English number style", "A2 power in kW", "office fee mid-line", "dealer"],
+      "text": "For sale: Kawasaki Z650 2021, A2-compatible\nMileage 8 200 km, 649 cc, 35 kW (A2 version), ABS\nDealer: Moto Esimerkki Oy, Vantaa\nServiced at 6 000 km. Two keys, owner's manual.\nPrice €6,990, office fee €195",
+      "expected": {"make": "Kawasaki", "model": "Z650", "year": 2021, "km": 8200, "price": 6990, "officeFee": 195, "engineCc": 649, "powerKw": 35, "licence": "A2", "sellerType": "dealer", "city": "Vantaa", "abs": true}
+    },
+    {
+      "id": "moto-3",
+      "kind": "moto",
+      "site": "free text (Finnish)",
+      "uiLanguage": "fi",
+      "synthetic": true,
+      "features": ["125 cm³ scooter", "a make that also builds cars"],
+      "text": "Myydään skootteri Honda PCX 125\nVuosimalli 2021, ajettu 6 300 km\n125 cm³, ABS, Smart Key\nTalvisäilytetty sisällä, huollettu keväällä 2026\nHinta 2 950 €\nYksityinen myyjä, Oulu",
+      "expected": {"make": "Honda", "model": "PCX 125", "year": 2021, "km": 6300, "price": 2950, "engineCc": 125, "licence": "A1", "sellerType": "private", "city": "Oulu", "abs": true}
+    },
+    {
+      "id": "moto-4",
+      "kind": "moto",
+      "site": "free text (English)",
+      "uiLanguage": "en",
+      "synthetic": false,
+      "source": "Vaishnav's example, 2026-10-17",
+      "features": ["no year", "lowered springs", "'Inspected' on a vehicle class with no periodic inspection"],
+      "text": "Yamaha YZF-R125\n58 000 km, 125 cc, petrol, manual\nLowered springs, new brakes\nInspected 3/2026\nPrivate seller, Turku\nQuick sale: 4 000 €",
+      "expected": {"make": "Yamaha", "model": "YZF-R125", "year": null, "km": 58000, "price": 4000, "engineCc": 125, "licence": "A1", "sellerType": "private", "city": "Turku", "lastInspection": "2026-03", "modified": true}
+    },
+    {
+      "id": "moto-5",
+      "kind": "moto",
+      "site": "free text (Finnish)",
+      "uiLanguage": "fi",
+      "synthetic": true,
+      "features": ["big bike, licence class A", "year in the title after the model", "a make that also builds cars", "dealer named in the text"],
+      "text": "BMW R 1250 GS Adventure 2020\nAjettu 41 000 km, 1254 cm³, 100 kW\nAjokorttiluokka A\nKotelot, sumuvalot, vakionopeudensäädin\nMerkkihuollettu, huoltokirja\nHinta 17 900 €\nMoottoripyöräliike Esimerkki, Helsinki",
+      "expected": {"make": "BMW", "model": "R 1250 GS Adventure", "year": 2020, "km": 41000, "price": 17900, "engineCc": 1254, "powerKw": 100, "licence": "A", "sellerType": "dealer", "city": "Helsinki"}
+    }
+  ],
+  "notSupported": [
+    {"id": "moped-1", "want": "moped", "text": "Myydään mopo Derbi Senda 50\nVuosimalli 2019, 50 cm³\nAM-kortti riittää\nHinta 1 200 €\nLahti"},
+    {"id": "moped-2", "want": "moped", "text": "Myydään\nTunturi\nSport\nIlmoitus\nTunturi Sport\n650 €\nMittarilukema\n9 000 km\nMoottori\n49 cm³, 2-tahti\nAjoneuvolaji\nMopo\nVuosimalli\n1981"},
+    {"id": "snowmobile-1", "want": "snowmobile", "text": "Lynx Rave RE 600R moottorikelkka 2016\n4 800 km\nHinta 6 500 €\nRovaniemi"},
+    {"id": "atv-1", "want": "atv", "text": "Mönkijä Can-Am Outlander 570 XT 2018\n3 200 km, traktorirekisterissä\nHinta 7 900 €\nKuopio"}
+  ]
+}

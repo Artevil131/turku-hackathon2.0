@@ -1,5 +1,7 @@
 # Privacy and law: what the design must satisfy
 
+> Written for **Ahead**, our first concept. Our entry is now **What if…** (`apps/what-if`, D-017 in DECISIONS.md).
+
 The concept reads the most personal data a person has. It is lawful and
 defensible only because of where the processing happens and what never
 happens. This file lists the rules, what each one demands of the design,
