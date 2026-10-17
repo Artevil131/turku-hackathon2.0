@@ -49,7 +49,7 @@ test("move journey uses the DVV window and the move date", async () => {
   expect(dvv?.due).toBe("2026-11-08");
   expect(dvv?.body).toContain("1 Oct");
   expect(j?.items.find((i) => i.id === "electricity")?.due).toBe("2026-10-18");
-  expect(j?.title).toBe("Move to Turku, 1 Nov");
+  expect(j?.title).toBe("Move to Turku, 1 November");
   expect(j?.eventId).toBe(mockMove.id);
 });
 

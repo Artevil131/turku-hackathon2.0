@@ -71,11 +71,11 @@ export function item(locale: Locale, spec: ItemSpec): JourneyItem {
   };
 }
 
-/** "1.11." in Finnish, "1 Nov" in English. */
+/** "1.11." in Finnish, "1 November" in English. */
 export function shortDate(iso: IsoDate, locale: Locale): string {
   const [y, m, d] = iso.split("-").map(Number);
   const date = new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, d ?? 1));
   return locale === "fi"
     ? `${date.getUTCDate()}.${date.getUTCMonth() + 1}.`
-    : date.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+    : date.toLocaleDateString("en-GB", { day: "numeric", month: "long", timeZone: "UTC" });
 }

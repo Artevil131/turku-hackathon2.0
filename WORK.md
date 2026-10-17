@@ -360,6 +360,7 @@ service workers; whether the Android build honours it is not confirmed.
   and list entrances, pressed buttons, the sheet, and the share's rows
   lifting off then arriving, with the counter flipping. Run the API
   beside the preview: `node apps/api/src/server.ts`.
+- A changed libs/journeys/src/common.ts month format to long per the finish review.
 
 ## Contract changes
 

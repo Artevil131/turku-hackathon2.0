@@ -269,24 +269,27 @@ h1 + .muted {
   display: grid;
   gap: 12px;
 }
+/* A timetable row: date cell, then the event. Yellow stays with selection. */
 .event-row .row-button {
   position: relative;
   display: grid;
-  gap: 10px;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  column-gap: 14px;
   padding: 16px 46px 18px 18px;
   background: var(--surface);
   border-color: var(--line);
   border-radius: var(--radius);
 }
 .event-date {
-  width: fit-content;
-  background: var(--selected);
-  color: var(--selected-text);
-  border-radius: 4px;
-  padding: 2px 8px;
+  min-width: 7ch;
+  color: var(--muted);
   font-size: 16px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
+}
+.event-row .row-title:first-child {
+  grid-column: 1 / -1;
 }
 .event-arrow {
   position: absolute;
@@ -491,11 +494,10 @@ nav button.active {
 .answer-actions {
   padding-bottom: 12px;
 }
-.answer-actions .primary {
-  flex-basis: 100%;
-}
-.answer-actions > button:not(.primary) {
-  flex: 1;
+/* Three full-width answers, primary first: "Not now" never shares a line with a two-line "Never ask about this". */
+.answer-actions > button {
+  flex: 1 1 100%;
+  min-height: 48px;
 }
 .back {
   margin: -10px 0 18px -12px;
@@ -550,10 +552,14 @@ nav button.active {
 }
 .card-foot {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   margin-top: 18px;
+}
+.card-foot .check {
+  margin-left: auto;
 }
 a {
   color: var(--accent);
@@ -571,8 +577,10 @@ a {
   flex: none;
 }
 .card a.service {
+  flex: 1 1 100%;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 48px;
   padding: 10px 14px;
   border-radius: 8px;
@@ -743,16 +751,21 @@ progress {
 .share-card {
   margin: 28px 0 8px;
   padding: 20px;
-  border: 1px dashed var(--line);
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
 }
 .share-card p {
   margin: 0 0 12px;
 }
+/* The only outbound action is the only teal button on the journey. */
 .share-button {
   width: 100%;
   min-height: 52px;
   font-weight: 650;
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
 }
 .shared-line {
   font-weight: 650;

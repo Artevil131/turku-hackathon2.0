@@ -121,7 +121,7 @@ A phone-first operating interface informed by Finnish swimming-hall wayfinding: 
 Petrol frames the app; action teal identifies buttons and links. Deep ink carries the reading hierarchy. The pool ground keeps the workspace distinct from the shell.
 
 ### Secondary
-Acid yellow identifies selection and event dates. Its dark selected ink remains constant between themes. Warning and danger colors are semantic, never decoration.
+Acid yellow identifies selection only; event dates are muted ink. Its dark selected ink remains constant between themes. Warning and danger colors are semantic, never decoration.
 
 ### Neutral
 White surfaces sit on the cool reading ground. Secondary ink and dividing lines retain the same hue family. Dark mode uses the documented dark token family rather than inverting the page.
@@ -142,19 +142,20 @@ Flat by default: colored fields, 1px outlines and spacing carry depth. Only the 
 
 ## Shapes
 
-Four radii: 4px inside segmented controls and on date cells; 8px on every control, payload row, segmented group and service link; 12px on event, journey and share surfaces; 18px on dialogs. Source switches use a 20px pill track with a circular thumb. No ornamental edge stripes or physical-material imitations.
+Four radii: 4px inside segmented controls; 8px on every control, payload row, segmented group and service link; 12px on event, journey and share surfaces; 18px on dialogs. Source switches use a 20px pill track with a circular thumb. No ornamental edge stripes or physical-material imitations.
 
 ## Components
 
 - **Buttons:** 48px minimum height; primary actions use action teal, secondary actions a bordered surface. Main Check now and Continue actions are full-width. Hover darkens meaningful controls; focus uses a visible 3px outline.
 - **Source switches:** a 56×44px hit area contains a 32px track. Selection changes the row field and moves the thumb 24px in 160ms with exponential ease-out. Reduced motion removes the transition. The list's top rule belongs to the first row, so it spans the selected field.
 - **Settings:** native radios in segmented groups; selected options use acid yellow. Language and theme choices are not header controls.
-- **Events:** full-width buttons with date cells and a consistent drawn arrow. The detector supplies the wording. With something to answer, "Needs your answer" is the home screen's heading; the tagline is the quiet state's.
-- **Notices:** the inference as the heading, one muted basis line, the question at title size, three answers above the evidence. Back at the top like a journey.
-- **Journeys:** cards ordered warning, to do, info, compare, insurance, then by due date, so help comes first and insurance is one card among many. No kind label: the warning ground carries the kind, and the word is visually hidden for screen readers. Readable first sentences (three lines at most), expandable detail, due dates, service/source links and todo checkboxes with a visible "Done".
+- **Events:** full-width buttons read as timetable rows: a muted, tabular date cell (7ch) in the first column, the title in the second, and a consistent drawn arrow. The detector supplies the wording. With something to answer, "Needs your answer" is the home screen's heading; the tagline is the quiet state's.
+- **Notices:** the inference as the heading, one muted basis line, the question at title size, three full-width answers stacked primary first (48px each, so Finnish never wraps beside a neighbour) above the evidence. Back at the top like a journey.
+- **Journeys:** cards ordered warning, to do, info, compare, insurance, then by due date, so help comes first and insurance is one card among many. No kind label: the warning ground carries the kind, and the word is visually hidden for screen readers. Readable first sentences (three lines at most), expandable detail, due dates, service/source links and todo checkboxes with a visible "Done". A service link fills the card's width; "Done" sits right-aligned on its own line.
 - **Chips:** muted ink, never teal; teal means tappable only.
 - **Navigation:** petrol field, pale labels and a yellow active destination. A small outlined settings action remains in the header.
 - **Boundary strip:** inline label (16px) and outbound-request count (20px), with no oversized metric styling. After a share the strip's outline and count turn acid yellow and stay that way: the one number that changed keeps its mark.
+- **Share card:** a solid surface like the journey cards (1px line, no dashes); its "Share this event with If" is the only teal button on the journey, since it is the only outbound action.
 - **Share sheet:** the three payload rows, one "Share with If" and one "Keep it on this phone", stacked full width; "Done" alone after sending.
 
 ## Motion
