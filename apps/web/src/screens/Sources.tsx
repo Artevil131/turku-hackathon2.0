@@ -38,6 +38,22 @@ export function SourceList({ sources, onChange }: Props) {
             />
           </li>
         ))}
+        {/* Never a source (AGENTS.md: no health signals, ever). Shown off and locked so the rule is visible. */}
+        <li className="row locked">
+          <div className="grow">
+            <div className="row-title">{t("source.health")}</div>
+            <div className="muted">{t("source.health.what")}</div>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={false}
+            aria-disabled="true"
+            aria-label={t("source.health")}
+            className="switch"
+            disabled
+          />
+        </li>
       </ul>
       {sheet && (
         <div className="scrim">

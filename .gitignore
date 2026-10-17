@@ -52,6 +52,8 @@ libs/embed/models/
 libs/embed/models-public/
 # ONNX Runtime WASM files copied from node_modules (scripts/copy-ort.ts); never committed
 apps/web/public/ort/
+# TLS certificate and private key for phone mode (mkcert); the key must never be committed
+apps/web/certs/
 
 # cached open data for the offline demo is committed (WORK.md, libs/opendata)
 !libs/opendata/data/

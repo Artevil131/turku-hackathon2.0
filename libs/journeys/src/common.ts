@@ -17,6 +17,8 @@ export interface BuilderOptions {
   warnings?: readonly FmiWarning[];
   /** When `warnings` were fetched, shown to the user next to "no warnings". */
   warningsFetchedAt?: string;
+  /** The warnings are a labelled example for the demo (`?fmi=example`), not FMI data: every card says so. */
+  warningsAreExample?: boolean;
 }
 
 export const todayIso = (): IsoDate => new Date().toISOString().slice(0, 10);

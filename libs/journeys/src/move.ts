@@ -185,7 +185,12 @@ function fmiItems(args: {
   if (!place) return [];
   const warnings = options.warnings ?? cachedWarnings;
   const fetchedAt = options.warnings ? options.warningsFetchedAt : (options.warningsFetchedAt ?? cachedWarningsFetchedAt);
-  const source = { name: { fi: "Ilmatieteen laitos, avoin data", en: "Finnish Meteorological Institute, open data" }, url: FMI_SOURCE.url };
+  const source = options.warningsAreExample
+    ? {
+        name: { fi: "Esimerkki demoa varten, ei voimassa oleva varoitus", en: "Example for the demo, not a current warning" },
+        url: FMI_SOURCE.url,
+      }
+    : { name: { fi: "Ilmatieteen laitos, avoin data", en: "Finnish Meteorological Institute, open data" }, url: FMI_SOURCE.url };
 
   if (!regionOfMunicipality(place)) {
     return [

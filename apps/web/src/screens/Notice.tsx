@@ -1,5 +1,7 @@
 import type { LedgerEntry, LedgerStatus, Snippet } from "@ahead/contract";
-import { formatDate, type Key, useI18n } from "../i18n.tsx";
+import { describe } from "@ahead/detect/describe";
+import { type Key, useI18n } from "../i18n.tsx";
+import { today } from "../today.ts";
 
 interface Props {
   entry: LedgerEntry;
@@ -8,20 +10,20 @@ interface Props {
   onAnswer(status: Exclude<LedgerStatus, "pending">): void;
 }
 
-/** A detected event as a question, with the evidence behind it. */
+/** A detected event as a question, with the evidence behind it. The wording is A's templates (`describe`). */
 export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
   const { t, locale } = useI18n();
   const { event } = entry;
+  const text = describe(event, locale, today());
   const byId = new Map(snippets.map((s) => [s.id, s]));
   // The detector's score is an unbounded sum, not a probability, so the notice states its basis instead.
   const sources = new Set(event.evidence.map((e) => byId.get(e.snippetId)?.source ?? e.snippetId)).size;
-  const date = event.estimatedDate ? formatDate(event.estimatedDate, locale) : "";
 
   return (
     <section>
-      <h1>{t(`notice.${event.type}` as Key, { date })}</h1>
+      <h1>{text.title}</h1>
       <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
-      <h2>{t("notice.why")}</h2>
+      <h2>{text.why}</h2>
       <ul className="list">
         {event.evidence.map((ev) => {
           const snippet = byId.get(ev.snippetId);
@@ -36,22 +38,23 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
                 <span className="muted">{t("notice.removed")}</span>
               ) : (
                 <button type="button" onClick={() => onRejectEvidence(ev.snippetId)}>
-                  {t("notice.notThis")}
+                  {text.answers.notThis}
                 </button>
               )}
             </li>
           );
         })}
       </ul>
+      <p>{text.question}</p>
       <div className="actions">
         <button type="button" className="primary" onClick={() => onAnswer("confirmed")}>
-          {t("notice.confirm")}
+          {text.answers.confirm}
         </button>
         <button type="button" onClick={() => onAnswer("dismissed")}>
-          {t("notice.later")}
+          {text.answers.notNow}
         </button>
         <button type="button" className="quiet" onClick={() => onAnswer("never")}>
-          {t("notice.never")}
+          {text.answers.never}
         </button>
       </div>
     </section>

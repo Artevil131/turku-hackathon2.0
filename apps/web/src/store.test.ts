@@ -24,3 +24,15 @@ test("ledger and journey round-trip, and eraseAll clears them", async () => {
   expect(await s.journey("evt-move-1")).toBeUndefined();
   expect((await s.sources()).every((x) => !x.enabled)).toBe(true);
 });
+
+test("vectors persist and are erased with everything else", async () => {
+  const s = createStore("t3");
+  expect(await s.vectors()).toBeUndefined();
+  const snapshot = { modelId: "m", dim: 2, ids: ["a", "b"], data: new Float32Array([1, 0, 0, 1]) };
+  await s.putVectors(snapshot);
+  const back = await s.vectors();
+  expect(back?.ids).toEqual(["a", "b"]);
+  expect(Array.from(back?.data ?? [])).toEqual([1, 0, 0, 1]);
+  await s.eraseAll();
+  expect(await s.vectors()).toBeUndefined();
+});

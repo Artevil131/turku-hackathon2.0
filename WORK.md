@@ -100,6 +100,62 @@ the mock event for `detector.detect(adapterSnippets, today)` behind
 "Check now", with the model loaded once and cached. Then the end-to-end
 run on a phone, offline, network tab open.
 
+## Running on a phone (machine B)
+
+The service worker, and with it offline use, needs a secure origin. On a
+phone that means `localhost` or HTTPS with a certificate the phone trusts.
+A self-signed certificate gives HTTPS but Chrome will not register a
+service worker on it. The cache belongs to one exact origin (scheme, host,
+port): open the app at the same address on stage as when it was primed.
+None of the paths below has been tried on a real phone yet; the laptop
+side is checked by `node scripts/offline-check.ts` (headless Chrome).
+
+Once, on the laptop:
+
+    pnpm install
+    node libs/synthetic/src/cli.ts        # until the phones are committed
+    pnpm --filter @ahead/web assets       # model (130 MB) and ONNX runtime into public/
+
+**Path 1, recommended: Android over USB.** No certificate, no Wi-Fi.
+1. Phone: Settings → About phone → tap "Build number" seven times, then
+   Developer options → USB debugging on.
+2. Laptop: `pnpm --filter @ahead/web serve` (production build on
+   http://localhost:4173).
+3. Cable in. Laptop Chrome → `chrome://inspect/#devices` → Discover USB
+   devices (accept the prompt on the phone) → Port forwarding: `4173` →
+   `localhost:4173`, Enable port forwarding.
+4. Phone Chrome: `http://localhost:4173/?engine=core`. `localhost` counts as
+   secure, so the service worker registers. Turn the sources on and press
+   Check now once: the model comes over the cable and everything is cached.
+   Add to home screen if you like (it opens `/?engine=core`).
+5. Unplug, airplane mode, open the same address: it runs from the cache
+   with the counter at 0.
+
+**Path 2: iPhone, or no cable.** A certificate the phone trusts, made with mkcert.
+1. Laptop, by the operator (it adds a root certificate to this machine's
+   trust store): `winget install FiloSottile.mkcert`, then `mkcert -install`.
+2. One network on which the phone can reach the laptop. Venue Wi-Fi often
+   keeps clients apart; the phone's own hotspot with the laptop joined to it
+   avoids that. Note the laptop's address (`ipconfig`).
+3. `mkcert -cert-file apps/web/certs/cert.pem -key-file apps/web/certs/key.pem <laptop-ip> localhost`
+   (`apps/web/certs/` is git-ignored; phone mode uses it when both files exist).
+4. Put `rootCA.pem` from `mkcert -CAROOT` on the phone. Never `rootCA-key.pem`.
+   iPhone: open it, Settings → Profile Downloaded → Install, then General →
+   About → Certificate Trust Settings → full trust. Android: Settings →
+   Security → Encryption & credentials → Install a certificate → CA
+   certificate (names vary by maker; whether Chrome then trusts it must be
+   checked on the device).
+5. `pnpm --filter @ahead/web phone` and open `https://<laptop-ip>:4443/?engine=core`
+   on the phone: no warning means it worked. Prime it with one Check now.
+   A different laptop address is a different origin: new certificate, and
+   the model downloads again.
+
+**Path 3: quick Android test over Wi-Fi (unverified).** Chrome on the phone →
+`chrome://flags/#unsafely-treat-insecure-origin-as-secure` → add
+`http://<laptop-ip>:4173` → Relaunch; on the laptop
+`pnpm --filter @ahead/web serve --host`. Chromium documents the flag for
+service workers; whether the Android build honours it is not confirmed.
+
 ## Requests
 
 (Write here what you need from the other side: "B needs
@@ -221,6 +277,16 @@ run on a phone, offline, network tab open.
   `detector.restore()` exist for exactly that (see the note above); store
   the snapshot's `data.buffer` and `ids` in the Store and restore before
   the first check.
+- B → A (2026-10-17, describe and snapshot): both in the app. Notice, home
+  and ledger word events only through `describe()`; the detector's snapshot is
+  saved in IndexedDB after every check, restored when the engine starts and
+  erased with everything else (plus `clearCache()`). Headless Chrome, offline
+  after a reload: the check went from 13.9 s to 7.4 s; what is left is the
+  model start and the prototypes. One request: importing `describe` from
+  `@ahead/detect` pulls Transformers.js into the app's first bundle (862 kB
+  instead of 266 kB), because the index also exports the detector. Could
+  `libs/detect/package.json` export `"./describe": "./src/describe.ts"`? The app
+  aliases that path in its own Vite and TS config until then.
 
 - A → B (2026-10-17, one-character bug): in `apps/web/src/App.tsx`
   the `today()` pattern is `/^d{4}-d{2}-d{2}$/`, the backslashes are

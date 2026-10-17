@@ -1,5 +1,7 @@
-import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, SourceState, Store } from "@ahead/contract";
+import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, SourceState } from "@ahead/contract";
 import { createBuilders } from "@ahead/journeys";
+import type { FmiWarning } from "@ahead/opendata";
+import exampleWarnings from "@ahead/opendata/data/fmi-example-warnings.json" with { type: "json" };
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { checkNow } from "./detect.ts";
 import { createEngine, type Engine, readSnippets } from "./engine.ts";
@@ -10,16 +12,11 @@ import { Journey } from "./screens/Journey.tsx";
 import { Ledger } from "./screens/Ledger.tsx";
 import { Notice } from "./screens/Notice.tsx";
 import { Onboarding, SourceList } from "./screens/Sources.tsx";
-import { createStore } from "./store.ts";
+import { type AppStore, createStore } from "./store.ts";
+import { today } from "./today.ts";
 
 type Tab = "home" | "ledger" | "sources";
 type View = { kind: "notice"; eventId: string } | { kind: "journey"; eventId: string } | null;
-
-/** The real date, unless the URL says `?today=YYYY-MM-DD`: the demo phone is dated, so the demo can pin the day. */
-const today = () => {
-  const pinned = new URLSearchParams(location.search).get("today");
-  return pinned && /^d{4}-d{2}-d{2}$/.test(pinned) ? pinned : new Date().toISOString().slice(0, 10);
-};
 
 function wasOnboarded(): boolean {
   try {
@@ -31,8 +28,13 @@ function wasOnboarded(): boolean {
 
 export function App() {
   const { t, locale, setLocale } = useI18n();
-  const store: Store = useMemo(() => createStore(), []);
-  const builders = useMemo(() => createBuilders({ today: today() }), []);
+  const store: AppStore = useMemo(() => createStore(), []);
+  // `?fmi=example` swaps the live FMI cache for one labelled example warning, for the stage (WORK.md); every card says so.
+  const builders = useMemo(() => {
+    const example = new URLSearchParams(location.search).get("fmi") === "example";
+    const warnings = example ? { warnings: exampleWarnings.warnings as FmiWarning[], warningsAreExample: true } : {};
+    return createBuilders({ today: today(), ...warnings });
+  }, []);
   const [sources, setSources] = useState<SourceState[]>([]);
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [journey, setJourney] = useState<JourneyData | undefined>();
@@ -50,12 +52,19 @@ export function App() {
   const getEngine = useCallback(() => {
     engineRef.current ??= createEngine((p) => {
       if (typeof p.progress === "number") setProgress(Math.round(p.progress));
-    }).catch((e) => {
-      engineRef.current = undefined;
-      throw e;
-    });
+    })
+      .then(async (engine) => {
+        // Vectors from an earlier session: no re-embedding of snippets already seen (ignored if the model changed).
+        const saved = await store.vectors();
+        if (saved && engine.vectors) engine.vectors.restore(saved);
+        return engine;
+      })
+      .catch((e) => {
+        engineRef.current = undefined;
+        throw e;
+      });
     return engineRef.current;
-  }, []);
+  }, [store]);
   const outbound = useOutboundCount();
 
   const reload = useCallback(async () => {
@@ -77,7 +86,9 @@ export function App() {
     setError(null);
     try {
       const enabled = sources.filter((s) => s.enabled).map((s) => s.source);
-      const result = await checkNow({ engine: await getEngine(), enabled, today: today(), ledger: await store.ledger() });
+      const engine = await getEngine();
+      const result = await checkNow({ engine, enabled, today: today(), ledger: await store.ledger() });
+      if (engine.vectors) await store.putVectors(engine.vectors.snapshot());
       setSnippets(result.snippets);
       const known = new Set((await store.ledger()).map((e) => e.event.id));
       for (const event of result.events) {
@@ -150,6 +161,8 @@ export function App() {
 
   const eraseAll = async () => {
     await store.eraseAll();
+    // The stored snapshot is gone with the rest; the detector's in-memory copy goes too.
+    (await engineRef.current?.catch(() => undefined))?.vectors?.clear();
     try {
       localStorage.removeItem("ahead.onboarded");
     } catch {}
