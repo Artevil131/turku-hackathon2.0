@@ -86,6 +86,12 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0085",
+      "source": "wifi",
+      "date": "2026-07-02",
+      "text": "Liityit verkkoon Espresso House Guest"
+    },
+    {
       "id": "bank-0001",
       "source": "bank",
       "date": "2026-07-03",
@@ -128,6 +134,12 @@
       "text": "K-Market Sandviken"
     },
     {
+      "id": "wifi-0001",
+      "source": "wifi",
+      "date": "2026-07-03",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "places-0005",
       "source": "places",
       "date": "2026-07-04",
@@ -147,6 +159,12 @@
       "source": "places",
       "date": "2026-07-05",
       "text": "Sali"
+    },
+    {
+      "id": "wifi-0002",
+      "source": "wifi",
+      "date": "2026-07-05",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0003",
@@ -215,6 +233,12 @@
       "text": "Kirjasto"
     },
     {
+      "id": "wifi-0003",
+      "source": "wifi",
+      "date": "2026-07-07",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "calendar-0043",
       "source": "calendar",
       "date": "2026-07-08",
@@ -243,6 +267,39 @@
       "source": "places",
       "date": "2026-07-08",
       "text": "Koti"
+    },
+    {
+      "id": "sms-0001",
+      "source": "sms",
+      "date": "2026-07-08",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "sms-0026",
+      "source": "sms",
+      "date": "2026-07-08",
+      "text": "Apteekki: Varauksesi on noudettavissa 3 päivän ajan.",
+      "meta": {
+        "from": "pharmacy"
+      }
+    },
+    {
+      "id": "sms-0029",
+      "source": "sms",
+      "date": "2026-07-08",
+      "text": "HSL: Kertalippu AB ostettu, voimassa 80 min.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
+      "id": "wifi-0041",
+      "source": "wifi",
+      "date": "2026-07-08",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0006",
@@ -275,6 +332,12 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0042",
+      "source": "wifi",
+      "date": "2026-07-09",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0007",
       "source": "bank",
       "date": "2026-07-10",
@@ -296,6 +359,27 @@
       "text": "Sali"
     },
     {
+      "id": "sms-0015",
+      "source": "sms",
+      "date": "2026-07-10",
+      "text": "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0043",
+      "source": "wifi",
+      "date": "2026-07-10",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0075",
+      "source": "wifi",
+      "date": "2026-07-10",
+      "text": "Liityit verkkoon Yliopisto-Guest"
+    },
+    {
       "id": "mail-0024",
       "source": "mail",
       "date": "2026-07-11",
@@ -312,6 +396,21 @@
       "meta": {
         "from": "shop"
       }
+    },
+    {
+      "id": "sms-0030",
+      "source": "sms",
+      "date": "2026-07-11",
+      "text": "Föli: Kertalippu ostettu, vyöhyke A, voimassa 2 h.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
+      "id": "wifi-0004",
+      "source": "wifi",
+      "date": "2026-07-11",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0008",
@@ -360,6 +459,12 @@
       "source": "places",
       "date": "2026-07-13",
       "text": "K-Market Sandviken"
+    },
+    {
+      "id": "wifi-0044",
+      "source": "wifi",
+      "date": "2026-07-13",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0011",
@@ -437,6 +542,27 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0016",
+      "source": "sms",
+      "date": "2026-07-15",
+      "text": "S-Pankki: Vahvistuskoodi maksun hyväksymiseen. Koodi on voimassa 5 minuuttia.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0005",
+      "source": "wifi",
+      "date": "2026-07-15",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0076",
+      "source": "wifi",
+      "date": "2026-07-15",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
+    },
+    {
       "id": "bank-0083",
       "source": "bank",
       "date": "2026-07-16",
@@ -468,6 +594,21 @@
       "source": "places",
       "date": "2026-07-16",
       "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "sms-0017",
+      "source": "sms",
+      "date": "2026-07-16",
+      "text": "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0006",
+      "source": "wifi",
+      "date": "2026-07-16",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0014",
@@ -503,6 +644,21 @@
       "text": "Kirjasto"
     },
     {
+      "id": "sms-0002",
+      "source": "sms",
+      "date": "2026-07-17",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0045",
+      "source": "wifi",
+      "date": "2026-07-17",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0015",
       "source": "bank",
       "date": "2026-07-18",
@@ -531,6 +687,24 @@
       "source": "places",
       "date": "2026-07-18",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0003",
+      "source": "sms",
+      "date": "2026-07-18",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "sms-0031",
+      "source": "sms",
+      "date": "2026-07-18",
+      "text": "Waltti: Mobiililippu aktivoitu.",
+      "meta": {
+        "from": "transit"
+      }
     },
     {
       "id": "bank-0017",
@@ -596,6 +770,18 @@
       "text": "Koti"
     },
     {
+      "id": "wifi-0007",
+      "source": "wifi",
+      "date": "2026-07-20",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0086",
+      "source": "wifi",
+      "date": "2026-07-20",
+      "text": "Liityit verkkoon Espresso House Guest"
+    },
+    {
       "id": "mail-0005",
       "source": "mail",
       "date": "2026-07-21",
@@ -618,6 +804,15 @@
       "source": "places",
       "date": "2026-07-21",
       "text": "K-Market Sandviken"
+    },
+    {
+      "id": "sms-0004",
+      "source": "sms",
+      "date": "2026-07-21",
+      "text": "Posti: Pakettisi on noudettavissa automaatista. Nouda 7 päivän sisällä.",
+      "meta": {
+        "from": "delivery"
+      }
     },
     {
       "id": "bank-0019",
@@ -648,6 +843,15 @@
       "source": "places",
       "date": "2026-07-22",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0032",
+      "source": "sms",
+      "date": "2026-07-22",
+      "text": "Waltti: Mobiililippu aktivoitu.",
+      "meta": {
+        "from": "transit"
+      }
     },
     {
       "id": "bank-0020",
@@ -681,6 +885,15 @@
       "source": "places",
       "date": "2026-07-23",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0033",
+      "source": "sms",
+      "date": "2026-07-23",
+      "text": "Waltti: Mobiililippu aktivoitu.",
+      "meta": {
+        "from": "transit"
+      }
     },
     {
       "id": "bank-0022",
@@ -752,6 +965,15 @@
       "text": "Yliopisto"
     },
     {
+      "id": "sms-0005",
+      "source": "sms",
+      "date": "2026-07-24",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
       "id": "bank-0023",
       "source": "bank",
       "date": "2026-07-25",
@@ -780,6 +1002,12 @@
       "source": "places",
       "date": "2026-07-25",
       "text": "K-Market Gerby"
+    },
+    {
+      "id": "wifi-0008",
+      "source": "wifi",
+      "date": "2026-07-25",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0086",
@@ -845,6 +1073,12 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0009",
+      "source": "wifi",
+      "date": "2026-07-27",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "mail-0048",
       "source": "mail",
       "date": "2026-07-28",
@@ -852,6 +1086,12 @@
       "meta": {
         "from": "shop"
       }
+    },
+    {
+      "id": "wifi-0010",
+      "source": "wifi",
+      "date": "2026-07-28",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0025",
@@ -885,6 +1125,18 @@
       "source": "places",
       "date": "2026-07-29",
       "text": "K-Market Brändö"
+    },
+    {
+      "id": "wifi-0011",
+      "source": "wifi",
+      "date": "2026-07-29",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0012",
+      "source": "wifi",
+      "date": "2026-07-29",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0026",
@@ -962,6 +1214,18 @@
       "text": "K-Market Sandviken"
     },
     {
+      "id": "wifi-0013",
+      "source": "wifi",
+      "date": "2026-07-30",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0046",
+      "source": "wifi",
+      "date": "2026-07-30",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0028",
       "source": "bank",
       "date": "2026-07-31",
@@ -995,6 +1259,18 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0014",
+      "source": "wifi",
+      "date": "2026-07-31",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0015",
+      "source": "wifi",
+      "date": "2026-07-31",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0029",
       "source": "bank",
       "date": "2026-08-01",
@@ -1016,6 +1292,36 @@
       "text": "K-Market Sandviken"
     },
     {
+      "id": "sms-0018",
+      "source": "sms",
+      "date": "2026-08-01",
+      "text": "Nordea: Tunnuslukusi verkkopankkiin. Jos et tehnyt pyyntöä, soita asiakaspalveluun.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0016",
+      "source": "wifi",
+      "date": "2026-08-01",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "sms-0006",
+      "source": "sms",
+      "date": "2026-08-02",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0017",
+      "source": "wifi",
+      "date": "2026-08-02",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "calendar-0051",
       "source": "calendar",
       "date": "2026-08-03",
@@ -1023,6 +1329,12 @@
       "meta": {
         "created": "2026-07-20"
       }
+    },
+    {
+      "id": "wifi-0047",
+      "source": "wifi",
+      "date": "2026-08-03",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0088",
@@ -1049,6 +1361,18 @@
       "text": "Koti"
     },
     {
+      "id": "wifi-0048",
+      "source": "wifi",
+      "date": "2026-08-04",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0087",
+      "source": "wifi",
+      "date": "2026-08-04",
+      "text": "Liityit verkkoon Espresso House Guest"
+    },
+    {
       "id": "bank-0030",
       "source": "bank",
       "date": "2026-08-05",
@@ -1062,6 +1386,12 @@
       "source": "places",
       "date": "2026-08-05",
       "text": "Kirjasto"
+    },
+    {
+      "id": "wifi-0049",
+      "source": "wifi",
+      "date": "2026-08-05",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "calendar-0020",
@@ -1086,6 +1416,21 @@
       "source": "places",
       "date": "2026-08-06",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0007",
+      "source": "sms",
+      "date": "2026-08-06",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0088",
+      "source": "wifi",
+      "date": "2026-08-06",
+      "text": "Liityit verkkoon Espresso House Guest"
     },
     {
       "id": "bank-0031",
@@ -1119,6 +1464,33 @@
       "source": "places",
       "date": "2026-08-07",
       "text": "Sali"
+    },
+    {
+      "id": "sms-0019",
+      "source": "sms",
+      "date": "2026-08-07",
+      "text": "S-Pankki: Vahvistuskoodi maksun hyväksymiseen. Koodi on voimassa 5 minuuttia.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0018",
+      "source": "wifi",
+      "date": "2026-08-07",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0050",
+      "source": "wifi",
+      "date": "2026-08-07",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0077",
+      "source": "wifi",
+      "date": "2026-08-07",
+      "text": "Liityit verkkoon Yliopisto-Guest"
     },
     {
       "id": "bank-0032",
@@ -1163,6 +1535,18 @@
       }
     },
     {
+      "id": "wifi-0051",
+      "source": "wifi",
+      "date": "2026-08-10",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0052",
+      "source": "wifi",
+      "date": "2026-08-10",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0035",
       "source": "bank",
       "date": "2026-08-11",
@@ -1185,6 +1569,27 @@
       "source": "places",
       "date": "2026-08-11",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0034",
+      "source": "sms",
+      "date": "2026-08-11",
+      "text": "Föli: Kertalippu ostettu, vyöhyke A, voimassa 2 h.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
+      "id": "wifi-0053",
+      "source": "wifi",
+      "date": "2026-08-11",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0089",
+      "source": "wifi",
+      "date": "2026-08-11",
+      "text": "Liityit verkkoon Cafe Sirius Free WiFi"
     },
     {
       "id": "bank-0037",
@@ -1241,6 +1646,12 @@
       "text": "K-Market Brändö"
     },
     {
+      "id": "wifi-0019",
+      "source": "wifi",
+      "date": "2026-08-12",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0038",
       "source": "bank",
       "date": "2026-08-13",
@@ -1287,6 +1698,12 @@
       "source": "places",
       "date": "2026-08-13",
       "text": "Yliopisto"
+    },
+    {
+      "id": "wifi-0054",
+      "source": "wifi",
+      "date": "2026-08-13",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0090",
@@ -1346,6 +1763,18 @@
       "text": "Koti"
     },
     {
+      "id": "wifi-0078",
+      "source": "wifi",
+      "date": "2026-08-14",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
+    },
+    {
+      "id": "wifi-0090",
+      "source": "wifi",
+      "date": "2026-08-14",
+      "text": "Liityit verkkoon Espresso House Guest"
+    },
+    {
       "id": "bank-0040",
       "source": "bank",
       "date": "2026-08-15",
@@ -1368,6 +1797,21 @@
       "source": "places",
       "date": "2026-08-15",
       "text": "Sali"
+    },
+    {
+      "id": "sms-0020",
+      "source": "sms",
+      "date": "2026-08-15",
+      "text": "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0020",
+      "source": "wifi",
+      "date": "2026-08-15",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0041",
@@ -1398,6 +1842,15 @@
       "source": "places",
       "date": "2026-08-16",
       "text": "Kirjasto"
+    },
+    {
+      "id": "sms-0045",
+      "source": "sms",
+      "date": "2026-08-16",
+      "text": "MobilePay: Matias ber dig om 15,00 € – \"flyttbilen, tack för hjälpen\"",
+      "meta": {
+        "from": "MobilePay"
+      }
     },
     {
       "id": "bank-0106",
@@ -1454,6 +1907,12 @@
       }
     },
     {
+      "id": "wifi-0055",
+      "source": "wifi",
+      "date": "2026-08-17",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0042",
       "source": "bank",
       "date": "2026-08-18",
@@ -1476,6 +1935,15 @@
       "source": "places",
       "date": "2026-08-18",
       "text": "Yliopisto"
+    },
+    {
+      "id": "sms-0027",
+      "source": "sms",
+      "date": "2026-08-18",
+      "text": "Apteekki: Varauksesi on noudettavissa 3 päivän ajan.",
+      "meta": {
+        "from": "pharmacy"
+      }
     },
     {
       "id": "bank-0043",
@@ -1598,12 +2066,33 @@
       "text": "Kirjasto"
     },
     {
+      "id": "wifi-0056",
+      "source": "wifi",
+      "date": "2026-08-21",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0091",
+      "source": "wifi",
+      "date": "2026-08-21",
+      "text": "Liityit verkkoon Espresso House Guest"
+    },
+    {
       "id": "mail-0054",
       "source": "mail",
       "date": "2026-08-22",
       "text": "Pakettisi odottaa noutoa",
       "meta": {
         "from": "shop"
+      }
+    },
+    {
+      "id": "sms-0035",
+      "source": "sms",
+      "date": "2026-08-22",
+      "text": "Föli: Kertalippu ostettu, vyöhyke A, voimassa 2 h.",
+      "meta": {
+        "from": "transit"
       }
     },
     {
@@ -1676,6 +2165,12 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0057",
+      "source": "wifi",
+      "date": "2026-08-24",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "calendar-0059",
       "source": "calendar",
       "date": "2026-08-25",
@@ -1698,6 +2193,18 @@
       "source": "places",
       "date": "2026-08-25",
       "text": "Yliopisto"
+    },
+    {
+      "id": "wifi-0058",
+      "source": "wifi",
+      "date": "2026-08-25",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0079",
+      "source": "wifi",
+      "date": "2026-08-25",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
     },
     {
       "id": "calendar-0027",
@@ -1751,6 +2258,21 @@
       "text": "Sali"
     },
     {
+      "id": "sms-0021",
+      "source": "sms",
+      "date": "2026-08-27",
+      "text": "Nordea: Tunnuslukusi verkkopankkiin. Jos et tehnyt pyyntöä, soita asiakaspalveluun.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0059",
+      "source": "wifi",
+      "date": "2026-08-27",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0047",
       "source": "bank",
       "date": "2026-08-28",
@@ -1776,6 +2298,21 @@
       "source": "places",
       "date": "2026-08-29",
       "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "sms-0008",
+      "source": "sms",
+      "date": "2026-08-29",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0021",
+      "source": "wifi",
+      "date": "2026-08-29",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0109",
@@ -1850,6 +2387,12 @@
       "text": "K-Market Sandviken"
     },
     {
+      "id": "wifi-0022",
+      "source": "wifi",
+      "date": "2026-08-31",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "calendar-0029",
       "source": "calendar",
       "date": "2026-09-01",
@@ -1863,6 +2406,12 @@
       "source": "places",
       "date": "2026-09-01",
       "text": "Kirjasto"
+    },
+    {
+      "id": "wifi-0080",
+      "source": "wifi",
+      "date": "2026-09-01",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
     },
     {
       "id": "bank-0049",
@@ -1892,6 +2441,27 @@
       "text": "Kirjasto"
     },
     {
+      "id": "sms-0009",
+      "source": "sms",
+      "date": "2026-09-02",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0023",
+      "source": "wifi",
+      "date": "2026-09-02",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0060",
+      "source": "wifi",
+      "date": "2026-09-02",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "calendar-0061",
       "source": "calendar",
       "date": "2026-09-03",
@@ -1910,6 +2480,24 @@
       }
     },
     {
+      "id": "wifi-0024",
+      "source": "wifi",
+      "date": "2026-09-03",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0061",
+      "source": "wifi",
+      "date": "2026-09-03",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0062",
+      "source": "wifi",
+      "date": "2026-09-03",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "mail-0068",
       "source": "mail",
       "date": "2026-09-04",
@@ -1923,6 +2511,21 @@
       "source": "places",
       "date": "2026-09-04",
       "text": "Sali"
+    },
+    {
+      "id": "sms-0036",
+      "source": "sms",
+      "date": "2026-09-04",
+      "text": "HSL: Kertalippu AB ostettu, voimassa 80 min.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
+      "id": "wifi-0025",
+      "source": "wifi",
+      "date": "2026-09-04",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0050",
@@ -1940,6 +2543,12 @@
       "text": "Koti"
     },
     {
+      "id": "wifi-0026",
+      "source": "wifi",
+      "date": "2026-09-05",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "mail-0013",
       "source": "mail",
       "date": "2026-09-06",
@@ -1955,6 +2564,15 @@
       "text": "Nyyti ry: hyvinvointiviikko",
       "meta": {
         "from": "newsletter"
+      }
+    },
+    {
+      "id": "sms-0037",
+      "source": "sms",
+      "date": "2026-09-06",
+      "text": "HSL: Kertalippu AB ostettu, voimassa 80 min.",
+      "meta": {
+        "from": "transit"
       }
     },
     {
@@ -1988,6 +2606,18 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0081",
+      "source": "wifi",
+      "date": "2026-09-07",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
+    },
+    {
+      "id": "wifi-0092",
+      "source": "wifi",
+      "date": "2026-09-07",
+      "text": "Liityit verkkoon Cafe Sirius Free WiFi"
+    },
+    {
       "id": "bank-0052",
       "source": "bank",
       "date": "2026-09-08",
@@ -2010,6 +2640,15 @@
       "source": "places",
       "date": "2026-09-08",
       "text": "Sali"
+    },
+    {
+      "id": "sms-0010",
+      "source": "sms",
+      "date": "2026-09-08",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
     },
     {
       "id": "bank-0110",
@@ -2060,6 +2699,12 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0063",
+      "source": "wifi",
+      "date": "2026-09-09",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "mail-0016",
       "source": "mail",
       "date": "2026-09-10",
@@ -2082,6 +2727,12 @@
       "source": "places",
       "date": "2026-09-10",
       "text": "Kirjasto"
+    },
+    {
+      "id": "wifi-0027",
+      "source": "wifi",
+      "date": "2026-09-10",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0111",
@@ -2144,6 +2795,12 @@
       "text": "Kirjasto"
     },
     {
+      "id": "wifi-0028",
+      "source": "wifi",
+      "date": "2026-09-12",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "calendar-0065",
       "source": "calendar",
       "date": "2026-09-13",
@@ -2160,6 +2817,12 @@
       "meta": {
         "created": "2026-09-02"
       }
+    },
+    {
+      "id": "wifi-0082",
+      "source": "wifi",
+      "date": "2026-09-13",
+      "text": "Liityit verkkoon Yliopisto-Guest"
     },
     {
       "id": "bank-0093",
@@ -2216,6 +2879,18 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0029",
+      "source": "wifi",
+      "date": "2026-09-15",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0064",
+      "source": "wifi",
+      "date": "2026-09-15",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0116",
       "source": "bank",
       "date": "2026-09-16",
@@ -2235,6 +2910,12 @@
       "source": "places",
       "date": "2026-09-16",
       "text": "K-Market Brändö"
+    },
+    {
+      "id": "wifi-0065",
+      "source": "wifi",
+      "date": "2026-09-16",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0055",
@@ -2271,6 +2952,27 @@
       "meta": {
         "from": "shop"
       }
+    },
+    {
+      "id": "sms-0011",
+      "source": "sms",
+      "date": "2026-09-17",
+      "text": "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0030",
+      "source": "wifi",
+      "date": "2026-09-17",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0066",
+      "source": "wifi",
+      "date": "2026-09-17",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0056",
@@ -2351,6 +3053,12 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0067",
+      "source": "wifi",
+      "date": "2026-09-18",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0058",
       "source": "bank",
       "date": "2026-09-19",
@@ -2390,6 +3098,12 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0031",
+      "source": "wifi",
+      "date": "2026-09-19",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "mail-0076",
       "source": "mail",
       "date": "2026-09-20",
@@ -2397,6 +3111,12 @@
       "meta": {
         "from": "Åbo Akademi"
       }
+    },
+    {
+      "id": "wifi-0032",
+      "source": "wifi",
+      "date": "2026-09-20",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0060",
@@ -2445,6 +3165,15 @@
       "source": "places",
       "date": "2026-09-21",
       "text": "Koti"
+    },
+    {
+      "id": "sms-0022",
+      "source": "sms",
+      "date": "2026-09-21",
+      "text": "S-Pankki: Vahvistuskoodi maksun hyväksymiseen. Koodi on voimassa 5 minuuttia.",
+      "meta": {
+        "from": "bank"
+      }
     },
     {
       "id": "bank-0061",
@@ -2519,6 +3248,12 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0068",
+      "source": "wifi",
+      "date": "2026-09-23",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0063",
       "source": "bank",
       "date": "2026-09-24",
@@ -2567,6 +3302,21 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0012",
+      "source": "sms",
+      "date": "2026-09-24",
+      "text": "Posti: Pakettisi on noudettavissa automaatista. Nouda 7 päivän sisällä.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "wifi-0093",
+      "source": "wifi",
+      "date": "2026-09-24",
+      "text": "Liityit verkkoon Cafe Sirius Free WiFi"
+    },
+    {
       "id": "bank-0064",
       "source": "bank",
       "date": "2026-09-25",
@@ -2606,6 +3356,18 @@
       "text": "Kirjasto"
     },
     {
+      "id": "wifi-0069",
+      "source": "wifi",
+      "date": "2026-09-25",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0070",
+      "source": "wifi",
+      "date": "2026-09-25",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0065",
       "source": "bank",
       "date": "2026-09-26",
@@ -2627,6 +3389,24 @@
       "text": "K-Market Brändö"
     },
     {
+      "id": "sms-0013",
+      "source": "sms",
+      "date": "2026-09-26",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "sms-0038",
+      "source": "sms",
+      "date": "2026-09-26",
+      "text": "HSL: Kertalippu AB ostettu, voimassa 80 min.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
       "id": "places-0104",
       "source": "places",
       "date": "2026-09-27",
@@ -2646,6 +3426,18 @@
       "source": "places",
       "date": "2026-09-28",
       "text": "Sali"
+    },
+    {
+      "id": "wifi-0033",
+      "source": "wifi",
+      "date": "2026-09-28",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0083",
+      "source": "wifi",
+      "date": "2026-09-28",
+      "text": "Liityit verkkoon Yliopisto-Guest"
     },
     {
       "id": "bank-0066",
@@ -2696,6 +3488,12 @@
       "text": "Koti"
     },
     {
+      "id": "wifi-0094",
+      "source": "wifi",
+      "date": "2026-09-29",
+      "text": "Liityit verkkoon Cafe Sirius Free WiFi"
+    },
+    {
       "id": "bank-0067",
       "source": "bank",
       "date": "2026-09-30",
@@ -2735,6 +3533,24 @@
       "text": "K-Market Vasa centrum"
     },
     {
+      "id": "sms-0014",
+      "source": "sms",
+      "date": "2026-09-30",
+      "text": "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "meta": {
+        "from": "delivery"
+      }
+    },
+    {
+      "id": "sms-0023",
+      "source": "sms",
+      "date": "2026-09-30",
+      "text": "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
       "id": "bank-0114",
       "source": "bank",
       "date": "2026-10-01",
@@ -2748,6 +3564,18 @@
       "source": "places",
       "date": "2026-10-01",
       "text": "K-Market Brändö"
+    },
+    {
+      "id": "wifi-0071",
+      "source": "wifi",
+      "date": "2026-10-01",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
+      "id": "wifi-0084",
+      "source": "wifi",
+      "date": "2026-10-01",
+      "text": "Liityit verkkoon Kirjasto-WiFi"
     },
     {
       "id": "bank-0068",
@@ -2789,6 +3617,21 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0028",
+      "source": "sms",
+      "date": "2026-10-02",
+      "text": "Apteekki: Varauksesi on noudettavissa 3 päivän ajan.",
+      "meta": {
+        "from": "pharmacy"
+      }
+    },
+    {
+      "id": "wifi-0034",
+      "source": "wifi",
+      "date": "2026-10-02",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0069",
       "source": "bank",
       "date": "2026-10-03",
@@ -2820,6 +3663,18 @@
       "source": "places",
       "date": "2026-10-03",
       "text": "K-Market Vasa centrum"
+    },
+    {
+      "id": "wifi-0035",
+      "source": "wifi",
+      "date": "2026-10-03",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
+      "id": "wifi-0096",
+      "source": "wifi",
+      "date": "2026-10-03",
+      "text": "Ansluten till nätverket TYS-Guest"
     },
     {
       "id": "bank-0070",
@@ -2948,6 +3803,12 @@
       "text": "Yliopisto"
     },
     {
+      "id": "wifi-0036",
+      "source": "wifi",
+      "date": "2026-10-06",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0073",
       "source": "bank",
       "date": "2026-10-07",
@@ -2988,6 +3849,21 @@
       "source": "places",
       "date": "2026-10-07",
       "text": "K-Market Brändö"
+    },
+    {
+      "id": "sms-0039",
+      "source": "sms",
+      "date": "2026-10-07",
+      "text": "Föli: Kertalippu ostettu, vyöhyke A, voimassa 2 h.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
+      "id": "wifi-0037",
+      "source": "wifi",
+      "date": "2026-10-07",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0075",
@@ -3041,6 +3917,15 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0040",
+      "source": "sms",
+      "date": "2026-10-08",
+      "text": "Waltti: Mobiililippu aktivoitu.",
+      "meta": {
+        "from": "transit"
+      }
+    },
+    {
       "id": "bank-0077",
       "source": "bank",
       "date": "2026-10-09",
@@ -3089,6 +3974,12 @@
       "text": "Sali"
     },
     {
+      "id": "wifi-0038",
+      "source": "wifi",
+      "date": "2026-10-09",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0078",
       "source": "bank",
       "date": "2026-10-10",
@@ -3114,6 +4005,21 @@
       "meta": {
         "from": "newsletter"
       }
+    },
+    {
+      "id": "sms-0024",
+      "source": "sms",
+      "date": "2026-10-10",
+      "text": "S-Pankki: Vahvistuskoodi maksun hyväksymiseen. Koodi on voimassa 5 minuuttia.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0095",
+      "source": "wifi",
+      "date": "2026-10-10",
+      "text": "Liityit verkkoon Espresso House Guest"
     },
     {
       "id": "mail-0023",
@@ -3149,6 +4055,12 @@
       "text": "Kirjasto"
     },
     {
+      "id": "wifi-0097",
+      "source": "wifi",
+      "date": "2026-10-11",
+      "text": "Ansluten till nätverket Laakkonen-Guest"
+    },
+    {
       "id": "mail-0071",
       "source": "mail",
       "date": "2026-10-12",
@@ -3162,6 +4074,12 @@
       "source": "places",
       "date": "2026-10-12",
       "text": "Koti"
+    },
+    {
+      "id": "wifi-0039",
+      "source": "wifi",
+      "date": "2026-10-12",
+      "text": "Liityit verkkoon Koti-WiFi"
     },
     {
       "id": "bank-0121",
@@ -3197,6 +4115,21 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0044",
+      "source": "sms",
+      "date": "2026-10-13",
+      "text": "Finnair: Din bokning AY1741 HEL–LIS 10 jan är bekräftad. Incheckningen öppnar 36 timmar före avgång.",
+      "meta": {
+        "from": "Finnair"
+      }
+    },
+    {
+      "id": "wifi-0040",
+      "source": "wifi",
+      "date": "2026-10-13",
+      "text": "Liityit verkkoon Koti-WiFi"
+    },
+    {
       "id": "bank-0119",
       "source": "bank",
       "date": "2026-10-14",
@@ -3228,6 +4161,21 @@
       "source": "places",
       "date": "2026-10-14",
       "text": "Yliopisto"
+    },
+    {
+      "id": "sms-0025",
+      "source": "sms",
+      "date": "2026-10-14",
+      "text": "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "meta": {
+        "from": "bank"
+      }
+    },
+    {
+      "id": "wifi-0072",
+      "source": "wifi",
+      "date": "2026-10-14",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0079",
@@ -3267,6 +4215,12 @@
       "source": "places",
       "date": "2026-10-15",
       "text": "Koti"
+    },
+    {
+      "id": "wifi-0073",
+      "source": "wifi",
+      "date": "2026-10-15",
+      "text": "Liityit verkkoon eduroam"
     },
     {
       "id": "bank-0080",
@@ -3320,6 +4274,30 @@
       "text": "Koti"
     },
     {
+      "id": "sms-0041",
+      "source": "sms",
+      "date": "2026-10-16",
+      "text": "Flyttfirma Snabb: Flyttbilen kommer lö 31.10 kl. 9. Chauffören ringer före ankomst.",
+      "meta": {
+        "from": "Snabb Ab"
+      }
+    },
+    {
+      "id": "sms-0042",
+      "source": "sms",
+      "date": "2026-10-16",
+      "text": "DVV/Posti: Din flyttanmälan har behandlats. Den nya adressen gäller från 1.11.2026.",
+      "meta": {
+        "from": "DVV"
+      }
+    },
+    {
+      "id": "wifi-0074",
+      "source": "wifi",
+      "date": "2026-10-16",
+      "text": "Liityit verkkoon eduroam"
+    },
+    {
       "id": "bank-0081",
       "source": "bank",
       "date": "2026-10-17",
@@ -3353,6 +4331,15 @@
       }
     },
     {
+      "id": "sms-0043",
+      "source": "sms",
+      "date": "2026-10-24",
+      "text": "Traficom: Ägarbyte registrerat, Toyota Yaris. Registreringsbeviset postas.",
+      "meta": {
+        "from": "Traficom"
+      }
+    },
+    {
       "id": "calendar-0078",
       "source": "calendar",
       "date": "2026-11-01",
@@ -3375,7 +4362,7 @@
     {
       "type": "move",
       "date": "2026-11-01",
-      "firstSignal": "2026-10-09",
+      "firstSignal": "2026-10-03",
       "place": "Åbo"
     },
     {

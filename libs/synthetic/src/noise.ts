@@ -14,6 +14,50 @@ export interface NoiseTemplate {
   weekdays?: readonly number[];
 }
 
+/**
+ * Service texts every Finnish phone gets. The one-time codes carry no code
+ * and no amount; the adapter would drop both before anything is embedded.
+ */
+export const smsNoise: NoiseTemplate[] = [
+  {
+    source: "sms",
+    rate: 4,
+    texts: [
+      "Posti: Pakettisi on noudettavissa automaatista. Nouda 7 päivän sisällä.",
+      "Matkahuolto: Lähetyksesi on saapunut noutopisteeseen.",
+      "DHL: Toimitus tänään klo 12–16. Seuraa lähetystä sovelluksessa.",
+      "Your parcel has been delivered to your parcel locker.",
+    ],
+    meta: { from: "delivery" },
+  },
+  {
+    source: "sms",
+    rate: 3,
+    texts: [
+      "OP: Vahvistuskoodisi kirjautumiseen. Älä kerro koodia kenellekään.",
+      "Nordea: Tunnuslukusi verkkopankkiin. Jos et tehnyt pyyntöä, soita asiakaspalveluun.",
+      "S-Pankki: Vahvistuskoodi maksun hyväksymiseen. Koodi on voimassa 5 minuuttia.",
+    ],
+    meta: { from: "bank" },
+  },
+  {
+    source: "sms",
+    rate: 0.5,
+    texts: ["Yliopiston Apteekki: Tilauksesi on noudettavissa.", "Apteekki: Varauksesi on noudettavissa 3 päivän ajan."],
+    meta: { from: "pharmacy" },
+  },
+  {
+    source: "sms",
+    rate: 3,
+    texts: [
+      "Föli: Kertalippu ostettu, vyöhyke A, voimassa 2 h.",
+      "HSL: Kertalippu AB ostettu, voimassa 80 min.",
+      "Waltti: Mobiililippu aktivoitu.",
+    ],
+    meta: { from: "transit" },
+  },
+];
+
 export const studentNoise: NoiseTemplate[] = [
   {
     source: "mail",
@@ -73,6 +117,17 @@ export const studentNoise: NoiseTemplate[] = [
   { source: "bank", rate: 1, texts: ["Vuokra", "DNA", "Spotify", "Netflix", "Kotipizza"], meta: { amountBand: "10-50" } },
   { source: "places", rate: 20, texts: ["Koti", "Yliopisto", "Kirjasto", "Sali", "K-Market {place}"] },
   { source: "photos", rate: 4, texts: ["Photo: {place}", "Photo: Koti", "Photo: Yliopisto"] },
+  // Texts from services (never from people, see the contract): parcels, bank codes without the code, tickets.
+  ...smsNoise,
+  // Networks the phone joined, as the phone reports them. Home and campus every day; a café now and then.
+  {
+    source: "wifi",
+    rate: 10,
+    texts: ["Liityit verkkoon Koti-WiFi"],
+  },
+  { source: "wifi", rate: 8, texts: ["Liityit verkkoon eduroam"], weekdays: [1, 2, 3, 4, 5] },
+  { source: "wifi", rate: 2, texts: ["Liityit verkkoon Yliopisto-Guest", "Liityit verkkoon Kirjasto-WiFi"] },
+  { source: "wifi", rate: 2, texts: ["Liityit verkkoon Cafe Sirius Free WiFi", "Liityit verkkoon Espresso House Guest"] },
 ];
 
 export const familyNoise: NoiseTemplate[] = [
@@ -113,6 +168,11 @@ export const familyNoise: NoiseTemplate[] = [
   { source: "bank", rate: 2, texts: ["Sähkö", "Vesi", "Vastike", "Elisa", "Yhtiölaina"], meta: { amountBand: "50-200" } },
   { source: "places", rate: 20, texts: ["Koti", "Työpaikka", "Päiväkoti", "Prisma {place}", "Uimahalli"] },
   { source: "photos", rate: 8, texts: ["Photo: Koti", "Photo: Leikkipuisto", "Photo: Mummola", "Photo: Uimahalli"] },
+  ...smsNoise,
+  { source: "wifi", rate: 10, texts: ["Liityit verkkoon Koti-WiFi"] },
+  { source: "wifi", rate: 8, texts: ["Liityit verkkoon Toimisto-WiFi"], weekdays: [1, 2, 3, 4, 5] },
+  { source: "wifi", rate: 2, texts: ["Liityit verkkoon Uimahalli-Free", "Liityit verkkoon Mummola-WiFi"] },
+  { source: "wifi", rate: 1, texts: ["Liityit verkkoon Cafe Art Free WiFi", "Liityit verkkoon Prisma-Guest"] },
 ];
 
 export const fills = {

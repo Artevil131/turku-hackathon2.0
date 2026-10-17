@@ -60,6 +60,8 @@ export const student: Persona = {
     { source: "mail", date: "2026-09-28", text: "Asuntohakemuksesi on vastaanotettu – TYS", meta: { from: "TYS" } },
     { source: "places", date: "2026-10-03", text: "Turku, Yo-kylä" },
     { source: "photos", date: "2026-10-03", text: "Photo: Turku, Yo-kylä" },
+    // The flat viewing: the phone joined the student housing guest network.
+    { source: "wifi", date: "2026-10-03", text: "Liityit verkkoon TYS-Guest" },
     {
       source: "mail",
       date: "2026-10-09",
@@ -81,6 +83,18 @@ export const student: Persona = {
       text: "Irtisanomisilmoitus vastaanotettu – PSOAS, vuokrasuhde päättyy 31.10.2026",
       meta: { from: "PSOAS" },
     },
+    {
+      source: "sms",
+      date: "2026-10-16",
+      text: "Siirto Oy: Muuttoauto tulossa la 31.10. klo 9. Kuljettaja soittaa ennen saapumista.",
+      meta: { from: "Siirto Oy" },
+    },
+    {
+      source: "sms",
+      date: "2026-10-16",
+      text: "DVV/Posti: Muuttoilmoituksesi on käsitelty. Uusi osoite on voimassa 1.11.2026 alkaen.",
+      meta: { from: "DVV" },
+    },
     // ---- first car: looking, test drive 18 Oct, buy later ----
     {
       source: "mail",
@@ -101,6 +115,7 @@ export const student: Persona = {
       meta: { from: "dealer" },
     },
     { source: "places", date: "2026-10-11", text: "Autotalo Laakkonen, Oulu" },
+    { source: "wifi", date: "2026-10-11", text: "Liityit verkkoon Laakkonen-Guest" },
     { source: "calendar", date: "2026-10-18", text: "Koeajo Yaris, Laakkonen klo 14", meta: { created: "2026-10-11" } },
     {
       source: "mail",
@@ -108,7 +123,15 @@ export const student: Persona = {
       text: "Kysymys: mitä ensimmäisen auton vakuutus maksaa? – vastaus If asiakaspalvelusta",
       meta: { from: "If" },
     },
+    // After the test drive, past the phone's end: the demo day never sees it, a later replay does.
+    {
+      source: "sms",
+      date: "2026-10-24",
+      text: "Traficom: Omistajanvaihdos rekisteröity, Toyota Yaris. Rekisteröintitodistus postitetaan.",
+      meta: { from: "Traficom" },
+    },
     // ---- long trip: exchange in Lisbon from 10 Jan ----
+    // No "Finnair-WiFi" join: she has not travelled yet.
     {
       source: "mail",
       date: "2026-09-20",
@@ -117,6 +140,12 @@ export const student: Persona = {
     },
     { source: "mail", date: "2026-10-13", text: "Your booking confirmation AY1741 Helsinki–Lisbon 10 Jan 2027", meta: { from: "Finnair" } },
     { source: "bank", date: "2026-10-13", text: "Finnair", meta: { amountBand: "200-500" } },
+    {
+      source: "sms",
+      date: "2026-10-13",
+      text: "Finnair: Your booking AY1741 HEL–LIS 10 Jan is confirmed. Check-in opens 36 hours before departure.",
+      meta: { from: "Finnair" },
+    },
     { source: "calendar", date: "2027-01-10", text: "✈️ Lisbon – exchange semester (until 30 May)", meta: { created: "2026-10-13" } },
     { source: "mail", date: "2026-10-15", text: "Learning Agreement signed – Erasmus+ spring 2027", meta: { from: "University of Oulu" } },
   ],
@@ -124,6 +153,13 @@ export const student: Persona = {
     { source: "mail", date: "2026-08-12", text: "Voitko auttaa mua muutossa lauantaina? Tarjoan pizzaa 🍕", meta: { from: "Matti" } },
     { source: "calendar", date: "2026-08-15", text: "Matin muuttoapu", meta: { created: "2026-08-12" } },
     { source: "mail", date: "2026-09-05", text: "Isä kysyy: tuleeko Saran uusi auto tällä viikolla?", meta: { from: "Äiti" } },
+    // A service text about a friend's move: a payment request, not her own move.
+    {
+      source: "sms",
+      date: "2026-08-16",
+      text: 'MobilePay: Matti pyytää sinulta 15,00 € – "muuttoauto, kiitos avusta"',
+      meta: { from: "MobilePay" },
+    },
   ],
   truth: [
     { type: "move", date: "2026-11-01", firstSignal: "2026-09-28", place: "Turku" },
@@ -150,7 +186,15 @@ export const family: Persona = {
     },
     { source: "bank", date: "2026-10-10", text: "K-Rauta Turku", meta: { amountBand: "200-500" } },
     { source: "calendar", date: "2026-10-20", text: "Remonttipalaveri Virtanen", meta: { created: "2026-10-12" } },
+    // At the meeting, past the phone's end: the demo day never sees it.
+    { source: "wifi", date: "2026-10-20", text: "Liityit verkkoon Rakennus-Virtanen" },
     { source: "mail", date: "2026-09-30", text: "Pentueesta vapaana vielä yksi uros – luovutus 15.11.", meta: { from: "breeder" } },
+    {
+      source: "sms",
+      date: "2026-10-14",
+      text: "Kennel Tuulenpesä: Pentu voi hyvin, paino 2,4 kg. Luovutus 15.11., muistathan pentuvakuutuksen.",
+      meta: { from: "breeder" },
+    },
     { source: "calendar", date: "2026-11-15", text: "Haetaan koiranpentu 🐶", meta: { created: "2026-09-30" } },
     { source: "bank", date: "2026-10-08", text: "Musti ja Mirri", meta: { amountBand: "50-200" } },
   ],
@@ -176,6 +220,7 @@ export const control: Persona = {
   traps: [
     { source: "mail", date: "2026-09-03", text: "Muuttoapua tarvitaan! Serkku muuttaa Tampereelle 12.9.", meta: { from: "Ida" } },
     { source: "mail", date: "2026-10-01", text: "Matkavinkit: 10 syytä lentää Lissaboniin syksyllä", meta: { from: "newsletter" } },
+    { source: "sms", date: "2026-09-13", text: 'MobilePay: Ida pyytää sinulta 20,00 € – "serkun muuttoauto"', meta: { from: "MobilePay" } },
   ],
   truth: [],
 };
@@ -212,6 +257,8 @@ export const studentSv: Persona = {
     place: ["Vasa centrum", "Brändö", "Sandviken", "Gerby"],
   },
   planted: [
+    // The flat viewing in Åbo: the phone joined the student housing guest network.
+    { source: "wifi", date: "2026-10-03", text: "Ansluten till nätverket TYS-Guest" },
     {
       source: "mail",
       date: "2026-10-09",
@@ -228,18 +275,38 @@ export const studentSv: Persona = {
     { source: "bank", date: "2026-10-14", text: "Flyttfirma Snabb Ab", meta: { amountBand: "200-500" } },
     { source: "mail", date: "2026-10-16", text: "Uppsägning mottagen – hyresförhållandet upphör 31.10.2026", meta: { from: "VOAS" } },
     {
+      source: "sms",
+      date: "2026-10-16",
+      text: "Flyttfirma Snabb: Flyttbilen kommer lö 31.10 kl. 9. Chauffören ringer före ankomst.",
+      meta: { from: "Snabb Ab" },
+    },
+    {
+      source: "sms",
+      date: "2026-10-16",
+      text: "DVV/Posti: Din flyttanmälan har behandlats. Den nya adressen gäller från 1.11.2026.",
+      meta: { from: "DVV" },
+    },
+    {
       source: "mail",
       date: "2026-10-02",
       text: "Nettiauto: nya träffar i din bevakning – Toyota Yaris 2014, 6 900 €",
       meta: { from: "Nettiauto" },
     },
     { source: "mail", date: "2026-10-11", text: "Prisförfrågan: Toyota Yaris 1.33 2014 – Bilhuset Laakkonen", meta: { from: "dealer" } },
+    { source: "wifi", date: "2026-10-11", text: "Ansluten till nätverket Laakkonen-Guest" },
     { source: "calendar", date: "2026-10-18", text: "Provkörning Yaris, Laakkonen kl. 14", meta: { created: "2026-10-11" } },
     {
       source: "mail",
       date: "2026-10-16",
       text: "Fråga: vad kostar försäkringen för min första bil? – svar från If kundtjänst",
       meta: { from: "If" },
+    },
+    // After the test drive, past the phone's end.
+    {
+      source: "sms",
+      date: "2026-10-24",
+      text: "Traficom: Ägarbyte registrerat, Toyota Yaris. Registreringsbeviset postas.",
+      meta: { from: "Traficom" },
     },
     {
       source: "mail",
@@ -254,14 +321,26 @@ export const studentSv: Persona = {
       meta: { from: "Finnair" },
     },
     { source: "bank", date: "2026-10-13", text: "Finnair", meta: { amountBand: "200-500" } },
+    {
+      source: "sms",
+      date: "2026-10-13",
+      text: "Finnair: Din bokning AY1741 HEL–LIS 10 jan är bekräftad. Incheckningen öppnar 36 timmar före avgång.",
+      meta: { from: "Finnair" },
+    },
     { source: "calendar", date: "2027-01-10", text: "✈️ Lissabon – utbytestermin (till 30 maj)", meta: { created: "2026-10-13" } },
   ],
   traps: [
     { source: "mail", date: "2026-08-12", text: "Kan du hjälpa mig flytta på lördag? Jag bjuder på pizza 🍕", meta: { from: "Matias" } },
     { source: "calendar", date: "2026-08-15", text: "Hjälpa Matias flytta", meta: { created: "2026-08-12" } },
+    {
+      source: "sms",
+      date: "2026-08-16",
+      text: 'MobilePay: Matias ber dig om 15,00 € – "flyttbilen, tack för hjälpen"',
+      meta: { from: "MobilePay" },
+    },
   ],
   truth: [
-    { type: "move", date: "2026-11-01", firstSignal: "2026-10-09", place: "Åbo" },
+    { type: "move", date: "2026-11-01", firstSignal: "2026-10-03", place: "Åbo" },
     { type: "first_car", date: "2026-10-18", firstSignal: "2026-10-02" },
     { type: "long_trip", date: "2027-01-10", firstSignal: "2026-09-20", place: "Lissabon" },
   ],
