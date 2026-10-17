@@ -99,6 +99,9 @@ importers:
       '@ahead/insights':
         specifier: workspace:*
         version: link:../libs/insights
+      '@ahead/listing':
+        specifier: workspace:*
+        version: link:../libs/listing
       '@ahead/opendata':
         specifier: workspace:*
         version: link:../libs/opendata
@@ -152,6 +155,15 @@ importers:
         version: link:../opendata
 
   libs/journeys:
+    dependencies:
+      '@ahead/contract':
+        specifier: workspace:*
+        version: link:../contract
+      '@ahead/opendata':
+        specifier: workspace:*
+        version: link:../opendata
+
+  libs/listing:
     dependencies:
       '@ahead/contract':
         specifier: workspace:*

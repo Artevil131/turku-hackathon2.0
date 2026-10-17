@@ -48,3 +48,31 @@ pitch.
 - GDPR articles cited in PRIVACY.md from the regulation text; EDPB
   guidelines on consent (05/2020) and on automated decision-making
   (WP251) still to be re-read for exact wording.
+
+## Listing risk map (libs/listing/src/risks.ts)
+
+- Isännöintiliitto, Putkiremonttibarometri 2026 (May 2026): traditional
+  pipe renovation, total cost per m² of living area, median 890 €
+  nationally and 1 000 € in the capital region (2025: 850 and 1 128);
+  works take about six months; most current projects are in 1970s and
+  80s buildings; 21 % of property managers report renovations left
+  undone for lack of finance. Primary.
+  https://www.isannointiliitto.fi/wp-content/uploads/2026/05/Putkiremonttibaro-2026-tulokset.pdf
+- Asbestos: survey required before any demolition or renovation in a
+  building finished before 1994, also inside one flat; asbestos building
+  materials used 1922–1992 (Isännöintiliitto owner's guide; Työterveyslaitos).
+  https://www.isannointiliitto.fi/wp-content/uploads/2020/05/osakkaan-asbestiohje.pdf
+- Urakkamaailma (Alma Marketplaces), quote requests Apr–Jun 2025, medians
+  incl. VAT: asbestos removal 1 255 €, bathroom 5 057 €, roof 4 209 €,
+  drainage 3 940 €, facade 2 885 €. Secondary (a tendering service's own
+  requests). https://www.sttinfo.fi/tiedote/71303280/remonttiselvitys-nain-paljon-suosituimmat-remontit-maksoivat-kevaalla-2025?lang=fi
+- False plinth (valesokkeli) most common small-house foundation of the
+  1970s–80s: a thesis, secondary. https://www.theseus.fi/handle/10024/347668
+- Radon: reference level 300 Bq/m³, new buildings 200; Finnish average
+  about 94 Bq/m³; measure at least two months between September and May
+  (STUK, via municipal pages). Per-municipality figures: STUK radon maps,
+  not yet read. https://stuk.fi/radon
+- Car upkeep about 1 070 €/year on servicing and repairs (Beely 2022, via
+  Moottori), secondary; average car age 17.8 years at the end of 2025
+  (Statistics Finland). https://moottori.fi/uutinen/suomalaiset-korjaavat-autojaan-keskimaarin-1-070-eurolla-kulut-kasvaneet-10-vuodessa/
+  https://stat.fi/en/publication/cmfqlg5zx01jd07uordhc6leg
