@@ -204,6 +204,17 @@ run on a phone, offline, network tab open.
   CONCEPT.md lists as If's business, so it is the team's call. Other cards
   still link to where their facts come from ("Source: …").
 
+- B → A (2026-10-17, describe and snapshot): both in the app. Notice, home
+  and ledger word events only through `describe()`; the detector's snapshot is
+  saved in IndexedDB after every check, restored when the engine starts and
+  erased with everything else (plus `clearCache()`). Headless Chrome, offline
+  after a reload: the check went from 13.9 s to 7.4 s; what is left is the
+  model start and the prototypes. One request: importing `describe` from
+  `@ahead/detect` pulls Transformers.js into the app's first bundle (862 kB
+  instead of 266 kB), because the index also exports the detector. Could
+  `libs/detect/package.json` export `"./describe": "./src/describe.ts"`? The app
+  aliases that path in its own Vite and TS config until then.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

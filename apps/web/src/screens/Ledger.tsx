@@ -1,5 +1,7 @@
 import type { LedgerEntry } from "@ahead/contract";
-import { formatDate, type Key, useI18n } from "../i18n.tsx";
+import { describe } from "@ahead/detect/describe";
+import { type Key, useI18n } from "../i18n.tsx";
+import { today } from "../today.ts";
 
 interface Props {
   ledger: LedgerEntry[];
@@ -21,9 +23,7 @@ export function Ledger({ ledger, onOpen, onEraseAll }: Props) {
           {ledger.map((e) => (
             <li key={e.event.id} className="row">
               <button type="button" className="row-button grow" onClick={() => onOpen(e)}>
-                <div className="row-title">
-                  {t(`notice.${e.event.type}` as Key, { date: e.event.estimatedDate ? formatDate(e.event.estimatedDate, locale) : "" })}
-                </div>
+                <div className="row-title">{describe(e.event, locale, today()).title}</div>
                 <div className="muted">
                   {t(`status.${e.status}` as Key)} · {t("ledger.shared", { answer: t(e.shared ? "ledger.yes" : "ledger.no") })}
                 </div>

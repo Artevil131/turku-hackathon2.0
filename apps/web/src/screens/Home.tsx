@@ -1,5 +1,7 @@
 import type { LedgerEntry } from "@ahead/contract";
-import { formatDate, type Key, useI18n } from "../i18n.tsx";
+import { describe } from "@ahead/detect/describe";
+import { useI18n } from "../i18n.tsx";
+import { today } from "../today.ts";
 
 interface Props {
   ledger: LedgerEntry[];
@@ -19,8 +21,7 @@ export function Home({ ledger, anySourceOn, checked, checking, progress, error, 
   const { t, locale } = useI18n();
   const pending = ledger.filter((e) => e.status === "pending");
   const confirmed = ledger.filter((e) => e.status === "confirmed");
-  const label = (e: LedgerEntry) =>
-    t(`notice.${e.event.type}` as Key, { date: e.event.estimatedDate ? formatDate(e.event.estimatedDate, locale) : "" });
+  const label = (e: LedgerEntry) => describe(e.event, locale, today()).title;
 
   return (
     <section>

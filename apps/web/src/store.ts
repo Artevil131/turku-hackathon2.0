@@ -1,4 +1,5 @@
 import { type Journey, type LedgerEntry, SOURCES, type SourceState, type Store } from "@ahead/contract";
+import type { VectorSnapshot } from "@ahead/detect";
 import { type IDBPDatabase, openDB } from "idb";
 
 const DB_NAME = "ahead";
@@ -6,17 +7,29 @@ const DB_NAME = "ahead";
 type Db = IDBPDatabase;
 
 function open(name: string): Promise<Db> {
-  return openDB(name, 1, {
-    upgrade(db) {
-      db.createObjectStore("sources", { keyPath: "source" });
-      db.createObjectStore("ledger", { keyPath: "event.id" });
-      db.createObjectStore("journeys", { keyPath: "eventId" });
+  return openDB(name, 2, {
+    upgrade(db, oldVersion) {
+      if (oldVersion < 1) {
+        db.createObjectStore("sources", { keyPath: "source" });
+        db.createObjectStore("ledger", { keyPath: "event.id" });
+        db.createObjectStore("journeys", { keyPath: "eventId" });
+      }
+      // v2: the detector's embedded vectors, one snapshot (derived personal data: on this device only, erased with the rest).
+      if (oldVersion < 2) db.createObjectStore("vectors");
     },
   });
 }
 
+/** The contract's Store plus the app's vector cache, so "Check now" is instant after a reload (WORK.md, A to B). */
+export interface AppStore extends Store {
+  vectors(): Promise<VectorSnapshot | undefined>;
+  putVectors(snapshot: VectorSnapshot): Promise<void>;
+}
+
+const SNAPSHOT_KEY = "snapshot";
+
 /** The app's single store, over IndexedDB. Nothing is enabled until the user turns it on. */
-export function createStore(name = DB_NAME): Store {
+export function createStore(name = DB_NAME): AppStore {
   let db: Promise<Db> | undefined;
   const get = () => {
     db ??= open(name);
@@ -41,6 +54,12 @@ export function createStore(name = DB_NAME): Store {
     },
     async putJourney(journey) {
       await (await get()).put("journeys", journey);
+    },
+    async vectors() {
+      return (await (await get()).get("vectors", SNAPSHOT_KEY)) as VectorSnapshot | undefined;
+    },
+    async putVectors(snapshot) {
+      await (await get()).put("vectors", snapshot, SNAPSHOT_KEY);
     },
     /** One transaction over every object store, so nothing survives a half-finished erase. */
     async eraseAll() {
