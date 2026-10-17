@@ -1,5 +1,5 @@
 import type { Journey, JourneyBuilder, JourneyContext, JourneyItem } from "@ahead/contract";
-import { addDays, DVV_SOURCE, daysBetween, FMI_SOURCE, moveNotificationWindow, regionOfMunicipality, warningsFor } from "@ahead/opendata";
+import { addDays, daysBetween, FMI_SOURCE, moveNotificationWindow, regionOfMunicipality, warningsFor } from "@ahead/opendata";
 import {
   type BuilderOptions,
   cachedWarnings,
@@ -14,6 +14,18 @@ import {
   shortDate,
   todayIso,
 } from "./common.ts";
+
+/** Service links: a todo card opens the service itself, not a page about it (WORK.md, A to B). */
+const MOVE_NOTICE_SERVICE = {
+  name: { fi: "Muuttoilmoitus (Posti ja DVV)", en: "Change of address (Posti and DVV)" },
+  url: "https://www.posti.fi/muuttaminen/muuttoilmoitus",
+  service: true,
+};
+const ELECTRICITY_SERVICE = {
+  name: { fi: "Sähkönhinta.fi, Energiavirasto", en: "Sähkönhinta.fi, Energy Authority" },
+  url: "https://www.sahkonhinta.fi/",
+  service: true,
+};
 
 const LT_URL = "https://www.lahitapiola.fi/henkilo/vakuutukset/kotivakuutus/kotivakuutus-ja-muutto/";
 const OP_URL = "https://www.op.fi/en/private-customers/insurance/home-insurance/moving-home-and-home-insurance";
@@ -42,25 +54,25 @@ export function createMoveBuilder(options: Partial<BuilderOptions> = {}): Journe
           title: { fi: "Tee muuttoilmoitus", en: "File your change of address" },
           body: {
             fi: window
-              ? `Ilmoituksen voi tehdä aikaisintaan kuukautta ennen muuttoa (${shortDate(window.opensOn, "fi")}) ja viimeistään viikon kuluessa muutosta (${shortDate(window.deadline, "fi")}). Sama ilmoitus menee Postille.`
-              : "Ilmoituksen voi tehdä aikaisintaan kuukautta ennen muuttoa ja viimeistään viikon kuluessa muutosta. Sama ilmoitus menee Postille.",
+              ? `Ilmoituksen voi tehdä aikaisintaan kuukautta ennen muuttoa (${shortDate(window.opensOn, "fi")}) ja viimeistään viikon kuluessa muutosta (${shortDate(window.deadline, "fi")}). Samalla ilmoituksella voi ilmoittaa sekä DVV:lle että Postille (DVV:n sääntö).`
+              : "Ilmoituksen voi tehdä aikaisintaan kuukautta ennen muuttoa ja viimeistään viikon kuluessa muutosta. Samalla ilmoituksella voi ilmoittaa sekä DVV:lle että Postille (DVV:n sääntö).",
             en: window
-              ? `You can file from one month before the move (${shortDate(window.opensOn, "en")}) and must do so within a week after it (${shortDate(window.deadline, "en")}). The same notice goes to Posti.`
-              : "You can file from one month before the move and must do so within a week after it. The same notice goes to Posti.",
+              ? `You can file from one month before the move (${shortDate(window.opensOn, "en")}) and must do so within a week after it (${shortDate(window.deadline, "en")}). One notice can go to both DVV and Posti (DVV's rule).`
+              : "You can file from one month before the move and must do so within a week after it. One notice can go to both DVV and Posti (DVV's rule).",
           },
           due: window?.deadline,
-          source: { name: { fi: DVV_SOURCE.name, en: "DVV, moving to a new address" }, url: DVV_SOURCE.url },
+          source: MOVE_NOTICE_SERVICE,
         }),
         t({
           id: "electricity",
           kind: "todo",
           title: { fi: "Sähkösopimus uuteen osoitteeseen", en: "Electricity contract for the new address" },
           body: {
-            fi: "Irtisano vanha sähkösopimus ja tee uusi noin kaksi viikkoa ennen muuttoa, jotta sähköt ovat päällä muuttopäivänä.",
-            en: "End the old contract and make a new one about two weeks before the move, so the power is on on moving day.",
+            fi: "Ifin muuttajan muistilista neuvoo irtisanomaan vanhan sähkösopimuksen ja tekemään uuden noin kaksi viikkoa ennen muuttoa, jotta sähköt ovat päällä muuttopäivänä. Energiaviraston vertailu näyttää uuden postinumeron tarjoukset; sopimus tehdään myyjän kanssa.",
+            en: "If's mover's checklist says to end the old contract and make a new one about two weeks before the move, so the power is on on moving day. The Energy Authority's comparison lists the offers for the new postcode; the contract is made with the seller.",
           },
           due: moveDate ? minus(moveDate, 14) : undefined,
-          source: IF_MOVE_CHECKLIST,
+          source: ELECTRICITY_SERVICE,
         }),
         t({
           id: "insurance-move",

@@ -193,6 +193,18 @@ run on a phone, offline, network tab open.
        module import from another origin would not show. B will say so when it
        talks about the counter.
 
+- B → A (2026-10-17, service links): done for the services that exist.
+  Todo cards now open the service and say "Open: …": change of address →
+  posti.fi/muuttaminen/muuttoilmoitus (one notice to both DVV and Posti),
+  electricity → sahkonhinta.fi (the Energy Authority's comparison; the contract
+  is made with the seller), first-car inspection → Traficom's free vehicle
+  lookup (inspection details by registration number). Two gaps, on purpose:
+  Traficom has no inspection booking (private stations do it), and there is
+  no neutral mover service to link. A mover card needs a partner, which
+  CONCEPT.md lists as If's business, so it is the team's call. Other cards
+  still link to where their facts come from ("Source: …").
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).
+- 2026-10-17: `JourneyItem.sourceIsService?: boolean` (machine B): marks a link that opens the service doing the task, so a todo card can say "Open" for posti.fi but "Source" for a T&C clause. Optional; nothing else changes.

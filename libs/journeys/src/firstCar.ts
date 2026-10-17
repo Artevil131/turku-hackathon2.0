@@ -1,5 +1,5 @@
 import type { IsoDate, Journey, JourneyBuilder, JourneyContext } from "@ahead/contract";
-import { daysBetween, nextInspectionDue, TRAFICOM_SOURCE } from "@ahead/opendata";
+import { daysBetween, nextInspectionDue } from "@ahead/opendata";
 import { type BuilderOptions, IF_KASKO_TERMS_URL, IF_TRAFFIC_TERMS_URL, item, shortDate, todayIso } from "./common.ts";
 
 export interface FirstCarOptions extends Partial<BuilderOptions> {
@@ -39,14 +39,20 @@ export function createFirstCarBuilder(options: FirstCarOptions = {}): JourneyBui
           title: { fi: "Katsastus", en: "Vehicle inspection" },
           body: {
             fi: due
-              ? `Ensimmäinen katsastus viimeistään neljän vuoden kuluttua käyttöönotosta: ${shortDate(due, "fi")}${daysLeft !== undefined ? ` (${daysLeft} päivää)` : ""}. Sen jälkeen kahden vuoden välein ja yli 10-vuotiaana vuosittain. Tarkista oman auton päivä katsastustodistuksesta.`
-              : "Ensimmäinen katsastus viimeistään neljän vuoden kuluttua käyttöönottopäivästä, sen jälkeen kahden vuoden välein ja yli 10-vuotiaana vuosittain. Käyttöönottopäivä on rekisteröintitodistuksessa.",
+              ? `Ensimmäinen katsastus viimeistään neljän vuoden kuluttua käyttöönotosta: ${shortDate(due, "fi")}${daysLeft !== undefined ? ` (${daysLeft} päivää)` : ""}. Sen jälkeen kahden vuoden välein ja yli 10-vuotiaana vuosittain. Tarkista oman auton päivä katsastustodistuksesta. Määräajat ovat Traficomin.`
+              : "Ensimmäinen katsastus viimeistään neljän vuoden kuluttua käyttöönottopäivästä, sen jälkeen kahden vuoden välein ja yli 10-vuotiaana vuosittain. Käyttöönottopäivä on rekisteröintitodistuksessa. Määräajat ovat Traficomin.",
             en: due
-              ? `First inspection within four years of commissioning: ${shortDate(due, "en")}${daysLeft !== undefined ? ` (${daysLeft} days)` : ""}. Then every two years, and yearly once the car is over 10. Check your own car's date on the inspection certificate.`
-              : "First inspection within four years of the commissioning date, then every two years, and yearly once the car is over 10. The commissioning date is on the registration certificate.",
+              ? `First inspection within four years of commissioning: ${shortDate(due, "en")}${daysLeft !== undefined ? ` (${daysLeft} days)` : ""}. Then every two years, and yearly once the car is over 10. Check your own car's date on the inspection certificate. The intervals are Traficom's rule.`
+              : "First inspection within four years of the commissioning date, then every two years, and yearly once the car is over 10. The commissioning date is on the registration certificate. The intervals are Traficom's rule.",
           },
           due,
-          source: { name: { fi: TRAFICOM_SOURCE.name, en: "Traficom, inspection dates by vehicle class" }, url: TRAFICOM_SOURCE.url },
+          // The service, not the rule page: Traficom's free lookup shows a car's inspection details by registration
+          // number. Inspections are booked at private stations, so there is no Traficom booking to link.
+          source: {
+            name: { fi: "Traficom, tarkista ajoneuvon tiedot", en: "Traficom, check vehicle details" },
+            url: "https://traficom.fi/fi/autoilijat/ajoneuvon-osto-ja-myynti/tarkista-ajoneuvon-tiedot",
+            service: true,
+          },
         }),
         item(locale, {
           id: "car-keys",

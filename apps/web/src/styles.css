@@ -146,6 +146,16 @@ p {
 .card a {
   color: var(--accent);
 }
+.card a.service {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
 .chip {
   display: inline-block;
   font-size: 0.75rem;

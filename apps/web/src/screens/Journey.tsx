@@ -33,8 +33,9 @@ export function Journey({ journey, onBack, onToggleDone }: Props) {
                 <div className="card-foot">
                   {item.sourceName &&
                     (item.sourceUrl ? (
-                      <a href={item.sourceUrl} target="_blank" rel="noreferrer">
-                        {t("journey.source")}: {item.sourceName}
+                      // A service link opens the service that does the task (WORK.md); other links show where a fact comes from.
+                      <a href={item.sourceUrl} target="_blank" rel="noreferrer" className={item.sourceIsService ? "service" : undefined}>
+                        {item.sourceIsService ? `${t("journey.open")}: ${item.sourceName} ↗` : `${t("journey.source")}: ${item.sourceName}`}
                       </a>
                     ) : (
                       <span className="muted">

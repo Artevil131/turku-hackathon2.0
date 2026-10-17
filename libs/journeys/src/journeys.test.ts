@@ -98,3 +98,15 @@ test("long trip: start date drives the cancellation-cover deadline", async () =>
   const j = await createBuilders({ today: TODAY }).long_trip?.build(ctx({ ...mockMove, type: "long_trip", estimatedDate: "2026-12-10" }));
   expect(j?.items.find((i) => i.id === "long-trip-cover")?.due).toBe("2026-12-07");
 });
+
+test("service todos open the service itself (WORK.md, A to B)", async () => {
+  const builders = createBuilders({ today: TODAY, commissioned: "2024-03-15" });
+  const move = await builders.move?.build(ctx(mockMove));
+  const host = (id: string, items = move?.items ?? []) => new URL(items.find((i) => i.id === id)?.sourceUrl ?? "http://none").hostname;
+  expect(host("dvv")).toBe("www.posti.fi");
+  expect(host("electricity")).toBe("www.sahkonhinta.fi");
+  expect(move?.items.find((i) => i.id === "dvv")?.sourceIsService).toBe(true);
+  expect(move?.items.find((i) => i.id === "locks")?.sourceIsService).toBeUndefined();
+  const car = await builders.first_car?.build(ctx({ ...mockMove, type: "first_car" }));
+  expect(host("inspection", car?.items)).toBe("traficom.fi");
+});

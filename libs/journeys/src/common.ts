@@ -26,6 +26,8 @@ export const minus = (date: IsoDate, days: number): IsoDate => addDays(date, -da
 export interface Source {
   name: Text;
   url?: string;
+  /** The URL is the service that does the task, not where a fact comes from. */
+  service?: boolean;
 }
 
 export const IF_MOVE_PAGE: Source = {
@@ -57,7 +59,13 @@ export function item(locale: Locale, spec: ItemSpec): JourneyItem {
     ...rest,
     title: title[locale],
     body: body[locale],
-    ...(source ? { sourceName: source.name[locale], ...(source.url ? { sourceUrl: source.url } : {}) } : {}),
+    ...(source
+      ? {
+          sourceName: source.name[locale],
+          ...(source.url ? { sourceUrl: source.url } : {}),
+          ...(source.service && source.url ? { sourceIsService: true } : {}),
+        }
+      : {}),
   };
 }
 
