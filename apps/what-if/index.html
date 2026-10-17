@@ -1776,11 +1776,11 @@ const { SRC, COVER } = engine;
 /* The three curated examples tell the full story (compare, the seller's reply). Their inspection numbers
    come from the same Traficom table as any pasted ad. */
 const fail = (key, y) => DATA.m[key][y][0];
-const MEGANE = fail("renault|megane", 2007), AURIS = fail("toyota|auris", 2007), AVG07 = DATA.avg[2007][0];
+const BMW3 = fail("bmw|3-sarja", 2009), AVENSIS = fail("toyota|avensis", 2009), AVG09 = DATA.avg[2009][0];
 const FAIL_BARS = [
-  { label: "Renault Mégane, 2007", pct: MEGANE, tone: "bad", me: true },
-  { label: "All cars from 2007", pct: AVG07, tone: "" },
-  { label: "Toyota Auris, 2007", pct: AURIS, tone: "good" },
+  { label: "BMW 3 Series, 2009", pct: BMW3, tone: "bad", me: true },
+  { label: "All cars from 2009", pct: AVG09, tone: "" },
+  { label: "Toyota Avensis, 2009", pct: AVENSIS, tone: "good" },
 ];
 const PIPE_RATE = DATA.facts.pipes.median;
 const HOME_SHARE = Math.round((58 * PIPE_RATE) / 100) * 100;
@@ -1840,25 +1840,25 @@ const CASES = {
   },
 
   car: {
-    chip: { cat: "Car", label: "Used Renault Mégane RS", eur: "€4,000" },
-    ad: "Renault Mégane RS 2.0T, 2007\n118 000 km, 225 hp, petrol, manual\nLowered springs, new stereo, winter tyres on rims\nInspected 3/2026\nPrivate seller, Turku\nQuick sale: 4 000 €",
-    stamp: "Used car", name: "Renault Mégane RS 2.0T",
-    specs: "2007 · 118,000 km · 225 hp · private seller · Turku",
-    price: 4000, priceLabel: "Asking price",
-    steps: ["Reading the ad", "Finding inspection results for a 2007 Renault Mégane", "Checking what usually needs doing at 118,000 km", "Estimating insurance for an 18-year-old"],
+    chip: { cat: "Car", label: "Used BMW 320d", eur: "€6,900" },
+    ad: "BMW 320d Touring, 2009\n248 000 km, 177 hp, diesel, manual\nM sport wheels, xenon lights, winter tyres on rims\nInspected 4/2026\nPrivate seller, Turku\nQuick sale: 6 900 €",
+    stamp: "Used car", name: "BMW 320d Touring",
+    specs: "2009 · 248,000 km · 177 hp · private seller · Turku",
+    price: 6900, priceLabel: "Asking price",
+    steps: ["Reading the ad", "Finding inspection results for a 2009 BMW 3 Series", "Checking what usually needs doing at 248,000 km", "Estimating insurance for an 18-year-old"],
     asks: [
       {
-        q: "“Has the timing belt been changed?”",
-        why: "Timing belts are usually changed around every 100,000 km. This one has 118,000 km.",
-        whatif: "What if it snaps? The engine is usually wrecked.", cost: "€2,000–3,500",
-        tip: `If it hasn’t been done, ask for €600 off. A garage charges €${DATA.facts.belt.low}–${DATA.facts.belt.high} for it.`,
-        tag: "Belt: AutoJerry 2026 · engine repair is an estimate", who: "you",
+        q: "“Is the clutch the original?”",
+        why: `At 248,000 km, ask. On the test drive, feel for slipping: the revs rise but the car doesn’t speed up. A garage charges €${DATA.facts.clutch.low}–${eur(DATA.facts.clutch.high).replace("€", "")} to change one.`,
+        whatif: "What if it goes next month?", cost: `≈ ${eur(DATA.facts.clutch.typical)}`,
+        tip: "If it’s the original and it slips, ask for €700 off. That’s what a garage usually charges.",
+        tag: "Clutch: AutoJerry 2026", who: "you",
       },
       {
         q: "“Can I see the last inspection report?”",
-        why: `More than half of 2007 Méganes failed their inspection in ${DATA.trafi.year}. For all cars that age it was ${Math.round(AVG07)}%.`,
+        why: `Almost half of 2009 BMW 3 Series cars failed their inspection in ${DATA.trafi.year}: ${BMW3.toFixed(1)}%. For all cars that age it was ${Math.round(AVG09)}%.`,
         bars: FAIL_BARS,
-        whatif: "What if it fails next spring? Front axle joints, steering joints and brakes are its usual reasons.", cost: "€300–800",
+        whatif: "What if it fails next spring? Rear axle joints and bushings, springs and shock absorbers, and brakes are its usual reasons.", cost: "€300–800",
         tag: `Traficom ${DATA.trafi.year} · repair cost is an estimate`, real: true, who: "you",
         link: { href: SRC.lookup.url, text: "Check its inspections free at Traficom" },
       },
@@ -1871,37 +1871,37 @@ const CASES = {
     ],
     period: "Over two years",
     costs: [
-      { what: "Asking price", note: "From the ad", eur: 4000, seg: "price" },
-      { what: "Timing belt, if not done", note: "Estimate", eur: 600, seg: "fix" },
+      { what: "Asking price", note: "From the ad", eur: 6900, seg: "price" },
+      { what: "Clutch, if it slips", note: "Typical garage price · AutoJerry 2026", eur: DATA.facts.clutch.typical, seg: "fix" },
       { what: "Likely repairs", note: "Estimate for a car this age", eur: 800, seg: "fix" },
       { what: "Insurance at 18", note: "About €1,800 a year with no bonus yet · estimate", eur: 3600, seg: "ins" },
     ],
     costNote: "Estimates are rough. With If’s own claims data they would be exact for this car and this driver.",
     compare: {
       label: "Is there a better choice?",
-      button: "Compare with a 2007 Toyota Auris for €5,000",
-      other: { name: "Toyota Auris 1.6", costs: [{ eur: 5000, seg: "price" }, { eur: 300, seg: "fix" }, { eur: 1800, seg: "ins" }] },
-      verdict: "The €4,000 car costs about €1,900 more over two years.",
-      insureLine: "And the safer car is cheaper to insure: about €900 a year less at 18 (estimate).",
+      button: "Compare with a 2009 Toyota Avensis for €6,500",
+      other: { name: "Toyota Avensis 1.8", costs: [{ eur: 6500, seg: "price" }, { eur: 300, seg: "fix" }, { eur: 2600, seg: "ins" }] },
+      verdict: `The BMW costs about ${eur(Math.round((6900 + DATA.facts.clutch.typical + 800 + 3600 - (6500 + 300 + 2600)) / 100) * 100)} more over two years.`,
+      insureLine: "And the safer car is cheaper to insure: about €500 a year less at 18 (estimate).",
       rows: [
-        ["Failed inspection", `${MEGANE.toFixed(1)}%`, `${AURIS.toFixed(1)}%`],
-        ["Timing belt", "Due, ≈&nbsp;€600", "Chain, nothing to change"],
-        ["Insurance at 18", "≈&nbsp;€1,800/yr", "≈&nbsp;€900/yr"],
-        ["Engine", "225 hp", "124 hp"],
+        ["Failed inspection", `${BMW3.toFixed(1)}%`, `${AVENSIS.toFixed(1)}%`],
+        ["Clutch", "Original at 248,000 km?", "Ask the same"],
+        ["Insurance at 18", "≈&nbsp;€1,800/yr", "≈&nbsp;€1,300/yr"],
+        ["Engine", "177 hp", "147 hp"],
       ],
-      heads: ["Mégane RS", "Auris"],
-      tag: `Traficom ${DATA.trafi.year} for inspections · the rest are estimates`,
+      heads: ["BMW 320d", "Avensis"],
+      tag: `Traficom ${DATA.trafi.year} for inspections · AutoJerry 2026 for the clutch · the rest are estimates`,
     },
     reply: {
-      seller: "Belt not done, but I'll do €3,800.",
-      offer: 3400,
+      seller: "The clutch is original but it's fine. I'll do €6,700.",
+      offer: 6200,
       reasons: [
-        "The belt isn’t done. A garage charges about €600 for it, so €4,000 minus €600 is €3,400.",
+        "The clutch is the original at 248,000 km. A garage usually charges about €700 to change one, so €6,900 minus €700 is €6,200.",
         "Ask for the last inspection report before you pay.",
-        "If the seller won’t go below €3,800, the Auris is still the cheaper car over two years.",
+        "If the seller won’t go below €6,700, the Avensis is still the cheaper car over two years.",
       ],
-      message: "Thanks! Since the timing belt isn’t done and a garage charges about €600 for it, I can pay €3,400. Could you also send me the last inspection report?",
-      saved: 600, savedNote: "That’s before you even own the car.",
+      message: "Thanks! The clutch is still the original at 248,000 km and a garage usually charges about €700 to change one, so I can pay €6,200. Could you also send me the last inspection report?",
+      saved: 700, savedNote: "That’s €700 in your pocket, before you even own the car.",
     },
     cover: COVER.car,
     later: {
@@ -1910,12 +1910,12 @@ const CASES = {
       list: [
         { when: "Nov–Mar", text: "Winter tyres whenever the weather or roads call for them, with at least 3 mm of tread." },
         { when: "Icy days", text: "A heads-up the evening before, for your own route." },
-        { when: "Mar 2027", text: "Inspection due. Check the front axle, steering joints and brakes the week before." },
+        { when: "Apr 2027", text: "Inspection due. Check the rear axle joints, springs and shock absorbers and brakes the week before." },
       ],
     },
     insure: { label: "Drive it home", title: "Get reminders for this car.", text: "They come with If car insurance. Traffic insurance is required by law from the moment the car is yours.",
-      details: [["Car", "Renault Mégane RS 2.0T, 2007"], ["Km", "118,000"], ["Area", "Turku"]] },
-    sources: ["trafi", "lookup", "belt", "kl", "ksl", "tll", "lvl"],
+      details: [["Car", "BMW 320d Touring, 2009"], ["Km", "248,000"], ["Area", "Turku"]] },
+    sources: ["trafi", "lookup", "clutch", "kl", "ksl", "tll", "lvl"],
   },
 
   rent: {
