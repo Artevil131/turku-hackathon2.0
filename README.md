@@ -13,14 +13,15 @@ wrong and who would pay for it, and the safer choice. After you sign, If
 customers get reminders at the right moment and a logbook (huoltokirja)
 for the home or vehicle.
 
-**Try it:** open `apps/what-if/index.html` in any browser. It is one file,
-works offline and sends nothing anywhere. Live version:
-https://claude.ai/artifact/7SUmD83heokewMBwhrvcho
+**Try it:** https://what-if.what-if.workers.dev (D-028). The page is also one
+file that works offline: open `apps/what-if/index.html` in any browser.
 
 ## How it works
 
-- **Rules, not AI.** The page reads the ad with rules and looks up the
-  facts. Every result traces back to a rule and a source (D-018).
+- **Rules first, AI second.** The page reads the ad with rules and looks up
+  the facts. When the rules can't read an ad (free text, a moped, a boat, a
+  pet), the team's AI reader reads it, and every field it returns must quote
+  the ad (D-024, D-028). Costs and who pays still come from our sources.
 - **Real data, with a source on every number.** Traficom's 2025 inspection
   statistics by make, model and year; Isännöintiliitto's pipe renovation
   costs; Finanssiala's leak damages; the laws on Finlex; KKV and FINE;
@@ -29,12 +30,16 @@ https://claude.ai/artifact/7SUmD83heokewMBwhrvcho
   timing belt or your share of a pipe renovation. "Covered by insurance ·
   after your excess" for a crash with kasko, theft or a leak. Facts, never
   personal advice (D-019).
-- **Nothing leaves the browser** until the person asks for a quote. In this
-  prototype nothing leaves at all.
+- **Only the ad's text leaves, and only when the rules can't read it.** It
+  goes without phone numbers or email addresses, through our server at
+  Cloudflare to the AI model on the team's own computer. Nothing is stored,
+  nothing about the person is sent, and nothing goes to If. The offline file
+  sends nothing at all.
 
-The reader passes all 17 test ads, written in the sites' real formats
-(`node apps/what-if/test/reader.test.mjs`). Details for developers are in
-`apps/what-if/README.md`.
+The rules pass all 17 test ads, written in the sites' real formats
+(`node apps/what-if/test/reader.test.mjs`); the AI side has its own tests
+(`apps/what-if/test/ai.test.mjs`). Details for developers are in
+`apps/what-if/README.md` and `deploy/what-if/README.md`.
 
 ## How If makes money
 
