@@ -7,10 +7,15 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "smoke": "node browser-smoke/run.ts",
+    "fetch-model": "node scripts/fetch-model.ts"
   },
   "dependencies": {
     "@ahead/contract": "workspace:*",
     "@huggingface/transformers": "^4.3.1"
+  },
+  "devDependencies": {
+    "vite": "^8.0.0"
   }
 }

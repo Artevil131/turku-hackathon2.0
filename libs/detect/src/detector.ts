@@ -7,7 +7,9 @@
 // MiniLM's). A snippet is evidence for its best event when its normalised
 // margin clears `floor`. An event's score is the decayed sum of its
 // evidence margins over the window; it fires above `threshold` when at
-// least `minSources` sources contribute.
+// least `minSources` sources contribute. Identical texts (the monthly rent,
+// the usual shop) count once, and when they recur more than `maxRepeats`
+// times in the window they are routine and count for nothing.
 
 import type { DetectedEvent, Detector, DetectorOptions, Embedder, EventType, Evidence, IsoDate, Snippet } from "@ahead/contract";
 import { EVENT_TYPES } from "@ahead/contract";
@@ -16,6 +18,8 @@ import { datesIn, placeIn } from "./dates.ts";
 import { ordinary, prototypes } from "./prototypes.ts";
 
 export interface DetectorParams {
+  /** A text seen more often than this in the window is routine and never evidence; otherwise it counts once. */
+  maxRepeats: number;
   /** Minimum margin (event similarity minus ordinary similarity) for a snippet to count. */
   floor: number;
   /** Event score needed to fire. */
@@ -26,13 +30,28 @@ export interface DetectorParams {
   minSources: number;
 }
 
-export const DEFAULT_PARAMS: DetectorParams = { floor: 0.6, threshold: 2.5, halfLifeDays: 30, minSources: 2 };
+export const DEFAULT_PARAMS: DetectorParams = { maxRepeats: 2, floor: 0.75, threshold: 2.5, halfLifeDays: 30, minSources: 2 };
 
 export interface Scored {
   snippet: Snippet;
   type: EventType;
   margin: number;
   prototype: string;
+}
+
+/** The most frequent value; ties go to the one seen first in `xs`. */
+function mostFrequent<T>(xs: readonly T[]): T | undefined {
+  const counts = new Map<T, number>();
+  for (const x of xs) counts.set(x, (counts.get(x) ?? 0) + 1);
+  let best: T | undefined;
+  let n = 0;
+  for (const [x, c] of counts) {
+    if (c > n) {
+      best = x;
+      n = c;
+    }
+  }
+  return best;
 }
 
 function daysBetween(a: IsoDate, b: IsoDate): number {
@@ -127,7 +146,18 @@ export class PrototypeDetector implements Detector {
   async detect(snippets: readonly Snippet[], today: IsoDate, options: DetectorOptions = {}): Promise<DetectedEvent[]> {
     const rejected = new Set(options.rejectedSnippetIds ?? []);
     const muted = new Set(options.mutedTypes ?? []);
-    const scored = (await this.score(snippets)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
+    const counts = new Map<string, number>();
+    const keyOf = (s: Snippet) => `${s.source}\u0000${s.text.toLowerCase().replace(/\s+/g, " ").trim()}`;
+    for (const s of snippets) counts.set(keyOf(s), (counts.get(keyOf(s)) ?? 0) + 1);
+    const seen = new Set<string>();
+    const latestFirst = [...snippets].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+    const unique = latestFirst.filter((s) => {
+      const k = keyOf(s);
+      if ((counts.get(k) ?? 0) > this.params.maxRepeats || seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+    const scored = (await this.score(unique)).filter((x) => !rejected.has(x.snippet.id) && !muted.has(x.type));
     const byType = new Map<EventType, Scored[]>();
     for (const x of scored) byType.set(x.type, [...(byType.get(x.type) ?? []), x]);
 
@@ -147,11 +177,14 @@ export class PrototypeDetector implements Detector {
         score: Number(x.margin.toFixed(3)),
         prototype: x.prototype,
       }));
-      const dates = sorted.flatMap((x) =>
-        x.snippet.source === "calendar" && x.snippet.date >= today ? [x.snippet.date] : datesIn(x.snippet.text, today),
-      );
-      const future = dates.filter((d) => d >= today).sort();
-      const place = sorted.map((x) => placeIn(x.snippet.text)).find((p) => p !== undefined);
+      // Date and place: a future calendar entry is the user's own statement and wins;
+      // otherwise the most frequent future date and place in the evidence.
+      const calendar = sorted.filter((x) => x.snippet.source === "calendar" && x.snippet.date >= today);
+      const calendarDate = calendar.map((x) => x.snippet.date).sort()[0];
+      const calendarPlace = calendar.map((x) => placeIn(x.snippet.text)).find((p) => p !== undefined);
+      const future = mostFrequent(sorted.flatMap((x) => datesIn(x.snippet.text, today)).filter((d) => d >= today));
+      const place = calendarPlace ?? mostFrequent(sorted.map((x) => placeIn(x.snippet.text)).filter((p): p is string => p !== undefined));
+      const estimatedDate = calendarDate ?? future;
       const firstSignal = xs.map((x) => x.snippet.date).sort()[0] as IsoDate;
       const ev: DetectedEvent = {
         id: `${type}-${firstSignal}`,
@@ -161,7 +194,7 @@ export class PrototypeDetector implements Detector {
         firstSignal,
         detectedAt: today,
       };
-      if (future[0]) ev.estimatedDate = future[0];
+      if (estimatedDate) ev.estimatedDate = estimatedDate;
       if (place) ev.place = place;
       events.push(ev);
     }

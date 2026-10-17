@@ -17,13 +17,13 @@ not deleted: add a new entry and mark the old one `superseded by D-NNN`.
 | D-009 | 2026-10-17 | Window 60 days; demo events move, first car, long trip; child, pet and renovation have prototypes but no journey this weekend | PLAN.md scope | Aapo |
 | D-010 | 2026-10-17 | Mail, bank and places in the demo come from the synthetic phone only; the OAuth and bank-consent screens are shown as mocks; a real calendar may be read on a team member's own device as a stretch | No real mailbox on stage (PRIVACY.md §8); no time for a reviewed OAuth app | Aapo |
 | D-011 | 2026-10-17 | Working name Ahead; package scope `@ahead` | Placeholder until someone has a better one | Aapo |
-| D-012 | 2026-10-17 | The app Store is IndexedDB through the `idb` wrapper, so erase-all is one transaction | Team choice, the proposal in Open | Operator (machine B) |
-| D-013 | 2026-10-17 | UI is Finnish and English from the start with a language toggle; the demo runs in English | Team choice, the proposal in Open | Operator (machine B) |
+| D-012 | 2026-10-17 | Embedding model `Xenova/multilingual-e5-small` (q8), detector defaults floor 0.75, threshold 2.5, half-life 30 days, two sources, routine above 2 repeats; margins normalised by the prototype scale; identical texts count once; calendar entries invisible before `meta.created` | benchmarks/detect: every planted event on every phone, no false episode, lead 7–89 days, and the setting sits on a plateau. MiniLM never reads the Finnish compound words behind renovation and pet | Aapo, on the benchmark |
+| D-013 | 2026-10-17 | The app Store is IndexedDB through the `idb` wrapper, so erase-all is one transaction | Team choice, the proposal in Open | Operator (machine B) |
+| D-014 | 2026-10-17 | UI is Finnish and English from the start with a language toggle; the demo runs in English | Team choice, the proposal in Open | Operator (machine B) |
+| D-015 | 2026-10-17 | Everything the on-device model needs is served from the app's own origin: the model files under `/models/` (`libs/embed/scripts/fetch-model.ts`, `useLocalModels`) and the ONNX Runtime WASM files under `/ort/` (`scripts/copy-ort.ts`); both git-ignored, remote model loading off | The first browser run fetched the model from huggingface.co and the runtime from cdn.jsdelivr.net; served locally the demo works without venue wifi and the outbound counter stays at 0 (PLAN.md risk 1) | Aapo (WORK.md) and operator (machine B) |
 
 ## Open (to be decided by the team before code depends on them)
 
 | Item | Options | Proposal |
 |------|---------|----------|
 | Server for the demo | None (journeys bundled, open data fetched at build time into JSON); or a tiny proxy for FMI if its feeds block browser requests | Machine B tests FMI from the browser first; proxy only if forced |
-| Model hosting for the demo | The Hugging Face CDN (Transformers.js default); or the model files served from the app's own origin under `apps/web/public/models/` (already git-ignored) with remote loading off | Own origin: the first load downloads ~120 MB once, then the network counter stays at 0 requests, which is the claim the demo makes. With the CDN the first run shows requests to huggingface.co (a model download, no user data), which the counter would honestly count. Measured 2026-10-17: the ONNX WASM runtime also loads from cdn.jsdelivr.net (5.4 MB), so "own origin" must cover it too |
-| Benchmark metrics | Days from first signal to detection; false notices per 120 days; per-event precision at the chosen threshold | All three, printed as one table |

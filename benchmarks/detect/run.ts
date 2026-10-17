@@ -35,7 +35,7 @@ const phones: Phone[] = readdirSync(dir)
   .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")));
 
 const grid: Partial<DetectorParams>[] = [];
-for (const floor of [0.45, 0.6, 0.75]) for (const threshold of [1.5, 2.0, 2.5, 3.5]) grid.push({ floor, threshold });
+for (const floor of [0.6, 0.75, 0.9]) for (const threshold of [2.0, 2.5, 3.0, 4.0]) grid.push({ floor, threshold });
 
 function addDays(s: string, n: number) {
   const d = new Date(`${s}T00:00:00Z`);

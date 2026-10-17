@@ -72,11 +72,36 @@ describe("PrototypeDetector", () => {
     expect(await det.detect(s, today, { rejectedSnippetIds: ["a"] })).toEqual([]);
     expect(await det.detect(s, today, { mutedTypes: ["move"] })).toEqual([]);
   });
+  it("lets a future calendar entry decide date and place over the mail", async () => {
+    const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0 });
+    const s = [
+      snip("a", "mail", "2026-10-15", "long_trip 0.9 Helsinki–Lisbon 10 Jan 2027 and movers 31.10."),
+      snip("b", "calendar", "2027-01-10", "long_trip 0.9 Lisbon"),
+    ];
+    const [ev] = await det.detect(s, today);
+    expect(ev?.estimatedDate).toBe("2027-01-10");
+    expect(ev?.place).toBe("Lisbon");
+  });
   it("estimates the date from the evidence and a future calendar entry", async () => {
     const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0 });
     const s = [snip("a", "mail", "2026-10-10", "move 0.9 alkaen 1.11.2026 Turku"), snip("b", "calendar", "2026-11-01", "move 0.9")];
     const [ev] = await det.detect(s, today);
     expect(ev?.estimatedDate).toBe("2026-11-01");
     expect(ev?.place).toBe("Turku");
+  });
+});
+
+describe("routine items", () => {
+  it("counts an identical text once and drops it when it recurs", async () => {
+    const det = new PrototypeDetector(fake, { floor: 0.3, threshold: 1.0, maxRepeats: 2 });
+    const twice = [
+      snip("a", "bank", "2026-10-10", "move 0.6"),
+      snip("b", "bank", "2026-10-14", "move 0.6"),
+      snip("c", "mail", "2026-10-15", "move 0.6"),
+    ];
+    const once = await det.detect(twice, today);
+    expect(once[0]?.evidence.length).toBe(2); // bank counted once, mail once
+    const routine = [...twice, snip("d", "bank", "2026-10-16", "move 0.6")];
+    expect(await det.detect(routine, today)).toEqual([]); // bank text recurs 3 times: routine; mail alone is one source
   });
 });

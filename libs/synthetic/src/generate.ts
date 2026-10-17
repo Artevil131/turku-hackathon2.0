@@ -44,6 +44,8 @@ export function generate(p: Persona): SyntheticPhone {
       for (let k = 0; k < n; k++) {
         const s: Snippet = { id: next(t.source), source: t.source, date, text: fill(r.pick(t.texts), p.fills, r, date) };
         if (t.meta) s.meta = t.meta;
+        // A calendar entry exists from the day it was made, up to two weeks before it happens.
+        if (t.source === "calendar") s.meta = { ...s.meta, created: addDays(date, -r.int(0, 14)) };
         snippets.push(s);
       }
     }

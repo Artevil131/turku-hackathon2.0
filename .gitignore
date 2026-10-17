@@ -45,8 +45,12 @@ xcuserdata/
 
 # synthetic phones are committed; everything else under data/ is not
 !data/synthetic/
-# cached model weights for the PWA
+# model weights served locally (libs/embed/scripts/fetch-model.ts); never committed
 apps/web/public/models/
+libs/embed/models/
+libs/embed/models-public/
+# ONNX Runtime WASM files copied from node_modules (scripts/copy-ort.ts); never committed
+apps/web/public/ort/
 
 # cached open data for the offline demo is committed (WORK.md, libs/opendata)
 !libs/opendata/data/
