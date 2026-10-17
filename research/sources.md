@@ -15,8 +15,12 @@ pitch.
 - Sampo results 2025 (5 Feb 2026): insurance revenue 9.1 bn€, Nordics
   75 %. https://www.globenewswire.com/news-release/2026/02/05/3232648/0/en/Sampo-Group-s-results-for-2025.html
 - Nordea–If partnership renewed in Finland (2020). https://www.nordea.com/fi/media/2020-03-12/nordea-jatkaa-vahinkovakuutusyhteistyota-ifin-kanssa-suomessa
-- Water damage in Finland: ~40 000 cases and >160 M€ a year (secondary;
-  insurer press material around the LähiTapiola–GROHE programme).
+- Finanssiala ry press release, 20 May 2022: leak damages turned up in
+  2021: 34 800 damages, 171 M€ paid; fire 6 100 damages, 168 M€ (down
+  from 191 M€); burglary 21 400 damages, 22 M€. Primary source for the
+  pitch. https://www.sttinfo.fi/tiedote/69941993/vuotovahingot-kaantyivat-nousuun-putkiremontin-suunnittelu-kannattaa-aloittaa-jo-ennen-kuin-putket-vanhenevat-kasiin
+- Older marketing figure, not to be used: ~40 000 cases and >160 M€ a
+  year (undated, LähiTapiola–GROHE material).
   https://insurance-edge.net/2019/07/16/water-escape-claims-grohe-lahitapiola-present-sense-guard/
   https://www.grohe.com/en/corporate/news/category_news/pressreleases/pressrelease/laehitapiola-and-grohe-are-rethinking-water-damage-insurance-at-dia-amsterdam.html
 - Flood coverage in Finnish home policies (OP explainer). https://www.op.fi/en/-/tulvat-ja-vakuutusten-korvattavuus

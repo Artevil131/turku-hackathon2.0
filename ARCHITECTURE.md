@@ -96,9 +96,13 @@ seeded with a **synthetic life**: a generated mailbox, calendar, bank
 transactions and places for a student moving from Oulu to Turku in
 November, looking at a used car, and leaving for an exchange term in
 January (DATA.md). The pipeline runs for real on that data, on the phone,
-in front of the judges, with the network tab open. One toggle switches to
-a real calendar if a team member wants to show it live on their own
-device.
+in front of the judges, with the network tab open. The model is served
+by the app itself (`libs/embed/scripts/fetch-model.ts`,
+`useLocalModels`), so the demo needs no internet at all; headless Chrome
+loads it in under two seconds from local files and embeds the demo
+window's 250 snippets in about eight seconds on a laptop CPU. A team
+member's own calendar can be read from an exported .ics file
+(`IcsAdapter`) without any account or OAuth.
 
 ## 6. Open technical items
 

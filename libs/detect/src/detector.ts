@@ -16,6 +16,7 @@ import { EVENT_TYPES } from "@ahead/contract";
 import { cosine } from "@ahead/embed";
 import { datesIn, placeIn } from "./dates.ts";
 import { ordinary, prototypes } from "./prototypes.ts";
+import { fromSnapshot, toSnapshot, type VectorSnapshot } from "./snapshot.ts";
 
 export interface DetectorParams {
   /** A text seen more often than this in the window is routine and never evidence; otherwise it counts once. */
@@ -76,6 +77,18 @@ export class PrototypeDetector implements Detector {
   /** The model's margin unit (see the header comment); loads the prototypes. */
   async scale(): Promise<number> {
     return (await this.loadPrototypes()).scale;
+  }
+
+  /** The cached vectors, for persisting on the device (see snapshot.ts). */
+  snapshot(): VectorSnapshot {
+    return toSnapshot(this.embedder.id, this.embedder.dim, this.cache);
+  }
+
+  /** Loads vectors persisted earlier; ignored if they came from another model. Returns how many were loaded. */
+  restore(snapshot: VectorSnapshot): number {
+    const vs = fromSnapshot(snapshot, this.embedder.id, this.embedder.dim);
+    for (const [id, v] of vs) this.cache.set(id, v);
+    return vs.size;
   }
 
   /** Forget cached vectors, for the erase button. */

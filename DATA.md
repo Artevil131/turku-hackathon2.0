@@ -12,7 +12,7 @@ personal data that stands in for a real phone in the demo.
 | Move notification rules and window | DVV (Digital and Population Data Services Agency): notification at the earliest one month before, at the latest a week after the move; Posti separately at muuttoilmoitus.fi | Rules only, no API needed | Public | Rule encoded in the move journey |
 | Vehicle inspection and registration rules | Traficom public rules; open vehicle register (ajoneuvojen avoin data) for make/model by registration | Public dataset | CC BY 4.0 | To check for the first-car journey |
 | What a policy covers | If's public terms and conditions and IPID documents (if.fi), plus competitors' for the comparison card | PDF | Public | Extract the relevant clauses for home-in-transit, empty home, travel |
-| Water-damage and claims statistics | Finanssiala ry statistics; insurer press material (≈40 000 water damage cases/yr, >160 M€) | Public | Public | Cited in the pitch; find the primary Finanssiala source |
+| Water-damage and claims statistics | Finanssiala ry press release 20 May 2022: 2021 leak damages 34 800 / 171 M€, fire 6 100 / 168 M€, burglary 21 400 / 22 M€ | Public | Public | Primary source found (research/sources.md); 2023–2025 figures still to look for on finanssiala.fi |
 | Municipality and postcode geometry | Statistics Finland / Maanmittauslaitos open data | WFS | CC BY 4.0 | For "warnings at the new address" |
 | Public transport and services at the new address | HSL/Föli open data, Turku open data | API | Open | Nice-to-have for the move journey |
 | Crime and burglary by area | Statistics Finland (StatFin) | PxWeb API | CC BY 4.0 | Optional: lock-change advice |
@@ -41,9 +41,12 @@ benchmark: for each persona, days from first signal to detection, and
 number of false notices in 120 days. Target for the demo: every planted
 event detected before its date, at most one false notice per persona.
 
-Generation is by template plus a language model for variety; the model is
-never given real data. Output is committed under `data/synthetic/` so the
-demo does not depend on a model at show time.
+Generation is by templates with a seeded random generator, no language
+model involved (`libs/synthetic`); rerunning gives the same files, so a
+diff means the generator changed. Output is committed under
+`data/synthetic/` so the demo depends on nothing at show time. Calendar
+entries carry the day they were created, so a replay does not see the
+future. The benchmark and its results are in `benchmarks/detect/README.md`.
 
 ## 3. Data that is never used
 

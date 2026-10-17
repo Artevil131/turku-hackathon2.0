@@ -52,11 +52,13 @@ Prizes: 1 400 € / 350 € / 250 €.
 - In Finland If sells through its own channels and through Nordea's
   branches and app (partnership renewed 2020).
 - P&C lines: home, car, travel, personal accident, pet, boat, business.
-  Water damage is the largest home-insurance cost driver in Finland:
-  roughly 40 000 cases and over 160 M€ paid a year (secondary source, see
-  research/sources.md). Competitor LähiTapiola already gives policyholders
-  leak sensors (with GROHE) to cut those claims, so "prevention as the
-  product" is a line If's market already takes seriously.
+  Water leaks are the largest home-insurance cost in Finland: Finanssiala
+  counted 34 800 leak damages and 171 M€ paid in 2021, more than fire
+  (6 100 damages, 168 M€) and far more than burglary (21 400, 22 M€)
+  (research/sources.md). Competitor LähiTapiola already gives
+  policyholders leak sensors (with GROHE) to cut those claims, so
+  "prevention as the product" is a line If's market already takes
+  seriously.
 - If publishes its terms and conditions and IPID sheets openly (if.fi), so
   "what does my policy actually cover at this event" can be answered from
   public documents.

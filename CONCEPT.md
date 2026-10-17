@@ -74,11 +74,29 @@ The architecture handles any event that can be described in a sentence.
 
 | Mechanism | How it works here | Hypothesis we can state |
 |-----------|-------------------|--------------------------|
-| Risk prevention, fewer claims | Leak, freeze, empty-home, inspection and lock reminders at the moment they matter | Water damage is the largest home cost driver in Finland (~40 000 cases, >160 M€/yr); a share of these are preventable with timely action, and LähiTapiola's sensor programme shows insurers already pay to prevent them |
+| Risk prevention, fewer claims | Leak, freeze, empty-home, inspection and lock reminders at the moment they matter | Leaks are the largest home-insurance cost in Finland (34 800 damages, 171 M€ in 2021, Finanssiala); a share of these are preventable with timely action, and LähiTapiola's sensor programme shows insurers already pay to prevent them |
 | Retention | A move or a first car is exactly when people change insurer; being the one who helped, before the sale, changes who gets the call | Standard churn-at-life-event argument; ask If for their own numbers |
 | Acquisition | The app is useful before you are a customer; comparison cards list If honestly beside others | Trust is earned by not pushing; the If card converts when it is the right answer |
 | Efficiency | When the user does want a quote or files a claim, the event, dates and address are already structured on the phone and shared with one tap | Fewer calls, fewer form fields, fewer wrong addresses |
 | New value | Partner services around events (movers, locksmiths, inspection), and anonymous aggregate signals ("moves into Turku peak in August") if users opt in | Only with explicit opt-in; counts, never individuals |
+
+### The arithmetic, with its assumptions in the open
+
+Finanssiala counted 34 800 leak damages and 171 M€ paid in Finland in
+2021. Every one percent of those prevented is about 1.7 M€ a year across
+the market, before fire, theft and car. We do not know If's market share
+or its retention at life events; those are questions for the mentor, and
+the pitch says so rather than inventing them. The claim we make is the
+mechanism, not a number: a reminder at the right moment prevents a share
+of damages that today nobody is in a position to prevent.
+
+### Services actually connected
+
+The brief asks to "connect useful services together". A checklist is
+not that. Each journey card that corresponds to a service opens it: the
+DVV move notification, Posti's forwarding, the electricity contract,
+the mover's booking, the inspection booking, the comparison. The app
+is the thread; the services stay where they are.
 
 ## Why it is not "another insurance app"
 

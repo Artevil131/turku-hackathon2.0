@@ -25,8 +25,8 @@ Everything else is a stretch.
 | When | What | Who |
 |------|------|-----|
 | Sat morning | Confirm criteria and deadline with the judges; take the open decisions (stack, model, window) to DECISIONS.md | Artem asks, Aapo records |
-| Sat midday | Synthetic phone generator and one persona committed (DATA.md); event prototypes written in fi/en | Aapo |
-| Sat afternoon | Pipeline: adapters over the synthetic data, on-device embedding, matcher, ledger; benchmark on planted events | Aapo (+ agent) |
+| Sat midday | Synthetic phone generator and one persona committed (DATA.md); event prototypes written in fi/en. **Done**, three personas | Aapo |
+| Sat afternoon | Pipeline: adapters over the synthetic data, on-device embedding, matcher, ledger; benchmark on planted events. **Done**: see benchmarks/detect/README.md | Aapo (+ agent) |
 | Sat afternoon | UI: onboarding toggles, home, notice with evidence, journey, ledger | Vaishnav |
 | Sat evening | Move journey filled with FMI, DVV, T&C extracts; comparison card | Artem (content), Aapo (fetch) |
 | Sat late | End-to-end run on a phone; fix; record a backup video | All |
@@ -58,11 +58,26 @@ Everything else is a stretch.
    move week, the lock-change card, the comparison card with If beside
    two competitors.
 5. (2:10) The ledger: what was inferred, what was shared (nothing), erase.
-6. (2:30) Business slide: prevention (water-damage numbers), retention at
+6. (2:30) Business slide: prevention (Finanssiala 2021: 34 800 leaks,
+   171 M€, more than fire), retention at
    the moment of change, acquisition because it is useful before you buy,
    efficiency because the data is already structured when you do.
 7. (2:50) Close: "The phone looks. The phone asks. If helps. Nothing
    leaves unless you say so."
+
+## Pitch rules
+
+- Emma first. The judges meet a person and a move before they meet a
+  model. The words "embedding", "on-device" and "GDPR" are not said
+  until the journey has been shown; then they are said once, as the
+  reason this can be trusted.
+- The value in one sentence, said twice: "Help arrives before the
+  event, and you never have to tell anyone your life."
+- Numbers only from sources we can name (Finanssiala 2021). What we do
+  not know about If (market share, churn at life events) we ask, on
+  stage if needed.
+- Show the comparison card with If beside competitors. The judges will
+  look for the catch; the catch is that there is none.
 
 ## Pitch outline against the criteria
 

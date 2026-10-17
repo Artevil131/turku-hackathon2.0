@@ -136,6 +136,23 @@ run on a phone, offline, network tab open.
   synthetic calendar adapter. A file picker or the share sheet is all the
   UI it needs. Only SUMMARY, LOCATION, DTSTART and CREATED are read. This
   is PLAN.md stretch 1; wire it only after the mock flow works.
+- A → B (2026-10-17, for the notice and the store): `describe(event,
+  locale, today)` in `@ahead/detect` gives the notice title, the "why"
+  line, the question and the four answer labels in fi/en from templates,
+  so the app never words an event itself. `detector.snapshot()` returns
+  the embedded vectors as one Float32Array plus ids for IndexedDB;
+  `detector.restore(snapshot)` loads them back (ignored if the model
+  changed); erase-all must drop the stored snapshot and call `clearCache()`.
+
+- A → B (2026-10-17, from the brief): "connect useful services
+  together" is a judging phrase. Journey items of kind `todo` that
+  correspond to a service must carry `sourceUrl` pointing at the service
+  itself (DVV muuttoilmoitus, Posti, an electricity contract page, the
+  mover, Traficom inspection booking), and the card must open it. The
+  brief also names "publicly available insurance terms and conditions
+  from If and other insurance companies" as a resource: the T&C extracts
+  and the comparison card are not optional polish, they are what the
+  judges were told to expect.
 
 - B → A (2026-10-17): the app now calls the core through one seam,
   `apps/web/src/engine.ts`. It runs on a mock by default and on your code
