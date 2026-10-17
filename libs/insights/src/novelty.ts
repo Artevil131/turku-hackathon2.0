@@ -23,6 +23,13 @@ export const STEADY_TOLERANCE_DAYS = 4;
 export const MIN_OCCURRENCES = 3;
 /** A gap longer than this times the usual interval is an anomaly. */
 export const ANOMALY_FACTOR = 1.5;
+/** Intervals that mean something to a person: weekly, fortnightly, monthly. Near-daily names are habit, not routine worth listing. */
+export const INTERVAL_BANDS: readonly { min: number; max: number }[] = [
+  { min: 5, max: 9 },
+  { min: 11, max: 17 },
+  { min: 26, max: 33 },
+];
+export const RECURRING_CAP = 8;
 
 const STOPWORDS = new Set([
   "and",
@@ -52,6 +59,8 @@ const STOPWORDS = new Set([
   "klo",
   "photo",
 ]);
+/** Company suffixes that say nothing about the topic. */
+const SUFFIXES = new Set(["oy", "ab", "oyj", "ltd", "inc"]);
 
 /** The name a snippet recurs under: who sent the mail, which merchant, which place. */
 export function nameOf(s: Snippet): string | undefined {
@@ -85,8 +94,9 @@ function median(xs: readonly number[]): number {
 }
 
 /**
- * Merchants, senders and places seen at least `MIN_OCCURRENCES` times on distinct days at a steady interval.
- * `anomaly` is "changed" when the latest gap broke the interval and "stopped" when the next occurrence is overdue on `today`.
+ * Merchants, senders and places seen at least `MIN_OCCURRENCES` times on distinct days at a steady weekly, fortnightly
+ * or monthly interval, most frequent first, at most `RECURRING_CAP`. `anomaly` is "changed" when the latest gap broke
+ * the interval and "stopped" when the next occurrence is overdue on `today` by more than one interval.
  */
 export function recurring(snippets: readonly Snippet[], today: IsoDate): Recurring[] {
   const groups = new Map<string, { source: Source; name: string; dates: Set<IsoDate> }>();
@@ -106,15 +116,18 @@ export function recurring(snippets: readonly Snippet[], today: IsoDate): Recurri
     const mean = gaps.reduce((a, b) => a + b, 0) / gaps.length;
     const med = median(gaps);
     if (Math.abs(med - mean) > STEADY_TOLERANCE_DAYS) continue;
-    const intervalDays = Math.max(1, Math.round(med));
+    const intervalDays = Math.round(med);
+    if (!INTERVAL_BANDS.some((b) => intervalDays >= b.min && intervalDays <= b.max)) continue;
     const lastDate = dates[dates.length - 1] as IsoDate;
     const r: Recurring = { source: g.source, name: g.name, intervalDays, occurrences: dates.length, lastDate };
     const latestGap = gaps[gaps.length - 1] as number;
-    if (daysBetween(lastDate, today) > ANOMALY_FACTOR * intervalDays) r.anomaly = "stopped";
+    if (daysBetween(lastDate, today) > 2 * intervalDays) r.anomaly = "stopped";
     else if (latestGap > ANOMALY_FACTOR * intervalDays) r.anomaly = "changed";
     out.push(r);
   }
-  return out.sort((a, b) => b.intervalDays - a.intervalDays || b.occurrences - a.occurrences || a.name.localeCompare(b.name));
+  return out
+    .sort((a, b) => b.occurrences - a.occurrences || b.intervalDays - a.intervalDays || a.name.localeCompare(b.name))
+    .slice(0, RECURRING_CAP);
 }
 
 /** Per source, a level shift in daily counts over the `days` days ending `today`. */
@@ -137,13 +150,13 @@ export function changePoints(snippets: readonly Snippet[], today: IsoDate, days 
   return out.sort((a, b) => a.date.localeCompare(b.date));
 }
 
-/** The three most frequent words across `texts`, longest-first on ties. */
+/** The three most frequent words across `texts` (stop words and company suffixes left out), longest-first on ties. */
 export function frequentWords(texts: readonly string[], n = 3): string[] {
   const counts = new Map<string, number>();
   for (const t of texts) {
     const seen = new Set<string>();
     for (const w of t.toLowerCase().split(/[^\p{L}\p{N}]+/u)) {
-      if (w.length < 3 || /^\d+$/.test(w) || STOPWORDS.has(w) || seen.has(w)) continue;
+      if (w.length < 3 || /^\d+$/.test(w) || STOPWORDS.has(w) || SUFFIXES.has(w) || seen.has(w)) continue;
       seen.add(w);
       counts.set(w, (counts.get(w) ?? 0) + 1);
     }
@@ -175,7 +188,7 @@ export async function novelty(detector: PrototypeDetector, snippets: readonly Sn
 
   const cur = uniqueTexts(current);
   const prev = uniqueTexts(previous);
-  const [vecs, protos] = await Promise.all([detector.vectors([...cur, ...prev].map((u) => u.rep)), detector.prototypeVectors()]);
+  const vecs = await detector.vectors([...cur, ...prev].map((u) => u.rep));
   const vec = (s: Snippet) => vecs.get(s.id) as Float32Array;
   const prevVectors = prev.map((u) => vec(u.rep));
 
@@ -203,30 +216,23 @@ export async function novelty(detector: PrototypeDetector, snippets: readonly Sn
   for (let c = 0; c < km.centroids.length; c++) {
     const members = cur.map((u, i) => ({ u, i })).filter(({ i }) => km.assignment[i] === c);
     if (members.length === 0) continue;
-    // Mean margin over ordinary life per event type; the best type labels the cluster when it is positive.
-    let nearest: EventType | undefined;
-    let bestMargin = 0;
-    for (const [type, ps] of protos.events) {
-      let sum = 0;
-      for (const { u } of members) {
-        const v = vec(u.rep);
-        let ev = -1;
-        for (const p of ps) ev = Math.max(ev, cosine(v, p.v));
-        let ord = -1;
-        for (const o of protos.ordinary) ord = Math.max(ord, cosine(v, o));
-        sum += ev - ord;
-      }
-      const m = sum / members.length;
-      if (m > bestMargin) {
-        bestMargin = m;
-        nearest = type;
-      }
-    }
+    // The cluster takes an event's name when its best single snippet would count as evidence for that event.
+    const best = (
+      await detector.score(
+        members.map(({ u }) => u.rep),
+        true,
+      )
+    ).sort((a, b) => b.margin - a.margin)[0];
+    const nearest: EventType | undefined = best && best.margin >= detector.params.floor ? best.type : undefined;
     const texts = members.map(({ u }) => u.rep.text);
     let label: string;
     if (nearest) {
       label = EVENT_LABEL[nearest];
-      const place = mostFrequent(texts.map(placeIn).filter((p): p is string => p !== undefined));
+      // Only a move or a trip goes somewhere.
+      const place =
+        nearest === "move" || nearest === "long_trip"
+          ? mostFrequent(texts.map(placeIn).filter((p): p is string => p !== undefined))
+          : undefined;
       if (place) label = STRINGS.clusterWithPlace(label, place);
     } else label = frequentWords(texts).join(", ");
     const nov = members.reduce((a, { i }) => a + (distance[i] as number), 0) / members.length;

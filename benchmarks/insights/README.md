@@ -183,3 +183,151 @@ clusters:
 
 done in 51657 ms
 ```
+
+## Result, 2026-10-17, second run (recurring bands, clusters labelled by their best snippet)
+
+Recurring now lists only weekly, fortnightly and monthly names, at most
+eight, most frequent first (the near-daily gym, library and home wifi are
+gone), and a cluster takes an event's name when its single best snippet
+clears the detector's floor: four of the five clusters now carry an event
+name because the move, car and trip snippets are spread across them, so
+the names say what the cluster touches rather than what it is about.
+
+```
+student on 2026-10-17: 551 snippets on the phone, 3 events (40039 ms including model load)
+  first_car 2026-10-18 Oulu score 14.088
+  long_trip 2027-01-10 Lisbon score 13.607
+  move 2026-11-01 Turku score 13.499
+
+== Timeline: move (40048 ms)
+window 2026-08-18..2026-10-17, threshold 2.5, first fired 2026-10-09, today 13.499
+  2026-08-18    1.85  
+  2026-08-19    1.81  
+  2026-08-20    1.77  
+  2026-08-21    1.73  
+  2026-08-22    1.69  
+  2026-08-23    1.65  
+  2026-08-24    1.61  
+  2026-08-25    1.58  
+  2026-08-26    1.54  
+  2026-08-27    1.51  
+  2026-08-28    1.47  
+  2026-08-29    1.44  
+  2026-08-30    1.41  
+  2026-08-31    1.37  
+  2026-09-01    1.34  
+  2026-09-02    1.31  
+  2026-09-03    1.28  
+  2026-09-04    1.25  
+  2026-09-05    1.22  
+  2026-09-06    1.20  
+  2026-09-07    1.17  
+  2026-09-08    1.14  
+  2026-09-09    1.11  
+  2026-09-10    1.09  
+  2026-09-11    1.06  
+  2026-09-12    1.04  
+  2026-09-13    1.02  
+  2026-09-14    0.99  
+  2026-09-15    0.97  
+  2026-09-16    0.95  
+  2026-09-17    0.93  
+  2026-09-18    0.91  
+  2026-09-19    0.89  
+  2026-09-20    0.86  
+  2026-09-21    0.84  
+  2026-09-22    0.83  
+  2026-09-23    0.81  
+  2026-09-24    0.79  
+  2026-09-25    0.77  
+  2026-09-26    0.75  
+  2026-09-27    0.74  
+  2026-09-28    0.72  
+  2026-09-29    0.70  
+  2026-09-30    0.69  
+  2026-10-01    0.67  
+  2026-10-02    0.66  
+  2026-10-03    2.38  
+  2026-10-04    2.33  
+  2026-10-05    2.28  
+  2026-10-06    2.23  
+  2026-10-07    2.17  
+  2026-10-08    2.13  
+  2026-10-09    4.30  fired
+  2026-10-10    4.22  fired
+  2026-10-11    4.15  fired
+  2026-10-12    5.47  fired
+  2026-10-13    5.38  fired
+  2026-10-14    6.44  fired
+  2026-10-15    7.27  fired
+  2026-10-16   13.79  fired
+  2026-10-17   13.50  fired
+signals:
+   0.90  mail      2026-08-12  Voitko auttaa mua muutossa lauantaina? Tarjoan pizzaa 🍕
+   1.15  calendar  2026-08-15  Matin muuttoapu
+   1.74  wifi      2026-10-03  Liityit verkkoon TYS-Guest
+   1.12  mail      2026-10-09  Vuokrasopimus allekirjoitettavaksi – Yo-kylä 12 B 7, Turku. Hei 
+   1.61  mail      2026-10-12  Tilausvahvistus: sähkösopimus, Yo-kylä 12 B 7, Turku, alkaen 1.1
+   1.17  bank      2026-10-14  Muuttopalvelu Siirto Oy
+   1.23  mail      2026-10-15  Vahvistus: muuttoauto varattu la 31.10.
+   0.93  mail      2026-10-16  Irtisanomisilmoitus vastaanotettu – PSOAS, vuokrasuhde päättyy 3
+   3.30  sms       2026-10-16  Siirto Oy: Muuttoauto tulossa la 31.10. klo 9. Kuljettaja soitta
+   2.44  sms       2026-10-16  DVV/Posti: Muuttoilmoituksesi on käsitelty. Uusi osoite on voima
+   1.10  calendar  2026-11-01  Muutto Turkuun 🚚
+
+== Contributions: move-2026-10-03 (45140 ms)
+  sms       total   5.73  n  2  strongest: Siirto Oy: Muuttoauto tulossa la 31.10. klo 9. Kuljettaja so
+  mail      total   4.89  n  4  strongest: Tilausvahvistus: sähkösopimus, Yo-kylä 12 B 7, Turku, alkaen
+  wifi      total   1.74  n  1  strongest: Liityit verkkoon TYS-Guest
+  bank      total   1.17  n  1  strongest: Muuttopalvelu Siirto Oy
+  calendar  total   1.10  n  1  strongest: Muutto Turkuun 🚚
+
+== Novelty 2026-09-18..2026-10-17 (48828 ms)
+new senders:   University of Oulu, TYS, Nettiauto, dealer, Turku Energia, Finnair, Siirto Oy, PSOAS, If
+new merchants: Prisma Linnanmaa, Spotify, Lidl Linnanmaa, Waltti, Onnibus, Finnair, Muuttopalvelu Siirto Oy
+new places:    Turku, Yo-kylä, Autotalo Laakkonen, Oulu
+new topics (distance from the previous 30 days):
+   0.18  mail      2026-10-15  Learning Agreement signed – Erasmus+ spring 2027
+   0.18  mail      2026-09-20  Nomination confirmed: Erasmus+ exchange, Universidade de Lisboa,
+   0.18  mail      2026-10-11  Autosi hintapyyntö: Toyota Yaris 1.33 2014 – Autotalo Laakkonen
+   0.17  mail      2026-10-02  Nettiauto: uusia hakuvahtiosumia – Toyota Yaris 2014, 6 900 €
+   0.17  sms       2026-10-13  Finnair: Your booking AY1741 HEL–LIS 10 Jan is confirmed. Check-
+   0.16  mail      2026-10-06  Nettiauto: uusia hakuvahtiosumia – Skoda Fabia 2015, 7 400 €
+   0.16  mail      2026-10-13  Your booking confirmation AY1741 Helsinki–Lisbon 10 Jan 2027
+   0.16  mail      2026-10-12  Tilausvahvistus: sähkösopimus, Yo-kylä 12 B 7, Turku, alkaen 1.1
+recurring:
+  mail      Peppi                    every  5 d  x13  last 2026-10-12
+  wifi      Liityit verkkoon eduroam every  5 d  x11  last 2026-10-16
+  mail      shop                     every  6 d  x10  last 2026-10-16
+  bank      Lidl Tuira               every  5 d  x8  last 2026-10-16
+  bank      Espresso House           every  7 d  x6  last 2026-10-13
+  bank      K-Market Linnanmaa       every 13 d  x5  last 2026-10-08
+  bank      K-Market Keskusta        every 12 d  x5  last 2026-10-14  changed
+  places    K-Market Kaijonharju     every 11 d  x5  last 2026-10-14
+change points:
+  photos    2026-08-31  3.5 -> 1.2 per week
+  wifi      2026-10-07  4.4 -> 8.9 per week
+  sms       2026-10-10  2.3 -> 7 per week
+clusters:
+  A first car [first_car]  novelty 0.116  29 snippets
+     Nomination confirmed: Erasmus+ exchange, | Posti: Pakettisi on noudettavissa automa | OP: Vahvistuskoodisi kirjautumiseen. Älä | Your parcel has been delivered to your p | Asuntohakemuksesi on vastaanotettu – TYS | Tilauksesi on toimitettu | +18
+  headphones, onnibus, shipped  novelty 0.071  11 snippets
+     Sali | Spotify | Order shipped: headphones | Onnibus
+  A first car [first_car]  novelty 0.041  47 snippets
+     Liityit verkkoon eduroam | Liityit verkkoon Koti-WiFi | Laskusi on saapunut | Ylioppilaskunnan uutiskirje | Luento siirtyy: Lineaarialgebra | Tentti: Tietorakenteet ja algoritmit | +23
+  A long trip [long_trip]  novelty 0.028  30 snippets
+     Kirjasto | VR | Koti | Yliopisto | Waltti | Gym | +5
+  Moving to Turku [move]  novelty 0.017  49 snippets
+     Lidl Tuira | K-Market Keskusta | K-Market Kaijonharju | K-Market Linnanmaa | Prisma Linnanmaa | Espresso House | +14
+
+== Horizon (48842 ms)
+2026-10-17..2027-01-15: first_car 2026-10-18, move 2026-11-01, long_trip 2027-01-10
+  [lapse] A gap in home cover is possible  (2026-10-31..2026-11-01; move-2026-10-03)
+     The old lease ends 31 October 2026 and the new one starts 1 November 2026. If the home insurance is not moved by then, the new home is uncovered from day one.
+  [weather-at-event] Example: night frost in Southwest Finland, 30 Oct to 2 Nov  (2026-10-30..2026-11-02; move-2026-10-03)
+     Moving is on 1 November 2026, inside the warning period. An example for the demo, not a warning from the Finnish Meteorological Institute. A card like this appears when the new place has a warning during the move week: check the water points and heating of the home that is left empty.
+  [empty-home] The home stands empty while you are away  (2027-01-10..2027-05-30; long_trip-2026-09-20)
+     You are away from 10 January 2027 to 30 May 2027, 140 days. An empty home is where leaks and freezes go unnoticed: turn off the water, ask someone to look in, and check that the home insurance covers a long absence.
+
+done in 48988 ms
+```

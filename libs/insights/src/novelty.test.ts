@@ -17,6 +17,18 @@ describe("recurring", () => {
     expect(r).toMatchObject({ source: "bank", name: "Vuokra", intervalDays: 31, occurrences: 4, lastDate: "2026-10-01" });
     expect(r?.anomaly).toBeUndefined();
   });
+  it("drops near-daily names and caps the list at eight, most frequent first", () => {
+    const s: Snippet[] = [];
+    for (let i = 0; i < 20; i++) s.push(bank(`g${i}`, new Date(Date.UTC(2026, 8, 1 + 2 * i)).toISOString().slice(0, 10), "Gym"));
+    for (let n = 0; n < 10; n++)
+      for (let i = 0; i < 3 + n; i++)
+        s.push(bank(`w${n}-${i}`, new Date(Date.UTC(2026, 5, 1 + 7 * i)).toISOString().slice(0, 10), `Weekly ${n}`));
+    const r = recurring(s, "2026-10-17");
+    expect(r.length).toBe(8);
+    expect(r.some((x) => x.name === "Gym")).toBe(false);
+    expect(r[0]?.name).toBe("Weekly 9");
+    expect(r.every((x) => x.intervalDays === 7)).toBe(true);
+  });
   it("ignores names seen fewer than three times or at ragged intervals", () => {
     expect(recurring([bank("a", "2026-09-01", "X"), bank("b", "2026-10-01", "X")], "2026-10-17")).toEqual([]);
     const ragged = [bank("a", "2026-07-01", "Y"), bank("b", "2026-07-03", "Y"), bank("c", "2026-09-30", "Y"), bank("d", "2026-10-02", "Y")];
@@ -68,6 +80,11 @@ describe("changePoints", () => {
 
 describe("frequentWords", () => {
   it("drops short words, numbers and stopwords", () => {
+    expect(frequentWords(["Muuttopalvelu Siirto Oy", "Siirto Oy: muuttoauto", "Siirto Ab"])).toEqual([
+      "siirto",
+      "muuttopalvelu",
+      "muuttoauto",
+    ]);
     expect(frequentWords(["Tentti: Lineaarialgebra 2026", "Tentti: Tilastotiede I", "Lineaarialgebra luento ja harjoitukset"])).toEqual([
       "lineaarialgebra",
       "tentti",

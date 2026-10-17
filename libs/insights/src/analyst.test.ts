@@ -48,7 +48,7 @@ describe("OnDeviceAnalyst on the student phone", () => {
     } finally {
       fake.embed = embed;
     }
-  });
+  }, 30_000);
 
   it("splits a detected move's score by source", async () => {
     const move = (await detector.detect(visibleOn(phone.snippets, today), today)).find((e) => e.type === "move");
@@ -74,7 +74,8 @@ describe("OnDeviceAnalyst on the student phone", () => {
     expect(n.newMerchants.length).toBeGreaterThan(0);
     expect(n.newTopics.length).toBe(8);
     expect(n.newTopics[0]?.margin ?? 0).toBeGreaterThanOrEqual(n.newTopics[7]?.margin ?? 1);
-    expect(n.recurring.some((r) => r.source === "places" && r.name === "Sali")).toBe(true);
+    expect(n.recurring.length).toBeLessThanOrEqual(8);
+    expect(n.recurring.every((r) => r.occurrences >= 3 && r.intervalDays >= 5)).toBe(true);
     expect(n.clusters.length).toBe(5);
     expect(n.clusters.find((c) => c.nearest === "move")?.label).toBe("Moving to Turku");
     expect(n.clusters.find((c) => c.nearest === "first_car")).toBeDefined();
