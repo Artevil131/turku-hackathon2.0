@@ -1655,11 +1655,12 @@ function createEngine(DATA, today) {
     const whatIfs = (Array.isArray(draft.whatIfs) ? draft.whatIfs : []).filter((w) => w && fStr(w.text, 220) && noFigures(w.text) && WHO_AI[w.whoPays]).slice(0, 4)
       .map((w) => ({ text: esc(w.text.trim()), who: WHO_AI[w.whoPays][1], tone: WHO_AI[w.whoPays][0] }));
     if (!item || !asks.length || !whatIfs.length) return null;
-    const quote = (q) => (/^[“"]/.test(q) ? q : `“${q}”`);
+    // Asks are things to say to the seller, in quotes, unless they already quote the ad ("The ad says “…”").
+    const quote = (q) => (/[“”"]/.test(q) ? q : `“${q}”`);
     return {
       kind: "draft", item: esc(item), model: esc(String(model ?? "AI model").slice(0, 80)),
       asks: asks.map((q) => esc(quote(q))), whatIfs,
-      disclaimer: "Written by AI from the ad. Not checked like our car, motorcycle and flat results.",
+      disclaimer: "First draft. An AI model read the ad and wrote the questions that quote it. The rest are general questions and what-ifs for this kind of item. None of it is checked like our car, motorcycle and flat results.",
       insure: { label: "Before you sign", title: "Ask If about cover for it.", text: "The item from the ad is already filled in, so you don’t have to type it again.", details: [["Item", esc(item)]] },
     };
   }
@@ -2100,7 +2101,7 @@ function draftView(d) {
   show(`
     <button class="back" type="button" id="backBtn">← New ad</button>
     <section class="item">
-      <span class="stamp">First draft by AI</span>
+      <span class="stamp">First draft</span>
       <p class="name">${d.item}</p>
       <p class="notice">${d.disclaimer}</p>
       ${shotHtml(d)}
@@ -2119,7 +2120,10 @@ function draftView(d) {
     ${insureHtml(d)}
     <section class="sources">
       <p class="eyebrow">Sources</p>
-      <ol><li>Written by an AI model (${d.model}) on our team’s own computer, from ${d.fromScreenshot ? "your screenshot" : "the ad’s text, without phone numbers or email addresses"}. It gives no figures.</li></ol>
+      <ol>
+        <li>The item and the questions that quote the ad: read by an AI model (${d.model}) on our team’s own computer, from ${d.fromScreenshot ? "your screenshot" : "the ad’s text, without phone numbers or email addresses"}.</li>
+        <li>The other questions and the what-ifs: general ones for this kind of item. Nothing in this draft carries a figure.</li>
+      </ol>
     </section>
   `);
   document.getElementById("backBtn").addEventListener("click", () => home());

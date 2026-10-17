@@ -150,7 +150,8 @@ and, once deployed, on our own Cloudflare site with the AI reader.
 - On the live site (Cloudflare, free plan), ads the rules can't read go to an AI reader on our own server:
   - only the ad's text, without phone numbers, email addresses or the seller's name where a site shows it;
   - a car, motorcycle or flat it reads becomes a normal result, with the numbers and who pays still from the rules;
-  - anything else becomes a first draft marked "Written by AI from the ad", with no figures in it;
+  - anything else becomes a first draft: the item and up to two questions quoting the ad come from the AI,
+    plus general questions and what-ifs for that kind of item; it says so, and it carries no figures;
   - if the AI fails or is slow, the page is rules-only, as before.
 
   The claude.ai link and the file on disk never call it. Details in `README.md` ("The AI reader").

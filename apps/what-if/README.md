@@ -64,10 +64,16 @@ own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `d
      The result is built by the same code as a rules result, with the model-key lookup and the licence class
      from cm³ and kW, so the numbers and who pays still come from our data. The page names the fields the AI
      read: "An AI model read these details from the ad: make and model. Check them against the ad."
-   - **`kind` other:** `draftResult()` makes a card with the item, three asks and two to four what-ifs, each
-     with who pays (`you`, `insurance`, `check`). It is marked "Written by AI from the ad. Not checked like
-     our car, motorcycle and flat results." Anything with €, % or "euro" is dropped on the page as well as on
-     the server, so a draft never carries a figure. The hand-over stays If's.
+   - **`kind` other:** `draftResult()` makes a first-draft card from what the server sends:
+     - the item and up to two questions quoting the ad ("The ad says “…”. Can you show me?"), read by the AI;
+     - general questions and two to four what-ifs for that kind of item, each with who pays (`you`,
+       `insurance`, `check`).
+
+     At most three asks are shown. An ask that already quotes the ad isn't put in quotes again. The card says:
+     "First draft. An AI model read the ad and wrote the questions that quote it. The rest are general
+     questions and what-ifs for this kind of item. None of it is checked like our car, motorcycle and flat
+     results." Anything with €, % or "euro" is dropped on the page as well as on the server, so a draft never
+     carries a figure. The hand-over stays If's.
    - **`kind` none, any error, or no answer within 12 s:** the page does exactly what it did before, rules
      only.
 4. **What the page says.** On our site: "If our rules can't read an ad, its text, without phone numbers or

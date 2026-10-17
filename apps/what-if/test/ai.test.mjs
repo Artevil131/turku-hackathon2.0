@@ -80,7 +80,9 @@ ok("draft: built from the fixture", d && d.kind === "draft" && d.item === "a 50 
 ok("draft: the what-if with a € figure is dropped", d && d.whatIfs.length === 3 && !d.whatIfs.some((w) => /€/.test(w.text)), d?.whatIfs.map((w) => w.text).join(" | "));
 ok("draft: who-pays labels", d && d.whatIfs.map((w) => w.who).join(" / ") === "Covered by insurance · after your excess / Not covered · you pay / Depends on the policy · check before you sign");
 ok("draft: HTML is escaped", d && d.whatIfs[2].text.includes("&lt;b&gt;") && !d.whatIfs[2].text.includes("<b>"));
-ok("draft: says it was written by AI", d && /Written by AI from the ad/.test(d.disclaimer));
+ok("draft: says what the AI read and that the rest is general", d && /^First draft\. An AI model read the ad/.test(d.disclaimer) && /general questions and what-ifs/.test(d.disclaimer));
+const quoting = engine.draftResult({ item: "a caravan", asks: ["The ad says “Katsastettu 5/2026”. Can you show me?", "Is the gas system checked?"], whatIfs: [{ text: "What if the roof leaks?", whoPays: "check" }] }, "m");
+ok("draft: an ask that quotes the ad isn't put in quotes again; a plain one is", quoting && quoting.asks[0] === "The ad says “Katsastettu 5/2026”. Can you show me?" && quoting.asks[1] === "“Is the gas system checked?”", quoting?.asks.join(" | "));
 ok("draft: the hand-over is If's", d && /If/.test(d.insure.title));
 ok("draft: no asks means no draft", engine.draftResult({ item: "x", asks: [], whatIfs: [{ text: "What if?", whoPays: "you" }] }, "m") === null);
 
