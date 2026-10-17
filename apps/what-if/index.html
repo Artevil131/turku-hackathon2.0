@@ -1918,7 +1918,7 @@ function home(message) {
       ${message ? `<p class="notice" role="alert">${message}</p>` : ""}
       <button class="btn" type="submit" id="checkBtn">Check this ad</button>
       <p class="fine">Reads used cars and motorcycles (Nettiauto, Autotalli, Nettimoto), flats for sale (Etuovi, Oikotie) and flats to rent (Vuokraovi, Oikotie). Paste the ad’s text, not the link. ${AI_ON ? "For other ads, an AI model writes a first draft." : "Other ads come in the full version."} Figures with a source are real; the rest are labelled estimates.</p>
-      <p class="fine">${AI_ON ? "If our rules can’t read an ad, its text, without phone numbers or email addresses, is read by an AI model on our server at Cloudflare. Nothing about you is sent, and nothing goes to If." : "Nothing you paste leaves your phone."}</p>
+      <p class="fine">${AI_ON ? "If our rules can’t read an ad, its text, without phone numbers or email addresses, goes through our server at Cloudflare to an AI model on our team’s own computer. Nothing is stored, nothing about you is sent, and nothing goes to If." : "Nothing you paste leaves your phone."}</p>
     </form>
   `);
   const box = document.getElementById("ad");

@@ -1,0 +1,20 @@
+// What if… on Cloudflare's free Workers plan: the page as a static asset, plus POST /api/read,
+// which passes ads the page's rules can't read to the team's listing reader on chili (D-024–D-027)
+// and answers in What if…'s own fields (D-028). The reader's address and team token are secrets
+// (`npx wrangler secret put AHEAD_ADDRESS` / `AHEAD_TEAM_TOKEN`), never in the repo; without them
+// /api/read answers "no AI" and the page uses its rules.
+// Deploy from this folder with `npx wrangler deploy`; the build step copies the page in first.
+{
+  "name": "what-if",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-17",
+  "build": {
+    "command": "node build.mjs",
+    "watch_dir": "../../apps/what-if"
+  },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  }
+}

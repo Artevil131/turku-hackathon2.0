@@ -71,9 +71,11 @@ own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `d
    - **`kind` none, any error, or no answer within 12 s:** the page does exactly what it did before, rules
      only.
 4. **What the page says.** On our site: "If our rules can't read an ad, its text, without phone numbers or
-   email addresses, is read by an AI model on our server at Cloudflare. Nothing about you is sent, and
-   nothing goes to If." Anywhere else: "Nothing you paste leaves your phone." Both are true where they're
-   shown.
+   email addresses, goes through our server at Cloudflare to an AI model on our team's own computer.
+   Nothing is stored, nothing about you is sent, and nothing goes to If." Anywhere else: "Nothing you paste
+   leaves your phone." Both are true where they're shown.
+5. **Which model.** `/api/read` passes the text to the team's listing reader (Qwen3.8-27B on chili, D-024–D-027)
+   and translates its quote-checked answer into the fields above (`deploy/what-if/worker.js`, D-028).
 
 ## Rules we keep
 
