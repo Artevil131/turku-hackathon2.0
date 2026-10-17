@@ -4,13 +4,17 @@
 // that is NInfer on 127.0.0.1:8010, reached with `ssh -N -L 8010:127.0.0.1:8010 chili`.
 // --images renders each ad as a phone-sized page in headless Chrome and
 // sends the screenshot instead of the text: transcription, then extraction.
+// --api URL goes through the team's authed API instead of the model
+// (deploy/TEAM.md): the token comes from AHEAD_TEAM_TOKEN, and the API's
+// own prompt and settings are what is measured, so --thinking does not apply.
 // Usage: node benchmarks/listing/run.ts [--url http://127.0.0.1:8010] [--model qwen3.8-27b] [--thinking] [--images] [--out file.json]
+//        AHEAD_TEAM_TOKEN=... node benchmarks/listing/run.ts --api https://<team address> [--images]
 
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { extractFromImage, extractListing, normalise } from "@ahead/listing";
+import { type Extraction, extractFromImage, extractListing, normalise } from "@ahead/listing";
 
 const args = process.argv.slice(2);
 const opt = (name: string, dflt: string) => {
@@ -22,6 +26,21 @@ const model = opt("model", "qwen3.8-27b");
 const thinking = args.includes("--thinking");
 const out = opt("out", "");
 const images = args.includes("--images");
+const api = opt("api", "").replace(/\/+$/, "");
+const token = process.env.AHEAD_TEAM_TOKEN ?? "";
+if (api && !token) throw new Error("--api needs the team token in AHEAD_TEAM_TOKEN");
+
+/** One ad through POST /api/listing, shaped like a local extraction. */
+async function viaApi(body: { text: string } | { image: string }): Promise<Extraction> {
+  const res = await fetch(`${api}/api/listing`, {
+    method: "POST",
+    headers: { "content-type": "application/json", authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`API ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const d = (await res.json()) as Pick<Extraction, "text" | "listing" | "dropped" | "ms">;
+  return { ...d, attempts: 1, reply: "" };
+}
 const shots = images ? mkdtempSync(join(tmpdir(), "listing-shots-")) : "";
 
 /** The ad as a plain classified page, screenshotted at phone size; returns a data: URL. */
@@ -83,9 +102,11 @@ for (const ad of ads) {
   const mentions = ad.truth.mentions ?? [];
   let res: Awaited<ReturnType<typeof extractListing>>;
   try {
-    res = images
-      ? await extractFromImage(screenshot(ad), { baseUrl, model, thinking })
-      : await extractListing(ad.text, { baseUrl, model, thinking });
+    res = api
+      ? await viaApi(images ? { image: screenshot(ad) } : { text: ad.text })
+      : images
+        ? await extractFromImage(screenshot(ad), { baseUrl, model, thinking })
+        : await extractListing(ad.text, { baseUrl, model, thinking });
   } catch (e) {
     console.log(`${ad.id.padEnd(28)} FAILED ${e instanceof Error ? e.message : e}`);
     tally.missed += Object.keys(fields).length;
@@ -142,7 +163,7 @@ for (const ad of ads) {
 const stated = tally.correct + tally.wrong + tally.missed;
 const sorted = [...times].sort((a, b) => a - b);
 const summary = {
-  model,
+  model: api ? `via ${api}` : model,
   thinking,
   input: images ? "screenshot" : "text",
   ads: ads.length,
