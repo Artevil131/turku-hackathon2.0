@@ -142,6 +142,7 @@
   --ink-2: #4f586b;
   --fog: #9aa0a8;
   --amber-ink: #c43a1f;
+  --glow: #b7351c;
   --danger: #b1263a;
   color-scheme: light;
   scrollbar-color: var(--hairline) var(--bg);
@@ -444,6 +445,16 @@ h1 + .muted {
 .event-row .event-date {
   padding-top: 3px;
 }
+@media (max-width: 350px) {
+  .event-row .row-button {
+    grid-template-columns: 1fr 24px;
+    row-gap: 6px;
+  }
+  .event-row .event-date {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+}
 .event-arrow {
   color: var(--amber);
   align-self: center;
@@ -702,7 +713,7 @@ nav button.active::after {
 }
 .rule-text text {
   fill: var(--ink-2);
-  font-size: 11px;
+  font-size: 12px;
 }
 .threshold {
   stroke: var(--ink-2);
@@ -937,7 +948,26 @@ nav button.active::after {
 .timetable td.num {
   color: var(--ink-2);
   text-align: right;
+  padding-left: 12px;
   padding-right: 0;
+}
+@media (max-width: 600px) {
+  .timetable tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .timetable th {
+    grid-column: 1 / -1;
+  }
+  .timetable th,
+  .timetable td.num {
+    padding: 0;
+    border: 0;
+    text-align: left;
+  }
 }
 .timetable tr.anomaly th {
   color: var(--amber-ink);

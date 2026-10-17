@@ -7,6 +7,7 @@ import { formatMonth, formatShort, type Key, useI18n } from "../i18n.tsx";
 import { today } from "../today.ts";
 import { constellationName } from "./Home.tsx";
 import { type Constellation, Sky } from "./Sky.tsx";
+import { useChartWidth } from "./useChartWidth.ts";
 
 interface Props {
   entry: LedgerEntry;
@@ -186,8 +187,8 @@ function Contributions({ contributions }: { contributions: SourceContribution[] 
 /** The score per day as a line, the threshold as a hairline, the fired day marked, the signals as dots on the line. */
 function TimelineChart({ timeline }: { timeline: EventTimeline }) {
   const { t, locale } = useI18n();
-  const W = 600;
-  const H = 180;
+  const { ref, width: W } = useChartWidth();
+  const H = 210;
   const left = 36;
   const right = 12;
   const top = 14;
@@ -208,7 +209,13 @@ function TimelineChart({ timeline }: { timeline: EventTimeline }) {
   const ty = y(timeline.threshold);
   return (
     <figure className="plate timeline-plate">
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("notice.score", { days: pts.length - 1 })} className="timeline-chart">
+      <svg
+        ref={ref}
+        viewBox={`0 0 ${W} ${H}`}
+        role="img"
+        aria-label={t("notice.score", { days: pts.length - 1 })}
+        className="timeline-chart"
+      >
         <g className="hair">
           <line x1={left} x2={W - right} y1={y(0) + 0.5} y2={y(0) + 0.5} />
           {months.map((m) => (

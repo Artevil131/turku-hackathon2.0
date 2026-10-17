@@ -144,7 +144,8 @@ export function Sky({ dots, constellations, from, to, today, bands, monthLabel, 
           ctx.lineTo(xx, top + plotH);
           ctx.stroke();
           ctx.textAlign = "left";
-          ctx.fillText(monthLabel(d).toUpperCase(), xx + 4, top + plotH + 7);
+          const month = monthLabel(d).toUpperCase();
+          ctx.fillText(month, Math.min(w - right - ctx.measureText(month).width, xx + 4), top + plotH + 7);
         }
         d = next;
       }
@@ -258,6 +259,7 @@ export function Sky({ dots, constellations, from, to, today, bands, monthLabel, 
           h: blockH,
         });
         const overlaps = (b: { x: number; y: number; w: number; h: number }) =>
+          (b.x < anchor.x + 14 && anchor.x - 14 < b.x + b.w && b.y < anchor.y + 14 && anchor.y - 14 < b.y + b.h) ||
           placed.some((q) => b.x < q.x + q.w + 6 && q.x < b.x + b.w + 6 && b.y < q.y + q.h + 4 && q.y < b.y + b.h + 4);
         let box = clamp(candidates[0] as { x: number; y: number });
         for (const cand of candidates) {

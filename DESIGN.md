@@ -17,6 +17,7 @@ colors:
   paper-slate: "#4f586b"
   paper-fog: "#9aa0a8"
   paper-amber-ink: "#c43a1f"
+  paper-shared-ink: "#b7351c"
   paper-danger: "#b1263a"
   backdrop: "rgb(10 16 33 / 70%)"
   backdrop-share: "rgb(10 16 33 / 45%)"
@@ -174,7 +175,7 @@ Star Amber (`#ff4d2e`) is the one hot colour: the primary button's fill (with Ni
 Stardust (`#f2f2e9`) is the chalk ink and the constellation stars. Slate (`#a3acbc`) is secondary ink at 8:1 on night: basis lines, dates, band labels, ticks. Fog Veil (`#5a6477`) is reserved for the faint field of unscored stars on the plate; it is never used for text.
 
 ### Paper chart (light mode)
-Cream Stardust becomes the ground and Night Sky the ink; the shell is `#e9e9de`, hairlines `#c6c8bb`, secondary ink `#4f586b`, the faint field `#9aa0a8`. Amber fills, rings and selection are unchanged; amber *text* on cream darkens to `#c43a1f` (5.2:1). Dark is the default scene; light is a Settings choice for daylight projectors. The canvas reads its colours from the same custom properties, so the plate changes with the page.
+Cream Stardust becomes the ground and Night Sky the ink; the shell is `#e9e9de`, hairlines `#c6c8bb`, secondary ink `#4f586b`, the faint field `#9aa0a8`. Amber fills, rings and selection are unchanged; amber *text* on cream uses Paper Amber Ink. Shared-state ink uses the deeper Paper Shared Ink for the counter, its outline and the arrived payload rows: contrast is 4.85:1 on the shell and 5.27:1 on the page ground, including the narrow counter at 16px. The pale dark-mode glow does not carry into the paper chart. Dark is the default scene; light is a Settings choice for daylight projectors. The canvas reads its colours from the same custom properties, so the plate changes with the page.
 
 **The One Amber Rule.** Amber marks exactly one thing per screen as the thing under the eye. A second amber on the same screen is either the warning outline (by kind) or a mistake.
 
@@ -186,7 +187,9 @@ Two faces, both self-hosted from `apps/web/public/fonts/` (OFL; see its README).
 
 ## Layout
 
-A mobile-first flex shell fills 100dvh, at most 780px wide; the header and boundary strip stay, `main` scrolls. Content is at most 640px wide with 22px gutters (48px from 700px, 16px under 350px). On Home the sky plate is full-bleed and 44dvh tall (300–460px; 380px fixed from 700px, with side hairlines). Dates lead every timetable row in a 7ch cell; the arrow sits in a 24px column at the end.
+A mobile-first flex shell fills 100dvh, at most 780px wide; the header and boundary strip stay, `main` scrolls. Content is at most 640px wide with 22px gutters (48px from 700px, 16px under 350px). On Home the sky plate is full-bleed and 44dvh tall (300–460px; 380px fixed from 700px, with side hairlines). Dates lead event timetable rows in a 7ch cell; the arrow sits in a 24px column at the end. At 350px and below, the date spans the full row and may wrap, then the title and arrow share a second line with a 6px row gap. This keeps long Finnish month names clear of the title. Recurring-payment tables become two-column grids at 600px and below: the name spans both columns, followed by interval, count and last-date or anomaly details, with one hairline per record.
+
+SVG chart coordinates follow the measured CSS width through ResizeObserver, preserving the intended label sizes on phones instead of shrinking a desktop viewBox. The evidence timeline is 210px high. The horizon axis sits 128px from the top; alternating event-name and date pairs stagger by 48px, with insight bands stacked below the axis.
 
 ## The magnitude ramp
 
@@ -204,15 +207,15 @@ None. Hairlines and spacing carry structure; the sheets lift only by a darkened 
 
 - **Buttons:** 48px minimum height. Primary: amber fill, night ink. Secondary: transparent with a 1px Stardust outline. Quiet (Back): no outline, slate ink. Danger: outline in the danger red. Check now and Continue are full width at 54px.
 - **Sky plate (canvas):** faint coordinate hairlines (band rules, month rules, today dashed), the band names in small caps down the left, the window's snippets as magnitude-ramped dots by date and source band (deterministic jitter inside the band), each detected event's signals brightened and joined in date order, named in the serif with its date in the sans beside its anchor star, labels pushed apart so they never cover each other, the soonest event ringed in amber. The notice shows a 190px plate with the event's constellation alone.
-- **Timetable rows:** date cell | title | amber arrow, a hairline under each; the detector supplies the title. Evidence rows add the source in small caps and a "Not this" outline button.
+- **Timetable rows:** date cell | title | amber arrow, a hairline under each; the detector supplies the title. At 350px and below, the event date wraps above the title and arrow. Evidence rows add the source in small caps and a "Not this" outline button.
 - **Contribution bars:** per source, a 10px hairline track with an amber fill proportional to the source's total, the total and signal count in tabular figures, the strongest snippet's text under it.
-- **Evidence timeline (SVG):** the score per day as a 1.5px chalk line, the threshold as a dashed slate rule with its value, month rules, the signals as dots on the line, the fired day ringed in amber with "crossed {date}".
-- **Horizon plate (SVG):** a hairline axis from today to +90 with month rules; events as amber ringed stars with their serif name and sans date; insights as bands under the axis over their periods (amber-outlined for weather and cover gaps, slate for the rest) with their kind as a label.
+- **Evidence timeline (SVG):** the score per day as a 1.5px chalk line, the threshold as a dashed slate rule with its value, month rules, the signals as dots on the line, the fired day ringed in amber with "crossed {date}". Geometry adapts to the measured width while labels retain their CSS-pixel sizes.
+- **Horizon plate (SVG):** a hairline axis from today to +90 with month rules; events as amber ringed stars with their serif name and sans date staggered on two levels; insights as bands under the axis over their periods (amber-outlined for weather and cover gaps, slate for the rest) with their kind as a label.
 - **This month:** new senders, merchants and places as chalk-outline chips; recurring payments as a table with interval, count and last date, an anomaly in amber; change points as a before/after pair of bars (slate, then amber); clusters as named constellations with a novelty dot on the ramp, ringed when near an event type.
 - **Journey cards:** hairline outline, no fill; a warning card's outline is amber with an amber dot before its title. Service links are full-width outlined; source links are amber text.
 - **Source switches:** 56×44px hit area, outlined track, slate thumb; amber track outline and thumb when on, and an amber dot in the margin before the row's title.
 - **Settings:** native radios in an outlined segmented group; the selected segment fills amber.
-- **Boundary strip:** outlined in slate with the count at 20px; after a share the outline and count turn Glow Amber and stay so.
+- **Boundary strip:** outlined in slate with the count at 20px; after a share the outline and count turn Glow Amber on the night chart or Paper Shared Ink on the paper chart, and stay so. At 350px and below the count is 16px.
 - **Share sheet:** the three payload rows outlined, "Share with If" the only amber button, "Keep it on this phone" outlined; "Done" alone after sending.
 - **Navigation:** four destinations (Home, Sky, Ledger, Sources) in slate; the active one in amber, bold, with a 6px amber dot under it.
 

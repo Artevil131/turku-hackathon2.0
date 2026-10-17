@@ -421,6 +421,32 @@ service workers; whether the Android build honours it is not confirmed.
   quick fix, `git revert` back to 95ce660's parent for apps/web only;
   the analysis and sources commits stand on their own.
 
+- A, continuation (2026-10-17): the star-atlas checkpoint is now verified.
+  `pnpm typecheck`, `pnpm check`, all 103 tests and the production build
+  pass. Captured and inspected onboarding, both consent sheets, Home,
+  notice/contributions/timeline, journey, sharing, Ledger, Sources,
+  horizon, This month and Settings in `demo-capture/atlas/` (local only),
+  including light/dark, desktop and Finnish at 320px. The fresh finish
+  reviewer scored its seven fixes resolved, disposition **ship** at that
+  scope. Fixed chart lettering/label collisions, recurring table spacing,
+  narrow Finnish dates and light shared-state contrast; DESIGN.md and its
+  sidecar describe the finished system. Kept the explicitly selected
+  Instrument Serif despite the detector's generic overused-font warning.
+  The original direction-roll output was unavailable; its uncorroborated
+  raw seed was removed, preserving the recorded user selection.
+  Offline verification found and fixed Chrome rejecting large streamed
+  cache writes. The script now exits nonzero on a failed check and tests
+  all seven demo sources: the same three events online and with the server
+  stopped, zero outbound requests, zero current signals after revoking all
+  sources, and all permissions off after erase. Source changes also clear
+  the app's analysis state after permissions reload, avoiding stale dots.
+  The two video outputs are local, git-ignored files under
+  `tools/demo-video/out/`: `demo.mp4` and `share-motion.mp4`. The full
+  recorder now includes the horizon and This month; the smooth share
+  recorder is reproducible as `node scripts/share-motion.ts`. Both retain
+  the visible sharing counter and verify the successful one-request
+  receipt. No real account or phone was used.
+
 ## Contract changes
 
 - 2026-10-17: initial contract and mock data (machine A).

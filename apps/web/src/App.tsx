@@ -110,6 +110,10 @@ export function App() {
   const onSource = async (s: SourceState) => {
     await store.setSource({ ...s, lastSync: s.enabled ? today() : undefined });
     await reload();
+    // The next destination must read the current permissions, including when the last source is revoked.
+    setSnippets([]);
+    setSky([]);
+    analysisRef.current = undefined;
   };
 
   /** A calendar file chosen by the user: parsed here, minimised entries kept, the phone's calendar replaced. */
@@ -126,6 +130,7 @@ export function App() {
       const snippetsFromFile = events ? icsToSnippets(events) : undefined;
       engineRef.current = engineRef.current.then((engine) => withCalendar(engine, snippetsFromFile));
     }
+    analysisRef.current = undefined;
     setSnippets([]);
     setSky([]);
     await reload();
@@ -242,6 +247,7 @@ export function App() {
     await store.eraseAll();
     // The stored snapshot is gone with the rest; the detector's in-memory copy goes too.
     (await engineRef.current?.catch(() => undefined))?.vectors?.clear();
+    analysisRef.current = undefined;
     try {
       localStorage.removeItem("ahead.onboarded");
     } catch {}

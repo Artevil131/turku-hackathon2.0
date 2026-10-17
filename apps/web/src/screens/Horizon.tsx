@@ -5,6 +5,7 @@ import { formatDate, formatMonth, formatShort, type Key, useI18n } from "../i18n
 import { bySoonest } from "../order.ts";
 import { today } from "../today.ts";
 import { constellationName } from "./Home.tsx";
+import { useChartWidth } from "./useChartWidth.ts";
 
 interface Props {
   ledger: LedgerEntry[];
@@ -48,10 +49,10 @@ export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
   const span = Math.max(1, daysBetween(now, to));
 
   // The plate's geometry: a horizontal axis from today to +90, bands stacked under it.
-  const W = 720;
+  const { ref: chartRef, width: W } = useChartWidth();
   const left = 12;
   const right = 12;
-  const axisY = 76;
+  const axisY = 128;
   const bandH = 30;
   const H = axisY + 24 + Math.max(1, insights.length) * bandH + 8;
   const x = (iso: string) => left + (Math.min(span, Math.max(0, daysBetween(now, iso))) / span) * (W - left - right);
@@ -65,7 +66,7 @@ export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
       <h1>{t("horizon.title")}</h1>
       <p className="screen-lead">{t("horizon.lead")}</p>
       <figure className="plate horizon-plate">
-        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("horizon.title")} className="horizon-chart">
+        <svg ref={chartRef} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("horizon.title")} className="horizon-chart">
           <g className="hair">
             <line x1={left} x2={W - right} y1={axisY + 0.5} y2={axisY + 0.5} />
             {months.map((m) => (
@@ -81,9 +82,6 @@ export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
                 {formatMonth(m, locale).toUpperCase()}
               </text>
             ))}
-            <text x={W - right} y={axisY + 18} textAnchor="end">
-              +90
-            </text>
           </g>
           <line className="today-rule" x1={x(now) + 0.5} x2={x(now) + 0.5} y1={axisY - 40} y2={H - 8} strokeDasharray="2 4" />
           {insights.map((i, k) => {
@@ -112,10 +110,11 @@ export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
               <g key={event.id} className="star">
                 <circle cx={ex} cy={axisY} r={4.5} className="star-dot" />
                 <circle cx={ex} cy={axisY} r={11} className="star-ring" />
-                <text className="star-name" x={tx} y={axisY - 30 + (k % 2) * 0} textAnchor={anchor}>
+                <line className="today-rule" x1={ex} x2={ex} y1={axisY - 17 - (k % 2) * 48} y2={axisY - 12} />
+                <text className="star-name" x={tx} y={axisY - 30 - (k % 2) * 48} textAnchor={anchor}>
                   {label(byId.get(event.id))}
                 </text>
-                <text className="star-date" x={tx} y={axisY - 12} textAnchor={anchor}>
+                <text className="star-date" x={tx} y={axisY - 12 - (k % 2) * 48} textAnchor={anchor}>
                   {formatShort(date, locale)}
                 </text>
               </g>
@@ -162,7 +161,6 @@ export function Horizon({ ledger, snippets, analysis, onOpen }: Props) {
             {insights.map((i) => (
               <li key={i.id} className={`insight insight-${i.kind}`}>
                 <div className="insight-head">
-                  <span className="chip">{insightTitle(i)}</span>
                   {(i.from || i.to) && (
                     <span className="event-date">
                       {i.from && <time dateTime={i.from}>{formatShort(i.from, locale)}</time>}

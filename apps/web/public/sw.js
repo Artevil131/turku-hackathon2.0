@@ -27,7 +27,12 @@ async function cacheFirst(request) {
   const hit = await cache.match(request, { ignoreSearch: true });
   if (hit) return hit;
   const response = await fetch(request);
-  if (response.ok && response.type === "basic") await cache.put(request, response.clone());
+  if (response.ok && response.type === "basic") {
+    // Materialise the clone before handing it to Cache.put. Chrome can reject a large network-backed
+    // response stream here even after a successful fetch, making an available local model look missing.
+    const body = await response.clone().arrayBuffer();
+    await cache.put(request, new Response(body, { status: response.status, statusText: response.statusText, headers: response.headers }));
+  }
   return response;
 }
 

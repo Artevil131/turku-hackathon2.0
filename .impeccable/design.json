@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-17T09:15:50.324Z",
+  "generatedAt": "2026-10-17T10:13:08.898673+00:00",
   "title": "Design System: Ahead",
   "extensions": {
     "colorMeta": {
@@ -259,6 +259,22 @@
           "oklch(84% 0.1738 18.91)",
           "oklch(95% 0.1738 18.91)"
         ]
+      },
+      "paper-shared-ink": {
+        "role": "accent",
+        "displayName": "Paper Shared Ink",
+        "canonical": "#b7351c",
+        "oklch": "oklch(52.2% 0.1707 32.87)",
+        "tonalRamp": [
+          "oklch(15% 0.1707 32.87)",
+          "oklch(26% 0.1707 32.87)",
+          "oklch(38% 0.1707 32.87)",
+          "oklch(49% 0.1707 32.87)",
+          "oklch(61% 0.1707 32.87)",
+          "oklch(72% 0.1707 32.87)",
+          "oklch(84% 0.1707 32.87)",
+          "oklch(95% 0.1707 32.87)"
+        ]
       }
     },
     "typographyMeta": {
@@ -338,6 +354,10 @@
       {
         "name": "wide",
         "value": "700px"
+      },
+      {
+        "name": "recurring-table-reflow",
+        "value": "600px"
       }
     ],
     "magnitudeRamp": {
@@ -355,6 +375,12 @@
         0.75,
         1.25
       ]
+    },
+    "chartLayout": {
+      "coordinateSpace": "Measured CSS width through ResizeObserver; labels retain their CSS-pixel size.",
+      "timelineHeight": "210px",
+      "horizonAxisY": "128px",
+      "horizonLabelStagger": "48px"
     }
   },
   "components": [
@@ -378,9 +404,9 @@
       "name": "Timetable row",
       "kind": "custom",
       "refersTo": "timetable-row",
-      "description": "An event as a row: date cell, the detector's title, the amber arrow, a hairline under it.",
+      "description": "An event as a row: date cell, the detector’s title, the amber arrow, a hairline under it. At 350px and below the wrapping date spans both columns above the title and arrow.",
       "html": "<button class=\"ds-row\"><span class=\"ds-row-date\">1 November</span><span class=\"ds-row-title\">It looks like a move is coming around 1 November, to Turku.</span><svg class=\"ds-row-arrow\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button>",
-      "css": ".ds-row { display: grid; grid-template-columns: 7ch 1fr 24px; column-gap: 14px; align-items: start; width: 100%; padding: 16px 0; background: transparent; border: 0; border-top: 1px solid var(--hairline, #24374f); border-bottom: 1px solid var(--hairline, #24374f); color: var(--ink, #f2f2e9); text-align: left; font-family: \"Atkinson Hyperlegible\", \"Helvetica Neue\", Arial, sans-serif; cursor: pointer; } .ds-row-date { font-size: 15px; color: var(--ink-2, #a3acbc); font-variant-numeric: tabular-nums; padding-top: 3px; } .ds-row-title { font-size: 19px; line-height: 1.35; } .ds-row-arrow { color: var(--amber, #ff4d2e); align-self: center; } .ds-row:hover { background: rgb(242 242 233 / 6%); } .ds-row:focus-visible { outline: 2px solid var(--amber, #ff4d2e); outline-offset: 4px; }"
+      "css": ".ds-row { display: grid; grid-template-columns: 7ch 1fr 24px; column-gap: 14px; align-items: start; width: 100%; padding: 16px 0; background: transparent; border: 0; border-top: 1px solid var(--hairline, #24374f); border-bottom: 1px solid var(--hairline, #24374f); color: var(--ink, #f2f2e9); text-align: left; font-family: \"Atkinson Hyperlegible\", \"Helvetica Neue\", Arial, sans-serif; cursor: pointer; } .ds-row-date { font-size: 15px; color: var(--ink-2, #a3acbc); font-variant-numeric: tabular-nums; padding-top: 3px; } .ds-row-title { font-size: 19px; line-height: 1.35; } .ds-row-arrow { color: var(--amber, #ff4d2e); align-self: center; } .ds-row:hover { background: rgb(242 242 233 / 6%); } .ds-row:focus-visible { outline: 2px solid var(--amber, #ff4d2e); outline-offset: 4px; } @media (max-width: 350px) { .ds-row { grid-template-columns: 1fr 24px; row-gap: 6px; } .ds-row-date { grid-column: 1 / -1; white-space: normal; } }"
     },
     {
       "name": "Source chip",
@@ -418,9 +444,9 @@
       "name": "Boundary strip",
       "kind": "custom",
       "refersTo": "secondary",
-      "description": "The outbound counter, outlined; Glow Amber after a share.",
+      "description": "The outbound counter, outlined; Glow Amber after a share on the night chart, Paper Shared Ink on the paper chart. Paper Shared Ink contrasts 4.85:1 against the shell, including the 16px narrow counter.",
       "html": "<div class=\"ds-net\"><span>Data leaving this phone</span><strong>0 requests</strong></div><div class=\"ds-net ds-net-live\"><span>Data leaving this phone</span><strong>1 request</strong></div>",
-      "css": ".ds-net { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 12px; margin-bottom: 8px; border: 1px solid var(--ink-2, #a3acbc); border-radius: 4px; background: var(--shell, #16233d); color: var(--ink, #f2f2e9); font-family: \"Atkinson Hyperlegible\", \"Helvetica Neue\", Arial, sans-serif; font-size: 16px; } .ds-net span { color: var(--ink-2, #a3acbc); } .ds-net strong { font-size: 20px; font-variant-numeric: tabular-nums; } .ds-net-live { border-color: var(--glow, #ffb36b); } .ds-net-live strong { color: var(--glow, #ffb36b); }"
+      "css": ".ds-net { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 12px; margin-bottom: 8px; border: 1px solid var(--ink-2, #a3acbc); border-radius: 4px; background: var(--shell, #16233d); color: var(--ink, #f2f2e9); font-family: \"Atkinson Hyperlegible\", \"Helvetica Neue\", Arial, sans-serif; font-size: 16px; } .ds-net span { color: var(--ink-2, #a3acbc); } .ds-net strong { font-size: 20px; font-variant-numeric: tabular-nums; } .ds-net-live { border-color: var(--glow, #ffb36b); } .ds-net-live strong { color: var(--glow, #ffb36b); } @media (max-width: 350px) { .ds-net { gap: 6px; font-size: 14px; padding-inline: 8px; } .ds-net strong { font-size: 16px; } }"
     }
   ],
   "narrative": {

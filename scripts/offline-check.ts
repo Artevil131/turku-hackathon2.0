@@ -14,7 +14,7 @@ const CHECK = `(async () => {
   const w = (ms) => new Promise((r) => setTimeout(r, ms));
   const click = (t) => { const b = [...document.querySelectorAll("button")].find((x) => x.textContent.trim().startsWith(t)); if (!b) throw new Error("no button " + t); b.click(); };
   if (document.body.innerText.includes("What may Ahead")) {
-    for (const s of ["Calendar", "Places", "Photos"]) { document.querySelector('[aria-label="' + s + '"]').click(); await w(100); }
+    for (const s of ["Calendar", "Places", "Photos", "Messages", "Wi-Fi"]) { document.querySelector('[aria-label="' + s + '"]').click(); await w(100); }
     for (const s of ["Mail", "Bank"]) { document.querySelector('[aria-label="' + s + '"]').click(); await w(200); click("Allow"); await w(200); }
     click("Continue"); await w(300);
   }
@@ -71,8 +71,42 @@ try {
   await cdp.evaluate(LOADED);
   summary.offline = await cdp.evaluate(CHECK);
   summary.outboundRequests = outbound;
+  summary.revoked = await cdp.evaluate(`(async () => {
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+    const click = (text) => [...document.querySelectorAll('button')].find(b => b.textContent.trim() === text).click();
+    click('Sources'); await wait(200);
+    for (const source of ['Calendar', 'Mail', 'Bank', 'Places', 'Photos', 'Messages', 'Wi-Fi']) {
+      const control = document.querySelector('[aria-label="' + source + '"]');
+      if (control.getAttribute('aria-checked') === 'true') control.click();
+      await wait(150);
+    }
+    click('Home'); await wait(300);
+    const signals = Number(document.querySelector('.sky-plate').dataset.dots);
+    const checkDisabled = [...document.querySelectorAll('button')].find(b => b.textContent.trim() === 'Check now').disabled;
+    click('Ledger'); await wait(200);
+    window.confirm = () => true;
+    click('Erase everything'); await wait(300);
+    return {signals, checkDisabled, erased: document.querySelectorAll('[role=switch][aria-checked=true]').length === 0 && document.body.innerText.includes('What may Ahead')};
+  })()`);
 } finally {
   preview.kill();
   await chrome.close();
 }
 console.log(JSON.stringify(summary, null, 2));
+const online = summary.online as { events: string[]; error: string | null };
+const offline = summary.offline as { events: string[]; error: string | null };
+const revoked = summary.revoked as { signals: number; checkDisabled: boolean; erased: boolean };
+if (
+  !summary.controlled ||
+  !summary.serverStopped ||
+  online.error ||
+  offline.error ||
+  online.events.length !== 3 ||
+  JSON.stringify(online.events) !== JSON.stringify(offline.events) ||
+  revoked.signals !== 0 ||
+  !revoked.checkDisabled ||
+  !revoked.erased ||
+  (summary.outboundRequests as string[]).length > 0
+) {
+  throw new Error("Offline verification failed: expected the same three events online and offline, with no errors or outbound requests.");
+}

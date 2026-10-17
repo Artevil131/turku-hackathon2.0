@@ -44,7 +44,8 @@ itself so it runs offline. The demo runs on synthetic data for one
 dated phone (today = 2026-10-17); "Check now" detects three events in
 about ten seconds on first run, instantly after. Screens: onboarding
 (sources), home, notice with evidence, journey, ledger, sources. A
-footer counter shows outbound requests, which stays at zero.
+footer counter shows outbound requests: zero until the user explicitly
+shares a confirmed event, then one for the share request.
 
 ## Capabilities and Constraints
 
@@ -61,7 +62,9 @@ footer counter shows outbound requests, which stays at zero.
 - Finnish and English UI. The user wants language, and theme
   (light / dark / system), in a settings area rather than the header.
 - Keep: the outbound-request counter visible on every screen.
-- No server, no analytics, no third-party scripts.
+- A small demo server accepts only the type, date and municipality of a
+  confirmed event the user explicitly chooses to share (D-016). No
+  analytics or third-party scripts.
 
 ## Brand Commitments
 

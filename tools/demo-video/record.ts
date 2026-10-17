@@ -114,7 +114,8 @@ async function click(cdp: CDP, label: string, selectors: string[], texts: string
       texts.map(t => controls.find(el => visible(el) &&
         (el.getAttribute('aria-label') || el.textContent).trim().toLowerCase().startsWith(t.toLowerCase()))).find(Boolean);
     if (!el) return false;
-    el.scrollIntoView({block: 'center'});
+    const box = el.getBoundingClientRect();
+    if (box.top < 0 || box.bottom > innerHeight) el.scrollIntoView({block: 'nearest'});
     el.click();
     return true;
   })()`);
@@ -216,7 +217,7 @@ try {
     console.log(`Key frame: ${name}`);
   };
   await step("onboarding");
-  for (const source of ["Calendar", "Places", "Photos"]) {
+  for (const source of ["Calendar", "Places", "Photos", "Messages", "Wi-Fi"]) {
     await click(client, source, [`[aria-label="${source}"]`]);
     await step(source.toLowerCase());
   }
@@ -277,16 +278,34 @@ try {
     await click(client, "Share with If", ["dialog.share-sheet button.primary"], ["Share with If", "Jaa Ifille"]);
     await sleep(1800);
     await step("share-sent");
+    const visibleReceipt = await client.evaluate<boolean>(`(() => {
+      const counter = document.querySelector('.net');
+      const box = counter.getBoundingClientRect();
+      return document.body.innerText.includes('Sent. If received exactly this:') &&
+        counter.innerText.includes('1 request') && box.top >= 0 && box.bottom <= innerHeight;
+    })()`);
+    if (!visibleReceipt) throw new Error("Share receipt or visible one-request counter missing");
     await click(client, "Done", ["dialog.share-sheet button.primary"], ["Done", "Valmis"]);
     await step("journey-shared");
   }
   await click(client, "Back", ['[aria-label="Back"]'], ["Back", "← Back"]);
   await scrollToTop(client);
   await step("back");
+  await click(client, "The next 90 days", [], ["The next 90 days"]);
+  await scrollToTop(client);
+  await step("horizon");
+  await click(client, "Home", [], ["Home"]);
+  await click(client, "This month", [], ["This month"]);
+  await scrollToTop(client);
+  await step("this-month");
+  await click(client, "Back", [], ["Back"]);
   await click(client, "Ledger", ['[aria-label="Ledger"]'], ["Ledger"]);
   await scrollToTop(client);
   await step("ledger");
-  await click(client, "Settings (Sources in the current app)", ['[aria-label="Settings"]'], ["Settings", "Sources"]);
+  await click(client, "Sources", [], ["Sources"]);
+  await scrollToTop(client);
+  await step("sources");
+  await click(client, "Settings", [".settings-toggle"], ["Settings"]);
   await scrollToTop(client);
   await step("settings");
   recording = false;
