@@ -68,6 +68,14 @@ Everything else is a stretch.
    frost band on the move week, the gap between the old lease and the
    new cover, the flat empty from January. Then "This month": what
    changed, from new senders to the rent still arriving every 30 days.
+4c. (proposed, 20 s) "Emma is also looking at cars." Share a screenshot
+   of a Yaris ad into "Analyse an ad"; the sheet says only this image is
+   sent; the counter ticks once. Back come the facts with their words
+   highlighted in the ad, Traficom's numbers for that model and year
+   (17.9 % failed inspection against 26.8 % for all 2012 cars; this one
+   has 40 % more km than their median), the compulsory traffic insurance,
+   and ten years of costs. Same promise: the phone asks first, and only
+   what she chose leaves.
 5. (2:10) The share. At the end of the journey: "Share this event with
    If". The sheet shows exactly three fields, event, date, municipality,
    and says that is the whole message. Press Share: the footer counter

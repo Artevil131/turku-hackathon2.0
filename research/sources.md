@@ -90,3 +90,13 @@ pitch.
 - Dog's basic needs about 1 561 € a year (Kennelliitto and
   Taloustutkimus, 1 631 owners, February 2025, via STT). Secondary until
   the report itself is read. https://www.sttinfo.fi/files/1744/70976680/195916/fi
+- Traficom, Katsastusalan tilannekatsaus 2025 (Traficomin julkaisuja
+  13/2026), table 3: average 2025 prices, walk-in: periodic inspection
+  50.06 €, with emissions test 78.15 €, electric car 79.54 €,
+  re-inspection 28.39 € (with booking: 39.89 / 66.81 / 68.19 €). Primary.
+  https://www.traficom.fi/files/media/file/Katsastusalan%20tilannekatsaus%202025.pdf
+- Vehicle tax 2026: lowest passenger-car base tax 106.21 €/year (up to
+  82 g/km NEDC, 102 g/km WLTP); diesel propulsion tax 5.5 c a day per
+  started 100 kg of total mass (Veronmaksajat). Secondary: the full CO2
+  table is in the annex of ajoneuvoverolaki 1281/2003, not yet read.
+  https://www.veronmaksajat.fi/neuvot/henkiloverotus/asuminen-ja-auto/autoilun-verotus/ajoneuvovero-perusvero-ja-kayttovoimavero/

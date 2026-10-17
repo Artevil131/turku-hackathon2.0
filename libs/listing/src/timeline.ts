@@ -6,7 +6,18 @@
 // so the total is a floor, and says so.
 
 import { inspectionStats } from "./lookups.ts";
-import { ageOf, type Cost, MENTION_TITLES, pipeCost, pipeStatus, SOURCES, type Source, type Text } from "./risks.ts";
+import {
+  ageOf,
+  type Cost,
+  INSPECTION_EUR,
+  MENTION_TITLES,
+  MIN_VEHICLE_TAX_EUR,
+  pipeCost,
+  pipeStatus,
+  SOURCES,
+  type Source,
+  type Text,
+} from "./risks.ts";
 import { HOMES, type Listing, type MentionRisk } from "./schema.ts";
 
 export interface TimelineEntry {
@@ -93,14 +104,33 @@ export function timeline(listing: Listing, today: string, years = 10): Timeline 
     const title: Text = stats
       ? { fi: `Katsastus (hylkäys ${stats.failPct} % tällä mallilla)`, en: `Inspection (${stats.failPct} % of this model fail)` }
       : { fi: "Katsastus", en: "Inspection" };
+    // The fee, plus a re-inspection weighted by how often this model (or every car that age) fails.
+    const fee = f.fuel?.value === "electric" ? INSPECTION_EUR.electric : INSPECTION_EUR.withEmissions;
+    const failShare = (stats?.failPct ?? 0) / 100;
+    const inspectionEur = Math.round(fee + failShare * INSPECTION_EUR.reinspection);
     let y = f.inspectedUntil ? Number(f.inspectedUntil.value.slice(0, 4)) : from;
     if (y < from) y = from;
     while (y <= to) {
-      entries.push({ year: y, id: "inspection", title, source: stats?.source ?? SOURCES.inspectionRule });
+      entries.push({ year: y, id: "inspection", title, eur: inspectionEur, source: SOURCES.inspectionPrice });
       const carAge = age === undefined ? 0 : age + (y - from);
       y += carAge >= 10 ? 1 : 2;
     }
     yearly("car-upkeep", { fi: "Huolto ja korjaukset", en: "Servicing and repairs" }, 1070, { source: SOURCES.carUpkeep });
+    yearly(
+      "vehicle-tax",
+      { fi: "Ajoneuvovero, vähintään (CO₂ ratkaisee)", en: "Vehicle tax, at least (CO₂ decides)" },
+      MIN_VEHICLE_TAX_EUR,
+      { source: SOURCES.vehicleTax },
+    );
+    // Diesel cars also pay a propulsion tax by mass, which ads rarely state: dated, not priced.
+    if (f.fuel?.value === "diesel")
+      for (let y = from; y <= to; y++)
+        entries.push({
+          year: y,
+          id: "diesel-tax",
+          title: { fi: "Dieselin käyttövoimavero, 5,5 c päivässä / 100 kg", en: "Diesel propulsion tax, 5.5 c a day per 100 kg" },
+          source: SOURCES.vehicleTax,
+        });
   }
 
   if (listing.category === "pet" && f.species?.value === "dog")

@@ -117,6 +117,7 @@ describe("lookups", () => {
     expect(s?.model).toBe("TOYOTA YARIS");
     expect(s?.failPct).toBeGreaterThan(0);
     expect(s?.mileageVsMedianPct).toBeGreaterThan(0);
+    expect(risksFor(car, "2026-10-17").map((r) => r.id)).toContain("insurance-traffic");
   });
 });
 

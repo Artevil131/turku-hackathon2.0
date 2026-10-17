@@ -63,6 +63,23 @@ export const SOURCES = {
     name: "Traficom, katsastusajankohdat ajoneuvoluokittain",
     url: "https://traficom.fi/fi/autoilijat/katsastus/katsastusajankohdat-ajoneuvoluokittain",
   },
+  inspectionPrice: {
+    name: "Traficom, Katsastusalan tilannekatsaus 2025 (julkaisuja 13/2026), taulukko 3",
+    url: "https://www.traficom.fi/files/media/file/Katsastusalan%20tilannekatsaus%202025.pdf",
+  },
+  vehicleTax: {
+    name: "Veronmaksajat, ajoneuvovero: perusvero ja käyttövoimavero (2026)",
+    url: "https://www.veronmaksajat.fi/neuvot/henkiloverotus/asuminen-ja-auto/autoilun-verotus/ajoneuvovero-perusvero-ja-kayttovoimavero/",
+    secondary: true,
+  },
+  ifTraffic: {
+    name: "If, liikennevakuutusehdot LII 601.20, kohdat 7 ja 9.2",
+    url: "https://www.if.fi/globalassets/fi/pdf/ehdot/liikennevakuutusehdot.pdf",
+  },
+  ifHome: {
+    name: "If, kotivakuutusehdot OMA 200.27, kohta 5.5",
+    url: "https://www.if.fi/globalassets/fi/pdf/ehdot/kotivakuutusehdot.pdf",
+  },
   carUpkeep: {
     name: "Moottori / Beely 2022",
     url: "https://moottori.fi/uutinen/suomalaiset-korjaavat-autojaan-keskimaarin-1-070-eurolla-kulut-kasvaneet-10-vuodessa/",
@@ -300,6 +317,42 @@ function mentionRisks(listing: Listing, taken: Set<string>): Risk[] {
     }));
 }
 
+/** Average 2025 price of a periodic inspection with the emissions test, of an electric car's, and of a re-inspection (Traficom). */
+export const INSPECTION_EUR = { withEmissions: 78.15, electric: 79.54, reinspection: 28.39 } as const;
+/** The lowest annual base vehicle tax for a passenger car in 2026; a car's CO2 decides its own. */
+export const MIN_VEHICLE_TAX_EUR = 106.21;
+
+/** What cover this purchase calls for, from If's public terms: compulsory for a motor vehicle, the home's for a home. */
+function insuranceRisks(listing: Listing): Risk[] {
+  const c = listing.category;
+  if (c === "car" || c === "motorcycle")
+    return [
+      {
+        id: "insurance-traffic",
+        title: { fi: "Liikennevakuutus on pakollinen", en: "Traffic insurance is compulsory" },
+        why: {
+          fi: "Ajoneuvo vakuutetaan liikennevakuutuksella ennen kuin sillä ajetaan. Ifin ehtojen mukaan sopimus on voimassa, kunnes vakuuttamisvelvollisuus päättyy tai sopimus irtisanotaan, ja hinta seuraa kotiosoitetta.",
+          en: "A vehicle needs traffic insurance before it is driven. Under If's terms the contract lasts until the duty to insure ends or it is cancelled, and the price follows your home address.",
+        },
+        source: SOURCES.ifTraffic,
+      },
+    ];
+  const building = listing.fields.buildingType?.value;
+  if (c === "cottage" || building === "detached" || building === "terraced" || building === "cottage")
+    return [
+      {
+        id: "insurance-empty-building",
+        title: { fi: "Kun talo on tyhjillään", en: "When the house stands empty" },
+        why: {
+          fi: "Ifin kotivakuutusehtojen mukaan yli viikon asumattomana olevassa rakennuksessa pääsulkuventtiili suljetaan ja vesipumppu kytketään pois; kylmänä vuodenaikana talo lämmitetään tai putkisto tyhjennetään.",
+          en: "Under If's home insurance terms, a building left uninhabited for over a week needs its main valve closed and the water pump off; in the cold season it is kept heated or the pipes are drained.",
+        },
+        source: SOURCES.ifHome,
+      },
+    ];
+  return [];
+}
+
 /** Every risk that applies to this ad. */
 export function risksFor(listing: Listing, today: string): Risk[] {
   if (listing.kind !== "listing" || !listing.category) return [];
@@ -312,5 +365,5 @@ export function risksFor(listing: Listing, today: string): Risk[] {
         ? petRisks(listing)
         : [];
   const taken = new Set(rules.map((r) => r.quote).filter((q): q is string => !!q));
-  return [...mentionRisks(listing, taken), ...rules];
+  return [...mentionRisks(listing, taken), ...rules, ...insuranceRisks(listing)];
 }

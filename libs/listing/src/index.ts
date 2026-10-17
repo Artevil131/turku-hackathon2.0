@@ -10,7 +10,9 @@ export {
 export { type AreaPrice, areaPrice, type InspectionStats, inspectionStats } from "./lookups.ts";
 export {
   type Cost,
+  INSPECTION_EUR,
   MENTION_TITLES,
+  MIN_VEHICLE_TAX_EUR,
   PIPE_RENOVATION_AGE,
   PIPE_RENOVATION_EUR_PER_M2,
   type Risk,
