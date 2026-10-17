@@ -76,18 +76,9 @@ AI, private, honest); how people find it; what If needs to launch it. What to sa
 `pitch/SPEAKER-NOTES.md`. `node scripts/what-if-deck/build.ts` prints the deck to `pitch/what-if-deck.pdf`
 in about 10 seconds.
 
-## On stage, about 3 minutes
+## On stage, about 10 minutes
 
-The same flow, live, with more time for the business:
-
-1. **The hook and the car** (45 s): as in the video.
-2. **The flat** (20 s): the pipe renovation share. Then point at "What if something goes wrong": a leak in
-   the flat is covered by home insurance, the renovation isn't.
-3. **Screenshots** (25 s): drop two screenshots. Say what leaves: only the pictures, after the check;
-   nothing is stored.
-4. **The business** (60 s): `apps/what-if/PLAN.md`, "The business model, as said on stage". Customer value =
-   years × (what they pay − what they claim − what they cost); What if… moves all four. The best customers:
-   first-time flat buyers, households heading for several policies, car-loan buyers.
-5. **The close** (10 s): "See the what-ifs before you sign."
+The deck, with a live demo of about four and a half minutes in the middle: the car, the flat, and two
+screenshots read by the AI. The timings, what to click and what to say are in `pitch/SPEAKER-NOTES.md`.
 
 Questions the judges are likely to ask, with answers: `pitch/QA.md`.
