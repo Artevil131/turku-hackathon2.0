@@ -1,0 +1,30 @@
+{
+  "example": true,
+  "note": "Not FMI data. A hand-written example in FMI's format so the demo can show what a warning card looks like when FMI has issued one for the new address. The app shows it only with ?fmi=example and labels the card as an example.",
+  "warnings": [
+    {
+      "id": "example-frost-varsinais-suomi-2026-10-30",
+      "sentAt": "2026-10-28T09:00:00+02:00",
+      "msgType": "Alert",
+      "eventCode": "example-frost",
+      "severity": "Moderate",
+      "color": "yellow",
+      "onset": "2026-10-30T18:00:00+02:00",
+      "expires": "2026-11-02T09:00:00+02:00",
+      "regions": ["FI-19"],
+      "areas": ["Varsinais-Suomi"],
+      "text": {
+        "fi": {
+          "event": "Pakkasvaroitus (esimerkki)",
+          "headline": "Esimerkki: yöpakkasia Varsinais-Suomessa 30.10.–2.11.",
+          "description": "Esimerkki demoa varten, ei Ilmatieteen laitoksen varoitus. Tällainen kortti näkyy, kun uudelle paikkakunnalle on muuttoviikolle voimassa oleva varoitus: tyhjäksi jäävän asunnon vesipisteet ja lämmitys kannattaa tarkistaa."
+        },
+        "en": {
+          "event": "Frost warning (example)",
+          "headline": "Example: night frost in Southwest Finland, 30 Oct to 2 Nov",
+          "description": "An example for the demo, not a warning from the Finnish Meteorological Institute. A card like this appears when the new place has a warning during the move week: check the water points and heating of the home that is left empty."
+        }
+      }
+    }
+  ]
+}

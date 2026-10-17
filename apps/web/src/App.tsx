@@ -1,5 +1,7 @@
 import type { Journey as JourneyData, LedgerEntry, LedgerStatus, Snippet, SourceState } from "@ahead/contract";
 import { createBuilders } from "@ahead/journeys";
+import type { FmiWarning } from "@ahead/opendata";
+import exampleWarnings from "@ahead/opendata/data/fmi-example-warnings.json" with { type: "json" };
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { checkNow } from "./detect.ts";
 import { createEngine, type Engine, readSnippets } from "./engine.ts";
@@ -27,7 +29,12 @@ function wasOnboarded(): boolean {
 export function App() {
   const { t, locale, setLocale } = useI18n();
   const store: AppStore = useMemo(() => createStore(), []);
-  const builders = useMemo(() => createBuilders({ today: today() }), []);
+  // `?fmi=example` swaps the live FMI cache for one labelled example warning, for the stage (WORK.md); every card says so.
+  const builders = useMemo(() => {
+    const example = new URLSearchParams(location.search).get("fmi") === "example";
+    const warnings = example ? { warnings: exampleWarnings.warnings as FmiWarning[], warningsAreExample: true } : {};
+    return createBuilders({ today: today(), ...warnings });
+  }, []);
   const [sources, setSources] = useState<SourceState[]>([]);
   const [ledger, setLedger] = useState<LedgerEntry[]>([]);
   const [journey, setJourney] = useState<JourneyData | undefined>();

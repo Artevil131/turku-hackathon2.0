@@ -4,7 +4,7 @@
     "url": "https://en.ilmatieteenlaitos.fi/open-data"
   },
   "feedUrl": "https://alerts.fmi.fi/cap/feed/atom_en-GB.xml",
-  "fetchedAt": "2026-10-16T23:14:30.761Z",
+  "fetchedAt": "2026-10-17T00:32:27.850Z",
   "warnings": [
     {
       "id": "urn:oid:2.49.0.1.246.0.0.2026.24958819.5505073929730626284081450915572546863",

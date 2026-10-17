@@ -110,3 +110,9 @@ test("service todos open the service itself (WORK.md, A to B)", async () => {
   const car = await builders.first_car?.build(ctx({ ...mockMove, type: "first_car" }));
   expect(host("inspection", car?.items)).toBe("traficom.fi");
 });
+
+test("example warnings are labelled as examples on the card", async () => {
+  const j = await createBuilders({ today: TODAY, warnings: [frost], warningsAreExample: true }).move?.build(ctx(mockMove, "en", "Turku"));
+  const w = j?.items.find((i) => i.kind === "warning" && i.title === "Frost warning");
+  expect(w?.sourceName).toBe("Example for the demo, not a current warning");
+});

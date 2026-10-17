@@ -280,3 +280,6 @@ nav button.active {
   color: var(--accent);
   font-weight: 700;
 }
+.row.locked {
+  opacity: 0.55;
+}

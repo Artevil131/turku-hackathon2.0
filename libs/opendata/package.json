@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./data/fmi-warnings.json": "./data/fmi-warnings.json"
+    "./data/fmi-warnings.json": "./data/fmi-warnings.json",
+    "./data/fmi-example-warnings.json": "./data/fmi-example-warnings.json"
   },
   "dependencies": {
     "@ahead/contract": "workspace:*"
