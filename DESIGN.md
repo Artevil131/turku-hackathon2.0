@@ -170,3 +170,16 @@ Two moments, nothing else. The event list arriving after Check now (rows rise 10
 - **Don't** add If branding; insurer names belong only in the relevant content cards.
 - **Don't** replace useful evidence or service links with decoration.
 - **Don't** use a physical-sign costume or novelty navigation.
+
+## Finish review record (2026-10-17)
+
+Independent reviewer, code-led Operate, on 18 recaptures of the demo
+path from a fresh profile plus dark mode. Round 1 `recapture` (the
+capture driver scrolled the window, not `main`). Round 2 `fix`: home date
+cells, the dashed share card, service links wrapping beside Done, the
+abbreviated month in journey titles, uneven notice answers; applied in
+c409d3b. Verdict pass: all five resolved, one regression (home title
+measure) fixed in fbb6963. Final disposition: `ship`, scoped to those
+items. Kept: the petrol shell with the outlined boundary strip, 34 px
+headings and 18 px body, yellow only for selected states, the three-row
+share sheet with its motion, the detector's wording.
