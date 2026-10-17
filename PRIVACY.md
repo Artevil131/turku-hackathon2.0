@@ -69,7 +69,10 @@ to us if we stay out.
   needs a declaration and a core-functionality justification; accessibility
   services may not be used for data collection; a prominent disclosure
   before any sensitive permission. We ship without notification access
-  first.
+  first. SMS is stricter still: `READ_SMS` is granted only to the default
+  messaging app or to a declared core use Play rarely accepts, so the
+  "messages" source in a shipping app is the service texts the Notification
+  listener sees, never the inbox, and never messages from people.
 - **Open banking (PSD2)**: account information via a licensed AISP
   (Enable Banking or similar); consent per bank, renewed every 90 days;
   transactions are reduced to merchant and amount band on the device.

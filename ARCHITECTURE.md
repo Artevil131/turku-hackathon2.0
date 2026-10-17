@@ -20,6 +20,8 @@ permission, is enough:
 | Location | Significant-change location, visited places | Fused location | Medium: repeated visits to a new town, a dealership |
 | Bank | PSD2 account information via an aggregator (Enable Banking is Finnish and covers OP, Nordea, Danske, S-Pankki…); user consents per bank, 90-day renewal | Same | High: deposit payment, mover, car dealer, vet |
 | Notifications of other apps | Not possible | NotificationListenerService; restricted Play permission, special settings screen; use only if core to the app and declared | High but policy-risky; optional, off by default |
+| SMS from services | Not possible | `READ_SMS` is a restricted Play permission, allowed only for the default messaging app or with a declaration Play rarely accepts; a shipping app reads service texts (Traficom, DVV, the mover, the airline) through the Notification listener above, never messages from people | High: ownership transfer registered, change of address processed, the mover's arrival; optional, off by default |
+| Wi-Fi networks joined | Not possible (no SSID history) | Connectivity API: the SSID of the current network, with location permission; the app keeps the name and the day of the first join, no traffic, no passwords | Medium: a new network is a new place, a student-housing guest network, a dealer's, an airport's; optional, off by default |
 | Share sheet | User shares a listing, a PDF, a page into the app | Same | High and explicit |
 | Health | HealthKit; Art. 9 data, not used | Health Connect; not used | Out of scope |
 | Screen contents / accessibility | Not possible | Possible, but Play forbids using accessibility for data collection | Never |
