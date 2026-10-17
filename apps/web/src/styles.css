@@ -520,7 +520,14 @@ a {
   overflow-wrap: anywhere;
 }
 .card a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 16px;
+}
+.card a.service .open-icon {
+  margin-left: 8px;
+  flex: none;
 }
 .card a.service {
   display: inline-flex;
