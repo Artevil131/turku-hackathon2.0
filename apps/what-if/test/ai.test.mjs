@@ -132,5 +132,40 @@ const hung = await engine.analyseWithAI(moped, { fetch: () => new Promise(() => 
 ok("fallback: no answer within the time limit gives today's message", JSON.stringify(hung) === rules(moped) && Date.now() - t0 < 2000, `${Date.now() - t0} ms`);
 ok("fallback: no fetch at all (the artifact, the file on disk) is rules only", JSON.stringify(await engine.analyseWithAI(moped, {})) === rules(moped));
 
+// 6. Screenshots: the check first, then {image} only; the transcript goes through the rules; failures say so.
+const img = `data:image/jpeg;base64,${"QUJD".repeat(100)}`;
+const shotSent = [];
+const shotFetch = (status, body) => async (url, opts) => { shotSent.push({ url, opts }); return reply(status, body)(); };
+const yes = async () => true;
+const no = async () => false;
+const shotCar = { ok: true, model: "@test/vision", kind: "car", draft: null, transcript: "Toyota Corolla\n2010\n150 000 km\nHinta 5 000 €\nTurku",
+  fields: { make: "Toyota", model: "Corolla", year: 2011, km: 150000, price: 4000, city: "Turku" } };
+
+const cancelled = await engine.sendScreenshot(img, no, { fetch: shotFetch(200, shotCar) });
+ok("screenshot: Cancel sends nothing", cancelled.cancelled === true && shotSent.length === 0);
+
+const viaShot = await engine.sendScreenshot(img, yes, { fetch: shotFetch(200, shotCar) });
+const shotReq = shotSent.at(-1);
+const shotBody = shotReq ? JSON.parse(shotReq.opts.body) : {};
+ok("screenshot: Send posts {image} only, to /api/read", Object.keys(shotBody).join() === "image" && shotBody.image === img && shotReq.url === "/api/read" && shotReq.opts.method === "POST");
+ok("screenshot: the transcript goes through the rules, and their values win (2010, €5,000)",
+  full(viaShot) && viaShot.kind === "car" && viaShot.specs.startsWith("2010") && viaShot.price === 5000, viaShot?.specs ?? viaShot?.message);
+ok("screenshot: the result says it came from a screenshot and carries the transcript for the text box",
+  viaShot.fromScreenshot === true && /screenshot/.test(viaShot.shotNote) && viaShot.transcript === shotCar.transcript);
+
+const shotDraft = await engine.sendScreenshot(img, yes, { fetch: shotFetch(200, { ...draftFixture, transcript: "Myydään mopo Derbi Senda 50" }) });
+ok("screenshot: kind other becomes a draft card", shotDraft.kind === "draft" && shotDraft.asks.length === 3 && shotDraft.fromScreenshot === true && !!shotDraft.transcript);
+
+for (const [label, fetchMock] of [...FAILS, ["413 too_large", reply(413, { ok: false, error: "too_large" })]]) {
+  ok(`screenshot fails: ${label} gives the screenshot message`, (await engine.sendScreenshot(img, yes, { fetch: fetchMock })).message === engine.SHOT_FAIL);
+}
+const t1 = Date.now();
+const shotHung = await engine.sendScreenshot(img, yes, { fetch: () => new Promise(() => {}), timeoutMs: 60 });
+ok("screenshot fails: no answer within the time limit", shotHung.message === engine.SHOT_FAIL && Date.now() - t1 < 2000);
+const before = shotSent.length;
+ok("screenshot: not an image data URL is refused before sending", (await engine.analyseImage("https://example.com/ad.png", { fetch: shotFetch(200, shotCar) })).message === engine.SHOT_FAIL && shotSent.length === before);
+ok("screenshot: over 8,000,000 characters is refused before sending", (await engine.analyseImage(`data:image/jpeg;base64,${"A".repeat(8000001)}`, { fetch: shotFetch(200, shotCar) })).message === engine.SHOT_FAIL && shotSent.length === before);
+ok("screenshot: without fetch (the artifact) nothing is sent", (await engine.analyseImage(img, {})).message === engine.SHOT_FAIL);
+
 console.log(`\nAI reader: ${pass} of ${pass + fail} pass.`);
 process.exit(fail ? 1 : 0);

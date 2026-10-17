@@ -14,7 +14,7 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
 | `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses and real-page quirks. Currently 17 of 17 pass. |
-| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`) and every fallback. Currently 80 of 80 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message). Currently 99 of 99 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
@@ -76,6 +76,37 @@ own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `d
    leaves your phone." Both are true where they're shown.
 5. **Which model.** `/api/read` passes the text to the team's listing reader (Qwen3.8-27B on chili, D-024–D-027)
    and translates its quote-checked answer into the fields above (`deploy/what-if/worker.js`, D-028).
+
+### Screenshots
+
+On our own site there is an "Or upload a screenshot" button by the text box. It is a file input with
+`accept="image/*"` and no `capture`, so phones offer both the camera and the library. The claude.ai artifact
+and the file on disk don't show it.
+
+1. **Made smaller on the phone first,** like Aapo's PWA (D-025): at most 1600 px on the longest side, re-encoded
+   as JPEG at quality 0.85. Only that copy can leave; the re-encoding also drops the photo's metadata, such as
+   its location.
+2. **The check before sending.** `sendScreenshot(image, confirm)` shows the resized picture and asks. Cancel
+   sends nothing. The wording is consent copy, marked "consent copy: needs team review (AGENTS.md)" in
+   `index.html` (`SHOT_CONSENT`), for Vaishnav to confirm:
+   - **Send this screenshot?**
+   - It goes through our server at Cloudflare to an AI model on our team's own computer, which reads the ad
+     from it. Check that it shows only the ad, not your name, messages or notifications. Nothing is stored,
+     and nothing goes to If.
+   - Buttons: Send, Cancel.
+3. **Then `POST /api/read` with `{"image": "data:image/jpeg;base64,…"}`,** never text and image together. It
+   allows at most 8,000,000 characters and 30 s ("Reading the screenshot…").
+4. **The answer** is as for text, plus `transcript`, the text read off the picture:
+   - **`kind` car, moto, home or rent:** the transcript goes through `fromAI()` as the ad's text, so the rules
+     read it too and their values win.
+   - **`kind` other:** a draft card, as for text.
+
+   The result says "Read from your screenshot by an AI model on our team's own computer". The transcript goes
+   into the text box, where "See and correct the text it read" leads.
+5. **On any failure, or `kind` none:** "We couldn't read an ad from that screenshot. Try one that shows the
+   whole ad, or paste the ad's text." Nothing else changes.
+
+Links stay as they were: the page asks for the ad's text.
 
 ## Rules we keep
 
