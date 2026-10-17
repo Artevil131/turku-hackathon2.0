@@ -1,0 +1,524 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T00:55:00Z",
+  "title": "Design System: Ahead",
+  "extensions": {
+    "colorMeta": {
+      "shell": {
+        "role": "primary",
+        "displayName": "Shell",
+        "canonical": "#123e48",
+        "tonalRamp": [
+          "oklch(15% 0.0500 215.75)",
+          "oklch(26% 0.0500 215.75)",
+          "oklch(38% 0.0500 215.75)",
+          "oklch(49% 0.0500 215.75)",
+          "oklch(61% 0.0500 215.75)",
+          "oklch(72% 0.0500 215.75)",
+          "oklch(84% 0.0500 215.75)",
+          "oklch(95% 0.0500 215.75)"
+        ]
+      },
+      "shell-text": {
+        "role": "neutral",
+        "displayName": "Shell Text",
+        "canonical": "#f2fbfc",
+        "tonalRamp": [
+          "oklch(15% 0.0096 204.92)",
+          "oklch(26% 0.0096 204.92)",
+          "oklch(38% 0.0096 204.92)",
+          "oklch(49% 0.0096 204.92)",
+          "oklch(61% 0.0096 204.92)",
+          "oklch(72% 0.0096 204.92)",
+          "oklch(84% 0.0096 204.92)",
+          "oklch(95% 0.0096 204.92)"
+        ]
+      },
+      "shell-muted": {
+        "role": "neutral",
+        "displayName": "Shell Muted",
+        "canonical": "#c0dce0",
+        "tonalRamp": [
+          "oklch(15% 0.0302 207.05)",
+          "oklch(26% 0.0302 207.05)",
+          "oklch(38% 0.0302 207.05)",
+          "oklch(49% 0.0302 207.05)",
+          "oklch(61% 0.0302 207.05)",
+          "oklch(72% 0.0302 207.05)",
+          "oklch(84% 0.0302 207.05)",
+          "oklch(95% 0.0302 207.05)"
+        ]
+      },
+      "pool-ground": {
+        "role": "neutral",
+        "displayName": "Pool Ground",
+        "canonical": "#eaf3f4",
+        "tonalRamp": [
+          "oklch(15% 0.0097 204.91)",
+          "oklch(26% 0.0097 204.91)",
+          "oklch(38% 0.0097 204.91)",
+          "oklch(49% 0.0097 204.91)",
+          "oklch(61% 0.0097 204.91)",
+          "oklch(72% 0.0097 204.91)",
+          "oklch(84% 0.0097 204.91)",
+          "oklch(95% 0.0097 204.91)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#123940",
+        "tonalRamp": [
+          "oklch(15% 0.0448 211.40)",
+          "oklch(26% 0.0448 211.40)",
+          "oklch(38% 0.0448 211.40)",
+          "oklch(49% 0.0448 211.40)",
+          "oklch(61% 0.0448 211.40)",
+          "oklch(72% 0.0448 211.40)",
+          "oklch(84% 0.0448 211.40)",
+          "oklch(95% 0.0448 211.40)"
+        ]
+      },
+      "secondary-ink": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "canonical": "#48676d",
+        "tonalRamp": [
+          "oklch(15% 0.0373 210.90)",
+          "oklch(26% 0.0373 210.90)",
+          "oklch(38% 0.0373 210.90)",
+          "oklch(49% 0.0373 210.90)",
+          "oklch(61% 0.0373 210.90)",
+          "oklch(72% 0.0373 210.90)",
+          "oklch(84% 0.0373 210.90)",
+          "oklch(95% 0.0373 210.90)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#b6cdd1",
+        "tonalRamp": [
+          "oklch(15% 0.0255 209.25)",
+          "oklch(26% 0.0255 209.25)",
+          "oklch(38% 0.0255 209.25)",
+          "oklch(49% 0.0255 209.25)",
+          "oklch(61% 0.0255 209.25)",
+          "oklch(72% 0.0255 209.25)",
+          "oklch(84% 0.0255 209.25)",
+          "oklch(95% 0.0255 209.25)"
+        ]
+      },
+      "action": {
+        "role": "primary",
+        "displayName": "Action",
+        "canonical": "#075d70",
+        "tonalRamp": [
+          "oklch(15% 0.0777 218.62)",
+          "oklch(26% 0.0777 218.62)",
+          "oklch(38% 0.0777 218.62)",
+          "oklch(49% 0.0777 218.62)",
+          "oklch(61% 0.0777 218.62)",
+          "oklch(72% 0.0777 218.62)",
+          "oklch(84% 0.0777 218.62)",
+          "oklch(95% 0.0777 218.62)"
+        ]
+      },
+      "selected": {
+        "role": "secondary",
+        "displayName": "Selected",
+        "canonical": "#e3f282",
+        "tonalRamp": [
+          "oklch(15% 0.1378 115.42)",
+          "oklch(26% 0.1378 115.42)",
+          "oklch(38% 0.1378 115.42)",
+          "oklch(49% 0.1378 115.42)",
+          "oklch(61% 0.1378 115.42)",
+          "oklch(72% 0.1378 115.42)",
+          "oklch(84% 0.1378 115.42)",
+          "oklch(95% 0.1378 115.42)"
+        ]
+      },
+      "selected-ink": {
+        "role": "secondary",
+        "displayName": "Selected Ink",
+        "canonical": "#173c37",
+        "tonalRamp": [
+          "oklch(15% 0.0433 183.58)",
+          "oklch(26% 0.0433 183.58)",
+          "oklch(38% 0.0433 183.58)",
+          "oklch(49% 0.0433 183.58)",
+          "oklch(61% 0.0433 183.58)",
+          "oklch(72% 0.0433 183.58)",
+          "oklch(84% 0.0433 183.58)",
+          "oklch(95% 0.0433 183.58)"
+        ]
+      },
+      "selected-ground": {
+        "role": "secondary",
+        "displayName": "Selected Ground",
+        "canonical": "#f1f7cf",
+        "tonalRamp": [
+          "oklch(15% 0.0525 114.32)",
+          "oklch(26% 0.0525 114.32)",
+          "oklch(38% 0.0525 114.32)",
+          "oklch(49% 0.0525 114.32)",
+          "oklch(61% 0.0525 114.32)",
+          "oklch(72% 0.0525 114.32)",
+          "oklch(84% 0.0525 114.32)",
+          "oklch(95% 0.0525 114.32)"
+        ]
+      },
+      "danger": {
+        "role": "neutral",
+        "displayName": "Danger",
+        "canonical": "#a42e38",
+        "tonalRamp": [
+          "oklch(15% 0.1535 20.48)",
+          "oklch(26% 0.1535 20.48)",
+          "oklch(38% 0.1535 20.48)",
+          "oklch(49% 0.1535 20.48)",
+          "oklch(61% 0.1535 20.48)",
+          "oklch(72% 0.1535 20.48)",
+          "oklch(84% 0.1535 20.48)",
+          "oklch(95% 0.1535 20.48)"
+        ]
+      },
+      "warning": {
+        "role": "neutral",
+        "displayName": "Warning",
+        "canonical": "#80520c",
+        "tonalRamp": [
+          "oklch(15% 0.0987 70.35)",
+          "oklch(26% 0.0987 70.35)",
+          "oklch(38% 0.0987 70.35)",
+          "oklch(49% 0.0987 70.35)",
+          "oklch(61% 0.0987 70.35)",
+          "oklch(72% 0.0987 70.35)",
+          "oklch(84% 0.0987 70.35)",
+          "oklch(95% 0.0987 70.35)"
+        ]
+      },
+      "warning-ground": {
+        "role": "neutral",
+        "displayName": "Warning Ground",
+        "canonical": "#fff1cf",
+        "tonalRamp": [
+          "oklch(15% 0.0468 88.29)",
+          "oklch(26% 0.0468 88.29)",
+          "oklch(38% 0.0468 88.29)",
+          "oklch(49% 0.0468 88.29)",
+          "oklch(61% 0.0468 88.29)",
+          "oklch(72% 0.0468 88.29)",
+          "oklch(84% 0.0468 88.29)",
+          "oklch(95% 0.0468 88.29)"
+        ]
+      },
+      "dark-ground": {
+        "role": "neutral",
+        "displayName": "Dark Ground",
+        "canonical": "#142f36",
+        "tonalRamp": [
+          "oklch(15% 0.0352 216.83)",
+          "oklch(26% 0.0352 216.83)",
+          "oklch(38% 0.0352 216.83)",
+          "oklch(49% 0.0352 216.83)",
+          "oklch(61% 0.0352 216.83)",
+          "oklch(72% 0.0352 216.83)",
+          "oklch(84% 0.0352 216.83)",
+          "oklch(95% 0.0352 216.83)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark Surface",
+        "canonical": "#1c3e46",
+        "tonalRamp": [
+          "oklch(15% 0.0418 215.05)",
+          "oklch(26% 0.0418 215.05)",
+          "oklch(38% 0.0418 215.05)",
+          "oklch(49% 0.0418 215.05)",
+          "oklch(61% 0.0418 215.05)",
+          "oklch(72% 0.0418 215.05)",
+          "oklch(84% 0.0418 215.05)",
+          "oklch(95% 0.0418 215.05)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark Ink",
+        "canonical": "#eff9f9",
+        "tonalRamp": [
+          "oklch(15% 0.0106 196.98)",
+          "oklch(26% 0.0106 196.98)",
+          "oklch(38% 0.0106 196.98)",
+          "oklch(49% 0.0106 196.98)",
+          "oklch(61% 0.0106 196.98)",
+          "oklch(72% 0.0106 196.98)",
+          "oklch(84% 0.0106 196.98)",
+          "oklch(95% 0.0106 196.98)"
+        ]
+      },
+      "dark-secondary-ink": {
+        "role": "neutral",
+        "displayName": "Dark Secondary Ink",
+        "canonical": "#b4cdd0",
+        "tonalRamp": [
+          "oklch(15% 0.0273 205.42)",
+          "oklch(26% 0.0273 205.42)",
+          "oklch(38% 0.0273 205.42)",
+          "oklch(49% 0.0273 205.42)",
+          "oklch(61% 0.0273 205.42)",
+          "oklch(72% 0.0273 205.42)",
+          "oklch(84% 0.0273 205.42)",
+          "oklch(95% 0.0273 205.42)"
+        ]
+      },
+      "dark-line": {
+        "role": "neutral",
+        "displayName": "Dark Line",
+        "canonical": "#526e75",
+        "tonalRamp": [
+          "oklch(15% 0.0344 214.79)",
+          "oklch(26% 0.0344 214.79)",
+          "oklch(38% 0.0344 214.79)",
+          "oklch(49% 0.0344 214.79)",
+          "oklch(61% 0.0344 214.79)",
+          "oklch(72% 0.0344 214.79)",
+          "oklch(84% 0.0344 214.79)",
+          "oklch(95% 0.0344 214.79)"
+        ]
+      },
+      "dark-shell": {
+        "role": "neutral",
+        "displayName": "Dark Shell",
+        "canonical": "#102f36",
+        "tonalRamp": [
+          "oklch(15% 0.0384 214.86)",
+          "oklch(26% 0.0384 214.86)",
+          "oklch(38% 0.0384 214.86)",
+          "oklch(49% 0.0384 214.86)",
+          "oklch(61% 0.0384 214.86)",
+          "oklch(72% 0.0384 214.86)",
+          "oklch(84% 0.0384 214.86)",
+          "oklch(95% 0.0384 214.86)"
+        ]
+      },
+      "dark-action": {
+        "role": "neutral",
+        "displayName": "Dark Action",
+        "canonical": "#a1dce6",
+        "tonalRamp": [
+          "oklch(15% 0.0615 209.09)",
+          "oklch(26% 0.0615 209.09)",
+          "oklch(38% 0.0615 209.09)",
+          "oklch(49% 0.0615 209.09)",
+          "oklch(61% 0.0615 209.09)",
+          "oklch(72% 0.0615 209.09)",
+          "oklch(84% 0.0615 209.09)",
+          "oklch(95% 0.0615 209.09)"
+        ]
+      },
+      "dark-action-ink": {
+        "role": "neutral",
+        "displayName": "Dark Action Ink",
+        "canonical": "#10333c",
+        "tonalRamp": [
+          "oklch(15% 0.0427 217.68)",
+          "oklch(26% 0.0427 217.68)",
+          "oklch(38% 0.0427 217.68)",
+          "oklch(49% 0.0427 217.68)",
+          "oklch(61% 0.0427 217.68)",
+          "oklch(72% 0.0427 217.68)",
+          "oklch(84% 0.0427 217.68)",
+          "oklch(95% 0.0427 217.68)"
+        ]
+      },
+      "dark-selected-ground": {
+        "role": "neutral",
+        "displayName": "Dark Selected Ground",
+        "canonical": "#344b35",
+        "tonalRamp": [
+          "oklch(15% 0.0466 145.67)",
+          "oklch(26% 0.0466 145.67)",
+          "oklch(38% 0.0466 145.67)",
+          "oklch(49% 0.0466 145.67)",
+          "oklch(61% 0.0466 145.67)",
+          "oklch(72% 0.0466 145.67)",
+          "oklch(84% 0.0466 145.67)",
+          "oklch(95% 0.0466 145.67)"
+        ]
+      },
+      "dark-danger": {
+        "role": "neutral",
+        "displayName": "Dark Danger",
+        "canonical": "#ffacb0",
+        "tonalRamp": [
+          "oklch(15% 0.0979 16.24)",
+          "oklch(26% 0.0979 16.24)",
+          "oklch(38% 0.0979 16.24)",
+          "oklch(49% 0.0979 16.24)",
+          "oklch(61% 0.0979 16.24)",
+          "oklch(72% 0.0979 16.24)",
+          "oklch(84% 0.0979 16.24)",
+          "oklch(95% 0.0979 16.24)"
+        ]
+      },
+      "dark-warning": {
+        "role": "neutral",
+        "displayName": "Dark Warning",
+        "canonical": "#f8cf7b",
+        "tonalRamp": [
+          "oklch(15% 0.1127 84.10)",
+          "oklch(26% 0.1127 84.10)",
+          "oklch(38% 0.1127 84.10)",
+          "oklch(49% 0.1127 84.10)",
+          "oklch(61% 0.1127 84.10)",
+          "oklch(72% 0.1127 84.10)",
+          "oklch(84% 0.1127 84.10)",
+          "oklch(95% 0.1127 84.10)"
+        ]
+      },
+      "dark-warning-ground": {
+        "role": "neutral",
+        "displayName": "Dark Warning Ground",
+        "canonical": "#493e28",
+        "tonalRamp": [
+          "oklch(15% 0.0379 84.12)",
+          "oklch(26% 0.0379 84.12)",
+          "oklch(38% 0.0379 84.12)",
+          "oklch(49% 0.0379 84.12)",
+          "oklch(61% 0.0379 84.12)",
+          "oklch(72% 0.0379 84.12)",
+          "oklch(84% 0.0379 84.12)",
+          "oklch(95% 0.0379 84.12)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "heading": {
+        "displayName": "Task heading",
+        "purpose": "The current screen’s task."
+      }
+    },
+    "shadows": [
+      {
+        "name": "consent-dialog",
+        "value": "0 16px 60px rgb(0 20 28 / 25%)",
+        "purpose": "Native consent dialog only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "source-selection",
+        "value": "transform 160ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Source-switch thumb; removed for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "350px"
+      },
+      {
+        "name": "wide",
+        "value": "700px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "description": "The main action in a task.",
+      "html": "<button class=\"ds-primary\">Check now</button>",
+      "css": ".ds-primary{font:600 18px/1.3 system-ui;min-height:48px;padding:10px 18px;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:var(--accent-text)}.ds-primary:hover{filter:brightness(.93)}.ds-primary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "description": "A non-primary choice.",
+      "html": "<button class=\"ds-secondary\">Not now</button>",
+      "css": ".ds-secondary{font:600 18px/1.3 system-ui;min-height:48px;padding:10px 18px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text)}.ds-secondary:hover{filter:brightness(.93)}.ds-secondary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}",
+      "refersTo": "button-secondary"
+    },
+    {
+      "name": "Source switch",
+      "kind": "input",
+      "description": "A labelled source permission switch.",
+      "html": "<button class=\"ds-switch\" role=\"switch\" aria-checked=\"true\" aria-label=\"Calendar\"></button>",
+      "css": ".ds-switch{position:relative;width:56px;height:44px;padding:0;border:0;background:transparent}.ds-switch:before{content:\"\";position:absolute;inset:6px 0;border:1px solid var(--selected-text);border-radius:20px;background:var(--selected)}.ds-switch:after{content:\"\";position:absolute;left:29px;top:11px;width:22px;height:22px;border-radius:50%;background:var(--selected-text)}.ds-switch:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.ds-switch:hover{filter:brightness(.93)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Standard three-destination bottom navigation.",
+      "html": "<nav class=\"ds-nav\"><button aria-current=\"page\">Home</button><button>Ledger</button><button>Sources</button></nav>",
+      "css": ".ds-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:8px;background:var(--shell)}.ds-nav button{font:600 16px system-ui;min-height:48px;border:0;border-radius:8px;background:transparent;color:var(--shell-muted)}.ds-nav button[aria-current]{background:var(--selected);color:var(--selected-text)}.ds-nav button:focus-visible{outline:3px solid var(--selected)}.ds-nav button:hover{filter:brightness(.93)}"
+    },
+    {
+      "name": "Journey card",
+      "kind": "card",
+      "description": "Action and its sourced context.",
+      "html": "<article class=\"ds-card\"><span>To do</span><h3>File your change of address</h3><p>Read the dates, then open the service.</p></article>",
+      "css": ".ds-card{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:20px;font:17px/1.5 system-ui}.ds-card span{font-size:15px;font-weight:700;color:var(--accent)}.ds-card h3{font-size:23px;line-height:1.25;letter-spacing:-.02em;margin:8px 0 12px}.ds-card p{margin:0}",
+      "refersTo": "journey-card"
+    },
+    {
+      "name": "Date cell",
+      "kind": "chip",
+      "description": "An event date with tabular numerals.",
+      "html": "<time class=\"ds-date\" datetime=\"2026-11-01\">1 November</time>",
+      "css": ".ds-date{display:inline-block;font:650 15px/1.5 system-ui;font-variant-numeric:tabular-nums;padding:2px 8px;border-radius:4px;background:var(--selected);color:var(--selected-text)}"
+    },
+    {
+      "name": "Local boundary",
+      "kind": "custom",
+      "description": "A persistent inline outbound counter.",
+      "html": "<div class=\"ds-net\"><span>Data leaving this phone</span><strong>0 requests</strong></div>",
+      "css": ".ds-net{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--shell-muted);border-radius:8px;background:var(--shell);color:var(--shell-text);font:14px/1.3 system-ui}.ds-net span{color:var(--shell-muted)}.ds-net strong{font-size:16px;white-space:nowrap;font-variant-numeric:tabular-nums}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The local boundary",
+    "overview": "A phone-first operating interface informed by Finnish swimming-hall wayfinding: clear public instructions, pool-tinted space, petrol framing and sharply legible selected states. The world supplies palette, type, density and one source-selection movement; navigation and controls remain familiar web controls.",
+    "keyCharacteristics": [
+      "Large task headings, direct actions and readable evidence.",
+      "A committed colored shell, not isolated accent decoration.",
+      "Flat work surfaces with visible state and a persistent boundary strip."
+    ],
+    "rules": [
+      {
+        "name": "The Boundary Rule",
+        "body": "The shell and its readable outbound counter persist while the work area scrolls.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do retain standard web controls and keyboard affordances.",
+      "Do keep the outbound counter visible, including during onboarding and settings.",
+      "Do preserve strong contrast in both themes and long Finnish labels."
+    ],
+    "donts": [
+      "Don’t add If branding; insurer names belong only in the relevant content cards.",
+      "Don’t replace useful evidence or service links with decoration.",
+      "Don’t use a physical-sign costume or novelty navigation."
+    ]
+  }
+}
