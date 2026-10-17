@@ -4,14 +4,26 @@
 // a file, and serves counts per municipality and event type. No user
 // id, no snippet, no vector, no cookie. Usage: node apps/api/src/server.ts
 // (port 8787, or AHEAD_API_PORT).
+//
+// One exception (D-017): POST /api/listing takes an ad the user chose to
+// analyse, as text or a screenshot, sends it to the listing model
+// (AHEAD_LISTING_URL, NInfer on chili through a tunnel) and returns the
+// facts, the risks and the ten-year timeline. Nothing about it is stored.
 
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { EVENT_TYPES, type EventType, type IsoDate } from "@ahead/contract";
+import { type Extraction, extractFromImage, extractListing, MAX_AD_CHARS, risksFor, timeline } from "@ahead/listing";
 
 const PORT = Number(process.env.AHEAD_API_PORT ?? 8787);
+const LISTING = {
+  baseUrl: process.env.AHEAD_LISTING_URL ?? "http://127.0.0.1:8010",
+  model: process.env.AHEAD_LISTING_MODEL ?? "qwen3.8-27b",
+};
+/** A phone screenshot as a data: URL; larger is refused. */
+const MAX_IMAGE_BYTES = 6_000_000;
 const FILE = process.env.AHEAD_API_FILE ?? join(dirname(fileURLToPath(import.meta.url)), "../../../data/shared/events.jsonl");
 
 /** What a share contains, and nothing else. */
@@ -72,16 +84,37 @@ const CORS = {
   "access-control-allow-headers": "content-type",
 };
 
-function readBody(req: IncomingMessage): Promise<string> {
+function readBody(req: IncomingMessage, limit = 1000): Promise<string> {
   return new Promise((resolve, reject) => {
     let body = "";
     req.on("data", (c) => {
       body += c;
-      if (body.length > 1000) reject(new Error("too large"));
+      if (body.length > limit) reject(new Error("too large"));
     });
     req.on("end", () => resolve(body));
     req.on("error", reject);
   });
+}
+
+/** An analysed ad as the app shows it: what was read, the facts, the risks, the ten years. */
+export function analysis(x: Extraction, today: IsoDate) {
+  return {
+    text: x.text,
+    listing: x.listing,
+    dropped: x.dropped,
+    ms: x.ms,
+    risks: risksFor(x.listing, today),
+    timeline: timeline(x.listing, today),
+  };
+}
+
+/** `{text}` or `{image}` (a data:image URL), nothing else. */
+export function parseListingRequest(body: unknown): { text: string } | { image: string } | undefined {
+  if (!body || typeof body !== "object") return undefined;
+  const b = body as Record<string, unknown>;
+  if (typeof b.text === "string" && b.text.trim()) return { text: b.text.slice(0, MAX_AD_CHARS) };
+  if (typeof b.image === "string" && /^data:image\/(png|jpeg|webp);base64,/.test(b.image)) return { image: b.image };
+  return undefined;
 }
 
 /** A page for the If side of the demo: the counts, nothing per person. */
@@ -128,6 +161,16 @@ export function start(port = PORT) {
         return json(res, 200, { ok: true, received: share, total: load().length });
       } catch (e) {
         return json(res, 400, { error: String(e instanceof Error ? e.message : e) });
+      }
+    }
+    if (req.method === "POST" && url.pathname === "/api/listing") {
+      try {
+        const ask = parseListingRequest(JSON.parse(await readBody(req, MAX_IMAGE_BYTES)));
+        if (!ask) return json(res, 400, { error: "a listing request is {text} or {image: data:image/...}" });
+        const x = "text" in ask ? await extractListing(ask.text, LISTING) : await extractFromImage(ask.image, LISTING);
+        return json(res, 200, analysis(x, new Date().toISOString().slice(0, 10)));
+      } catch (e) {
+        return json(res, 502, { error: String(e instanceof Error ? e.message : e) });
       }
     }
     if (req.method === "GET" && url.pathname === "/api/counts") return json(res, 200, counts(load()));

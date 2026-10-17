@@ -1,12 +1,29 @@
 // What the listing analyst may say about an ad, and how each claim is
-// checked. Every field carries the words of the ad it came from; a field
-// whose quote is not in the ad, or whose value is out of range, is dropped
-// (validate.ts). That is the defence against a model inventing facts: it
-// can only report what the ad says, and the app can highlight where.
+// checked. An ad is anything a person might buy or rent at a turning
+// point: a car, a motorcycle, a boat, a home, a cottage, a pet, a bike.
+// Every field carries the words of the ad it came from; a field whose
+// quote is not in the ad, or whose value is not written in its quote, is
+// dropped (validate.ts). So is every risk the ad mentions: it must quote
+// the ad. The model can only report what the ad says.
 
 import type { IsoDate } from "@ahead/contract";
 
-export type ListingKind = "car" | "flat" | "other";
+export const CATEGORIES = [
+  "car",
+  "motorcycle",
+  "boat",
+  "caravan",
+  "home",
+  "cottage",
+  "pet",
+  "bicycle",
+  "electronics",
+  "other_item",
+] as const;
+export type Category = (typeof CATEGORIES)[number];
+
+export const VEHICLES: readonly Category[] = ["car", "motorcycle", "boat", "caravan"];
+export const HOMES: readonly Category[] = ["home", "cottage"];
 
 /** One extracted fact and the exact words of the ad it rests on. */
 export interface Field<T> {
@@ -14,44 +31,85 @@ export interface Field<T> {
   quote: string;
 }
 
-export interface CarFields {
-  make: string;
-  model: string;
-  /** Model year (vuosimalli) or year of first registration. */
-  year: number;
-  mileageKm: number;
+export interface ListingFields {
+  // Any ad
+  title: string;
   priceEur: number;
-  fuel: "petrol" | "diesel" | "hybrid" | "electric" | "gas";
-  transmission: "manual" | "automatic";
-  seller: "dealer" | "private";
-  /** Month the current inspection is valid until, `YYYY-MM`. */
-  inspectedUntil: string;
-  municipality: string;
-}
-
-export interface FlatFields {
-  deal: "rent" | "sale";
+  /** "sale" or a monthly rent. */
+  priceKind: "sale" | "rent_month";
   municipality: string;
   postcode: string;
+  seller: "dealer" | "private";
+  /** Year made: model year, first registration, year built, year of birth. */
+  year: number;
+  // Vehicles and goods
+  make: string;
+  model: string;
+  mileageKm: number;
+  engineHours: number;
+  fuel: "petrol" | "diesel" | "hybrid" | "electric" | "gas";
+  transmission: "manual" | "automatic";
+  /** Month the current inspection is valid until, `YYYY-MM`. */
+  inspectedUntil: string;
+  // Homes
   sizeM2: number;
   /** As written in Finnish ads: "2h+kk", "3h+k+s". */
   rooms: string;
-  /** Monthly rent for a rental, debt-free price (velaton hinta) for a sale. */
-  priceEur: number;
-  builtYear: number;
-  /** Pipe renovation (linjasaneeraus, putkiremontti): done, planned, or stated as not done. */
-  pipeRenovation: "done" | "planned" | "not_done";
-  pipeRenovationYear: number;
+  buildingType: "apartment" | "terraced" | "detached" | "cottage";
   availableFrom: IsoDate;
-  buildingType: "apartment" | "terraced" | "detached";
+  heating: "district" | "electric" | "oil" | "ground_source" | "air_water" | "wood";
+  /** Hoitovastike, € a month. */
+  monthlyChargeEur: number;
+  plotM2: number;
+  // Pets
+  species: "dog" | "cat" | "horse" | "other";
+  breed: string;
 }
 
-export type Fields<T> = { [K in keyof T]?: Field<T[K]> };
+export type Fields = { [K in keyof ListingFields]?: Field<ListingFields[K]> };
+
+/** Things an ad can say that matter for the buyer's risk and costs. */
+export const MENTION_RISKS = [
+  "pipe_renovation",
+  "facade_renovation",
+  "roof_renovation",
+  "balcony_renovation",
+  "window_renovation",
+  "elevator_renovation",
+  "drainage_renovation",
+  "moisture_damage",
+  "mould",
+  "false_plinth",
+  "oil_heating",
+  "asbestos",
+  "radon",
+  "flood",
+  "rust",
+  "accident_damage",
+  "engine_fault",
+  "timing_belt",
+  "battery_condition",
+  "imported",
+  "service_history",
+  "sold_as_is",
+  "hereditary_disease",
+  "health_tests",
+] as const;
+export type MentionRisk = (typeof MENTION_RISKS)[number];
+
+export interface Mention {
+  risk: MentionRisk;
+  /** done: fixed or renewed; planned: coming; present: a problem now; not_done: stated as not done or missing. */
+  status: "done" | "planned" | "present" | "not_done";
+  year?: number;
+  quote: string;
+}
 
 export interface Listing {
-  kind: ListingKind;
-  car?: Fields<CarFields>;
-  flat?: Fields<FlatFields>;
+  kind: "listing" | "other";
+  category?: Category;
+  fields: Fields;
+  mentions: Mention[];
 }
 
 type Check = (v: unknown) => boolean;
@@ -60,7 +118,7 @@ const str =
   (max = 60): Check =>
   (v) =>
     typeof v === "string" && v.trim().length > 0 && v.length <= max;
-const int =
+const num =
   (min: number, max: number): Check =>
   (v) =>
     typeof v === "number" && Number.isFinite(v) && v >= min && v <= max;
@@ -75,57 +133,64 @@ const pattern =
 
 const thisYear = new Date().getFullYear();
 
-export const CAR_CHECKS: Record<keyof CarFields, Check> = {
-  make: str(),
-  model: str(),
-  year: int(1950, thisYear + 1),
-  mileageKm: int(0, 2_000_000),
-  priceEur: int(100, 1_000_000),
-  fuel: oneOf("petrol", "diesel", "hybrid", "electric", "gas"),
-  transmission: oneOf("manual", "automatic"),
-  seller: oneOf("dealer", "private"),
-  inspectedUntil: pattern(/^\d{4}-(0[1-9]|1[0-2])$/),
-  municipality: str(40),
-};
-
-export const FLAT_CHECKS: Record<keyof FlatFields, Check> = {
-  deal: oneOf("rent", "sale"),
+export const CHECKS: Record<keyof ListingFields, Check> = {
+  title: str(120),
+  priceEur: num(1, 10_000_000),
+  priceKind: oneOf("sale", "rent_month"),
   municipality: str(40),
   postcode: pattern(/^\d{5}$/),
-  sizeM2: int(5, 1000),
+  seller: oneOf("dealer", "private"),
+  year: num(1700, thisYear + 3),
+  make: str(),
+  model: str(),
+  mileageKm: num(0, 2_000_000),
+  engineHours: num(0, 100_000),
+  fuel: oneOf("petrol", "diesel", "hybrid", "electric", "gas"),
+  transmission: oneOf("manual", "automatic"),
+  inspectedUntil: pattern(/^\d{4}-(0[1-9]|1[0-2])$/),
+  sizeM2: num(5, 10_000),
   rooms: str(20),
-  priceEur: int(50, 10_000_000),
-  builtYear: int(1700, thisYear + 3),
-  pipeRenovation: oneOf("done", "planned", "not_done"),
-  pipeRenovationYear: int(1950, thisYear + 10),
+  buildingType: oneOf("apartment", "terraced", "detached", "cottage"),
   availableFrom: pattern(/^\d{4}-\d{2}-\d{2}$/),
-  buildingType: oneOf("apartment", "terraced", "detached"),
+  heating: oneOf("district", "electric", "oil", "ground_source", "air_water", "wood"),
+  monthlyChargeEur: num(1, 5000),
+  plotM2: num(10, 10_000_000),
+  species: oneOf("dog", "cat", "horse", "other"),
+  breed: str(),
 };
 
-/** The schema as the model sees it: field, type, meaning. */
+/** The schema as the model sees it. */
 export const SCHEMA_TEXT = `{
-  "kind": "car" | "flat" | "other",
-  "car": {            // only when kind is "car"
+  "kind": "listing" | "other",
+  "category": ${CATEGORIES.map((c) => `"${c}"`).join(" | ")},
+  "fields": {
+    // any ad
+    "title": string (what is offered, short),
+    "priceEur": number (for a home for sale, the debt-free price "velaton hinta" when the ad gives one),
+    "priceKind": "sale" | "rent_month",
+    "municipality": string, "postcode": "5 digits",
+    "seller": "dealer" | "private",
+    "year": integer (model year, first registration, year built, or year of birth),
+    // vehicles, boats, goods
     "make": string, "model": string,
-    "year": integer (model year or first registration),
-    "mileageKm": integer (kilometres; "185 tkm" is 185000),
-    "priceEur": integer,
+    "mileageKm": integer ("185 tkm" is 185000), "engineHours": integer,
     "fuel": "petrol" | "diesel" | "hybrid" | "electric" | "gas",
     "transmission": "manual" | "automatic",
-    "seller": "dealer" | "private",
-    "inspectedUntil": "YYYY-MM" (inspection valid until),
-    "municipality": string
-  },
-  "flat": {           // only when kind is "flat"
-    "deal": "rent" | "sale",
-    "municipality": string, "postcode": "5 digits",
+    "inspectedUntil": "YYYY-MM",
+    // homes and cottages
     "sizeM2": number, "rooms": string as written ("2h+kk"),
-    "priceEur": integer (monthly rent, or debt-free price for a sale),
-    "builtYear": integer,
-    "pipeRenovation": "done" | "planned" | "not_done",
-    "pipeRenovationYear": integer,
+    "buildingType": "apartment" | "terraced" | "detached" | "cottage",
     "availableFrom": "YYYY-MM-DD",
-    "buildingType": "apartment" | "terraced" | "detached"
-  }
+    "heating": "district" | "electric" | "oil" | "ground_source" | "air_water" | "wood",
+    "monthlyChargeEur": number (hoitovastike), "plotM2": number,
+    // pets
+    "species": "dog" | "cat" | "horse" | "other", "breed": string
+  },
+  "mentions": [
+    { "risk": ${MENTION_RISKS.map((r) => `"${r}"`).join(" | ")},
+      "status": "done" | "planned" | "present" | "not_done",
+      "year": integer (only if the ad gives one),
+      "quote": string }
+  ]
 }
 Every field is an object {"value": ..., "quote": "..."}.`;

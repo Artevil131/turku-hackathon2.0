@@ -1,14 +1,37 @@
-export { type CarFacts, enrich, type Facts, type FlatFacts, PIPE_RENOVATION_AGE } from "./enrich.ts";
-export { type Extraction, type ExtractOptions, extractListing, MAX_AD_CHARS, SYSTEM_PROMPT } from "./extract.ts";
-export { CAR_RULES, type Cost, FLAT_RULES, PIPE_RENOVATION_EUR_PER_M2, type Risk, risksFor, type Source } from "./risks.ts";
 export {
-  CAR_CHECKS,
-  type CarFields,
+  type Extraction,
+  type ExtractOptions,
+  extractFromImage,
+  extractListing,
+  MAX_AD_CHARS,
+  SYSTEM_PROMPT,
+  transcribe,
+} from "./extract.ts";
+export { type AreaPrice, areaPrice, type InspectionStats, inspectionStats } from "./lookups.ts";
+export {
+  type Cost,
+  MENTION_TITLES,
+  PIPE_RENOVATION_AGE,
+  PIPE_RENOVATION_EUR_PER_M2,
+  type Risk,
+  risksFor,
+  SOURCES,
+  type Source,
+  type Text,
+} from "./risks.ts";
+export {
+  CATEGORIES,
+  type Category,
+  CHECKS,
   type Field,
   type Fields,
-  FLAT_CHECKS,
-  type FlatFields,
+  HOMES,
   type Listing,
-  type ListingKind,
+  type ListingFields,
+  MENTION_RISKS,
+  type Mention,
+  type MentionRisk,
+  VEHICLES,
 } from "./schema.ts";
+export { type Timeline, type TimelineEntry, timeline } from "./timeline.ts";
 export { type Dropped, jsonIn, normalise, type Validated, validate } from "./validate.ts";

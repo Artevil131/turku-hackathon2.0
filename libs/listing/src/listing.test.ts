@@ -1,98 +1,163 @@
 import { describe, expect, it } from "vitest";
-import { enrich, extractListing, risksFor, validate } from "./index.ts";
+import { areaPrice, extractFromImage, extractListing, inspectionStats, type Listing, risksFor, timeline, validate } from "./index.ts";
 
-const AD = "Myydään Toyota Yaris 1.33 VVT-i 2012, ajettu 185 tkm, hinta 6 900 €. Katsastettu 5/2026. Turku, yksityinen myyjä.";
+const AD =
+  "Myydään Toyota Yaris 1.33 VVT-i 2012, ajettu 185 tkm, hinta 6 900 €. Katsastettu 5/2026. Turku, yksityinen myyjä. Jakohihna vaihdettu 2023.";
+
+const reply = (o: unknown) => JSON.stringify(o);
+const f = <T>(value: T, quote: string) => ({ value, quote });
 
 describe("validate", () => {
-  it("keeps fields whose quotes are in the ad, ignoring spacing in numbers", () => {
-    const reply = JSON.stringify({
-      kind: "car",
-      car: {
-        make: { value: "Toyota", quote: "Toyota" },
-        priceEur: { value: 6900, quote: "6900 €" },
-        mileageKm: { value: 185000, quote: "185 tkm" },
-        seller: { value: "private", quote: "yksityinen myyjä" },
-      },
-    });
-    const { listing, dropped } = validate(reply, AD);
-    expect(Object.keys(listing.car ?? {}).sort()).toEqual(["make", "mileageKm", "priceEur", "seller"]);
+  it("keeps fields and mentions whose quotes are in the ad, ignoring spacing in numbers", () => {
+    const { listing, dropped } = validate(
+      reply({
+        kind: "listing",
+        category: "car",
+        fields: {
+          make: f("Toyota", "Toyota"),
+          priceEur: f(6900, "6900 €"),
+          mileageKm: f(185000, "185 tkm"),
+          seller: f("private", "yksityinen myyjä"),
+        },
+        mentions: [{ risk: "timing_belt", status: "done", year: 2023, quote: "Jakohihna vaihdettu 2023" }],
+      }),
+      AD,
+    );
+    expect(Object.keys(listing.fields).sort()).toEqual(["make", "mileageKm", "priceEur", "seller"]);
+    expect(listing.mentions).toEqual([{ risk: "timing_belt", status: "done", year: 2023, quote: "Jakohihna vaihdettu 2023" }]);
     expect(dropped).toEqual([]);
   });
 
-  it("drops an invented field, a bad value and an unknown field", () => {
-    const reply = `Here you go:\n\`\`\`json\n${JSON.stringify({
-      kind: "car",
-      car: {
-        fuel: { value: "petrol", quote: "bensiini" },
-        year: { value: 1850, quote: "2012" },
-        colour: { value: "red", quote: "punainen" },
-      },
-    })}\n\`\`\``;
-    const { listing, dropped } = validate(reply, AD);
-    expect(listing.car).toEqual({});
-    expect(dropped.map((d) => d.reason).sort()).toEqual(["bad_value", "not_a_field", "quote_not_in_ad"]);
-  });
-
-  it("drops values read into a quote that does not write them", () => {
+  it("drops invented fields and mentions, bad values, unknown fields and values read into a quote", () => {
     const flat = "Kaksio vuokralle keskustasta heti, 48,5 m², rakennettu -72.";
-    const reply = JSON.stringify({
-      kind: "flat",
-      flat: {
-        rooms: { value: "2h+kk", quote: "Kaksio" },
-        availableFrom: { value: "2024-05-15", quote: "heti" },
-        sizeM2: { value: 48.5, quote: "48,5 m²" },
-        builtYear: { value: 1972, quote: "-72" },
-      },
-    });
-    const { listing, dropped } = validate(reply, flat);
-    expect(Object.keys(listing.flat ?? {}).sort()).toEqual(["builtYear", "sizeM2"]);
-    expect(dropped.map((d) => d.reason)).toEqual(["value_not_in_quote", "value_not_in_quote"]);
-  });
-
-  it("treats anything but car or flat as other and keeps no fields", () => {
-    expect(validate('{"kind":"news","car":{}}', AD).listing).toEqual({ kind: "other" });
-  });
-});
-
-describe("enrich", () => {
-  it("marks an old block without a stated pipe renovation as due", () => {
-    const facts = enrich({ kind: "flat", flat: { builtYear: { value: 1972, quote: "1972" } } }, "2026-10-17");
-    expect(facts.flat).toEqual({ buildingAgeYears: 54, pipes: "due" });
-  });
-
-  it("puts a 14-year-old car on yearly inspection and counts days to the end of its inspection month", () => {
-    const facts = enrich(
-      { kind: "car", car: { year: { value: 2012, quote: "2012" }, inspectedUntil: { value: "2026-11", quote: "11/2026" } } },
-      "2026-10-17",
+    const { listing, dropped } = validate(
+      `\`\`\`json\n${reply({
+        kind: "listing",
+        category: "home",
+        fields: {
+          rooms: f("2h+kk", "Kaksio"),
+          availableFrom: f("2024-05-15", "heti"),
+          sizeM2: f(48.5, "48,5 m²"),
+          year: f(1972, "-72"),
+          fuel: f("petrol", "bensiini"),
+          colour: f("red", "punainen"),
+        },
+        mentions: [{ risk: "mould", status: "present", quote: "hometta kylpyhuoneessa" }],
+      })}\n\`\`\``,
+      flat,
     );
-    expect(facts.car).toEqual({ ageYears: 14, yearlyInspection: true, inspectionDaysLeft: 44 });
+    expect(Object.keys(listing.fields).sort()).toEqual(["sizeM2", "year"]);
+    expect(listing.mentions).toEqual([]);
+    expect(dropped.map((d) => d.reason).sort()).toEqual([
+      "not_a_field",
+      "quote_not_in_ad",
+      "quote_not_in_ad",
+      "value_not_in_quote",
+      "value_not_in_quote",
+    ]);
+  });
+
+  it("treats anything but a listing as other and keeps nothing", () => {
+    expect(validate('{"kind":"news","fields":{}}', AD).listing).toEqual({ kind: "other", fields: {}, mentions: [] });
   });
 });
 
-describe("extractListing", () => {
-  it("retries once when the first reply is not JSON", async () => {
-    const replies = ["Sorry, thinking...", JSON.stringify({ kind: "car", car: { make: { value: "Toyota", quote: "Toyota" } } })];
-    const fake = (async () =>
-      new Response(JSON.stringify({ choices: [{ message: { content: replies.shift() } }] }))) as unknown as typeof fetch;
-    const out = await extractListing(AD, { baseUrl: "http://x", model: "m", fetch: fake });
-    expect(out.attempts).toBe(2);
-    expect(out.listing.car?.make?.value).toBe("Toyota");
-  });
+const flat = (over: Partial<Listing> = {}): Listing => ({
+  kind: "listing",
+  category: "home",
+  fields: {
+    priceKind: f("sale" as const, "Myydään"),
+    municipality: f("Turku", "Turku"),
+    postcode: f("20100", "20100"),
+    rooms: f("2h+kk", "2h+kk"),
+    sizeM2: f(55, "55 m²"),
+    priceEur: f(165000, "165 000 €"),
+    year: f(1972, "1972"),
+    monthlyChargeEur: f(250, "250 €/kk"),
+  },
+  mentions: [],
+  ...over,
 });
 
 describe("risksFor", () => {
-  it("prices the pipe renovation of an old flat for sale and flags asbestos and leaks", () => {
-    const listing = {
-      kind: "flat" as const,
-      flat: {
-        deal: { value: "sale" as const, quote: "Myydään" },
-        municipality: { value: "Turku", quote: "Turku" },
-        sizeM2: { value: 55, quote: "55 m²" },
-        builtYear: { value: 1972, quote: "1972" },
-      },
-    };
-    const risks = risksFor(listing, enrich(listing, "2026-10-17"));
-    expect(risks.map((r) => r.id)).toEqual(["pipes-due", "leaks-old-pipes", "asbestos"]);
+  it("prices an old flat's pipe renovation, flags leaks and asbestos and compares with its postcode", () => {
+    const risks = risksFor(flat(), "2026-10-17");
+    expect(risks.map((r) => r.id)).toEqual(["pipes-due", "leaks", "asbestos", "area-price"]);
     expect(risks[0]?.cost?.eur).toBe(49000);
+    expect(areaPrice(flat())?.areaEurPerM2).toBeGreaterThan(1000);
+  });
+
+  it("lists what the ad says in its own words and takes a stated renovation as done", () => {
+    const listing = flat({
+      mentions: [
+        { risk: "pipe_renovation", status: "done", year: 2016, quote: "linjasaneeraus tehty 2016" },
+        { risk: "facade_renovation", status: "planned", year: 2027, quote: "julkisivuremontti tulossa 2027" },
+      ],
+    });
+    const ids = risksFor(listing, "2026-10-17").map((r) => r.id);
+    expect(ids).toContain("ad-facade_renovation");
+    expect(ids).not.toContain("pipes-due");
+  });
+});
+
+describe("lookups", () => {
+  it("finds Traficom's figures for a 2012 Yaris and its mileage against the median", () => {
+    const car: Listing = {
+      kind: "listing",
+      category: "car",
+      fields: {
+        make: f("Toyota", "Toyota"),
+        model: f("Yaris 1.33 VVT-i", "Yaris 1.33 VVT-i"),
+        year: f(2012, "2012"),
+        mileageKm: f(185000, "185 tkm"),
+      },
+      mentions: [],
+    };
+    const s = inspectionStats(car);
+    expect(s?.model).toBe("TOYOTA YARIS");
+    expect(s?.failPct).toBeGreaterThan(0);
+    expect(s?.mileageVsMedianPct).toBeGreaterThan(0);
+  });
+});
+
+describe("timeline", () => {
+  it("adds the charge every year and the pipe renovation once, in the window", () => {
+    const t = timeline(flat(), "2026-10-17");
+    expect(t.from).toBe(2026);
+    expect(t.to).toBe(2035);
+    const pipe = t.entries.find((e) => e.id === "pipe-renovation");
+    expect(pipe).toMatchObject({ year: 2027, eur: 49000, estimated: true });
+    expect(t.total).toBe(10 * 3000 + 49000);
+  });
+
+  it("puts a 14-year-old car on yearly inspections after its current one", () => {
+    const car: Listing = {
+      kind: "listing",
+      category: "car",
+      fields: { year: f(2012, "2012"), inspectedUntil: f("2027-05", "5/2027") },
+      mentions: [],
+    };
+    const years = timeline(car, "2026-10-17")
+      .entries.filter((e) => e.id === "inspection")
+      .map((e) => e.year);
+    expect(years).toEqual([2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]);
+  });
+});
+
+describe("extract", () => {
+  const server = (replies: string[]) =>
+    (async () => new Response(JSON.stringify({ choices: [{ message: { content: replies.shift() } }] }))) as unknown as typeof fetch;
+  const ok = reply({ kind: "listing", category: "car", fields: { make: f("Toyota", "Toyota") }, mentions: [] });
+
+  it("retries once when the first reply is not JSON", async () => {
+    const out = await extractListing(AD, { baseUrl: "http://x", model: "m", fetch: server(["Sorry...", ok]) });
+    expect(out.attempts).toBe(2);
+    expect(out.listing.fields.make?.value).toBe("Toyota");
+  });
+
+  it("checks a screenshot's quotes against its transcript", async () => {
+    const out = await extractFromImage("data:image/png;base64,AAAA", { baseUrl: "http://x", model: "m", fetch: server([AD, ok]) });
+    expect(out.text).toBe(AD);
+    expect(out.listing.fields.make?.value).toBe("Toyota");
   });
 });

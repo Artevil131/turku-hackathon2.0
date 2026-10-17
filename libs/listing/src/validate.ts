@@ -3,7 +3,17 @@
 // each quote must occur in the ad (ignoring case, spacing and dash style).
 // What was dropped is reported, so the benchmark can count invention.
 
-import { CAR_CHECKS, type Field, FLAT_CHECKS, type Listing, type ListingKind } from "./schema.ts";
+import {
+  CATEGORIES,
+  type Category,
+  CHECKS,
+  type Fields,
+  type Listing,
+  type ListingFields,
+  MENTION_RISKS,
+  type Mention,
+  type MentionRisk,
+} from "./schema.ts";
 
 export interface Dropped {
   field: string;
@@ -34,69 +44,72 @@ export function jsonIn(reply: string): unknown {
   return JSON.parse(reply.slice(start, end + 1));
 }
 
+/** A number written in the quote: as is, in thousands ("185 tkm") or as a two-digit year ("-09"). */
+function numberIn(value: number, q: string): boolean {
+  const forms = [String(value)];
+  if (value >= 1000 && value % 1000 === 0) forms.push(String(value / 1000));
+  if (value >= 1950 && value <= 2099) forms.push(String(value).slice(2));
+  return forms.some((f) => new RegExp(`(^|\\D)${f.replace(".", "\\.")}(\\D|$)`).test(q));
+}
+
 /**
  * A quote in the ad is not enough when the value is read into it: "vapaa
  * heti" is in the ad but no date is, "kaksio" is but "2h+kk" is not. So a
- * number must be written in its quote (also as thousands, "185 tkm", or a
- * two-digit year, "-09"), a date's quote must hold a number, and rooms
- * must be copied as written.
+ * number must be written in its quote, a date's quote must hold a number,
+ * rooms must be copied as written, a private seller and a building type
+ * must be named.
  */
 function grounded(name: string, value: unknown, quote: string): boolean {
   const q = normalise(quote).replace(/,/g, ".");
-  if (typeof value === "number") {
-    const forms = [String(value)];
-    if (value >= 1000 && value % 1000 === 0) forms.push(String(value / 1000));
-    if (value >= 1950 && value <= 2099) forms.push(String(value).slice(2));
-    return forms.some((f) => new RegExp(`(^|\\D)${f.replace(".", "\\.")}(\\D|$)`).test(q));
-  }
+  if (typeof value === "number") return numberIn(value, q);
   if (name === "availableFrom" || name === "inspectedUntil") return /\d/.test(q);
   if (name === "rooms") return q.replace(/\s/g, "").includes(normalise(String(value)).replace(/\s/g, ""));
+  // "Myydään" says something is sold, not who sells it; "kaksio" is a size, not a building.
+  if (name === "seller" && value === "private") return /yksityi|privat|private/.test(q);
+  if (name === "buildingType") return /talo|mökki|hus|house|apartment|flat|cottage|villa|stuga/.test(q);
   return true;
 }
 
-function fields<T>(
-  raw: unknown,
-  checks: Record<string, (v: unknown) => boolean>,
-  ad: string,
-  prefix: string,
-  dropped: Dropped[],
-): Record<string, Field<T>> {
-  const out: Record<string, Field<T>> = {};
-  if (!raw || typeof raw !== "object") return out;
-  for (const [name, f] of Object.entries(raw as Record<string, unknown>)) {
-    const field = `${prefix}.${name}`;
-    const check = checks[name];
-    if (!check) {
-      dropped.push({ field, reason: "not_a_field" });
-      continue;
-    }
-    if (f === null || f === undefined) continue;
-    const { value, quote } = (typeof f === "object" ? f : {}) as { value?: unknown; quote?: unknown };
-    if (value === null || value === undefined) continue;
-    if (!check(value)) {
-      dropped.push({ field, reason: "bad_value" });
-      continue;
-    }
-    if (typeof quote !== "string" || !quote.trim() || !ad.includes(normalise(quote))) {
-      dropped.push({ field, reason: "quote_not_in_ad" });
-      continue;
-    }
-    if (!grounded(name, value, quote)) {
-      dropped.push({ field, reason: "value_not_in_quote" });
-      continue;
-    }
-    out[name] = { value: value as T, quote: quote.trim() };
-  }
-  return out;
-}
+const quoted = (quote: unknown, ad: string): quote is string =>
+  typeof quote === "string" && quote.trim().length > 0 && ad.includes(normalise(quote));
 
 export function validate(reply: string, ad: string): Validated {
-  const raw = jsonIn(reply) as { kind?: unknown; car?: unknown; flat?: unknown };
-  const kind: ListingKind = raw.kind === "car" || raw.kind === "flat" ? raw.kind : "other";
+  const raw = jsonIn(reply) as { kind?: unknown; category?: unknown; fields?: unknown; mentions?: unknown };
   const dropped: Dropped[] = [];
+  if (raw.kind !== "listing") return { listing: { kind: "other", fields: {}, mentions: [] }, dropped };
   const norm = normalise(ad);
-  const listing: Listing = { kind };
-  if (kind === "car") listing.car = fields(raw.car, CAR_CHECKS, norm, "car", dropped);
-  if (kind === "flat") listing.flat = fields(raw.flat, FLAT_CHECKS, norm, "flat", dropped);
-  return { listing, dropped };
+
+  const fields: Record<string, unknown> = {};
+  for (const [name, f] of Object.entries((raw.fields ?? {}) as Record<string, unknown>)) {
+    const check = CHECKS[name as keyof ListingFields];
+    if (!check) {
+      dropped.push({ field: name, reason: "not_a_field" });
+      continue;
+    }
+    if (f === null || typeof f !== "object") continue;
+    const { value, quote } = f as { value?: unknown; quote?: unknown };
+    if (value === null || value === undefined) continue;
+    if (!check(value)) dropped.push({ field: name, reason: "bad_value" });
+    else if (!quoted(quote, norm)) dropped.push({ field: name, reason: "quote_not_in_ad" });
+    else if (!grounded(name, value, quote)) dropped.push({ field: name, reason: "value_not_in_quote" });
+    else fields[name] = { value, quote: quote.trim() };
+  }
+
+  const mentions: Mention[] = [];
+  for (const m of Array.isArray(raw.mentions) ? raw.mentions : []) {
+    const { risk, status, year, quote } = (m ?? {}) as Record<string, unknown>;
+    const field = `mention.${String(risk)}`;
+    if (!MENTION_RISKS.includes(risk as MentionRisk) || !["done", "planned", "present", "not_done"].includes(status as string))
+      dropped.push({ field, reason: "bad_value" });
+    else if (!quoted(quote, norm)) dropped.push({ field, reason: "quote_not_in_ad" });
+    else {
+      const out: Mention = { risk: risk as MentionRisk, status: status as Mention["status"], quote: quote.trim() };
+      // A year is kept only when the quote writes it.
+      if (typeof year === "number" && numberIn(year, normalise(quote))) out.year = year;
+      if (!mentions.some((x) => x.risk === out.risk)) mentions.push(out);
+    }
+  }
+
+  const category = CATEGORIES.includes(raw.category as Category) ? (raw.category as Category) : "other_item";
+  return { listing: { kind: "listing", category, fields: fields as Fields, mentions }, dropped };
 }

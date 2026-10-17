@@ -9,6 +9,7 @@
     "typecheck": "tsc -p ."
   },
   "dependencies": {
-    "@ahead/contract": "workspace:*"
+    "@ahead/contract": "workspace:*",
+    "@ahead/listing": "workspace:*"
   }
 }

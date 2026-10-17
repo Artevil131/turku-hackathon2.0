@@ -26,6 +26,9 @@ importers:
       '@ahead/contract':
         specifier: workspace:*
         version: link:../../libs/contract
+      '@ahead/listing':
+        specifier: workspace:*
+        version: link:../../libs/listing
 
   apps/web:
     dependencies:

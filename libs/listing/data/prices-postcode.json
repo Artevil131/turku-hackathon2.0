@@ -1,0 +1,3950 @@
+{
+  "source": "Tilastokeskus, taulukko 13mu: vanhojen osakeasuntojen neliöhinnat ja kauppojen lukumäärät postinumeroalueittain (CC BY 4.0)",
+  "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ashi/statfin_ashi_pxt_13mu.px/",
+  "year": 2025,
+  "fetched": "2026-10-17",
+  "byPostcode": {
+    "10210": { "name": "Inkoo Keskus (Inkoo)", "types": { "terraced": { "eurPerM2": 1751, "sales": 27 } } },
+    "10300": {
+      "name": "Karjaa Keskus (Raasepori)",
+      "types": {
+        "two_room": { "eurPerM2": 1565, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 1184, "sales": 16 },
+        "terraced": { "eurPerM2": 1809, "sales": 12 }
+      }
+    },
+    "10420": { "name": "Pohjankuru (Raasepori)", "types": { "terraced": { "eurPerM2": 833, "sales": 8 } } },
+    "10600": {
+      "name": "Tammisaari Keskus (Raasepori)",
+      "types": {
+        "studio": { "eurPerM2": 1912, "sales": 13 },
+        "two_room": { "eurPerM2": 2369, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 2483, "sales": 35 },
+        "terraced": { "eurPerM2": 2457, "sales": 19 }
+      }
+    },
+    "10650": {
+      "name": "Flyet (Raasepori)",
+      "types": { "studio": { "eurPerM2": 1222, "sales": 6 }, "two_room": { "eurPerM2": 1197, "sales": 10 } }
+    },
+    "10900": {
+      "name": "Hanko Keskus (Hanko)",
+      "types": {
+        "studio": { "eurPerM2": 2322, "sales": 14 },
+        "two_room": { "eurPerM2": 2147, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 2165, "sales": 28 },
+        "terraced": { "eurPerM2": 4391, "sales": 10 }
+      }
+    },
+    "10940": { "name": "Hangonkylä (Hanko)", "types": { "terraced": { "eurPerM2": 1756, "sales": 7 } } },
+    "10960": { "name": "Hanko Pohjoinen (Hanko)", "types": { "terraced": { "eurPerM2": 2193, "sales": 13 } } },
+    "11100": {
+      "name": "Riihimäki Keskus (Riihimäki)",
+      "types": {
+        "studio": { "eurPerM2": 1670, "sales": 34 },
+        "two_room": { "eurPerM2": 1564, "sales": 74 },
+        "three_room_plus": { "eurPerM2": 1535, "sales": 51 },
+        "terraced": { "eurPerM2": 1801, "sales": 17 }
+      }
+    },
+    "11120": {
+      "name": "Pohjois-Riihimäki (Riihimäki)",
+      "types": {
+        "studio": { "eurPerM2": 1444, "sales": 7 },
+        "two_room": { "eurPerM2": 1239, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1153, "sales": 10 },
+        "terraced": { "eurPerM2": 1802, "sales": 23 }
+      }
+    },
+    "11130": {
+      "name": "Peltosaari-Patastenmäki (Riihimäki)",
+      "types": {
+        "studio": { "eurPerM2": 1570, "sales": 12 },
+        "two_room": { "eurPerM2": 1185, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 1180, "sales": 28 },
+        "terraced": { "eurPerM2": 2101, "sales": 49 }
+      }
+    },
+    "11710": {
+      "name": "Herajoki (Riihimäki)",
+      "types": { "two_room": { "eurPerM2": 1391, "sales": 7 }, "terraced": { "eurPerM2": 1865, "sales": 13 } }
+    },
+    "11910": { "name": "Lasi-Kumela (Riihimäki)", "types": { "terraced": { "eurPerM2": 1633, "sales": 18 } } },
+    "12100": { "name": "Oitti (Hausjärvi)", "types": { "terraced": { "eurPerM2": 782, "sales": 10 } } },
+    "12400": {
+      "name": "Tervakoski (Janakkala)",
+      "types": { "two_room": { "eurPerM2": 843, "sales": 11 }, "terraced": { "eurPerM2": 1391, "sales": 14 } }
+    },
+    "12700": {
+      "name": "Loppi kk (Loppi)",
+      "types": { "two_room": { "eurPerM2": 780, "sales": 7 }, "terraced": { "eurPerM2": 1177, "sales": 10 } }
+    },
+    "13100": {
+      "name": "Hämeenlinna Keskus (Hämeenlinna)",
+      "types": {
+        "studio": { "eurPerM2": 2430, "sales": 72 },
+        "two_room": { "eurPerM2": 2064, "sales": 113 },
+        "three_room_plus": { "eurPerM2": 2145, "sales": 79 },
+        "terraced": { "eurPerM2": 2002, "sales": 40 }
+      }
+    },
+    "13130": {
+      "name": "Kauriala (Hämeenlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1853, "sales": 35 },
+        "two_room": { "eurPerM2": 1627, "sales": 77 },
+        "three_room_plus": { "eurPerM2": 1621, "sales": 29 },
+        "terraced": { "eurPerM2": 2202, "sales": 10 }
+      }
+    },
+    "13200": {
+      "name": "Keinusaari (Hämeenlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1613, "sales": 12 },
+        "two_room": { "eurPerM2": 2080, "sales": 39 },
+        "three_room_plus": { "eurPerM2": 2396, "sales": 20 }
+      }
+    },
+    "13210": {
+      "name": "Hätilä (Hämeenlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1712, "sales": 20 },
+        "two_room": { "eurPerM2": 1419, "sales": 34 },
+        "three_room_plus": { "eurPerM2": 1288, "sales": 33 },
+        "terraced": { "eurPerM2": 1976, "sales": 43 }
+      }
+    },
+    "13220": {
+      "name": "Sairio (Hämeenlinna)",
+      "types": { "three_room_plus": { "eurPerM2": 2710, "sales": 8 }, "terraced": { "eurPerM2": 2562, "sales": 7 } }
+    },
+    "13250": { "name": "Katuma (Hämeenlinna)", "types": { "two_room": { "eurPerM2": 985, "sales": 7 } } },
+    "13270": { "name": "Ruununmylly (Hämeenlinna)", "types": { "terraced": { "eurPerM2": 2284, "sales": 8 } } },
+    "13300": { "name": "Käikälä (Hämeenlinna)", "types": { "terraced": { "eurPerM2": 1864, "sales": 34 } } },
+    "13500": {
+      "name": "Jukola (Hämeenlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1254, "sales": 32 },
+        "two_room": { "eurPerM2": 968, "sales": 125 },
+        "three_room_plus": { "eurPerM2": 891, "sales": 66 },
+        "terraced": { "eurPerM2": 1840, "sales": 105 }
+      }
+    },
+    "13600": {
+      "name": "Ojoinen (Hämeenlinna)",
+      "types": {
+        "two_room": { "eurPerM2": 1050, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 959, "sales": 12 },
+        "terraced": { "eurPerM2": 1841, "sales": 17 }
+      }
+    },
+    "13720": { "name": "Parola (Hattula)", "types": { "terraced": { "eurPerM2": 1451, "sales": 26 } } },
+    "13880": { "name": "Rahkoila (Hattula)", "types": { "terraced": { "eurPerM2": 1755, "sales": 8 } } },
+    "14200": {
+      "name": "Turenki (Janakkala)",
+      "types": {
+        "studio": { "eurPerM2": 1094, "sales": 14 },
+        "two_room": { "eurPerM2": 919, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 975, "sales": 13 },
+        "terraced": { "eurPerM2": 1487, "sales": 52 }
+      }
+    },
+    "14500": { "name": "Iittala (Hämeenlinna)", "types": { "terraced": { "eurPerM2": 1123, "sales": 6 } } },
+    "14700": { "name": "Hauho kk (Hämeenlinna)", "types": { "terraced": { "eurPerM2": 743, "sales": 8 } } },
+    "15100": {
+      "name": "Lahti Asemanseutu (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1984, "sales": 15 },
+        "two_room": { "eurPerM2": 1989, "sales": 29 },
+        "three_room_plus": { "eurPerM2": 2220, "sales": 32 },
+        "terraced": { "eurPerM2": 2639, "sales": 11 }
+      }
+    },
+    "15110": {
+      "name": "Keski-Lahti (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 2453, "sales": 25 },
+        "two_room": { "eurPerM2": 2377, "sales": 44 },
+        "three_room_plus": { "eurPerM2": 2269, "sales": 49 }
+      }
+    },
+    "15140": {
+      "name": "Kartano-Paavola (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 2255, "sales": 70 },
+        "two_room": { "eurPerM2": 2149, "sales": 163 },
+        "three_room_plus": { "eurPerM2": 2435, "sales": 104 },
+        "terraced": { "eurPerM2": 3837, "sales": 6 }
+      }
+    },
+    "15150": {
+      "name": "Möysä (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1231, "sales": 21 },
+        "two_room": { "eurPerM2": 1371, "sales": 34 },
+        "three_room_plus": { "eurPerM2": 1337, "sales": 23 },
+        "terraced": { "eurPerM2": 1987, "sales": 10 }
+      }
+    },
+    "15160": { "name": "Kolava (Lahti)", "types": { "terraced": { "eurPerM2": 2554, "sales": 33 } } },
+    "15170": {
+      "name": "Tenava-Tonttila (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1153, "sales": 8 },
+        "two_room": { "eurPerM2": 969, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 928, "sales": 23 }
+      }
+    },
+    "15200": {
+      "name": "Kiveriö (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1075, "sales": 11 },
+        "two_room": { "eurPerM2": 931, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 1211, "sales": 6 }
+      }
+    },
+    "15210": {
+      "name": "Kivistönmäki (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1820, "sales": 13 },
+        "two_room": { "eurPerM2": 1353, "sales": 46 },
+        "three_room_plus": { "eurPerM2": 1072, "sales": 25 }
+      }
+    },
+    "15230": { "name": "Kytölä (Lahti)", "types": { "terraced": { "eurPerM2": 2291, "sales": 8 } } },
+    "15240": {
+      "name": "Mukkula (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1062, "sales": 8 },
+        "two_room": { "eurPerM2": 790, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 899, "sales": 30 },
+        "terraced": { "eurPerM2": 1732, "sales": 23 }
+      }
+    },
+    "15300": {
+      "name": "Myllypohja-Koiskala (Lahti)",
+      "types": { "two_room": { "eurPerM2": 595, "sales": 8 }, "terraced": { "eurPerM2": 1810, "sales": 11 } }
+    },
+    "15320": { "name": "Ahtiala (Lahti)", "types": { "terraced": { "eurPerM2": 1565, "sales": 12 } } },
+    "15500": {
+      "name": "Liipola (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 803, "sales": 11 },
+        "two_room": { "eurPerM2": 803, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 841, "sales": 13 }
+      }
+    },
+    "15520": {
+      "name": "Saksala (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1155, "sales": 9 },
+        "two_room": { "eurPerM2": 1064, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 985, "sales": 8 }
+      }
+    },
+    "15540": { "name": "Villähde (Lahti)", "types": { "terraced": { "eurPerM2": 1604, "sales": 20 } } },
+    "15550": { "name": "Rakokivi (Lahti)", "types": { "terraced": { "eurPerM2": 1481, "sales": 13 } } },
+    "15560": {
+      "name": "Nastola kk (Lahti)",
+      "types": {
+        "two_room": { "eurPerM2": 980, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 910, "sales": 9 },
+        "terraced": { "eurPerM2": 1343, "sales": 8 }
+      }
+    },
+    "15610": { "name": "Laune-Nikkilä (Lahti)", "types": { "terraced": { "eurPerM2": 1994, "sales": 17 } } },
+    "15680": { "name": "Renkomäki-Ämmälä (Lahti)", "types": { "terraced": { "eurPerM2": 2612, "sales": 16 } } },
+    "15700": {
+      "name": "Hennala-Jokimaa (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1763, "sales": 72 },
+        "two_room": { "eurPerM2": 1584, "sales": 44 },
+        "three_room_plus": { "eurPerM2": 1864, "sales": 36 },
+        "terraced": { "eurPerM2": 1969, "sales": 7 }
+      }
+    },
+    "15800": {
+      "name": "Kärpänen (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1383, "sales": 14 },
+        "two_room": { "eurPerM2": 1200, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1522, "sales": 8 },
+        "terraced": { "eurPerM2": 1922, "sales": 7 }
+      }
+    },
+    "15830": {
+      "name": "Metsäkangas (Lahti)",
+      "types": { "two_room": { "eurPerM2": 903, "sales": 28 }, "three_room_plus": { "eurPerM2": 934, "sales": 25 } }
+    },
+    "15840": { "name": "Riihelä (Lahti)", "types": { "terraced": { "eurPerM2": 1108, "sales": 13 } } },
+    "15860": {
+      "name": "Kartano (Hollola)",
+      "types": {
+        "studio": { "eurPerM2": 1063, "sales": 10 },
+        "two_room": { "eurPerM2": 773, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 925, "sales": 16 },
+        "terraced": { "eurPerM2": 1698, "sales": 11 }
+      }
+    },
+    "15870": {
+      "name": "Salpakangas (Hollola)",
+      "types": {
+        "two_room": { "eurPerM2": 1451, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1059, "sales": 9 },
+        "terraced": { "eurPerM2": 1826, "sales": 24 }
+      }
+    },
+    "15880": {
+      "name": "Soramäki (Hollola)",
+      "types": { "two_room": { "eurPerM2": 871, "sales": 19 }, "terraced": { "eurPerM2": 1379, "sales": 11 } }
+    },
+    "15900": {
+      "name": "Jalkaranta (Lahti)",
+      "types": { "three_room_plus": { "eurPerM2": 2761, "sales": 10 }, "terraced": { "eurPerM2": 2055, "sales": 24 } }
+    },
+    "15950": {
+      "name": "Kiikkula (Lahti)",
+      "types": {
+        "studio": { "eurPerM2": 1787, "sales": 6 },
+        "two_room": { "eurPerM2": 1360, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 1350, "sales": 18 },
+        "terraced": { "eurPerM2": 1698, "sales": 21 }
+      }
+    },
+    "16300": {
+      "name": "Orimattila Keskus (Orimattila)",
+      "types": {
+        "studio": { "eurPerM2": 677, "sales": 16 },
+        "two_room": { "eurPerM2": 1054, "sales": 39 },
+        "three_room_plus": { "eurPerM2": 885, "sales": 29 },
+        "terraced": { "eurPerM2": 1324, "sales": 79 }
+      }
+    },
+    "16600": { "name": "Järvelä (Kärkölä)", "types": { "terraced": { "eurPerM2": 781, "sales": 13 } } },
+    "16800": { "name": "Hämeenkoski (Hollola)", "types": { "terraced": { "eurPerM2": 779, "sales": 8 } } },
+    "16900": { "name": "Lammi kk (Hämeenlinna)", "types": { "terraced": { "eurPerM2": 909, "sales": 20 } } },
+    "17200": {
+      "name": "Vääksy Keskus (Asikkala)",
+      "types": {
+        "two_room": { "eurPerM2": 1299, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 914, "sales": 9 },
+        "terraced": { "eurPerM2": 1220, "sales": 25 }
+      }
+    },
+    "18100": {
+      "name": "Heinola Keskus (Heinola)",
+      "types": {
+        "studio": { "eurPerM2": 839, "sales": 11 },
+        "two_room": { "eurPerM2": 1021, "sales": 30 },
+        "three_room_plus": { "eurPerM2": 1235, "sales": 31 },
+        "terraced": { "eurPerM2": 1190, "sales": 19 }
+      }
+    },
+    "18130": {
+      "name": "Tommola-Sahanniemi (Heinola)",
+      "types": { "studio": { "eurPerM2": 652, "sales": 14 }, "two_room": { "eurPerM2": 582, "sales": 27 } }
+    },
+    "18150": { "name": "Jyränkö (Heinola)", "types": { "terraced": { "eurPerM2": 1088, "sales": 9 } } },
+    "19650": {
+      "name": "Joutsa Keskus (Joutsa)",
+      "types": { "two_room": { "eurPerM2": 666, "sales": 9 }, "terraced": { "eurPerM2": 725, "sales": 23 } }
+    },
+    "19700": { "name": "Sysmä Keskus (Sysmä)", "types": { "terraced": { "eurPerM2": 998, "sales": 14 } } },
+    "20100": {
+      "name": "Turku Keskus (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 3999, "sales": 179 },
+        "two_room": { "eurPerM2": 3376, "sales": 203 },
+        "three_room_plus": { "eurPerM2": 3353, "sales": 197 },
+        "terraced": { "eurPerM2": 4193, "sales": 84 }
+      }
+    },
+    "20200": {
+      "name": "Iso-Heikkilä (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2891, "sales": 25 },
+        "two_room": { "eurPerM2": 2462, "sales": 27 },
+        "three_room_plus": { "eurPerM2": 2206, "sales": 19 }
+      }
+    },
+    "20210": {
+      "name": "Pahaniemi (Turku)",
+      "types": { "two_room": { "eurPerM2": 1076, "sales": 23 }, "three_room_plus": { "eurPerM2": 1034, "sales": 18 } }
+    },
+    "20240": {
+      "name": "Pansio-Perno (Turku)",
+      "types": {
+        "two_room": { "eurPerM2": 1057, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 959, "sales": 19 },
+        "terraced": { "eurPerM2": 1200, "sales": 9 }
+      }
+    },
+    "20300": {
+      "name": "Pohjola-Kastu (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2702, "sales": 35 },
+        "two_room": { "eurPerM2": 2641, "sales": 59 },
+        "three_room_plus": { "eurPerM2": 2459, "sales": 31 },
+        "terraced": { "eurPerM2": 2886, "sales": 29 }
+      }
+    },
+    "20320": {
+      "name": "Kuninkoja-Mälikkälä (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2375, "sales": 24 },
+        "two_room": { "eurPerM2": 2137, "sales": 78 },
+        "three_room_plus": { "eurPerM2": 1982, "sales": 128 },
+        "terraced": { "eurPerM2": 2531, "sales": 65 }
+      }
+    },
+    "20360": {
+      "name": "Runosmäki-Kärsämäki (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 1750, "sales": 13 },
+        "two_room": { "eurPerM2": 1192, "sales": 45 },
+        "three_room_plus": { "eurPerM2": 1352, "sales": 60 },
+        "terraced": { "eurPerM2": 1762, "sales": 19 }
+      }
+    },
+    "20380": { "name": "Räntämäki-Saramäki (Turku)", "types": { "terraced": { "eurPerM2": 1968, "sales": 14 } } },
+    "20460": {
+      "name": "Jäkärlä (Turku)",
+      "types": { "three_room_plus": { "eurPerM2": 904, "sales": 9 }, "terraced": { "eurPerM2": 1356, "sales": 22 } }
+    },
+    "20500": {
+      "name": "Vesilinna (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 4024, "sales": 46 },
+        "two_room": { "eurPerM2": 3389, "sales": 53 },
+        "three_room_plus": { "eurPerM2": 3229, "sales": 29 }
+      }
+    },
+    "20520": {
+      "name": "Kupittaa (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 4681, "sales": 22 },
+        "two_room": { "eurPerM2": 4066, "sales": 34 },
+        "three_room_plus": { "eurPerM2": 3654, "sales": 23 }
+      }
+    },
+    "20540": {
+      "name": "Nummi-Ylioppilaskylä (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 3533, "sales": 38 },
+        "two_room": { "eurPerM2": 2486, "sales": 66 },
+        "three_room_plus": { "eurPerM2": 2067, "sales": 78 },
+        "terraced": { "eurPerM2": 2403, "sales": 36 }
+      }
+    },
+    "20610": {
+      "name": "Varissuo (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 1679, "sales": 10 },
+        "two_room": { "eurPerM2": 1246, "sales": 58 },
+        "three_room_plus": { "eurPerM2": 1210, "sales": 61 },
+        "terraced": { "eurPerM2": 1461, "sales": 37 }
+      }
+    },
+    "20660": { "name": "Littoinen (Kaarina)", "types": { "terraced": { "eurPerM2": 2742, "sales": 49 } } },
+    "20700": {
+      "name": "Vartiovuori-Samppalinna (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 3907, "sales": 30 },
+        "two_room": { "eurPerM2": 3310, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 3292, "sales": 42 }
+      }
+    },
+    "20720": {
+      "name": "Vasaramäki (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2619, "sales": 13 },
+        "two_room": { "eurPerM2": 2422, "sales": 39 },
+        "three_room_plus": { "eurPerM2": 2138, "sales": 38 },
+        "terraced": { "eurPerM2": 2784, "sales": 14 }
+      }
+    },
+    "20740": {
+      "name": "Ilpoinen-Harittu (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2160, "sales": 7 },
+        "two_room": { "eurPerM2": 1863, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 1821, "sales": 26 },
+        "terraced": { "eurPerM2": 2252, "sales": 44 }
+      }
+    },
+    "20750": {
+      "name": "Huhkola-Lauste-Vaala (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 1281, "sales": 8 },
+        "two_room": { "eurPerM2": 868, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 862, "sales": 20 },
+        "terraced": { "eurPerM2": 1871, "sales": 20 }
+      }
+    },
+    "20760": {
+      "name": "Piispanristi (Kaarina)",
+      "types": {
+        "studio": { "eurPerM2": 2291, "sales": 12 },
+        "two_room": { "eurPerM2": 2263, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 1789, "sales": 16 },
+        "terraced": { "eurPerM2": 2720, "sales": 51 }
+      }
+    },
+    "20780": {
+      "name": "Kaarina Keskus (Kaarina)",
+      "types": {
+        "studio": { "eurPerM2": 2475, "sales": 12 },
+        "two_room": { "eurPerM2": 1995, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 1975, "sales": 18 },
+        "terraced": { "eurPerM2": 2836, "sales": 92 }
+      }
+    },
+    "20810": {
+      "name": "Martti-Korppolaismäki (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 3560, "sales": 69 },
+        "two_room": { "eurPerM2": 3441, "sales": 137 },
+        "three_room_plus": { "eurPerM2": 3555, "sales": 95 },
+        "terraced": { "eurPerM2": 3799, "sales": 47 }
+      }
+    },
+    "20880": {
+      "name": "Uittamo (Turku)",
+      "types": {
+        "studio": { "eurPerM2": 2411, "sales": 6 },
+        "two_room": { "eurPerM2": 1991, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 1767, "sales": 35 },
+        "terraced": { "eurPerM2": 2660, "sales": 11 }
+      }
+    },
+    "20900": { "name": "Moikoinen-Pikisaari (Turku)", "types": { "terraced": { "eurPerM2": 3046, "sales": 99 } } },
+    "21100": {
+      "name": "Naantali Keskus (Naantali)",
+      "types": {
+        "studio": { "eurPerM2": 1805, "sales": 10 },
+        "two_room": { "eurPerM2": 2252, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 2411, "sales": 30 },
+        "terraced": { "eurPerM2": 2864, "sales": 40 }
+      }
+    },
+    "21110": {
+      "name": "Taimo-Nuhjala-Lietsala (Naantali)",
+      "types": {
+        "two_room": { "eurPerM2": 1485, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1854, "sales": 12 },
+        "terraced": { "eurPerM2": 2282, "sales": 54 }
+      }
+    },
+    "21160": { "name": "Merimasku (Naantali)", "types": { "terraced": { "eurPerM2": 2430, "sales": 12 } } },
+    "21200": {
+      "name": "Raisio Keskus (Raisio)",
+      "types": {
+        "studio": { "eurPerM2": 1852, "sales": 19 },
+        "two_room": { "eurPerM2": 1729, "sales": 82 },
+        "three_room_plus": { "eurPerM2": 1670, "sales": 62 },
+        "terraced": { "eurPerM2": 2005, "sales": 56 }
+      }
+    },
+    "21210": { "name": "Hakinmäki (Raisio)", "types": { "terraced": { "eurPerM2": 2646, "sales": 20 } } },
+    "21220": { "name": "Somersoja (Raisio)", "types": { "terraced": { "eurPerM2": 1534, "sales": 9 } } },
+    "21250": { "name": "Masku (Masku)", "types": { "terraced": { "eurPerM2": 2144, "sales": 28 } } },
+    "21260": { "name": "Ihala (Raisio)", "types": { "terraced": { "eurPerM2": 2006, "sales": 21 } } },
+    "21270": { "name": "Nousiainen (Nousiainen)", "types": { "terraced": { "eurPerM2": 1571, "sales": 6 } } },
+    "21280": { "name": "Kuloinen (Raisio)", "types": { "terraced": { "eurPerM2": 2375, "sales": 19 } } },
+    "21290": { "name": "Rusko (Rusko)", "types": { "terraced": { "eurPerM2": 2518, "sales": 20 } } },
+    "21310": { "name": "Vahto (Rusko)", "types": { "terraced": { "eurPerM2": 1227, "sales": 7 } } },
+    "21350": { "name": "Ilmarinen (Lieto)", "types": { "terraced": { "eurPerM2": 3020, "sales": 7 } } },
+    "21380": { "name": "Aura Keskus (Aura)", "types": { "terraced": { "eurPerM2": 1291, "sales": 28 } } },
+    "21410": { "name": "Vanhalinna (Lieto)", "types": { "terraced": { "eurPerM2": 3350, "sales": 12 } } },
+    "21420": {
+      "name": "Lieto Keskus (Lieto)",
+      "types": {
+        "studio": { "eurPerM2": 2058, "sales": 13 },
+        "two_room": { "eurPerM2": 2129, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 2281, "sales": 18 },
+        "terraced": { "eurPerM2": 2296, "sales": 37 }
+      }
+    },
+    "21450": { "name": "Tarvasjoki Keskus (Lieto)", "types": { "terraced": { "eurPerM2": 1003, "sales": 8 } } },
+    "21500": {
+      "name": "Piikkiö (Kaarina)",
+      "types": {
+        "studio": { "eurPerM2": 1603, "sales": 7 },
+        "two_room": { "eurPerM2": 1459, "sales": 12 },
+        "three_room_plus": { "eurPerM2": 1449, "sales": 8 },
+        "terraced": { "eurPerM2": 2669, "sales": 31 }
+      }
+    },
+    "21530": {
+      "name": "Paimio Keskus (Paimio)",
+      "types": {
+        "studio": { "eurPerM2": 1160, "sales": 13 },
+        "two_room": { "eurPerM2": 1375, "sales": 28 },
+        "three_room_plus": { "eurPerM2": 1539, "sales": 11 },
+        "terraced": { "eurPerM2": 1728, "sales": 44 }
+      }
+    },
+    "21570": { "name": "Sauvo Keskus (Sauvo)", "types": { "terraced": { "eurPerM2": 1164, "sales": 8 } } },
+    "21600": {
+      "name": "Parainen Keskus (Parainen)",
+      "types": {
+        "studio": { "eurPerM2": 1426, "sales": 13 },
+        "two_room": { "eurPerM2": 1292, "sales": 34 },
+        "three_room_plus": { "eurPerM2": 1304, "sales": 27 },
+        "terraced": { "eurPerM2": 2227, "sales": 24 }
+      }
+    },
+    "21620": { "name": "Kuusisto (Kaarina)", "types": { "terraced": { "eurPerM2": 2310, "sales": 10 } } },
+    "23100": {
+      "name": "Mynämäki Keskus (Mynämäki)",
+      "types": { "two_room": { "eurPerM2": 1451, "sales": 12 }, "terraced": { "eurPerM2": 1642, "sales": 19 } }
+    },
+    "23500": {
+      "name": "Uusikaupunki Keskus (Uusikaupunki)",
+      "types": {
+        "studio": { "eurPerM2": 1001, "sales": 15 },
+        "two_room": { "eurPerM2": 882, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 999, "sales": 28 },
+        "terraced": { "eurPerM2": 1106, "sales": 38 }
+      }
+    },
+    "23800": {
+      "name": "Laitila Keskus (Laitila)",
+      "types": { "two_room": { "eurPerM2": 940, "sales": 13 }, "terraced": { "eurPerM2": 1290, "sales": 16 } }
+    },
+    "24100": {
+      "name": "Salo Keskus (Salo)",
+      "types": {
+        "studio": { "eurPerM2": 1518, "sales": 43 },
+        "two_room": { "eurPerM2": 1673, "sales": 59 },
+        "three_room_plus": { "eurPerM2": 1583, "sales": 45 },
+        "terraced": { "eurPerM2": 1417, "sales": 42 }
+      }
+    },
+    "24130": { "name": "Ylhäisi (Salo)", "types": { "terraced": { "eurPerM2": 1293, "sales": 10 } } },
+    "24240": {
+      "name": "Rappula (Salo)",
+      "types": {
+        "studio": { "eurPerM2": 1835, "sales": 9 },
+        "two_room": { "eurPerM2": 1749, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 1736, "sales": 14 },
+        "terraced": { "eurPerM2": 1439, "sales": 16 }
+      }
+    },
+    "24260": {
+      "name": "Ollikkala (Salo)",
+      "types": {
+        "studio": { "eurPerM2": 932, "sales": 10 },
+        "two_room": { "eurPerM2": 694, "sales": 12 },
+        "terraced": { "eurPerM2": 1306, "sales": 21 }
+      }
+    },
+    "24280": { "name": "Tupuri-Hähkänä (Salo)", "types": { "terraced": { "eurPerM2": 1434, "sales": 50 } } },
+    "24800": {
+      "name": "Halikko Keskus (Salo)",
+      "types": {
+        "studio": { "eurPerM2": 1085, "sales": 8 },
+        "two_room": { "eurPerM2": 1116, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1096, "sales": 9 },
+        "terraced": { "eurPerM2": 1367, "sales": 39 }
+      }
+    },
+    "25130": { "name": "Muurla (Salo)", "types": { "terraced": { "eurPerM2": 1157, "sales": 7 } } },
+    "25250": { "name": "Märynummi (Salo)", "types": { "terraced": { "eurPerM2": 1011, "sales": 7 } } },
+    "25360": { "name": "Pertteli Keskus (Salo)", "types": { "terraced": { "eurPerM2": 1033, "sales": 11 } } },
+    "25500": {
+      "name": "Perniö Keskus (Salo)",
+      "types": { "two_room": { "eurPerM2": 826, "sales": 7 }, "terraced": { "eurPerM2": 984, "sales": 11 } }
+    },
+    "25700": { "name": "Kemiö Keskus (Kemiönsaari)", "types": { "terraced": { "eurPerM2": 1356, "sales": 11 } } },
+    "26100": {
+      "name": "Rauma Keskus (Rauma)",
+      "types": {
+        "studio": { "eurPerM2": 1689, "sales": 35 },
+        "two_room": { "eurPerM2": 1477, "sales": 131 },
+        "three_room_plus": { "eurPerM2": 1458, "sales": 94 },
+        "terraced": { "eurPerM2": 1792, "sales": 36 }
+      }
+    },
+    "26200": {
+      "name": "Merirauma-Kappelinluhta (Rauma)",
+      "types": {
+        "two_room": { "eurPerM2": 795, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 984, "sales": 40 },
+        "terraced": { "eurPerM2": 1538, "sales": 40 }
+      }
+    },
+    "26660": {
+      "name": "Paroalho (Rauma)",
+      "types": {
+        "two_room": { "eurPerM2": 730, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 732, "sales": 13 },
+        "terraced": { "eurPerM2": 1135, "sales": 28 }
+      }
+    },
+    "27100": { "name": "Eurajoki Keskus (Eurajoki)", "types": { "terraced": { "eurPerM2": 1219, "sales": 15 } } },
+    "27510": { "name": "Eura Keskus (Eura)", "types": { "terraced": { "eurPerM2": 760, "sales": 12 } } },
+    "27800": { "name": "Säkylä Keskus (Säkylä)", "types": { "terraced": { "eurPerM2": 1071, "sales": 12 } } },
+    "28100": {
+      "name": "Pori Keskus (Pori)",
+      "types": {
+        "studio": { "eurPerM2": 1744, "sales": 68 },
+        "two_room": { "eurPerM2": 1723, "sales": 135 },
+        "three_room_plus": { "eurPerM2": 1649, "sales": 119 }
+      }
+    },
+    "28120": {
+      "name": "Käppärä-Isomäki (Pori)",
+      "types": {
+        "studio": { "eurPerM2": 957, "sales": 10 },
+        "two_room": { "eurPerM2": 1013, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 894, "sales": 9 },
+        "terraced": { "eurPerM2": 1066, "sales": 6 }
+      }
+    },
+    "28130": {
+      "name": "Impola (Pori)",
+      "types": {
+        "studio": { "eurPerM2": 2264, "sales": 26 },
+        "two_room": { "eurPerM2": 1541, "sales": 69 },
+        "three_room_plus": { "eurPerM2": 1168, "sales": 54 }
+      }
+    },
+    "28190": {
+      "name": "Pormestarinluoto (Pori)",
+      "types": {
+        "studio": { "eurPerM2": 636, "sales": 15 },
+        "two_room": { "eurPerM2": 504, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 597, "sales": 11 },
+        "terraced": { "eurPerM2": 868, "sales": 7 }
+      }
+    },
+    "28200": { "name": "Toejoki (Pori)", "types": { "terraced": { "eurPerM2": 1928, "sales": 27 } } },
+    "28220": { "name": "Ruosniemi (Pori)", "types": { "terraced": { "eurPerM2": 1690, "sales": 32 } } },
+    "28300": { "name": "Kalaholma-Väinölä (Pori)", "types": { "terraced": { "eurPerM2": 1681, "sales": 19 } } },
+    "28330": {
+      "name": "Koivistonluoto (Pori)",
+      "types": { "two_room": { "eurPerM2": 553, "sales": 18 }, "terraced": { "eurPerM2": 1277, "sales": 12 } }
+    },
+    "28360": {
+      "name": "Vanhakoivisto (Pori)",
+      "types": {
+        "two_room": { "eurPerM2": 1169, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 1169, "sales": 12 },
+        "terraced": { "eurPerM2": 1282, "sales": 18 }
+      }
+    },
+    "28370": {
+      "name": "Sampola (Pori)",
+      "types": { "studio": { "eurPerM2": 540, "sales": 13 }, "two_room": { "eurPerM2": 483, "sales": 20 } }
+    },
+    "28400": {
+      "name": "Ulvila Keskus (Ulvila)",
+      "types": { "three_room_plus": { "eurPerM2": 1192, "sales": 11 }, "terraced": { "eurPerM2": 1310, "sales": 28 } }
+    },
+    "28430": { "name": "Kartano-Harmaalinna (Pori)", "types": { "terraced": { "eurPerM2": 1360, "sales": 9 } } },
+    "28450": { "name": "Vanha-Ulvila (Ulvila)", "types": { "terraced": { "eurPerM2": 1011, "sales": 14 } } },
+    "28500": { "name": "Keskussairaala-alue-Tiilimäki (Pori)", "types": { "terraced": { "eurPerM2": 1131, "sales": 7 } } },
+    "28540": { "name": "Pinomäki (Pori)", "types": { "terraced": { "eurPerM2": 1473, "sales": 6 } } },
+    "28600": { "name": "Vähärauma (Pori)", "types": { "terraced": { "eurPerM2": 1858, "sales": 26 } } },
+    "28610": {
+      "name": "Musa-Tiiliruukki (Pori)",
+      "types": {
+        "studio": { "eurPerM2": 752, "sales": 6 },
+        "two_room": { "eurPerM2": 659, "sales": 10 },
+        "terraced": { "eurPerM2": 1449, "sales": 18 }
+      }
+    },
+    "28660": { "name": "Pietniemi-Leppäkorpi (Pori)", "types": { "terraced": { "eurPerM2": 1199, "sales": 23 } } },
+    "28760": { "name": "Kyläsaari (Pori)", "types": { "terraced": { "eurPerM2": 950, "sales": 7 } } },
+    "28800": { "name": "Pihlava (Pori)", "types": { "terraced": { "eurPerM2": 973, "sales": 13 } } },
+    "29100": { "name": "Luvia Keskus (Eurajoki)", "types": { "terraced": { "eurPerM2": 1087, "sales": 6 } } },
+    "29200": { "name": "Harjavalta Keskus (Harjavalta)", "types": { "terraced": { "eurPerM2": 843, "sales": 32 } } },
+    "29250": { "name": "Nakkila Keskus (Nakkila)", "types": { "terraced": { "eurPerM2": 840, "sales": 14 } } },
+    "29600": { "name": "Noormarkku Keskus (Pori)", "types": { "terraced": { "eurPerM2": 976, "sales": 9 } } },
+    "29630": { "name": "Pomarkku Keskus (Pomarkku)", "types": { "terraced": { "eurPerM2": 795, "sales": 7 } } },
+    "29900": { "name": "Merikarvia Keskus-Rannikko (Merikarvia)", "types": { "terraced": { "eurPerM2": 572, "sales": 8 } } },
+    "30100": {
+      "name": "Forssa Keskus (Forssa)",
+      "types": {
+        "studio": { "eurPerM2": 1198, "sales": 29 },
+        "two_room": { "eurPerM2": 960, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 1374, "sales": 22 },
+        "terraced": { "eurPerM2": 1209, "sales": 17 }
+      }
+    },
+    "30300": {
+      "name": "Viksberg (Forssa)",
+      "types": { "two_room": { "eurPerM2": 494, "sales": 12 }, "three_room_plus": { "eurPerM2": 541, "sales": 14 } }
+    },
+    "30420": {
+      "name": "Tölö (Forssa)",
+      "types": {
+        "studio": { "eurPerM2": 1002, "sales": 8 },
+        "two_room": { "eurPerM2": 862, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 990, "sales": 8 }
+      }
+    },
+    "31300": { "name": "Tammela Keskus (Tammela)", "types": { "terraced": { "eurPerM2": 1153, "sales": 16 } } },
+    "31400": {
+      "name": "Somero Keskus (Somero)",
+      "types": {
+        "studio": { "eurPerM2": 947, "sales": 7 },
+        "two_room": { "eurPerM2": 750, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 662, "sales": 16 },
+        "terraced": { "eurPerM2": 881, "sales": 34 }
+      }
+    },
+    "31600": { "name": "Jokioinen Keskus (Jokioinen)", "types": { "terraced": { "eurPerM2": 1103, "sales": 11 } } },
+    "31760": { "name": "Urjala Keskus (Urjala)", "types": { "terraced": { "eurPerM2": 875, "sales": 8 } } },
+    "31900": { "name": "Punkalaidun Keskus (Punkalaidun)", "types": { "terraced": { "eurPerM2": 596, "sales": 10 } } },
+    "32200": {
+      "name": "Loimaa Keskus (Loimaa)",
+      "types": {
+        "studio": { "eurPerM2": 850, "sales": 13 },
+        "two_room": { "eurPerM2": 907, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 1003, "sales": 17 },
+        "terraced": { "eurPerM2": 1195, "sales": 27 }
+      }
+    },
+    "32700": {
+      "name": "Huittinen Keskus (Huittinen)",
+      "types": {
+        "studio": { "eurPerM2": 716, "sales": 8 },
+        "two_room": { "eurPerM2": 746, "sales": 15 },
+        "terraced": { "eurPerM2": 910, "sales": 36 }
+      }
+    },
+    "32740": { "name": "Pehula (Sastamala)", "types": { "terraced": { "eurPerM2": 575, "sales": 7 } } },
+    "32800": { "name": "Kokemäki Keskus (Kokemäki)", "types": { "terraced": { "eurPerM2": 822, "sales": 16 } } },
+    "33100": {
+      "name": "Tampere Keskus (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4256, "sales": 97 },
+        "two_room": { "eurPerM2": 3960, "sales": 157 },
+        "three_room_plus": { "eurPerM2": 3811, "sales": 119 },
+        "terraced": { "eurPerM2": 2600, "sales": 7 }
+      }
+    },
+    "33180": {
+      "name": "Lapinniemi-Käpylä (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 5718, "sales": 8 },
+        "two_room": { "eurPerM2": 5355, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 5389, "sales": 28 }
+      }
+    },
+    "33200": {
+      "name": "Tampere Keskus Läntinen (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4317, "sales": 38 },
+        "two_room": { "eurPerM2": 3701, "sales": 63 },
+        "three_room_plus": { "eurPerM2": 3621, "sales": 63 }
+      }
+    },
+    "33210": {
+      "name": "Itä-Amuri-Tammerkoski (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4266, "sales": 32 },
+        "two_room": { "eurPerM2": 3850, "sales": 50 },
+        "three_room_plus": { "eurPerM2": 3740, "sales": 54 }
+      }
+    },
+    "33230": {
+      "name": "Länsi-Amuri (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4018, "sales": 32 },
+        "two_room": { "eurPerM2": 3758, "sales": 59 },
+        "three_room_plus": { "eurPerM2": 3575, "sales": 55 }
+      }
+    },
+    "33240": {
+      "name": "Tahmela (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2972, "sales": 13 },
+        "two_room": { "eurPerM2": 2954, "sales": 7 },
+        "terraced": { "eurPerM2": 3898, "sales": 18 }
+      }
+    },
+    "33250": {
+      "name": "Pispala (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4200, "sales": 20 },
+        "two_room": { "eurPerM2": 3546, "sales": 13 },
+        "three_room_plus": { "eurPerM2": 3542, "sales": 24 },
+        "terraced": { "eurPerM2": 3392, "sales": 14 }
+      }
+    },
+    "33270": {
+      "name": "Epilä (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2536, "sales": 8 },
+        "two_room": { "eurPerM2": 2592, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 2710, "sales": 29 },
+        "terraced": { "eurPerM2": 2798, "sales": 34 }
+      }
+    },
+    "33300": {
+      "name": "Rahola (Tampere)",
+      "types": {
+        "two_room": { "eurPerM2": 2039, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 2118, "sales": 18 },
+        "terraced": { "eurPerM2": 2654, "sales": 40 }
+      }
+    },
+    "33310": {
+      "name": "Tesoma (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2507, "sales": 10 },
+        "two_room": { "eurPerM2": 1516, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 1360, "sales": 44 },
+        "terraced": { "eurPerM2": 2589, "sales": 15 }
+      }
+    },
+    "33330": {
+      "name": "Myllypuro-Kalkku (Tampere)",
+      "types": { "two_room": { "eurPerM2": 1525, "sales": 11 }, "terraced": { "eurPerM2": 2478, "sales": 11 } }
+    },
+    "33340": {
+      "name": "Haukiluoma-Ikuri (Tampere)",
+      "types": {
+        "two_room": { "eurPerM2": 1960, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1637, "sales": 7 },
+        "terraced": { "eurPerM2": 2538, "sales": 50 }
+      }
+    },
+    "33400": {
+      "name": "Luoteis-Tampere (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 3894, "sales": 42 },
+        "two_room": { "eurPerM2": 3447, "sales": 80 },
+        "three_room_plus": { "eurPerM2": 4006, "sales": 36 },
+        "terraced": { "eurPerM2": 2477, "sales": 33 }
+      }
+    },
+    "33410": {
+      "name": "Lentävänniemi (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2632, "sales": 12 },
+        "two_room": { "eurPerM2": 2303, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 1903, "sales": 43 },
+        "terraced": { "eurPerM2": 2336, "sales": 19 }
+      }
+    },
+    "33420": { "name": "Lamminpää (Tampere)", "types": { "terraced": { "eurPerM2": 2127, "sales": 8 } } },
+    "33430": { "name": "Vuorentausta (Ylöjärvi)", "types": { "terraced": { "eurPerM2": 2203, "sales": 37 } } },
+    "33450": { "name": "Siivikkala (Ylöjärvi)", "types": { "terraced": { "eurPerM2": 2499, "sales": 27 } } },
+    "33470": {
+      "name": "Ylöjärvi Keskus (Ylöjärvi)",
+      "types": {
+        "studio": { "eurPerM2": 2316, "sales": 11 },
+        "two_room": { "eurPerM2": 2449, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 2096, "sales": 13 },
+        "terraced": { "eurPerM2": 2257, "sales": 20 }
+      }
+    },
+    "33480": {
+      "name": "Manninmäki-Haavisto (Ylöjärvi)",
+      "types": { "three_room_plus": { "eurPerM2": 1977, "sales": 9 }, "terraced": { "eurPerM2": 2234, "sales": 61 } }
+    },
+    "33500": {
+      "name": "Osmonmäki-Petsamo (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 3818, "sales": 51 },
+        "two_room": { "eurPerM2": 3425, "sales": 114 },
+        "three_room_plus": { "eurPerM2": 3212, "sales": 56 }
+      }
+    },
+    "33520": { "name": "Keskussairaala-alue-Kauppi (Tampere)", "types": { "two_room": { "eurPerM2": 3055, "sales": 8 } } },
+    "33530": {
+      "name": "Kissanmaa (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2871, "sales": 12 },
+        "two_room": { "eurPerM2": 2738, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 2528, "sales": 19 },
+        "terraced": { "eurPerM2": 3275, "sales": 25 }
+      }
+    },
+    "33540": {
+      "name": "Kaleva (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 4121, "sales": 59 },
+        "two_room": { "eurPerM2": 3451, "sales": 116 },
+        "three_room_plus": { "eurPerM2": 3456, "sales": 99 }
+      }
+    },
+    "33560": {
+      "name": "Takahuhti (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2972, "sales": 13 },
+        "two_room": { "eurPerM2": 2405, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 2428, "sales": 44 },
+        "terraced": { "eurPerM2": 2706, "sales": 47 }
+      }
+    },
+    "33580": {
+      "name": "Atala-Linnainmaa (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2727, "sales": 16 },
+        "two_room": { "eurPerM2": 2632, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 2162, "sales": 34 },
+        "terraced": { "eurPerM2": 2614, "sales": 123 }
+      }
+    },
+    "33610": { "name": "Olkahinen-Tasanne (Tampere)", "types": { "terraced": { "eurPerM2": 2247, "sales": 63 } } },
+    "33700": { "name": "Messukylä (Tampere)", "types": { "terraced": { "eurPerM2": 3074, "sales": 14 } } },
+    "33710": {
+      "name": "Kaukajärvi (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2375, "sales": 24 },
+        "two_room": { "eurPerM2": 1977, "sales": 62 },
+        "three_room_plus": { "eurPerM2": 2121, "sales": 56 },
+        "terraced": { "eurPerM2": 2467, "sales": 109 }
+      }
+    },
+    "33720": {
+      "name": "Hervanta (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2993, "sales": 103 },
+        "two_room": { "eurPerM2": 1999, "sales": 189 },
+        "three_room_plus": { "eurPerM2": 1615, "sales": 125 },
+        "terraced": { "eurPerM2": 2576, "sales": 56 }
+      }
+    },
+    "33730": {
+      "name": "Leinola-Vehmainen (Tampere)",
+      "types": { "three_room_plus": { "eurPerM2": 3474, "sales": 7 }, "terraced": { "eurPerM2": 2920, "sales": 26 } }
+    },
+    "33800": {
+      "name": "Nekala (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2371, "sales": 34 },
+        "two_room": { "eurPerM2": 2408, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 2767, "sales": 11 },
+        "terraced": { "eurPerM2": 3535, "sales": 19 }
+      }
+    },
+    "33820": {
+      "name": "Koivistonkylä (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 3478, "sales": 10 },
+        "two_room": { "eurPerM2": 2207, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 2209, "sales": 16 },
+        "terraced": { "eurPerM2": 2787, "sales": 58 }
+      }
+    },
+    "33840": {
+      "name": "Peltolammi (Tampere)",
+      "types": {
+        "two_room": { "eurPerM2": 1616, "sales": 74 },
+        "three_room_plus": { "eurPerM2": 1389, "sales": 44 },
+        "terraced": { "eurPerM2": 2000, "sales": 13 }
+      }
+    },
+    "33850": {
+      "name": "Multisilta (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 2408, "sales": 8 },
+        "two_room": { "eurPerM2": 1357, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 1157, "sales": 10 }
+      }
+    },
+    "33870": {
+      "name": "Vuores (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 3663, "sales": 37 },
+        "two_room": { "eurPerM2": 3360, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 3393, "sales": 27 },
+        "terraced": { "eurPerM2": 3603, "sales": 64 }
+      }
+    },
+    "33880": {
+      "name": "Höytämö (Lempäälä)",
+      "types": { "two_room": { "eurPerM2": 1472, "sales": 15 }, "terraced": { "eurPerM2": 2185, "sales": 18 } }
+    },
+    "33900": {
+      "name": "Härmälä-Rantaperkiö (Tampere)",
+      "types": {
+        "studio": { "eurPerM2": 3193, "sales": 40 },
+        "two_room": { "eurPerM2": 3551, "sales": 78 },
+        "three_room_plus": { "eurPerM2": 3449, "sales": 59 },
+        "terraced": { "eurPerM2": 3027, "sales": 15 }
+      }
+    },
+    "33950": {
+      "name": "Killo (Pirkkala)",
+      "types": {
+        "studio": { "eurPerM2": 2278, "sales": 39 },
+        "two_room": { "eurPerM2": 2598, "sales": 45 },
+        "three_room_plus": { "eurPerM2": 2693, "sales": 46 },
+        "terraced": { "eurPerM2": 3218, "sales": 47 }
+      }
+    },
+    "33960": {
+      "name": "Suuppa (Pirkkala)",
+      "types": {
+        "studio": { "eurPerM2": 2903, "sales": 16 },
+        "two_room": { "eurPerM2": 3102, "sales": 38 },
+        "three_room_plus": { "eurPerM2": 2449, "sales": 40 },
+        "terraced": { "eurPerM2": 2919, "sales": 98 }
+      }
+    },
+    "34300": { "name": "Kuru Keskus (Ylöjärvi)", "types": { "terraced": { "eurPerM2": 673, "sales": 10 } } },
+    "34600": { "name": "Ruovesi Keskus-Nenonen (Ruovesi)", "types": { "terraced": { "eurPerM2": 765, "sales": 8 } } },
+    "34800": { "name": "Virrat Keskus (Virrat)", "types": { "terraced": { "eurPerM2": 832, "sales": 16 } } },
+    "35100": { "name": "Orivesi Asemanseutu (Orivesi)", "types": { "terraced": { "eurPerM2": 989, "sales": 10 } } },
+    "35300": {
+      "name": "Orivesi Keskus (Orivesi)",
+      "types": {
+        "two_room": { "eurPerM2": 1156, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 1064, "sales": 13 },
+        "terraced": { "eurPerM2": 1165, "sales": 24 }
+      }
+    },
+    "36110": { "name": "Ruutana (Kangasala)", "types": { "terraced": { "eurPerM2": 2288, "sales": 30 } } },
+    "36200": {
+      "name": "Kangasala Keskus (Kangasala)",
+      "types": {
+        "studio": { "eurPerM2": 2063, "sales": 11 },
+        "two_room": { "eurPerM2": 2064, "sales": 41 },
+        "three_room_plus": { "eurPerM2": 2177, "sales": 29 },
+        "terraced": { "eurPerM2": 2254, "sales": 57 }
+      }
+    },
+    "36220": {
+      "name": "Suorama (Kangasala)",
+      "types": {
+        "two_room": { "eurPerM2": 1889, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1496, "sales": 17 },
+        "terraced": { "eurPerM2": 2134, "sales": 20 }
+      }
+    },
+    "36240": {
+      "name": "Nattari (Kangasala)",
+      "types": {
+        "studio": { "eurPerM2": 2403, "sales": 7 },
+        "two_room": { "eurPerM2": 2211, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 1821, "sales": 10 },
+        "terraced": { "eurPerM2": 2677, "sales": 47 }
+      }
+    },
+    "36270": { "name": "Huutijärvi (Kangasala)", "types": { "terraced": { "eurPerM2": 2168, "sales": 8 } } },
+    "36420": { "name": "Sahalahti Keskus (Kangasala)", "types": { "terraced": { "eurPerM2": 949, "sales": 10 } } },
+    "36600": { "name": "Pälkäne Keskus (Pälkäne)", "types": { "terraced": { "eurPerM2": 1601, "sales": 7 } } },
+    "37100": {
+      "name": "Nokia Keskus (Nokia)",
+      "types": {
+        "studio": { "eurPerM2": 2403, "sales": 43 },
+        "two_room": { "eurPerM2": 1902, "sales": 82 },
+        "three_room_plus": { "eurPerM2": 1920, "sales": 50 },
+        "terraced": { "eurPerM2": 2444, "sales": 28 }
+      }
+    },
+    "37120": {
+      "name": "Koskenmäki (Nokia)",
+      "types": {
+        "studio": { "eurPerM2": 1672, "sales": 11 },
+        "two_room": { "eurPerM2": 1428, "sales": 37 },
+        "three_room_plus": { "eurPerM2": 1612, "sales": 12 },
+        "terraced": { "eurPerM2": 2198, "sales": 74 }
+      }
+    },
+    "37130": { "name": "Alhoniitty (Nokia)", "types": { "terraced": { "eurPerM2": 2069, "sales": 36 } } },
+    "37140": { "name": "Harjuniitty (Nokia)", "types": { "terraced": { "eurPerM2": 2882, "sales": 29 } } },
+    "37150": { "name": "Kankaantaka (Nokia)", "types": { "terraced": { "eurPerM2": 2200, "sales": 34 } } },
+    "37470": { "name": "Vesilahti Keskus (Vesilahti)", "types": { "terraced": { "eurPerM2": 2300, "sales": 7 } } },
+    "37500": {
+      "name": "Lempäälä Keskus (Lempäälä)",
+      "types": {
+        "studio": { "eurPerM2": 2088, "sales": 9 },
+        "two_room": { "eurPerM2": 2132, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 2252, "sales": 20 },
+        "terraced": { "eurPerM2": 2224, "sales": 28 }
+      }
+    },
+    "37550": { "name": "Kuivaspää (Lempäälä)", "types": { "terraced": { "eurPerM2": 2729, "sales": 57 } } },
+    "37560": { "name": "Kulju (Lempäälä)", "types": { "terraced": { "eurPerM2": 2844, "sales": 43 } } },
+    "37600": {
+      "name": "Valkeakoski Keskus (Valkeakoski)",
+      "types": {
+        "studio": { "eurPerM2": 856, "sales": 13 },
+        "two_room": { "eurPerM2": 1471, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 1215, "sales": 46 },
+        "terraced": { "eurPerM2": 1174, "sales": 24 }
+      }
+    },
+    "37630": {
+      "name": "Vääräkoivu (Valkeakoski)",
+      "types": {
+        "studio": { "eurPerM2": 1019, "sales": 9 },
+        "two_room": { "eurPerM2": 1081, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 1200, "sales": 34 },
+        "terraced": { "eurPerM2": 1473, "sales": 25 }
+      }
+    },
+    "37800": {
+      "name": "Toijala keskus (Akaa)",
+      "types": {
+        "studio": { "eurPerM2": 1052, "sales": 7 },
+        "two_room": { "eurPerM2": 1136, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 1396, "sales": 27 },
+        "terraced": { "eurPerM2": 1262, "sales": 37 }
+      }
+    },
+    "37830": {
+      "name": "Viiala Keskus (Akaa)",
+      "types": {
+        "studio": { "eurPerM2": 841, "sales": 7 },
+        "two_room": { "eurPerM2": 905, "sales": 7 },
+        "terraced": { "eurPerM2": 1491, "sales": 22 }
+      }
+    },
+    "37910": { "name": "Kylmäkoski Keskus (Akaa)", "types": { "terraced": { "eurPerM2": 862, "sales": 7 } } },
+    "38200": {
+      "name": "Vammala Keskus (Sastamala)",
+      "types": {
+        "studio": { "eurPerM2": 1611, "sales": 16 },
+        "two_room": { "eurPerM2": 1553, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 1408, "sales": 18 },
+        "terraced": { "eurPerM2": 1528, "sales": 17 }
+      }
+    },
+    "38210": { "name": "Vammala Asemanseutu (Sastamala)", "types": { "terraced": { "eurPerM2": 1280, "sales": 10 } } },
+    "38460": { "name": "Mouhijärvi Keskus (Sastamala)", "types": { "terraced": { "eurPerM2": 727, "sales": 12 } } },
+    "38700": {
+      "name": "Kankaanpää Keskus (Kankaanpää)",
+      "types": {
+        "studio": { "eurPerM2": 1009, "sales": 8 },
+        "two_room": { "eurPerM2": 968, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1039, "sales": 6 },
+        "terraced": { "eurPerM2": 978, "sales": 25 }
+      }
+    },
+    "38710": { "name": "Myllymäki (Kankaanpää)", "types": { "terraced": { "eurPerM2": 726, "sales": 9 } } },
+    "39100": { "name": "Hämeenkyrö Keskus (Hämeenkyrö)", "types": { "terraced": { "eurPerM2": 1168, "sales": 14 } } },
+    "39160": { "name": "Julkujärvi (Ylöjärvi)", "types": { "terraced": { "eurPerM2": 2489, "sales": 42 } } },
+    "39200": { "name": "Kyröskoski (Hämeenkyrö)", "types": { "terraced": { "eurPerM2": 1021, "sales": 9 } } },
+    "39500": {
+      "name": "Ikaalinen Keskus (Ikaalinen)",
+      "types": {
+        "studio": { "eurPerM2": 757, "sales": 8 },
+        "two_room": { "eurPerM2": 808, "sales": 9 },
+        "terraced": { "eurPerM2": 767, "sales": 15 }
+      }
+    },
+    "39700": {
+      "name": "Parkano Keskus (Parkano)",
+      "types": { "two_room": { "eurPerM2": 1205, "sales": 13 }, "terraced": { "eurPerM2": 766, "sales": 16 } }
+    },
+    "40100": {
+      "name": "Jyväskylä Keskus (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 3101, "sales": 104 },
+        "two_room": { "eurPerM2": 2716, "sales": 179 },
+        "three_room_plus": { "eurPerM2": 2722, "sales": 116 }
+      }
+    },
+    "40200": {
+      "name": "Mannila-Taulumäki (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2396, "sales": 20 },
+        "two_room": { "eurPerM2": 2172, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 2091, "sales": 16 },
+        "terraced": { "eurPerM2": 2558, "sales": 28 }
+      }
+    },
+    "40250": {
+      "name": "Ritoniemi-Lohikoski (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 1310, "sales": 11 },
+        "two_room": { "eurPerM2": 1314, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 1120, "sales": 28 },
+        "terraced": { "eurPerM2": 1963, "sales": 71 }
+      }
+    },
+    "40270": {
+      "name": "Palokka (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2428, "sales": 6 },
+        "two_room": { "eurPerM2": 1970, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 2885, "sales": 17 },
+        "terraced": { "eurPerM2": 2125, "sales": 85 }
+      }
+    },
+    "40320": {
+      "name": "Seppälän Teollisuusalue (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 1553, "sales": 8 },
+        "two_room": { "eurPerM2": 1546, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 1437, "sales": 12 },
+        "terraced": { "eurPerM2": 2019, "sales": 16 }
+      }
+    },
+    "40340": {
+      "name": "Huhtasuo (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 997, "sales": 39 },
+        "two_room": { "eurPerM2": 640, "sales": 80 },
+        "three_room_plus": { "eurPerM2": 792, "sales": 76 }
+      }
+    },
+    "40400": {
+      "name": "Halssila (Jyväskylä)",
+      "types": {
+        "two_room": { "eurPerM2": 1628, "sales": 6 },
+        "three_room_plus": { "eurPerM2": 1426, "sales": 13 },
+        "terraced": { "eurPerM2": 1531, "sales": 28 }
+      }
+    },
+    "40420": {
+      "name": "Jyskä (Jyväskylä)",
+      "types": { "two_room": { "eurPerM2": 1739, "sales": 19 }, "terraced": { "eurPerM2": 1898, "sales": 46 } }
+    },
+    "40500": {
+      "name": "Keljo-Ristonmaa (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2758, "sales": 16 },
+        "two_room": { "eurPerM2": 2297, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 2305, "sales": 11 },
+        "terraced": { "eurPerM2": 1911, "sales": 21 }
+      }
+    },
+    "40520": {
+      "name": "Kuokkala-Ristikivi (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2400, "sales": 43 },
+        "two_room": { "eurPerM2": 2318, "sales": 61 },
+        "three_room_plus": { "eurPerM2": 2218, "sales": 68 },
+        "terraced": { "eurPerM2": 2105, "sales": 69 }
+      }
+    },
+    "40530": { "name": "Keljonkangas (Jyväskylä)", "types": { "terraced": { "eurPerM2": 2225, "sales": 23 } } },
+    "40600": {
+      "name": "Mattilanpelto (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2964, "sales": 6 },
+        "two_room": { "eurPerM2": 1914, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 1884, "sales": 9 },
+        "terraced": { "eurPerM2": 1786, "sales": 9 }
+      }
+    },
+    "40630": { "name": "Kypärämäki (Jyväskylä)", "types": { "two_room": { "eurPerM2": 1857, "sales": 9 } } },
+    "40640": {
+      "name": "Keltinmäki (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 886, "sales": 10 },
+        "two_room": { "eurPerM2": 924, "sales": 30 },
+        "three_room_plus": { "eurPerM2": 853, "sales": 28 },
+        "terraced": { "eurPerM2": 1190, "sales": 8 }
+      }
+    },
+    "40700": {
+      "name": "Mäki-Matti (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2869, "sales": 33 },
+        "two_room": { "eurPerM2": 2161, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 2501, "sales": 22 }
+      }
+    },
+    "40720": {
+      "name": "Nisula (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 2871, "sales": 11 },
+        "two_room": { "eurPerM2": 1966, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 2365, "sales": 13 },
+        "terraced": { "eurPerM2": 2171, "sales": 11 }
+      }
+    },
+    "40740": {
+      "name": "Kortepohja (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 1798, "sales": 11 },
+        "two_room": { "eurPerM2": 1387, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 1356, "sales": 29 },
+        "terraced": { "eurPerM2": 2331, "sales": 16 }
+      }
+    },
+    "40800": {
+      "name": "Vaajakoski (Jyväskylä)",
+      "types": {
+        "studio": { "eurPerM2": 1817, "sales": 16 },
+        "two_room": { "eurPerM2": 1166, "sales": 30 },
+        "three_room_plus": { "eurPerM2": 1245, "sales": 20 },
+        "terraced": { "eurPerM2": 1772, "sales": 28 }
+      }
+    },
+    "40900": {
+      "name": "Säynätsalo (Jyväskylä)",
+      "types": { "two_room": { "eurPerM2": 609, "sales": 37 }, "terraced": { "eurPerM2": 1704, "sales": 7 } }
+    },
+    "40930": { "name": "Kinkomaa (Muurame)", "types": { "terraced": { "eurPerM2": 1955, "sales": 6 } } },
+    "40950": {
+      "name": "Muurame Keskus (Muurame)",
+      "types": {
+        "studio": { "eurPerM2": 953, "sales": 10 },
+        "two_room": { "eurPerM2": 819, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 980, "sales": 11 },
+        "terraced": { "eurPerM2": 1704, "sales": 16 }
+      }
+    },
+    "41160": { "name": "Tikkakoski (Jyväskylä)", "types": { "terraced": { "eurPerM2": 1426, "sales": 19 } } },
+    "41310": { "name": "Leppävesi (Laukaa)", "types": { "terraced": { "eurPerM2": 1788, "sales": 7 } } },
+    "41340": {
+      "name": "Laukaa Keskus (Laukaa)",
+      "types": {
+        "studio": { "eurPerM2": 963, "sales": 7 },
+        "two_room": { "eurPerM2": 1631, "sales": 10 },
+        "terraced": { "eurPerM2": 1386, "sales": 21 }
+      }
+    },
+    "41660": { "name": "Toivakka Keskus (Toivakka)", "types": { "terraced": { "eurPerM2": 799, "sales": 13 } } },
+    "41800": { "name": "Korpilahti Keskus (Jyväskylä)", "types": { "terraced": { "eurPerM2": 836, "sales": 57 } } },
+    "41900": { "name": "Petäjävesi Keskus (Petäjävesi)", "types": { "terraced": { "eurPerM2": 757, "sales": 7 } } },
+    "42100": {
+      "name": "Jämsä Keskus (Jämsä)",
+      "types": {
+        "studio": { "eurPerM2": 871, "sales": 12 },
+        "two_room": { "eurPerM2": 781, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 1060, "sales": 15 },
+        "terraced": { "eurPerM2": 804, "sales": 27 }
+      }
+    },
+    "42300": { "name": "Jämsänkoski Keskus (Jämsä)", "types": { "terraced": { "eurPerM2": 654, "sales": 13 } } },
+    "42700": {
+      "name": "Keuruu Keskus (Keuruu)",
+      "types": {
+        "studio": { "eurPerM2": 618, "sales": 31 },
+        "two_room": { "eurPerM2": 658, "sales": 37 },
+        "three_room_plus": { "eurPerM2": 450, "sales": 27 },
+        "terraced": { "eurPerM2": 1001, "sales": 14 }
+      }
+    },
+    "43100": {
+      "name": "Saarijärvi Keskus (Saarijärvi)",
+      "types": {
+        "two_room": { "eurPerM2": 856, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 911, "sales": 7 },
+        "terraced": { "eurPerM2": 944, "sales": 15 }
+      }
+    },
+    "43500": { "name": "Karstula Keskus (Karstula)", "types": { "terraced": { "eurPerM2": 719, "sales": 11 } } },
+    "44100": {
+      "name": "Äänekoski Keskus (Äänekoski)",
+      "types": {
+        "studio": { "eurPerM2": 744, "sales": 10 },
+        "two_room": { "eurPerM2": 948, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 934, "sales": 18 },
+        "terraced": { "eurPerM2": 1161, "sales": 9 }
+      }
+    },
+    "44150": { "name": "Likolahti-Karhunlähde (Äänekoski)", "types": { "terraced": { "eurPerM2": 726, "sales": 10 } } },
+    "44200": { "name": "Suolahti Keskus (Äänekoski)", "types": { "terraced": { "eurPerM2": 817, "sales": 10 } } },
+    "44500": { "name": "Viitasaari Keskus (Viitasaari)", "types": { "two_room": { "eurPerM2": 514, "sales": 7 } } },
+    "45100": {
+      "name": "Kouvola Keskus (Kouvola)",
+      "types": {
+        "studio": { "eurPerM2": 1523, "sales": 16 },
+        "two_room": { "eurPerM2": 1330, "sales": 68 },
+        "three_room_plus": { "eurPerM2": 1537, "sales": 47 },
+        "terraced": { "eurPerM2": 1431, "sales": 17 }
+      }
+    },
+    "45120": { "name": "Kotkankallio-Vahteronmäki (Kouvola)", "types": { "terraced": { "eurPerM2": 1476, "sales": 12 } } },
+    "45130": { "name": "Korjala-Kaunisnurmi (Kouvola)", "types": { "two_room": { "eurPerM2": 864, "sales": 10 } } },
+    "45150": { "name": "Kankaronmäki-Eskolanmäki (Kouvola)", "types": { "terraced": { "eurPerM2": 939, "sales": 15 } } },
+    "45160": {
+      "name": "Lehtomäki (Kouvola)",
+      "types": {
+        "two_room": { "eurPerM2": 608, "sales": 12 },
+        "three_room_plus": { "eurPerM2": 651, "sales": 12 },
+        "terraced": { "eurPerM2": 1275, "sales": 23 }
+      }
+    },
+    "45200": {
+      "name": "Tornionmäki (Kouvola)",
+      "types": {
+        "studio": { "eurPerM2": 888, "sales": 16 },
+        "two_room": { "eurPerM2": 814, "sales": 37 },
+        "three_room_plus": { "eurPerM2": 880, "sales": 20 },
+        "terraced": { "eurPerM2": 1024, "sales": 14 }
+      }
+    },
+    "45360": { "name": "Kukkuramäki (Kouvola)", "types": { "terraced": { "eurPerM2": 1302, "sales": 32 } } },
+    "45370": { "name": "Valkeala kk (Kouvola)", "types": { "terraced": { "eurPerM2": 1157, "sales": 11 } } },
+    "45610": { "name": "Koria (Kouvola)", "types": { "terraced": { "eurPerM2": 880, "sales": 43 } } },
+    "45700": {
+      "name": "Kuusankoski Keskus (Kouvola)",
+      "types": {
+        "studio": { "eurPerM2": 580, "sales": 20 },
+        "two_room": { "eurPerM2": 831, "sales": 92 },
+        "three_room_plus": { "eurPerM2": 1145, "sales": 28 },
+        "terraced": { "eurPerM2": 1149, "sales": 28 }
+      }
+    },
+    "45740": { "name": "Maunuksela (Kouvola)", "types": { "terraced": { "eurPerM2": 903, "sales": 8 } } },
+    "46800": { "name": "Myllykoski (Kouvola)", "types": { "terraced": { "eurPerM2": 758, "sales": 9 } } },
+    "46910": { "name": "Anjala (Kouvola)", "types": { "terraced": { "eurPerM2": 680, "sales": 8 } } },
+    "47400": { "name": "Kausala (Iitti)", "types": { "terraced": { "eurPerM2": 810, "sales": 23 } } },
+    "48100": {
+      "name": "Kotkansaari (Kotka)",
+      "types": {
+        "studio": { "eurPerM2": 1526, "sales": 53 },
+        "two_room": { "eurPerM2": 1455, "sales": 133 },
+        "three_room_plus": { "eurPerM2": 1468, "sales": 89 }
+      }
+    },
+    "48200": {
+      "name": "Hovinsaari (Kotka)",
+      "types": { "studio": { "eurPerM2": 777, "sales": 8 }, "two_room": { "eurPerM2": 821, "sales": 18 } }
+    },
+    "48310": { "name": "Mussalo (Kotka)", "types": { "terraced": { "eurPerM2": 1995, "sales": 44 } } },
+    "48350": {
+      "name": "Karhuvuori (Kotka)",
+      "types": { "studio": { "eurPerM2": 632, "sales": 17 }, "two_room": { "eurPerM2": 459, "sales": 39 } }
+    },
+    "48400": { "name": "Sutela (Kotka)", "types": { "terraced": { "eurPerM2": 1104, "sales": 33 } } },
+    "48410": { "name": "Kaukola (Kotka)", "types": { "terraced": { "eurPerM2": 1289, "sales": 6 } } },
+    "48600": {
+      "name": "Karhula (Kotka)",
+      "types": {
+        "studio": { "eurPerM2": 812, "sales": 26 },
+        "two_room": { "eurPerM2": 935, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 1050, "sales": 29 },
+        "terraced": { "eurPerM2": 1024, "sales": 27 }
+      }
+    },
+    "48700": {
+      "name": "Kyminlinna (Kotka)",
+      "types": { "two_room": { "eurPerM2": 629, "sales": 19 }, "terraced": { "eurPerM2": 1115, "sales": 6 } }
+    },
+    "48710": { "name": "Koivula (Kotka)", "types": { "terraced": { "eurPerM2": 1094, "sales": 6 } } },
+    "48770": { "name": "Ristinkallio (Kotka)", "types": { "terraced": { "eurPerM2": 1061, "sales": 12 } } },
+    "48800": { "name": "Otsola-Mäntykangas (Kotka)", "types": { "terraced": { "eurPerM2": 1394, "sales": 11 } } },
+    "48900": {
+      "name": "Sunila (Kotka)",
+      "types": { "studio": { "eurPerM2": 666, "sales": 7 }, "two_room": { "eurPerM2": 621, "sales": 13 } }
+    },
+    "49210": { "name": "Huutjärvi (Pyhtää)", "types": { "terraced": { "eurPerM2": 1025, "sales": 7 } } },
+    "49220": { "name": "Siltakylä (Pyhtää)", "types": { "terraced": { "eurPerM2": 1722, "sales": 6 } } },
+    "49400": {
+      "name": "Hamina Keskus (Hamina)",
+      "types": {
+        "studio": { "eurPerM2": 1262, "sales": 14 },
+        "two_room": { "eurPerM2": 1248, "sales": 29 },
+        "three_room_plus": { "eurPerM2": 1317, "sales": 22 },
+        "terraced": { "eurPerM2": 1389, "sales": 39 }
+      }
+    },
+    "49420": { "name": "Uusi-Summa (Hamina)", "types": { "terraced": { "eurPerM2": 779, "sales": 10 } } },
+    "49460": { "name": "Hillo (Hamina)", "types": { "two_room": { "eurPerM2": 533, "sales": 9 } } },
+    "50100": {
+      "name": "Mikkeli Keskus (Mikkeli)",
+      "types": {
+        "studio": { "eurPerM2": 1721, "sales": 47 },
+        "two_room": { "eurPerM2": 1690, "sales": 94 },
+        "three_room_plus": { "eurPerM2": 1528, "sales": 52 },
+        "terraced": { "eurPerM2": 1609, "sales": 28 }
+      }
+    },
+    "50120": { "name": "Siekkilä (Mikkeli)", "types": { "two_room": { "eurPerM2": 760, "sales": 11 } } },
+    "50130": {
+      "name": "Nuijamies (Mikkeli)",
+      "types": {
+        "two_room": { "eurPerM2": 1675, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 1590, "sales": 7 },
+        "terraced": { "eurPerM2": 2071, "sales": 14 }
+      }
+    },
+    "50160": {
+      "name": "Kattilansilta (Mikkeli)",
+      "types": { "two_room": { "eurPerM2": 591, "sales": 12 }, "three_room_plus": { "eurPerM2": 515, "sales": 12 } }
+    },
+    "50170": {
+      "name": "Peitsari (Mikkeli)",
+      "types": {
+        "two_room": { "eurPerM2": 1147, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 960, "sales": 9 },
+        "terraced": { "eurPerM2": 1211, "sales": 29 }
+      }
+    },
+    "50190": {
+      "name": "Tuppurala (Mikkeli)",
+      "types": {
+        "two_room": { "eurPerM2": 1934, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 1431, "sales": 16 },
+        "terraced": { "eurPerM2": 1133, "sales": 11 }
+      }
+    },
+    "50500": { "name": "Tuukkala-Kaituenmäki (Mikkeli)", "types": { "terraced": { "eurPerM2": 1216, "sales": 6 } } },
+    "50600": { "name": "Karikko (Mikkeli)", "types": { "terraced": { "eurPerM2": 1678, "sales": 20 } } },
+    "50700": { "name": "Syysjärvi (Mikkeli)", "types": { "terraced": { "eurPerM2": 2945, "sales": 9 } } },
+    "50970": { "name": "Ihastjärvi (Mikkeli)", "types": { "terraced": { "eurPerM2": 2188, "sales": 7 } } },
+    "51200": {
+      "name": "Kangasniemi Keskus (Kangasniemi)",
+      "types": { "studio": { "eurPerM2": 525, "sales": 9 }, "terraced": { "eurPerM2": 759, "sales": 12 } }
+    },
+    "51900": { "name": "Juva Keskus (Juva)", "types": { "terraced": { "eurPerM2": 642, "sales": 27 } } },
+    "52200": { "name": "Puumala Keskus (Puumala)", "types": { "terraced": { "eurPerM2": 1080, "sales": 10 } } },
+    "52300": { "name": "Ristiina Keskus (Mikkeli)", "types": { "terraced": { "eurPerM2": 1017, "sales": 14 } } },
+    "52550": { "name": "Hirvensalmi Keskus (Hirvensalmi)", "types": { "terraced": { "eurPerM2": 720, "sales": 11 } } },
+    "52700": {
+      "name": "Mäntyharju Keskus (Mäntyharju)",
+      "types": {
+        "studio": { "eurPerM2": 587, "sales": 9 },
+        "two_room": { "eurPerM2": 884, "sales": 10 },
+        "terraced": { "eurPerM2": 563, "sales": 34 }
+      }
+    },
+    "53100": {
+      "name": "Lappeenranta keskus (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 2480, "sales": 62 },
+        "two_room": { "eurPerM2": 1975, "sales": 94 },
+        "three_room_plus": { "eurPerM2": 2100, "sales": 60 },
+        "terraced": { "eurPerM2": 2157, "sales": 18 }
+      }
+    },
+    "53200": { "name": "Kaukas-Tirilä (Lappeenranta)", "types": { "two_room": { "eurPerM2": 1567, "sales": 13 } } },
+    "53300": {
+      "name": "Lauritsala-Mälkiä (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 965, "sales": 10 },
+        "two_room": { "eurPerM2": 838, "sales": 16 },
+        "terraced": { "eurPerM2": 1555, "sales": 22 }
+      }
+    },
+    "53500": { "name": "Parkkarila-Harapainen-Reijola (Lappeenranta)", "types": { "terraced": { "eurPerM2": 1899, "sales": 9 } } },
+    "53550": { "name": "Kourulanmäki (Lappeenranta)", "types": { "terraced": { "eurPerM2": 2091, "sales": 17 } } },
+    "53600": {
+      "name": "Kesämäki (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 2430, "sales": 6 },
+        "two_room": { "eurPerM2": 2208, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 2095, "sales": 16 }
+      }
+    },
+    "53810": {
+      "name": "Kuusimäki-Lavola (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 1334, "sales": 9 },
+        "two_room": { "eurPerM2": 963, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 964, "sales": 17 },
+        "terraced": { "eurPerM2": 1328, "sales": 19 }
+      }
+    },
+    "53850": {
+      "name": "Skinnarila (Lappeenranta)",
+      "types": {
+        "two_room": { "eurPerM2": 1024, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 914, "sales": 9 },
+        "terraced": { "eurPerM2": 1653, "sales": 35 }
+      }
+    },
+    "53900": {
+      "name": "Pallo-Tysterniemi-Leiri (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 1724, "sales": 11 },
+        "two_room": { "eurPerM2": 2794, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 3255, "sales": 23 }
+      }
+    },
+    "53920": {
+      "name": "Voisalmi (Lappeenranta)",
+      "types": {
+        "studio": { "eurPerM2": 1066, "sales": 8 },
+        "two_room": { "eurPerM2": 968, "sales": 17 },
+        "terraced": { "eurPerM2": 2020, "sales": 8 }
+      }
+    },
+    "53950": { "name": "Kivisalmi (Lappeenranta)", "types": { "two_room": { "eurPerM2": 665, "sales": 10 } } },
+    "54100": {
+      "name": "Joutseno Keskus (Lappeenranta)",
+      "types": { "two_room": { "eurPerM2": 798, "sales": 11 }, "terraced": { "eurPerM2": 746, "sales": 10 } }
+    },
+    "54500": {
+      "name": "Taavetti-Somerharju (Luumäki)",
+      "types": { "two_room": { "eurPerM2": 457, "sales": 10 }, "terraced": { "eurPerM2": 717, "sales": 13 } }
+    },
+    "54800": { "name": "Savitaipale Keskus (Savitaipale)", "types": { "terraced": { "eurPerM2": 780, "sales": 8 } } },
+    "54915": { "name": "Saimaanharju-Kyläniemi (Taipalsaari)", "types": { "terraced": { "eurPerM2": 1183, "sales": 10 } } },
+    "55100": {
+      "name": "Imatra Keskus (Imatra)",
+      "types": {
+        "studio": { "eurPerM2": 687, "sales": 8 },
+        "two_room": { "eurPerM2": 724, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 730, "sales": 14 },
+        "terraced": { "eurPerM2": 798, "sales": 15 }
+      }
+    },
+    "55120": {
+      "name": "Mansikkala-Tuulikallio (Imatra)",
+      "types": { "two_room": { "eurPerM2": 378, "sales": 11 }, "terraced": { "eurPerM2": 937, "sales": 8 } }
+    },
+    "57100": {
+      "name": "Heikinpohja-Piispanmäki (Savonlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1391, "sales": 23 },
+        "two_room": { "eurPerM2": 1402, "sales": 55 },
+        "three_room_plus": { "eurPerM2": 1637, "sales": 26 }
+      }
+    },
+    "57130": {
+      "name": "Savonlinna Keskus (Savonlinna)",
+      "types": {
+        "studio": { "eurPerM2": 1473, "sales": 14 },
+        "two_room": { "eurPerM2": 1626, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 1929, "sales": 16 }
+      }
+    },
+    "57170": {
+      "name": "Sortteerinlahti-Talvisalo (Savonlinna)",
+      "types": {
+        "studio": { "eurPerM2": 713, "sales": 8 },
+        "two_room": { "eurPerM2": 798, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 962, "sales": 11 }
+      }
+    },
+    "57200": {
+      "name": "Miekonniemi-Venäjänniemi (Savonlinna)",
+      "types": { "three_room_plus": { "eurPerM2": 554, "sales": 7 }, "terraced": { "eurPerM2": 1126, "sales": 10 } }
+    },
+    "57210": { "name": "Nojanmaa (Savonlinna)", "types": { "two_room": { "eurPerM2": 554, "sales": 7 } } },
+    "57230": { "name": "Inkerinkylä (Savonlinna)", "types": { "terraced": { "eurPerM2": 720, "sales": 10 } } },
+    "57710": { "name": "Kellarpelto-Rantakoivikko (Savonlinna)", "types": { "terraced": { "eurPerM2": 791, "sales": 15 } } },
+    "58200": { "name": "Kerimäki Keskus (Savonlinna)", "types": { "terraced": { "eurPerM2": 452, "sales": 16 } } },
+    "58500": { "name": "Punkasalmi (Savonlinna)", "types": { "terraced": { "eurPerM2": 453, "sales": 9 } } },
+    "58700": { "name": "Sulkava Keskus (Sulkava)", "types": { "terraced": { "eurPerM2": 428, "sales": 8 } } },
+    "58900": { "name": "Rantasalmi Keskus (Rantasalmi)", "types": { "terraced": { "eurPerM2": 556, "sales": 10 } } },
+    "59100": { "name": "Parikkala Keskus (Parikkala)", "types": { "terraced": { "eurPerM2": 561, "sales": 10 } } },
+    "59800": { "name": "Kesälahti Keskus (Kitee)", "types": { "terraced": { "eurPerM2": 356, "sales": 12 } } },
+    "60100": {
+      "name": "Seinäjoki Keskus (Seinäjoki)",
+      "types": {
+        "studio": { "eurPerM2": 2870, "sales": 57 },
+        "two_room": { "eurPerM2": 2222, "sales": 97 },
+        "three_room_plus": { "eurPerM2": 1930, "sales": 76 },
+        "terraced": { "eurPerM2": 1785, "sales": 27 }
+      }
+    },
+    "60120": {
+      "name": "Pohja (Seinäjoki)",
+      "types": {
+        "studio": { "eurPerM2": 2552, "sales": 6 },
+        "two_room": { "eurPerM2": 2365, "sales": 7 },
+        "terraced": { "eurPerM2": 1572, "sales": 12 }
+      }
+    },
+    "60150": {
+      "name": "Kasperi (Seinäjoki)",
+      "types": {
+        "two_room": { "eurPerM2": 1139, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 676, "sales": 8 },
+        "terraced": { "eurPerM2": 1690, "sales": 23 }
+      }
+    },
+    "60200": {
+      "name": "Törnävä (Seinäjoki)",
+      "types": {
+        "studio": { "eurPerM2": 2726, "sales": 6 },
+        "two_room": { "eurPerM2": 2142, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 1950, "sales": 18 },
+        "terraced": { "eurPerM2": 2088, "sales": 104 }
+      }
+    },
+    "60220": {
+      "name": "Huhtala (Seinäjoki)",
+      "types": { "two_room": { "eurPerM2": 1345, "sales": 9 }, "terraced": { "eurPerM2": 1427, "sales": 13 } }
+    },
+    "60320": { "name": "Alakylä-Jouppi (Seinäjoki)", "types": { "terraced": { "eurPerM2": 1843, "sales": 60 } } },
+    "60510": {
+      "name": "Hyllykallio (Seinäjoki)",
+      "types": {
+        "two_room": { "eurPerM2": 2017, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 2229, "sales": 10 },
+        "terraced": { "eurPerM2": 2071, "sales": 131 }
+      }
+    },
+    "60550": { "name": "Nurmo Keskus (Seinäjoki)", "types": { "terraced": { "eurPerM2": 2101, "sales": 13 } } },
+    "60720": { "name": "Tuomikylä (Ilmajoki)", "types": { "terraced": { "eurPerM2": 2353, "sales": 13 } } },
+    "60800": { "name": "Ilmajoki Keskus (Ilmajoki)", "types": { "terraced": { "eurPerM2": 1425, "sales": 33 } } },
+    "61100": { "name": "Peräseinäjoki Keskus (Seinäjoki)", "types": { "terraced": { "eurPerM2": 977, "sales": 13 } } },
+    "61300": { "name": "Kurikka Keskus (Kurikka)", "types": { "terraced": { "eurPerM2": 1102, "sales": 28 } } },
+    "61400": { "name": "Ylistaro Keskus (Seinäjoki)", "types": { "terraced": { "eurPerM2": 995, "sales": 10 } } },
+    "61500": { "name": "Isokyrö Keskus (Isokyrö)", "types": { "terraced": { "eurPerM2": 1040, "sales": 8 } } },
+    "61600": { "name": "Jalasjärvi Keskus (Kurikka)", "types": { "terraced": { "eurPerM2": 893, "sales": 21 } } },
+    "61800": { "name": "Kauhajoki Keskus (Kauhajoki)", "types": { "terraced": { "eurPerM2": 1034, "sales": 33 } } },
+    "62100": {
+      "name": "Lapua Keskus (Lapua)",
+      "types": {
+        "two_room": { "eurPerM2": 1115, "sales": 12 },
+        "three_room_plus": { "eurPerM2": 1220, "sales": 8 },
+        "terraced": { "eurPerM2": 1488, "sales": 39 }
+      }
+    },
+    "62200": { "name": "Kauhava Keskus (Kauhava)", "types": { "terraced": { "eurPerM2": 1101, "sales": 18 } } },
+    "62900": { "name": "Alajärvi Keskus (Alajärvi)", "types": { "terraced": { "eurPerM2": 1571, "sales": 14 } } },
+    "63100": { "name": "Kuortane Keskus (Kuortane)", "types": { "terraced": { "eurPerM2": 851, "sales": 6 } } },
+    "63300": { "name": "Alavus Keskus (Alavus)", "types": { "terraced": { "eurPerM2": 1070, "sales": 22 } } },
+    "63700": { "name": "Ähtäri Keskus (Ähtäri)", "types": { "terraced": { "eurPerM2": 940, "sales": 15 } } },
+    "64100": { "name": "Kristiinankaupunki keskus (Kristiinankaupunki)", "types": { "terraced": { "eurPerM2": 721, "sales": 15 } } },
+    "64200": {
+      "name": "Närpiö Keskus (Närpiö)",
+      "types": {
+        "studio": { "eurPerM2": 1240, "sales": 9 },
+        "two_room": { "eurPerM2": 1100, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 1506, "sales": 9 }
+      }
+    },
+    "64260": { "name": "Kaskinen (Kaskinen)", "types": { "two_room": { "eurPerM2": 527, "sales": 11 } } },
+    "65100": {
+      "name": "Vaasa Keskus (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 2986, "sales": 129 },
+        "two_room": { "eurPerM2": 2463, "sales": 198 },
+        "three_room_plus": { "eurPerM2": 2329, "sales": 184 },
+        "terraced": { "eurPerM2": 2025, "sales": 8 }
+      }
+    },
+    "65200": {
+      "name": "Palosaari (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 2425, "sales": 25 },
+        "two_room": { "eurPerM2": 1865, "sales": 56 },
+        "three_room_plus": { "eurPerM2": 1736, "sales": 36 }
+      }
+    },
+    "65230": {
+      "name": "Vetokannas (Vaasa)",
+      "types": {
+        "two_room": { "eurPerM2": 1146, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1455, "sales": 10 },
+        "terraced": { "eurPerM2": 1673, "sales": 21 }
+      }
+    },
+    "65280": { "name": "Gerby (Vaasa)", "types": { "terraced": { "eurPerM2": 1819, "sales": 54 } } },
+    "65300": { "name": "Asevelikylä (Vaasa)", "types": { "terraced": { "eurPerM2": 2430, "sales": 38 } } },
+    "65320": {
+      "name": "Huutoniemi (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 1391, "sales": 14 },
+        "two_room": { "eurPerM2": 1268, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 1058, "sales": 26 },
+        "terraced": { "eurPerM2": 1596, "sales": 33 }
+      }
+    },
+    "65350": {
+      "name": "Suvilahti (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 1796, "sales": 10 },
+        "two_room": { "eurPerM2": 1039, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 1087, "sales": 29 }
+      }
+    },
+    "65370": {
+      "name": "Ristinummi (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 934, "sales": 18 },
+        "two_room": { "eurPerM2": 727, "sales": 75 },
+        "three_room_plus": { "eurPerM2": 739, "sales": 30 },
+        "terraced": { "eurPerM2": 749, "sales": 7 }
+      }
+    },
+    "65380": {
+      "name": "Vanha Vaasa (Vaasa)",
+      "types": {
+        "studio": { "eurPerM2": 1043, "sales": 6 },
+        "two_room": { "eurPerM2": 935, "sales": 8 },
+        "three_room_plus": { "eurPerM2": 1057, "sales": 9 },
+        "terraced": { "eurPerM2": 1458, "sales": 11 }
+      }
+    },
+    "65410": { "name": "Sundom (Vaasa)", "types": { "terraced": { "eurPerM2": 2253, "sales": 9 } } },
+    "65450": { "name": "Sulva (Mustasaari)", "types": { "terraced": { "eurPerM2": 1670, "sales": 6 } } },
+    "65520": { "name": "Helsingby (Mustasaari)", "types": { "terraced": { "eurPerM2": 1801, "sales": 6 } } },
+    "65610": {
+      "name": "Mustasaari Keskus (Mustasaari)",
+      "types": {
+        "two_room": { "eurPerM2": 1325, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1982, "sales": 15 },
+        "terraced": { "eurPerM2": 1825, "sales": 58 }
+      }
+    },
+    "65630": { "name": "Karperö (Mustasaari)", "types": { "terraced": { "eurPerM2": 1781, "sales": 9 } } },
+    "66100": { "name": "Maalahti (Maalahti)", "types": { "terraced": { "eurPerM2": 1749, "sales": 11 } } },
+    "66400": { "name": "Laihia Keskus (Laihia)", "types": { "terraced": { "eurPerM2": 1414, "sales": 26 } } },
+    "66900": {
+      "name": "Uusikaarlepyy Keskus (Uusikaarlepyy)",
+      "types": {
+        "studio": { "eurPerM2": 812, "sales": 6 },
+        "two_room": { "eurPerM2": 1351, "sales": 7 },
+        "three_room_plus": { "eurPerM2": 1685, "sales": 6 },
+        "terraced": { "eurPerM2": 1542, "sales": 9 }
+      }
+    },
+    "67100": {
+      "name": "Kokkola Keskus (Kokkola)",
+      "types": {
+        "studio": { "eurPerM2": 2493, "sales": 33 },
+        "two_room": { "eurPerM2": 1704, "sales": 81 },
+        "three_room_plus": { "eurPerM2": 1942, "sales": 59 },
+        "terraced": { "eurPerM2": 1622, "sales": 35 }
+      }
+    },
+    "67200": {
+      "name": "Kiviniitty-Tullimäki (Kokkola)",
+      "types": {
+        "studio": { "eurPerM2": 2419, "sales": 6 },
+        "two_room": { "eurPerM2": 1706, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 1660, "sales": 20 },
+        "terraced": { "eurPerM2": 1892, "sales": 15 }
+      }
+    },
+    "67300": { "name": "Halkokari (Kokkola)", "types": { "terraced": { "eurPerM2": 2354, "sales": 44 } } },
+    "67400": { "name": "Rytimäki (Kokkola)", "types": { "terraced": { "eurPerM2": 2116, "sales": 23 } } },
+    "67700": { "name": "Kirkonmäki-Isokylä (Kokkola)", "types": { "terraced": { "eurPerM2": 1899, "sales": 24 } } },
+    "67800": {
+      "name": "Koivuhaka (Kokkola)",
+      "types": {
+        "two_room": { "eurPerM2": 793, "sales": 8 },
+        "three_room_plus": { "eurPerM2": 706, "sales": 9 },
+        "terraced": { "eurPerM2": 1143, "sales": 9 }
+      }
+    },
+    "68300": { "name": "Kälviä Keskus (Kokkola)", "types": { "terraced": { "eurPerM2": 1189, "sales": 9 } } },
+    "68570": { "name": "Luoto (Luoto)", "types": { "terraced": { "eurPerM2": 2086, "sales": 6 } } },
+    "68600": {
+      "name": "Pietarsaari Keskus (Pietarsaari)",
+      "types": {
+        "studio": { "eurPerM2": 1354, "sales": 15 },
+        "two_room": { "eurPerM2": 1525, "sales": 29 },
+        "three_room_plus": { "eurPerM2": 1362, "sales": 28 },
+        "terraced": { "eurPerM2": 1045, "sales": 19 }
+      }
+    },
+    "68620": {
+      "name": "Skutnäs-Västermalm (Pietarsaari)",
+      "types": {
+        "two_room": { "eurPerM2": 1035, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 996, "sales": 15 },
+        "terraced": { "eurPerM2": 1489, "sales": 9 }
+      }
+    },
+    "68630": { "name": "Kyrkostrand (Pietarsaari)", "types": { "terraced": { "eurPerM2": 1348, "sales": 13 } } },
+    "68660": {
+      "name": "Östermalm-Björnholmen (Pietarsaari)",
+      "types": {
+        "studio": { "eurPerM2": 834, "sales": 9 },
+        "two_room": { "eurPerM2": 694, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 763, "sales": 8 }
+      }
+    },
+    "69100": { "name": "Kannus Keskus (Kannus)", "types": { "terraced": { "eurPerM2": 989, "sales": 20 } } },
+    "69600": { "name": "Kaustinen Keskus (Kaustinen)", "types": { "terraced": { "eurPerM2": 921, "sales": 9 } } },
+    "70100": {
+      "name": "Kuopio Keskus (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 2974, "sales": 55 },
+        "two_room": { "eurPerM2": 2513, "sales": 123 },
+        "three_room_plus": { "eurPerM2": 2698, "sales": 88 },
+        "terraced": { "eurPerM2": 2769, "sales": 13 }
+      }
+    },
+    "70110": {
+      "name": "Etu-Niirala (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 3130, "sales": 33 },
+        "two_room": { "eurPerM2": 2557, "sales": 64 },
+        "three_room_plus": { "eurPerM2": 2466, "sales": 38 }
+      }
+    },
+    "70150": {
+      "name": "Neulamäki (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 1271, "sales": 8 },
+        "two_room": { "eurPerM2": 1057, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 1231, "sales": 6 },
+        "terraced": { "eurPerM2": 1613, "sales": 16 }
+      }
+    },
+    "70200": {
+      "name": "Puijonlaakso (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 2880, "sales": 13 },
+        "two_room": { "eurPerM2": 2267, "sales": 56 },
+        "three_room_plus": { "eurPerM2": 1748, "sales": 64 },
+        "terraced": { "eurPerM2": 1540, "sales": 9 }
+      }
+    },
+    "70260": { "name": "Julkula (Kuopio)", "types": { "terraced": { "eurPerM2": 1582, "sales": 38 } } },
+    "70280": { "name": "Länsi-Puijo (Kuopio)", "types": { "terraced": { "eurPerM2": 1392, "sales": 12 } } },
+    "70340": {
+      "name": "Inkilänmäki (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 2700, "sales": 7 },
+        "two_room": { "eurPerM2": 1917, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 1475, "sales": 21 },
+        "terraced": { "eurPerM2": 1983, "sales": 9 }
+      }
+    },
+    "70420": {
+      "name": "Päiväranta (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 1490, "sales": 13 },
+        "two_room": { "eurPerM2": 1266, "sales": 12 },
+        "three_room_plus": { "eurPerM2": 1255, "sales": 19 },
+        "terraced": { "eurPerM2": 1622, "sales": 9 }
+      }
+    },
+    "70460": {
+      "name": "Saarijärvi (Kuopio)",
+      "types": {
+        "two_room": { "eurPerM2": 769, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 650, "sales": 14 },
+        "terraced": { "eurPerM2": 1288, "sales": 8 }
+      }
+    },
+    "70500": {
+      "name": "Männistö (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 1266, "sales": 157 },
+        "two_room": { "eurPerM2": 1689, "sales": 142 },
+        "three_room_plus": { "eurPerM2": 1955, "sales": 62 }
+      }
+    },
+    "70600": {
+      "name": "Niirala-Huuhanmäki (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 3259, "sales": 14 },
+        "two_room": { "eurPerM2": 2384, "sales": 25 },
+        "three_room_plus": { "eurPerM2": 2544, "sales": 13 }
+      }
+    },
+    "70620": { "name": "Haapaniemi (Kuopio)", "types": { "two_room": { "eurPerM2": 1620, "sales": 14 } } },
+    "70700": {
+      "name": "Särkiniemi (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 3154, "sales": 7 },
+        "two_room": { "eurPerM2": 1628, "sales": 29 },
+        "three_room_plus": { "eurPerM2": 1467, "sales": 19 }
+      }
+    },
+    "70780": { "name": "Jynkkä (Kuopio)", "types": { "terraced": { "eurPerM2": 1616, "sales": 44 } } },
+    "70800": { "name": "Pitkälahti (Kuopio)", "types": { "terraced": { "eurPerM2": 2137, "sales": 23 } } },
+    "70820": {
+      "name": "Litmanen (Kuopio)",
+      "types": {
+        "two_room": { "eurPerM2": 1508, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 1551, "sales": 15 },
+        "terraced": { "eurPerM2": 2263, "sales": 139 }
+      }
+    },
+    "70840": {
+      "name": "Jynkänmäki (Kuopio)",
+      "types": {
+        "studio": { "eurPerM2": 3102, "sales": 23 },
+        "two_room": { "eurPerM2": 2624, "sales": 57 },
+        "three_room_plus": { "eurPerM2": 2873, "sales": 41 },
+        "terraced": { "eurPerM2": 2699, "sales": 89 }
+      }
+    },
+    "70870": { "name": "Hiltulanlahti (Kuopio)", "types": { "terraced": { "eurPerM2": 2769, "sales": 7 } } },
+    "70900": { "name": "Toivala (Siilinjärvi)", "types": { "terraced": { "eurPerM2": 1940, "sales": 16 } } },
+    "70910": {
+      "name": "Vuorela (Siilinjärvi)",
+      "types": { "three_room_plus": { "eurPerM2": 2491, "sales": 6 }, "terraced": { "eurPerM2": 1526, "sales": 25 } }
+    },
+    "71160": { "name": "Riistavesi (Kuopio)", "types": { "terraced": { "eurPerM2": 697, "sales": 7 } } },
+    "71800": {
+      "name": "Siilinjärvi Keskus (Siilinjärvi)",
+      "types": {
+        "studio": { "eurPerM2": 875, "sales": 20 },
+        "two_room": { "eurPerM2": 1294, "sales": 19 },
+        "three_room_plus": { "eurPerM2": 1288, "sales": 11 },
+        "terraced": { "eurPerM2": 1459, "sales": 52 }
+      }
+    },
+    "71850": { "name": "Leppäkaarre (Siilinjärvi)", "types": { "terraced": { "eurPerM2": 1283, "sales": 17 } } },
+    "72400": { "name": "Pielavesi Keskus-Jylänki (Pielavesi)", "types": { "terraced": { "eurPerM2": 586, "sales": 16 } } },
+    "73100": { "name": "Lapinlahti Keskus (Lapinlahti)", "types": { "terraced": { "eurPerM2": 811, "sales": 21 } } },
+    "73300": { "name": "Nilsiä Keskus (Kuopio)", "types": { "terraced": { "eurPerM2": 951, "sales": 14 } } },
+    "74100": {
+      "name": "Iisalmi Keskus, Eteläinen (Iisalmi)",
+      "types": {
+        "studio": { "eurPerM2": 1116, "sales": 16 },
+        "two_room": { "eurPerM2": 1058, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 1578, "sales": 25 }
+      }
+    },
+    "74120": {
+      "name": "Iisalmi Keskus Pohjoinen (Iisalmi)",
+      "types": {
+        "two_room": { "eurPerM2": 655, "sales": 13 },
+        "three_room_plus": { "eurPerM2": 975, "sales": 11 },
+        "terraced": { "eurPerM2": 1264, "sales": 29 }
+      }
+    },
+    "74130": { "name": "Kihmula (Iisalmi)", "types": { "terraced": { "eurPerM2": 1272, "sales": 21 } } },
+    "74700": { "name": "Kiuruvesi Keskus (Kiuruvesi)", "types": { "terraced": { "eurPerM2": 525, "sales": 17 } } },
+    "75500": {
+      "name": "Nurmes Keskus (Nurmes)",
+      "types": { "studio": { "eurPerM2": 579, "sales": 6 }, "two_room": { "eurPerM2": 588, "sales": 8 } }
+    },
+    "75530": { "name": "Porokylä (Nurmes)", "types": { "terraced": { "eurPerM2": 585, "sales": 19 } } },
+    "76100": {
+      "name": "Pieksämäki Keskus (Pieksämäki)",
+      "types": {
+        "studio": { "eurPerM2": 651, "sales": 11 },
+        "two_room": { "eurPerM2": 454, "sales": 40 },
+        "three_room_plus": { "eurPerM2": 560, "sales": 22 },
+        "terraced": { "eurPerM2": 644, "sales": 7 }
+      }
+    },
+    "76150": {
+      "name": "Länsirinne (Pieksämäki)",
+      "types": {
+        "studio": { "eurPerM2": 385, "sales": 9 },
+        "two_room": { "eurPerM2": 321, "sales": 19 },
+        "terraced": { "eurPerM2": 765, "sales": 10 }
+      }
+    },
+    "76850": { "name": "Naarajärvi (Pieksämäki)", "types": { "terraced": { "eurPerM2": 554, "sales": 13 } } },
+    "77600": {
+      "name": "Suonenjoki Keskus (Suonenjoki)",
+      "types": {
+        "studio": { "eurPerM2": 435, "sales": 7 },
+        "two_room": { "eurPerM2": 852, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 1111, "sales": 9 }
+      }
+    },
+    "78200": {
+      "name": "Varkaus Keskus (Varkaus)",
+      "types": {
+        "studio": { "eurPerM2": 476, "sales": 16 },
+        "two_room": { "eurPerM2": 705, "sales": 39 },
+        "three_room_plus": { "eurPerM2": 509, "sales": 24 }
+      }
+    },
+    "78210": { "name": "Kuoppakangas (Varkaus)", "types": { "terraced": { "eurPerM2": 593, "sales": 10 } } },
+    "78250": { "name": "Päiviönsaari (Varkaus)", "types": { "three_room_plus": { "eurPerM2": 672, "sales": 7 } } },
+    "78500": { "name": "Pitkälänniemi-Könönpelto (Varkaus)", "types": { "terraced": { "eurPerM2": 632, "sales": 7 } } },
+    "78850": { "name": "Käpykangas (Varkaus)", "types": { "terraced": { "eurPerM2": 700, "sales": 22 } } },
+    "78870": { "name": "Kaura-Aho (Varkaus)", "types": { "terraced": { "eurPerM2": 710, "sales": 14 } } },
+    "79100": {
+      "name": "Leppävirta Keskus (Leppävirta)",
+      "types": { "two_room": { "eurPerM2": 441, "sales": 14 }, "terraced": { "eurPerM2": 764, "sales": 36 } }
+    },
+    "79600": { "name": "Joroinen Keskus (Joroinen)", "types": { "terraced": { "eurPerM2": 464, "sales": 16 } } },
+    "80100": {
+      "name": "Joensuu Keskus, Pohjoinen (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 2756, "sales": 57 },
+        "two_room": { "eurPerM2": 2046, "sales": 85 },
+        "three_room_plus": { "eurPerM2": 1813, "sales": 83 },
+        "terraced": { "eurPerM2": 1709, "sales": 16 }
+      }
+    },
+    "80110": {
+      "name": "Joensuu Keskus Eteläinen (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 2485, "sales": 33 },
+        "two_room": { "eurPerM2": 1835, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 1961, "sales": 39 }
+      }
+    },
+    "80130": { "name": "Kanervala (Joensuu)", "types": { "terraced": { "eurPerM2": 1697, "sales": 7 } } },
+    "80140": {
+      "name": "Noljakka (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 2936, "sales": 17 },
+        "two_room": { "eurPerM2": 1543, "sales": 35 },
+        "three_room_plus": { "eurPerM2": 1523, "sales": 21 },
+        "terraced": { "eurPerM2": 1645, "sales": 44 }
+      }
+    },
+    "80160": {
+      "name": "Rantakylä-Latola (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 1841, "sales": 8 },
+        "two_room": { "eurPerM2": 1523, "sales": 37 },
+        "three_room_plus": { "eurPerM2": 1085, "sales": 19 },
+        "terraced": { "eurPerM2": 1101, "sales": 53 }
+      }
+    },
+    "80170": { "name": "Utra (Joensuu)", "types": { "terraced": { "eurPerM2": 1559, "sales": 16 } } },
+    "80200": {
+      "name": "Niinivaara (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 1984, "sales": 18 },
+        "two_room": { "eurPerM2": 2178, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 1930, "sales": 22 },
+        "terraced": { "eurPerM2": 1443, "sales": 10 }
+      }
+    },
+    "80220": {
+      "name": "Penttilä (Joensuu)",
+      "types": {
+        "studio": { "eurPerM2": 3612, "sales": 19 },
+        "two_room": { "eurPerM2": 3023, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 2947, "sales": 25 },
+        "terraced": { "eurPerM2": 2269, "sales": 25 }
+      }
+    },
+    "80230": { "name": "Hukanhauta (Joensuu)", "types": { "terraced": { "eurPerM2": 1855, "sales": 60 } } },
+    "80260": {
+      "name": "Kettuvaara (Joensuu)",
+      "types": {
+        "two_room": { "eurPerM2": 1381, "sales": 8 },
+        "three_room_plus": { "eurPerM2": 1142, "sales": 6 },
+        "terraced": { "eurPerM2": 1183, "sales": 24 }
+      }
+    },
+    "80330": { "name": "Reijola (Joensuu)", "types": { "terraced": { "eurPerM2": 1500, "sales": 19 } } },
+    "80400": { "name": "Ylämylly (Liperi)", "types": { "terraced": { "eurPerM2": 1682, "sales": 14 } } },
+    "80710": { "name": "Lehmo (Kontiolahti)", "types": { "terraced": { "eurPerM2": 1943, "sales": 48 } } },
+    "81100": { "name": "Kontiolahti (Kontiolahti)", "types": { "terraced": { "eurPerM2": 846, "sales": 18 } } },
+    "81700": {
+      "name": "Lieksa Keskus (Lieksa)",
+      "types": { "two_room": { "eurPerM2": 394, "sales": 12 }, "terraced": { "eurPerM2": 430, "sales": 12 } }
+    },
+    "82200": { "name": "Hammaslahti (Joensuu)", "types": { "terraced": { "eurPerM2": 706, "sales": 14 } } },
+    "82500": {
+      "name": "Kitee Keskus (Kitee)",
+      "types": { "two_room": { "eurPerM2": 518, "sales": 21 }, "terraced": { "eurPerM2": 556, "sales": 22 } }
+    },
+    "82600": { "name": "Tohmajärvi Keskus (Tohmajärvi)", "types": { "terraced": { "eurPerM2": 360, "sales": 12 } } },
+    "82900": { "name": "Ilomantsi Keskus (Ilomantsi)", "types": { "terraced": { "eurPerM2": 296, "sales": 28 } } },
+    "83100": { "name": "Liperi Keskus (Liperi)", "types": { "terraced": { "eurPerM2": 405, "sales": 15 } } },
+    "83500": { "name": "Outokumpu Keskus (Outokumpu)", "types": { "terraced": { "eurPerM2": 341, "sales": 28 } } },
+    "83700": { "name": "Polvijärvi Keskus (Polvijärvi)", "types": { "terraced": { "eurPerM2": 333, "sales": 17 } } },
+    "84100": {
+      "name": "Ylivieska Keskus (Ylivieska)",
+      "types": {
+        "studio": { "eurPerM2": 1556, "sales": 14 },
+        "two_room": { "eurPerM2": 1204, "sales": 38 },
+        "three_room_plus": { "eurPerM2": 1214, "sales": 17 },
+        "terraced": { "eurPerM2": 1403, "sales": 77 }
+      }
+    },
+    "85100": { "name": "Kalajoki Keskus (Kalajoki)", "types": { "terraced": { "eurPerM2": 1427, "sales": 16 } } },
+    "85500": {
+      "name": "Nivala Keskus (Nivala)",
+      "types": {
+        "two_room": { "eurPerM2": 1211, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1506, "sales": 6 },
+        "terraced": { "eurPerM2": 1000, "sales": 21 }
+      }
+    },
+    "85800": {
+      "name": "Haapajärvi Keskus (Haapajärvi)",
+      "types": { "studio": { "eurPerM2": 596, "sales": 7 }, "terraced": { "eurPerM2": 1202, "sales": 13 } }
+    },
+    "85900": { "name": "Reisjärvi Keskus (Reisjärvi)", "types": { "terraced": { "eurPerM2": 894, "sales": 21 } } },
+    "86300": { "name": "Oulainen Keskus (Oulainen)", "types": { "terraced": { "eurPerM2": 781, "sales": 20 } } },
+    "86600": { "name": "Haapavesi Keskus (Haapavesi)", "types": { "terraced": { "eurPerM2": 777, "sales": 13 } } },
+    "87100": {
+      "name": "Kajaani Keskus (Kajaani)",
+      "types": {
+        "studio": { "eurPerM2": 1346, "sales": 42 },
+        "two_room": { "eurPerM2": 1327, "sales": 61 },
+        "three_room_plus": { "eurPerM2": 1545, "sales": 40 },
+        "terraced": { "eurPerM2": 1159, "sales": 7 }
+      }
+    },
+    "87200": {
+      "name": "Teppana (Kajaani)",
+      "types": {
+        "two_room": { "eurPerM2": 1084, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1447, "sales": 14 },
+        "terraced": { "eurPerM2": 1642, "sales": 20 }
+      }
+    },
+    "87250": { "name": "Kättö-Kätönlahti (Kajaani)", "types": { "terraced": { "eurPerM2": 1375, "sales": 18 } } },
+    "87300": { "name": "Palokangas (Kajaani)", "types": { "three_room_plus": { "eurPerM2": 790, "sales": 10 } } },
+    "87400": {
+      "name": "Petäisenniska (Kajaani)",
+      "types": { "two_room": { "eurPerM2": 964, "sales": 6 }, "terraced": { "eurPerM2": 1011, "sales": 18 } }
+    },
+    "87500": {
+      "name": "Lehtikangas (Kajaani)",
+      "types": {
+        "two_room": { "eurPerM2": 694, "sales": 19 },
+        "three_room_plus": { "eurPerM2": 647, "sales": 17 },
+        "terraced": { "eurPerM2": 1309, "sales": 35 }
+      }
+    },
+    "87700": { "name": "Lohtaja-Kettu (Kajaani)", "types": { "terraced": { "eurPerM2": 976, "sales": 22 } } },
+    "88600": {
+      "name": "Sotkamo Keskus (Sotkamo)",
+      "types": {
+        "studio": { "eurPerM2": 1325, "sales": 6 },
+        "two_room": { "eurPerM2": 1376, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1802, "sales": 12 },
+        "terraced": { "eurPerM2": 1330, "sales": 26 }
+      }
+    },
+    "88610": { "name": "Vuokatti (Sotkamo)", "types": { "terraced": { "eurPerM2": 1561, "sales": 20 } } },
+    "88900": { "name": "Kuhmo Keskus (Kuhmo)", "types": { "terraced": { "eurPerM2": 592, "sales": 12 } } },
+    "90100": {
+      "name": "Oulu Keskus (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 3638, "sales": 61 },
+        "two_room": { "eurPerM2": 2787, "sales": 85 },
+        "three_room_plus": { "eurPerM2": 2681, "sales": 78 }
+      }
+    },
+    "90120": {
+      "name": "Heinäpää (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2536, "sales": 41 },
+        "two_room": { "eurPerM2": 2297, "sales": 70 },
+        "three_room_plus": { "eurPerM2": 2371, "sales": 65 }
+      }
+    },
+    "90130": {
+      "name": "Raksila (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2416, "sales": 33 },
+        "two_room": { "eurPerM2": 2421, "sales": 48 },
+        "three_room_plus": { "eurPerM2": 2458, "sales": 50 }
+      }
+    },
+    "90140": {
+      "name": "Karjasilta (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2890, "sales": 21 },
+        "two_room": { "eurPerM2": 2673, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 2592, "sales": 17 }
+      }
+    },
+    "90150": {
+      "name": "Höyhtyä (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 1507, "sales": 9 },
+        "two_room": { "eurPerM2": 1279, "sales": 25 },
+        "three_room_plus": { "eurPerM2": 1564, "sales": 33 },
+        "terraced": { "eurPerM2": 1898, "sales": 42 }
+      }
+    },
+    "90220": { "name": "Kontinkangas (Oulu)", "types": { "two_room": { "eurPerM2": 1314, "sales": 32 } } },
+    "90230": {
+      "name": "Värttö-Maikkula (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2578, "sales": 11 },
+        "two_room": { "eurPerM2": 2380, "sales": 34 },
+        "three_room_plus": { "eurPerM2": 2357, "sales": 19 },
+        "terraced": { "eurPerM2": 2349, "sales": 40 }
+      }
+    },
+    "90240": {
+      "name": "Iinatti (Oulu)",
+      "types": {
+        "two_room": { "eurPerM2": 1576, "sales": 13 },
+        "three_room_plus": { "eurPerM2": 1400, "sales": 7 },
+        "terraced": { "eurPerM2": 1839, "sales": 43 }
+      }
+    },
+    "90250": {
+      "name": "Kaukovainio (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 1952, "sales": 43 },
+        "two_room": { "eurPerM2": 1544, "sales": 45 },
+        "three_room_plus": { "eurPerM2": 1334, "sales": 31 },
+        "terraced": { "eurPerM2": 2016, "sales": 13 }
+      }
+    },
+    "90310": { "name": "Madekoski (Oulu)", "types": { "terraced": { "eurPerM2": 1592, "sales": 6 } } },
+    "90400": {
+      "name": "Äimärautio (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 3810, "sales": 25 },
+        "two_room": { "eurPerM2": 3312, "sales": 76 },
+        "three_room_plus": { "eurPerM2": 3007, "sales": 16 }
+      }
+    },
+    "90410": { "name": "Kaakkuri (Oulu)", "types": { "terraced": { "eurPerM2": 1941, "sales": 36 } } },
+    "90420": {
+      "name": "Metsokangas (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2459, "sales": 15 },
+        "two_room": { "eurPerM2": 1979, "sales": 29 },
+        "three_room_plus": { "eurPerM2": 2036, "sales": 31 },
+        "terraced": { "eurPerM2": 2265, "sales": 80 }
+      }
+    },
+    "90440": {
+      "name": "Kempele Keskus (Kempele)",
+      "types": {
+        "studio": { "eurPerM2": 2554, "sales": 12 },
+        "two_room": { "eurPerM2": 2168, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 2233, "sales": 13 },
+        "terraced": { "eurPerM2": 1840, "sales": 66 }
+      }
+    },
+    "90450": {
+      "name": "Honkanen (Kempele)",
+      "types": { "three_room_plus": { "eurPerM2": 2190, "sales": 6 }, "terraced": { "eurPerM2": 2219, "sales": 76 } }
+    },
+    "90460": {
+      "name": "Oulunsalo Keskus (Oulu)",
+      "types": { "three_room_plus": { "eurPerM2": 1549, "sales": 6 }, "terraced": { "eurPerM2": 1770, "sales": 84 } }
+    },
+    "90500": {
+      "name": "Tuira (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2252, "sales": 45 },
+        "two_room": { "eurPerM2": 2072, "sales": 83 },
+        "three_room_plus": { "eurPerM2": 1731, "sales": 65 }
+      }
+    },
+    "90510": {
+      "name": "Hietasaari (Oulu)",
+      "types": { "two_room": { "eurPerM2": 2657, "sales": 13 }, "three_room_plus": { "eurPerM2": 3139, "sales": 15 } }
+    },
+    "90520": {
+      "name": "Taskila-Toppila (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 3194, "sales": 31 },
+        "two_room": { "eurPerM2": 2860, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 2994, "sales": 36 },
+        "terraced": { "eurPerM2": 1455, "sales": 11 }
+      }
+    },
+    "90530": {
+      "name": "Välivainio (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2167, "sales": 23 },
+        "two_room": { "eurPerM2": 2015, "sales": 41 },
+        "three_room_plus": { "eurPerM2": 2117, "sales": 25 },
+        "terraced": { "eurPerM2": 1458, "sales": 7 }
+      }
+    },
+    "90540": {
+      "name": "Kuivasjärvi (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 3291, "sales": 7 },
+        "two_room": { "eurPerM2": 2527, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 2111, "sales": 11 },
+        "terraced": { "eurPerM2": 2090, "sales": 126 }
+      }
+    },
+    "90550": {
+      "name": "Pyykösjärvi-Puolivälinkangas (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 1457, "sales": 37 },
+        "two_room": { "eurPerM2": 1191, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 942, "sales": 21 },
+        "terraced": { "eurPerM2": 1410, "sales": 30 }
+      }
+    },
+    "90560": {
+      "name": "Koskela-Oulu (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 1293, "sales": 12 },
+        "two_room": { "eurPerM2": 1106, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 1033, "sales": 17 },
+        "terraced": { "eurPerM2": 1577, "sales": 23 }
+      }
+    },
+    "90570": {
+      "name": "Kaijonharju-Linnanmaa (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2514, "sales": 39 },
+        "two_room": { "eurPerM2": 1401, "sales": 55 },
+        "three_room_plus": { "eurPerM2": 1262, "sales": 22 },
+        "terraced": { "eurPerM2": 1502, "sales": 27 }
+      }
+    },
+    "90580": {
+      "name": "Rajakylä (Oulu)",
+      "types": { "two_room": { "eurPerM2": 918, "sales": 14 }, "terraced": { "eurPerM2": 1109, "sales": 34 } }
+    },
+    "90630": {
+      "name": "Korvensuora (Oulu)",
+      "types": {
+        "two_room": { "eurPerM2": 2381, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 2213, "sales": 15 },
+        "terraced": { "eurPerM2": 2027, "sales": 83 }
+      }
+    },
+    "90650": {
+      "name": "Haapalehto (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 1685, "sales": 10 },
+        "two_room": { "eurPerM2": 1606, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 1743, "sales": 20 },
+        "terraced": { "eurPerM2": 1862, "sales": 69 }
+      }
+    },
+    "90670": {
+      "name": "Hiukkavaara (Oulu)",
+      "types": {
+        "studio": { "eurPerM2": 2962, "sales": 9 },
+        "two_room": { "eurPerM2": 2197, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 1978, "sales": 9 },
+        "terraced": { "eurPerM2": 2790, "sales": 137 }
+      }
+    },
+    "90800": {
+      "name": "Pateniemi (Oulu)",
+      "types": { "two_room": { "eurPerM2": 2825, "sales": 7 }, "terraced": { "eurPerM2": 1637, "sales": 40 } }
+    },
+    "90810": { "name": "Kiviniemi (Oulu)", "types": { "terraced": { "eurPerM2": 1766, "sales": 20 } } },
+    "90830": { "name": "Haukipudas Keskus (Oulu)", "types": { "terraced": { "eurPerM2": 1639, "sales": 68 } } },
+    "90840": { "name": "Haukipudas Asemanseutu (Oulu)", "types": { "terraced": { "eurPerM2": 1807, "sales": 6 } } },
+    "90900": { "name": "Kiiminki Keskus (Oulu)", "types": { "terraced": { "eurPerM2": 1396, "sales": 35 } } },
+    "90940": { "name": "Jääli (Oulu)", "types": { "terraced": { "eurPerM2": 1482, "sales": 48 } } },
+    "91100": { "name": "Ii Keskus (Ii)", "types": { "terraced": { "eurPerM2": 967, "sales": 28 } } },
+    "91500": { "name": "Muhos Keskus (Muhos)", "types": { "terraced": { "eurPerM2": 1106, "sales": 38 } } },
+    "91600": { "name": "Utajärvi Keskus (Utajärvi)", "types": { "terraced": { "eurPerM2": 827, "sales": 9 } } },
+    "91800": { "name": "Tyrnävä (Tyrnävä)", "types": { "terraced": { "eurPerM2": 1122, "sales": 14 } } },
+    "91900": { "name": "Liminka Keskus (Liminka)", "types": { "terraced": { "eurPerM2": 1445, "sales": 21 } } },
+    "92100": {
+      "name": "Raahe Keskus (Raahe)",
+      "types": {
+        "studio": { "eurPerM2": 1334, "sales": 16 },
+        "two_room": { "eurPerM2": 1432, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 1549, "sales": 17 },
+        "terraced": { "eurPerM2": 1746, "sales": 12 }
+      }
+    },
+    "92130": { "name": "Isoholmi-Antinkangas (Raahe)", "types": { "terraced": { "eurPerM2": 916, "sales": 19 } } },
+    "92140": { "name": "Pattijoki Keskus (Raahe)", "types": { "terraced": { "eurPerM2": 1075, "sales": 19 } } },
+    "93100": {
+      "name": "Pudasjärvi Keskus (Pudasjärvi)",
+      "types": { "studio": { "eurPerM2": 455, "sales": 8 }, "terraced": { "eurPerM2": 686, "sales": 15 } }
+    },
+    "93400": { "name": "Taivalkoski Keskus (Taivalkoski)", "types": { "terraced": { "eurPerM2": 883, "sales": 13 } } },
+    "93600": {
+      "name": "Kuusamo (Kuusamo)",
+      "types": {
+        "studio": { "eurPerM2": 1618, "sales": 37 },
+        "two_room": { "eurPerM2": 1272, "sales": 61 },
+        "terraced": { "eurPerM2": 1313, "sales": 38 }
+      }
+    },
+    "94100": {
+      "name": "Kemi Keskus (Kemi)",
+      "types": {
+        "studio": { "eurPerM2": 732, "sales": 19 },
+        "two_room": { "eurPerM2": 959, "sales": 58 },
+        "three_room_plus": { "eurPerM2": 1027, "sales": 21 },
+        "terraced": { "eurPerM2": 800, "sales": 13 }
+      }
+    },
+    "94400": {
+      "name": "Keminmaa Keskus (Keminmaa)",
+      "types": { "two_room": { "eurPerM2": 478, "sales": 10 }, "terraced": { "eurPerM2": 669, "sales": 17 } }
+    },
+    "94450": { "name": "Lassila-Jokisuu (Keminmaa)", "types": { "terraced": { "eurPerM2": 1065, "sales": 13 } } },
+    "94720": { "name": "Peurasaari (Kemi)", "types": { "terraced": { "eurPerM2": 970, "sales": 8 } } },
+    "95400": {
+      "name": "Tornio Keskus (Tornio)",
+      "types": {
+        "studio": { "eurPerM2": 1806, "sales": 13 },
+        "two_room": { "eurPerM2": 1463, "sales": 19 },
+        "three_room_plus": { "eurPerM2": 1956, "sales": 17 }
+      }
+    },
+    "95410": { "name": "Kiviranta (Tornio)", "types": { "terraced": { "eurPerM2": 1267, "sales": 14 } } },
+    "95420": { "name": "Miukki-Palosaari-Luotomäki (Tornio)", "types": { "terraced": { "eurPerM2": 1123, "sales": 14 } } },
+    "95430": {
+      "name": "Suensaari (Tornio)",
+      "types": {
+        "studio": { "eurPerM2": 1228, "sales": 6 },
+        "two_room": { "eurPerM2": 1093, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 1117, "sales": 8 }
+      }
+    },
+    "95450": { "name": "Kirkonmäki (Tornio)", "types": { "terraced": { "eurPerM2": 1572, "sales": 17 } } },
+    "96100": {
+      "name": "Rovaniemi Keskus (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 2637, "sales": 102 },
+        "two_room": { "eurPerM2": 2338, "sales": 172 },
+        "three_room_plus": { "eurPerM2": 2283, "sales": 111 },
+        "terraced": { "eurPerM2": 1684, "sales": 19 }
+      }
+    },
+    "96190": {
+      "name": "Lapinrinne-Ahokangas (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 3331, "sales": 18 },
+        "two_room": { "eurPerM2": 2890, "sales": 8 },
+        "three_room_plus": { "eurPerM2": 2049, "sales": 12 },
+        "terraced": { "eurPerM2": 2015, "sales": 22 }
+      }
+    },
+    "96200": {
+      "name": "Sahanperä-Ratantaus (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 2366, "sales": 30 },
+        "two_room": { "eurPerM2": 2095, "sales": 72 },
+        "three_room_plus": { "eurPerM2": 1939, "sales": 68 },
+        "terraced": { "eurPerM2": 1940, "sales": 7 }
+      }
+    },
+    "96300": {
+      "name": "Niemelänkangas-Korvanniemi (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 3240, "sales": 43 },
+        "two_room": { "eurPerM2": 2042, "sales": 49 },
+        "three_room_plus": { "eurPerM2": 1566, "sales": 23 },
+        "terraced": { "eurPerM2": 2012, "sales": 16 }
+      }
+    },
+    "96400": {
+      "name": "Pullinranta-Kiiruna (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 2293, "sales": 7 },
+        "two_room": { "eurPerM2": 2258, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 1816, "sales": 10 },
+        "terraced": { "eurPerM2": 1858, "sales": 26 }
+      }
+    },
+    "96440": {
+      "name": "Ounasrinne (Rovaniemi)",
+      "types": {
+        "two_room": { "eurPerM2": 818, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 779, "sales": 11 },
+        "terraced": { "eurPerM2": 1053, "sales": 15 }
+      }
+    },
+    "96460": { "name": "Pöykkölä (Rovaniemi)", "types": { "terraced": { "eurPerM2": 2043, "sales": 33 } } },
+    "96500": {
+      "name": "Korkalovaara (Rovaniemi)",
+      "types": {
+        "studio": { "eurPerM2": 901, "sales": 13 },
+        "two_room": { "eurPerM2": 733, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 778, "sales": 34 },
+        "terraced": { "eurPerM2": 1427, "sales": 25 }
+      }
+    },
+    "96600": { "name": "Koskenkylä (Rovaniemi)", "types": { "terraced": { "eurPerM2": 1411, "sales": 11 } } },
+    "96800": { "name": "Ylikylä-Patosaari (Rovaniemi)", "types": { "terraced": { "eurPerM2": 2403, "sales": 10 } } },
+    "96900": { "name": "Saarenkylä (Rovaniemi)", "types": { "terraced": { "eurPerM2": 2375, "sales": 71 } } },
+    "96910": {
+      "name": "Syväsenvaara (Rovaniemi)",
+      "types": {
+        "two_room": { "eurPerM2": 1046, "sales": 13 },
+        "three_room_plus": { "eurPerM2": 910, "sales": 11 },
+        "terraced": { "eurPerM2": 1763, "sales": 17 }
+      }
+    },
+    "96960": { "name": "Someroharju (Rovaniemi)", "types": { "terraced": { "eurPerM2": 928, "sales": 8 } } },
+    "97700": { "name": "Ranua Keskus (Ranua)", "types": { "terraced": { "eurPerM2": 744, "sales": 8 } } },
+    "98100": { "name": "Kemijärvi Keskus (Kemijärvi)", "types": { "terraced": { "eurPerM2": 669, "sales": 15 } } },
+    "98120": { "name": "Särkikangas (Kemijärvi)", "types": { "terraced": { "eurPerM2": 486, "sales": 9 } } },
+    "98900": { "name": "Salla Keskus (Salla)", "types": { "terraced": { "eurPerM2": 817, "sales": 6 } } },
+    "99130": { "name": "Sirkka-Rauhala (Kittilä)", "types": { "terraced": { "eurPerM2": 2660, "sales": 16 } } },
+    "99600": {
+      "name": "Sodankylä Keskus (Sodankylä)",
+      "types": { "two_room": { "eurPerM2": 988, "sales": 13 }, "terraced": { "eurPerM2": 1154, "sales": 20 } }
+    },
+    "99800": { "name": "Ivalo (Inari)", "types": { "terraced": { "eurPerM2": 1529, "sales": 21 } } },
+    "99830": { "name": "Saariselkä (Inari)", "types": { "terraced": { "eurPerM2": 2299, "sales": 10 } } },
+    "00100": {
+      "name": "Helsinki keskusta - Etu-Töölö (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7371, "sales": 136 },
+        "two_room": { "eurPerM2": 7254, "sales": 152 },
+        "three_room_plus": { "eurPerM2": 7353, "sales": 132 }
+      }
+    },
+    "00120": {
+      "name": "Punavuori - Bulevardi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7851, "sales": 41 },
+        "two_room": { "eurPerM2": 8066, "sales": 67 },
+        "three_room_plus": { "eurPerM2": 8886, "sales": 90 }
+      }
+    },
+    "00130": {
+      "name": "Kaartinkaupunki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7877, "sales": 19 },
+        "two_room": { "eurPerM2": 7546, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 7684, "sales": 19 }
+      }
+    },
+    "00140": {
+      "name": "Kaivopuisto - Ullanlinna (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 8002, "sales": 80 },
+        "two_room": { "eurPerM2": 8129, "sales": 72 },
+        "three_room_plus": { "eurPerM2": 9653, "sales": 65 }
+      }
+    },
+    "00150": {
+      "name": "Punavuori - Eira - Hernesaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7796, "sales": 91 },
+        "two_room": { "eurPerM2": 8047, "sales": 97 },
+        "three_room_plus": { "eurPerM2": 8852, "sales": 78 }
+      }
+    },
+    "00160": {
+      "name": "Katajanokka (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7497, "sales": 25 },
+        "two_room": { "eurPerM2": 7425, "sales": 53 },
+        "three_room_plus": { "eurPerM2": 7288, "sales": 44 }
+      }
+    },
+    "00170": {
+      "name": "Kruununhaka (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7344, "sales": 41 },
+        "two_room": { "eurPerM2": 7399, "sales": 52 },
+        "three_room_plus": { "eurPerM2": 7149, "sales": 69 }
+      }
+    },
+    "00180": {
+      "name": "Kamppi - Ruoholahti (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7157, "sales": 98 },
+        "two_room": { "eurPerM2": 6493, "sales": 154 },
+        "three_room_plus": { "eurPerM2": 6655, "sales": 100 }
+      }
+    },
+    "00200": {
+      "name": "Pohjois-Lauttasaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 6449, "sales": 83 },
+        "two_room": { "eurPerM2": 6017, "sales": 169 },
+        "three_room_plus": { "eurPerM2": 6444, "sales": 178 },
+        "terraced": { "eurPerM2": 7948, "sales": 14 }
+      }
+    },
+    "00210": {
+      "name": "Vattuniemi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5981, "sales": 51 },
+        "two_room": { "eurPerM2": 5918, "sales": 104 },
+        "three_room_plus": { "eurPerM2": 6664, "sales": 120 }
+      }
+    },
+    "00220": {
+      "name": "Jätkäsaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7090, "sales": 20 },
+        "two_room": { "eurPerM2": 7549, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 7077, "sales": 74 }
+      }
+    },
+    "00240": {
+      "name": "Länsi-Pasila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5011, "sales": 32 },
+        "two_room": { "eurPerM2": 4514, "sales": 38 },
+        "three_room_plus": { "eurPerM2": 4051, "sales": 56 }
+      }
+    },
+    "00250": {
+      "name": "Taka-Töölö (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 6758, "sales": 105 },
+        "two_room": { "eurPerM2": 6207, "sales": 120 },
+        "three_room_plus": { "eurPerM2": 6250, "sales": 76 }
+      }
+    },
+    "00260": {
+      "name": "Keski-Töölö (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 6638, "sales": 41 },
+        "two_room": { "eurPerM2": 7062, "sales": 79 },
+        "three_room_plus": { "eurPerM2": 7486, "sales": 45 }
+      }
+    },
+    "00270": {
+      "name": "Pohjois-Meilahti (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5811, "sales": 41 },
+        "two_room": { "eurPerM2": 5546, "sales": 64 },
+        "three_room_plus": { "eurPerM2": 5653, "sales": 39 }
+      }
+    },
+    "00280": {
+      "name": "Ruskeasuo (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5490, "sales": 10 },
+        "two_room": { "eurPerM2": 5299, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 4864, "sales": 15 }
+      }
+    },
+    "00300": {
+      "name": "Pikku Huopalahti (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4745, "sales": 31 },
+        "two_room": { "eurPerM2": 4490, "sales": 38 },
+        "three_room_plus": { "eurPerM2": 4468, "sales": 33 }
+      }
+    },
+    "00310": { "name": "Kivihaka (Helsinki)", "types": { "three_room_plus": { "eurPerM2": 3982, "sales": 12 } } },
+    "00320": {
+      "name": "Etelä-Haaga (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5004, "sales": 54 },
+        "two_room": { "eurPerM2": 4948, "sales": 85 },
+        "three_room_plus": { "eurPerM2": 5029, "sales": 87 }
+      }
+    },
+    "00330": {
+      "name": "Munkkiniemi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 6752, "sales": 30 },
+        "two_room": { "eurPerM2": 6111, "sales": 73 },
+        "three_room_plus": { "eurPerM2": 6358, "sales": 116 }
+      }
+    },
+    "00340": {
+      "name": "Kuusisaari - Lehtisaari (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 3520, "sales": 6 },
+        "three_room_plus": { "eurPerM2": 3173, "sales": 10 },
+        "terraced": { "eurPerM2": 4805, "sales": 14 }
+      }
+    },
+    "00350": {
+      "name": "Munkkivuori - Niemenmäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4668, "sales": 41 },
+        "two_room": { "eurPerM2": 4475, "sales": 58 },
+        "three_room_plus": { "eurPerM2": 4748, "sales": 69 }
+      }
+    },
+    "00360": {
+      "name": "Pajamäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4183, "sales": 7 },
+        "two_room": { "eurPerM2": 3966, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 3664, "sales": 16 }
+      }
+    },
+    "00370": {
+      "name": "Reimarla (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 3257, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 3311, "sales": 19 },
+        "terraced": { "eurPerM2": 3241, "sales": 10 }
+      }
+    },
+    "00380": {
+      "name": "Pitäjänmäen yritysalue (Helsinki)",
+      "types": { "two_room": { "eurPerM2": 4377, "sales": 15 }, "three_room_plus": { "eurPerM2": 4733, "sales": 20 } }
+    },
+    "00390": {
+      "name": "Konala (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3434, "sales": 12 },
+        "two_room": { "eurPerM2": 3120, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 3470, "sales": 20 },
+        "terraced": { "eurPerM2": 2824, "sales": 20 }
+      }
+    },
+    "00400": {
+      "name": "Pohjois-Haaga (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4662, "sales": 22 },
+        "two_room": { "eurPerM2": 4167, "sales": 65 },
+        "three_room_plus": { "eurPerM2": 3872, "sales": 55 }
+      }
+    },
+    "00410": {
+      "name": "Malminkartano (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2907, "sales": 8 },
+        "two_room": { "eurPerM2": 2085, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 2229, "sales": 14 },
+        "terraced": { "eurPerM2": 3243, "sales": 18 }
+      }
+    },
+    "00420": {
+      "name": "Kannelmäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3763, "sales": 25 },
+        "two_room": { "eurPerM2": 2985, "sales": 52 },
+        "three_room_plus": { "eurPerM2": 2681, "sales": 71 },
+        "terraced": { "eurPerM2": 2775, "sales": 16 }
+      }
+    },
+    "00430": {
+      "name": "Maununneva - Kuninkaantammi (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 4074, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 3780, "sales": 9 },
+        "terraced": { "eurPerM2": 3358, "sales": 35 }
+      }
+    },
+    "00440": {
+      "name": "Lassila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3820, "sales": 14 },
+        "two_room": { "eurPerM2": 3405, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 3043, "sales": 21 }
+      }
+    },
+    "00500": {
+      "name": "Sörnäinen - Harju (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5302, "sales": 166 },
+        "two_room": { "eurPerM2": 5173, "sales": 73 },
+        "three_room_plus": { "eurPerM2": 5032, "sales": 19 }
+      }
+    },
+    "00510": {
+      "name": "Alppila - Vallila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5490, "sales": 114 },
+        "two_room": { "eurPerM2": 5369, "sales": 84 },
+        "three_room_plus": { "eurPerM2": 5676, "sales": 34 }
+      }
+    },
+    "00520": {
+      "name": "Itä- ja Keski-Pasila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 6210, "sales": 31 },
+        "two_room": { "eurPerM2": 5651, "sales": 73 },
+        "three_room_plus": { "eurPerM2": 5190, "sales": 86 }
+      }
+    },
+    "00530": {
+      "name": "Kallio (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5743, "sales": 159 },
+        "two_room": { "eurPerM2": 5470, "sales": 177 },
+        "three_room_plus": { "eurPerM2": 5817, "sales": 72 }
+      }
+    },
+    "00540": {
+      "name": "Kalasatama - Sompasaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 9156, "sales": 8 },
+        "two_room": { "eurPerM2": 7966, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 7160, "sales": 52 }
+      }
+    },
+    "00550": {
+      "name": "Vallila - Hermanni (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5525, "sales": 52 },
+        "two_room": { "eurPerM2": 5148, "sales": 66 },
+        "three_room_plus": { "eurPerM2": 5333, "sales": 24 }
+      }
+    },
+    "00560": {
+      "name": "Toukola - Kumpula - Vanhakaupunki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5584, "sales": 22 },
+        "two_room": { "eurPerM2": 5387, "sales": 83 },
+        "three_room_plus": { "eurPerM2": 5354, "sales": 85 }
+      }
+    },
+    "00570": {
+      "name": "Kulosaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5747, "sales": 13 },
+        "two_room": { "eurPerM2": 5380, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 5209, "sales": 37 },
+        "terraced": { "eurPerM2": 5744, "sales": 13 }
+      }
+    },
+    "00580": {
+      "name": "Kalasatama - Kyläsaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 7939, "sales": 20 },
+        "two_room": { "eurPerM2": 7066, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 7455, "sales": 49 }
+      }
+    },
+    "00590": { "name": "Kruunuvuorenranta (Helsinki)", "types": { "three_room_plus": { "eurPerM2": 5199, "sales": 34 } } },
+    "00600": {
+      "name": "Koskela (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4140, "sales": 9 },
+        "two_room": { "eurPerM2": 3586, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 2803, "sales": 20 }
+      }
+    },
+    "00610": {
+      "name": "Käpylä (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4665, "sales": 33 },
+        "two_room": { "eurPerM2": 4879, "sales": 56 },
+        "three_room_plus": { "eurPerM2": 5085, "sales": 49 },
+        "terraced": { "eurPerM2": 6665, "sales": 15 }
+      }
+    },
+    "00620": {
+      "name": "Metsälä - Etelä-Oulunkylä (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 3717, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 3820, "sales": 28 },
+        "terraced": { "eurPerM2": 4013, "sales": 16 }
+      }
+    },
+    "00630": {
+      "name": "Maunula (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3995, "sales": 10 },
+        "two_room": { "eurPerM2": 3499, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 3036, "sales": 19 },
+        "terraced": { "eurPerM2": 4283, "sales": 10 }
+      }
+    },
+    "00640": {
+      "name": "Oulunkylä - Patola (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4485, "sales": 16 },
+        "two_room": { "eurPerM2": 3461, "sales": 50 },
+        "three_room_plus": { "eurPerM2": 3597, "sales": 41 },
+        "terraced": { "eurPerM2": 3966, "sales": 31 }
+      }
+    },
+    "00650": {
+      "name": "Veräjämäki (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 4072, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 4319, "sales": 36 },
+        "terraced": { "eurPerM2": 3980, "sales": 23 }
+      }
+    },
+    "00660": { "name": "Länsi-Pakila (Helsinki)", "types": { "terraced": { "eurPerM2": 4161, "sales": 79 } } },
+    "00670": { "name": "Paloheinä (Helsinki)", "types": { "terraced": { "eurPerM2": 3746, "sales": 80 } } },
+    "00680": { "name": "Itä-Pakila (Helsinki)", "types": { "terraced": { "eurPerM2": 3498, "sales": 48 } } },
+    "00690": { "name": "Torpparinmäki (Helsinki)", "types": { "terraced": { "eurPerM2": 3434, "sales": 14 } } },
+    "00700": {
+      "name": "Malmi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3590, "sales": 14 },
+        "two_room": { "eurPerM2": 2819, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 2642, "sales": 34 },
+        "terraced": { "eurPerM2": 3290, "sales": 26 }
+      }
+    },
+    "00710": {
+      "name": "Pihlajamäki - Viikinmäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3087, "sales": 58 },
+        "two_room": { "eurPerM2": 2411, "sales": 60 },
+        "three_room_plus": { "eurPerM2": 2252, "sales": 56 },
+        "terraced": { "eurPerM2": 3206, "sales": 20 }
+      }
+    },
+    "00720": {
+      "name": "Pukinmäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3533, "sales": 12 },
+        "two_room": { "eurPerM2": 2481, "sales": 30 },
+        "three_room_plus": { "eurPerM2": 2621, "sales": 34 },
+        "terraced": { "eurPerM2": 2810, "sales": 14 }
+      }
+    },
+    "00730": {
+      "name": "Tapanila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4338, "sales": 13 },
+        "two_room": { "eurPerM2": 3997, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 3409, "sales": 60 },
+        "terraced": { "eurPerM2": 3241, "sales": 75 }
+      }
+    },
+    "00740": {
+      "name": "Siltamäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2510, "sales": 7 },
+        "two_room": { "eurPerM2": 1798, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 1737, "sales": 22 },
+        "terraced": { "eurPerM2": 3033, "sales": 63 }
+      }
+    },
+    "00750": {
+      "name": "Tapulikaupunki (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 1962, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 2250, "sales": 13 },
+        "terraced": { "eurPerM2": 2973, "sales": 22 }
+      }
+    },
+    "00760": { "name": "Puistola - Heikinlaakso (Helsinki)", "types": { "terraced": { "eurPerM2": 3019, "sales": 53 } } },
+    "00770": {
+      "name": "Jakomäki - Alppikylä (Helsinki)",
+      "types": { "three_room_plus": { "eurPerM2": 2222, "sales": 21 }, "terraced": { "eurPerM2": 3212, "sales": 12 } }
+    },
+    "00780": {
+      "name": "Tapaninvainio (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3273, "sales": 6 },
+        "two_room": { "eurPerM2": 2879, "sales": 12 },
+        "three_room_plus": { "eurPerM2": 2354, "sales": 12 },
+        "terraced": { "eurPerM2": 3062, "sales": 64 }
+      }
+    },
+    "00790": {
+      "name": "Viikki (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 4491, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 3989, "sales": 36 },
+        "terraced": { "eurPerM2": 4096, "sales": 16 }
+      }
+    },
+    "00800": {
+      "name": "Länsi-Herttoniemi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4756, "sales": 17 },
+        "two_room": { "eurPerM2": 4681, "sales": 37 },
+        "three_room_plus": { "eurPerM2": 4741, "sales": 36 }
+      }
+    },
+    "00810": {
+      "name": "Herttoniemenranta (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 5379, "sales": 28 },
+        "two_room": { "eurPerM2": 5123, "sales": 96 },
+        "three_room_plus": { "eurPerM2": 4971, "sales": 87 }
+      }
+    },
+    "00820": {
+      "name": "Roihuvuori (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4096, "sales": 15 },
+        "two_room": { "eurPerM2": 3825, "sales": 64 },
+        "three_room_plus": { "eurPerM2": 3722, "sales": 75 }
+      }
+    },
+    "00830": { "name": "Tammisalo (Helsinki)", "types": { "terraced": { "eurPerM2": 4540, "sales": 27 } } },
+    "00840": {
+      "name": "Yliskylä (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 4074, "sales": 15 },
+        "two_room": { "eurPerM2": 3500, "sales": 45 },
+        "three_room_plus": { "eurPerM2": 3524, "sales": 63 },
+        "terraced": { "eurPerM2": 3850, "sales": 53 }
+      }
+    },
+    "00850": { "name": "Jollas (Helsinki)", "types": { "terraced": { "eurPerM2": 4188, "sales": 27 } } },
+    "00870": {
+      "name": "Gunillanmäki - Hevossalmi (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 2875, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 2722, "sales": 18 },
+        "terraced": { "eurPerM2": 3905, "sales": 14 }
+      }
+    },
+    "00900": {
+      "name": "Puotinharju (Helsinki)",
+      "types": { "two_room": { "eurPerM2": 2315, "sales": 18 }, "three_room_plus": { "eurPerM2": 2183, "sales": 28 } }
+    },
+    "00910": {
+      "name": "Puotila (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3413, "sales": 18 },
+        "two_room": { "eurPerM2": 3154, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 3128, "sales": 34 }
+      }
+    },
+    "00920": {
+      "name": "Myllypuro (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2931, "sales": 9 },
+        "two_room": { "eurPerM2": 2651, "sales": 46 },
+        "three_room_plus": { "eurPerM2": 2589, "sales": 66 },
+        "terraced": { "eurPerM2": 3325, "sales": 47 }
+      }
+    },
+    "00930": {
+      "name": "Itäkeskus - Marjaniemi (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2329, "sales": 7 },
+        "two_room": { "eurPerM2": 2332, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 2163, "sales": 14 },
+        "terraced": { "eurPerM2": 3516, "sales": 26 }
+      }
+    },
+    "00940": {
+      "name": "Kontula - Vesala - Kivikko (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3073, "sales": 11 },
+        "two_room": { "eurPerM2": 2152, "sales": 75 },
+        "three_room_plus": { "eurPerM2": 2000, "sales": 96 },
+        "terraced": { "eurPerM2": 2510, "sales": 37 }
+      }
+    },
+    "00950": {
+      "name": "Vartioharju (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 3073, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 3037, "sales": 12 },
+        "terraced": { "eurPerM2": 3165, "sales": 32 }
+      }
+    },
+    "00960": {
+      "name": "Pohjois-Vuosaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2752, "sales": 11 },
+        "two_room": { "eurPerM2": 2243, "sales": 47 },
+        "three_room_plus": { "eurPerM2": 2322, "sales": 20 },
+        "terraced": { "eurPerM2": 2833, "sales": 14 }
+      }
+    },
+    "00970": {
+      "name": "Mellunmäki (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 2700, "sales": 12 },
+        "two_room": { "eurPerM2": 1949, "sales": 36 },
+        "three_room_plus": { "eurPerM2": 1812, "sales": 46 },
+        "terraced": { "eurPerM2": 2787, "sales": 8 }
+      }
+    },
+    "00980": {
+      "name": "Etelä-Vuosaari (Helsinki)",
+      "types": {
+        "studio": { "eurPerM2": 3244, "sales": 12 },
+        "two_room": { "eurPerM2": 2759, "sales": 71 },
+        "three_room_plus": { "eurPerM2": 2707, "sales": 60 },
+        "terraced": { "eurPerM2": 3233, "sales": 58 }
+      }
+    },
+    "00990": {
+      "name": "Aurinkolahti (Helsinki)",
+      "types": {
+        "two_room": { "eurPerM2": 4381, "sales": 48 },
+        "three_room_plus": { "eurPerM2": 4494, "sales": 55 },
+        "terraced": { "eurPerM2": 4345, "sales": 6 }
+      }
+    },
+    "01150": {
+      "name": "Söderkulla (Sipoo)",
+      "types": {
+        "two_room": { "eurPerM2": 2979, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 2734, "sales": 16 },
+        "terraced": { "eurPerM2": 2494, "sales": 26 }
+      }
+    },
+    "01200": {
+      "name": "Hakunila (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 1962, "sales": 19 },
+        "two_room": { "eurPerM2": 1966, "sales": 27 },
+        "three_room_plus": { "eurPerM2": 1975, "sales": 28 },
+        "terraced": { "eurPerM2": 2313, "sales": 22 }
+      }
+    },
+    "01230": {
+      "name": "Vaarala (Vantaa)",
+      "types": { "two_room": { "eurPerM2": 1982, "sales": 6 }, "terraced": { "eurPerM2": 2834, "sales": 37 } }
+    },
+    "01260": { "name": "Itä-Hakkila (Vantaa)", "types": { "terraced": { "eurPerM2": 3050, "sales": 26 } } },
+    "01280": {
+      "name": "Länsimäki (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 2480, "sales": 8 },
+        "two_room": { "eurPerM2": 1742, "sales": 27 },
+        "three_room_plus": { "eurPerM2": 1197, "sales": 16 },
+        "terraced": { "eurPerM2": 2661, "sales": 60 }
+      }
+    },
+    "01300": {
+      "name": "Tikkurila (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 4142, "sales": 114 },
+        "two_room": { "eurPerM2": 3625, "sales": 177 },
+        "three_room_plus": { "eurPerM2": 3195, "sales": 130 },
+        "terraced": { "eurPerM2": 3022, "sales": 69 }
+      }
+    },
+    "01340": {
+      "name": "Leinelä (Vantaa)",
+      "types": { "two_room": { "eurPerM2": 3703, "sales": 24 }, "three_room_plus": { "eurPerM2": 3627, "sales": 16 } }
+    },
+    "01350": {
+      "name": "Hiekkaharju (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 3221, "sales": 25 },
+        "two_room": { "eurPerM2": 2765, "sales": 55 },
+        "three_room_plus": { "eurPerM2": 2182, "sales": 62 },
+        "terraced": { "eurPerM2": 2814, "sales": 33 }
+      }
+    },
+    "01360": {
+      "name": "Koivukylä-Havukoski (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 1582, "sales": 20 },
+        "two_room": { "eurPerM2": 1371, "sales": 42 },
+        "three_room_plus": { "eurPerM2": 1444, "sales": 34 },
+        "terraced": { "eurPerM2": 2493, "sales": 19 }
+      }
+    },
+    "01370": {
+      "name": "Jokiniemi (Vantaa)",
+      "types": {
+        "two_room": { "eurPerM2": 3063, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 2888, "sales": 12 },
+        "terraced": { "eurPerM2": 3351, "sales": 19 }
+      }
+    },
+    "01380": { "name": "Kuusikko-Hakkila (Vantaa)", "types": { "terraced": { "eurPerM2": 3542, "sales": 10 } } },
+    "01390": {
+      "name": "Ruskeasanta-Ilola (Vantaa)",
+      "types": { "three_room_plus": { "eurPerM2": 2245, "sales": 7 }, "terraced": { "eurPerM2": 3168, "sales": 50 } }
+    },
+    "01400": {
+      "name": "Rekola (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 4098, "sales": 16 },
+        "two_room": { "eurPerM2": 3269, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 3037, "sales": 9 },
+        "terraced": { "eurPerM2": 2752, "sales": 30 }
+      }
+    },
+    "01450": {
+      "name": "Korso (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 2347, "sales": 11 },
+        "two_room": { "eurPerM2": 1799, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 1859, "sales": 19 },
+        "terraced": { "eurPerM2": 2606, "sales": 92 }
+      }
+    },
+    "01480": {
+      "name": "Mikkola (Vantaa)",
+      "types": {
+        "two_room": { "eurPerM2": 1278, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 1450, "sales": 18 },
+        "terraced": { "eurPerM2": 2703, "sales": 18 }
+      }
+    },
+    "01490": { "name": "Nikinmäki (Vantaa)", "types": { "terraced": { "eurPerM2": 3418, "sales": 23 } } },
+    "01510": {
+      "name": "Kirkonkylä-Veromäki (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 4550, "sales": 16 },
+        "two_room": { "eurPerM2": 3964, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 3663, "sales": 40 },
+        "terraced": { "eurPerM2": 3959, "sales": 28 }
+      }
+    },
+    "01520": {
+      "name": "Tammisto (Vantaa)",
+      "types": {
+        "two_room": { "eurPerM2": 3814, "sales": 15 },
+        "three_room_plus": { "eurPerM2": 3543, "sales": 27 },
+        "terraced": { "eurPerM2": 4245, "sales": 26 }
+      }
+    },
+    "01600": {
+      "name": "Myyrmäki (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 3304, "sales": 41 },
+        "two_room": { "eurPerM2": 2188, "sales": 103 },
+        "three_room_plus": { "eurPerM2": 2027, "sales": 139 }
+      }
+    },
+    "01610": {
+      "name": "Kaivoksela (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 3693, "sales": 11 },
+        "two_room": { "eurPerM2": 2236, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 2650, "sales": 28 },
+        "terraced": { "eurPerM2": 2650, "sales": 9 }
+      }
+    },
+    "01620": {
+      "name": "Martinlaakso (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 2826, "sales": 18 },
+        "two_room": { "eurPerM2": 2530, "sales": 60 },
+        "three_room_plus": { "eurPerM2": 2052, "sales": 70 },
+        "terraced": { "eurPerM2": 2459, "sales": 30 }
+      }
+    },
+    "01630": { "name": "Hämeenkylä (Vantaa)", "types": { "terraced": { "eurPerM2": 2584, "sales": 26 } } },
+    "01640": { "name": "Hämevaara (Vantaa)", "types": { "three_room_plus": { "eurPerM2": 3003, "sales": 9 } } },
+    "01650": {
+      "name": "Vapaala (Vantaa)",
+      "types": {
+        "two_room": { "eurPerM2": 1638, "sales": 16 },
+        "three_room_plus": { "eurPerM2": 1653, "sales": 12 },
+        "terraced": { "eurPerM2": 2211, "sales": 12 }
+      }
+    },
+    "01660": { "name": "Varisto (Vantaa)", "types": { "terraced": { "eurPerM2": 2789, "sales": 29 } } },
+    "01670": {
+      "name": "Vantaanlaakso (Vantaa)",
+      "types": { "three_room_plus": { "eurPerM2": 2852, "sales": 6 }, "terraced": { "eurPerM2": 2909, "sales": 38 } }
+    },
+    "01680": { "name": "Askisto (Vantaa)", "types": { "terraced": { "eurPerM2": 2041, "sales": 7 } } },
+    "01690": { "name": "Ylästö (Vantaa)", "types": { "terraced": { "eurPerM2": 3816, "sales": 47 } } },
+    "01700": {
+      "name": "Kivistö (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 4134, "sales": 38 },
+        "two_room": { "eurPerM2": 3778, "sales": 72 },
+        "three_room_plus": { "eurPerM2": 3336, "sales": 35 },
+        "terraced": { "eurPerM2": 3286, "sales": 25 }
+      }
+    },
+    "01710": {
+      "name": "Pähkinärinne (Vantaa)",
+      "types": {
+        "studio": { "eurPerM2": 2470, "sales": 8 },
+        "two_room": { "eurPerM2": 2077, "sales": 17 },
+        "three_room_plus": { "eurPerM2": 2159, "sales": 25 },
+        "terraced": { "eurPerM2": 3006, "sales": 35 }
+      }
+    },
+    "01730": {
+      "name": "Vantaanpuisto (Vantaa)",
+      "types": { "two_room": { "eurPerM2": 1788, "sales": 8 }, "terraced": { "eurPerM2": 3487, "sales": 8 } }
+    },
+    "01800": {
+      "name": "Klaukkala Keskus (Nurmijärvi)",
+      "types": {
+        "studio": { "eurPerM2": 2643, "sales": 22 },
+        "two_room": { "eurPerM2": 2186, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 2252, "sales": 14 },
+        "terraced": { "eurPerM2": 2243, "sales": 66 }
+      }
+    },
+    "01820": { "name": "Haikala (Nurmijärvi)", "types": { "terraced": { "eurPerM2": 2153, "sales": 37 } } },
+    "01840": { "name": "Klaukkala (Nurmijärvi)", "types": { "terraced": { "eurPerM2": 2114, "sales": 24 } } },
+    "01900": {
+      "name": "Nurmijärvi Keskus (Nurmijärvi)",
+      "types": {
+        "studio": { "eurPerM2": 1558, "sales": 10 },
+        "two_room": { "eurPerM2": 1740, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 2135, "sales": 24 },
+        "terraced": { "eurPerM2": 2216, "sales": 37 }
+      }
+    },
+    "02100": {
+      "name": "Tapiola (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 5702, "sales": 34 },
+        "two_room": { "eurPerM2": 5773, "sales": 60 },
+        "three_room_plus": { "eurPerM2": 5647, "sales": 112 },
+        "terraced": { "eurPerM2": 4972, "sales": 8 }
+      }
+    },
+    "02110": {
+      "name": "Otsolahti (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 5189, "sales": 7 },
+        "two_room": { "eurPerM2": 5058, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 4892, "sales": 34 },
+        "terraced": { "eurPerM2": 5182, "sales": 9 }
+      }
+    },
+    "02120": {
+      "name": "Länsikorkee-Suvikumpu (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 5691, "sales": 9 },
+        "two_room": { "eurPerM2": 4690, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 4988, "sales": 49 },
+        "terraced": { "eurPerM2": 5015, "sales": 9 }
+      }
+    },
+    "02130": {
+      "name": "Pohjois-Tapiola (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 4609, "sales": 96 },
+        "three_room_plus": { "eurPerM2": 4576, "sales": 58 },
+        "terraced": { "eurPerM2": 4222, "sales": 47 }
+      }
+    },
+    "02140": { "name": "Laajalahti (Espoo)", "types": { "terraced": { "eurPerM2": 4032, "sales": 34 } } },
+    "02150": { "name": "Otaniemi (Espoo)", "types": { "three_room_plus": { "eurPerM2": 4405, "sales": 8 } } },
+    "02160": { "name": "Westend (Espoo)", "types": { "terraced": { "eurPerM2": 4809, "sales": 34 } } },
+    "02170": {
+      "name": "Haukilahti (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 4614, "sales": 8 },
+        "two_room": { "eurPerM2": 4411, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 4097, "sales": 44 },
+        "terraced": { "eurPerM2": 4507, "sales": 52 }
+      }
+    },
+    "02180": { "name": "Mankkaa (Espoo)", "types": { "terraced": { "eurPerM2": 3988, "sales": 88 } } },
+    "02200": {
+      "name": "Niittykumpu (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 5777, "sales": 43 },
+        "two_room": { "eurPerM2": 4843, "sales": 68 },
+        "three_room_plus": { "eurPerM2": 4975, "sales": 80 },
+        "terraced": { "eurPerM2": 4045, "sales": 52 }
+      }
+    },
+    "02210": {
+      "name": "Olari (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3594, "sales": 20 },
+        "two_room": { "eurPerM2": 3109, "sales": 52 },
+        "three_room_plus": { "eurPerM2": 2982, "sales": 88 },
+        "terraced": { "eurPerM2": 3146, "sales": 57 }
+      }
+    },
+    "02230": {
+      "name": "Matinkylä (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 4668, "sales": 34 },
+        "two_room": { "eurPerM2": 3938, "sales": 127 },
+        "three_room_plus": { "eurPerM2": 3869, "sales": 121 },
+        "terraced": { "eurPerM2": 4426, "sales": 98 }
+      }
+    },
+    "02240": { "name": "Friisilä (Espoo)", "types": { "terraced": { "eurPerM2": 3935, "sales": 21 } } },
+    "02250": {
+      "name": "Henttaa (Espoo)",
+      "types": { "two_room": { "eurPerM2": 4413, "sales": 10 }, "three_room_plus": { "eurPerM2": 4054, "sales": 16 } }
+    },
+    "02260": {
+      "name": "Kaitaa (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 3179, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 3399, "sales": 17 },
+        "terraced": { "eurPerM2": 4116, "sales": 22 }
+      }
+    },
+    "02270": { "name": "Finnoo-Eestinmalmi (Espoo)", "types": { "terraced": { "eurPerM2": 3528, "sales": 24 } } },
+    "02280": { "name": "Malminmäki-Eestinlaakso (Espoo)", "types": { "terraced": { "eurPerM2": 3445, "sales": 33 } } },
+    "02300": { "name": "Nöykkiönpuro (Espoo)", "types": { "terraced": { "eurPerM2": 3332, "sales": 14 } } },
+    "02320": {
+      "name": "Espoonlahti (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3336, "sales": 33 },
+        "two_room": { "eurPerM2": 3417, "sales": 51 },
+        "three_room_plus": { "eurPerM2": 3094, "sales": 117 },
+        "terraced": { "eurPerM2": 3403, "sales": 64 }
+      }
+    },
+    "02330": {
+      "name": "Saunalahti-Kattilalaakso (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 4580, "sales": 10 },
+        "two_room": { "eurPerM2": 3850, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 4105, "sales": 30 },
+        "terraced": { "eurPerM2": 3863, "sales": 50 }
+      }
+    },
+    "02340": { "name": "Latokaski (Espoo)", "types": { "terraced": { "eurPerM2": 3218, "sales": 72 } } },
+    "02360": {
+      "name": "Soukka (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3247, "sales": 9 },
+        "two_room": { "eurPerM2": 2400, "sales": 21 },
+        "three_room_plus": { "eurPerM2": 2478, "sales": 57 },
+        "terraced": { "eurPerM2": 3720, "sales": 53 }
+      }
+    },
+    "02390": {
+      "name": "Sarvvik (Kirkkonummi)",
+      "types": { "studio": { "eurPerM2": 3839, "sales": 15 }, "two_room": { "eurPerM2": 3991, "sales": 7 } }
+    },
+    "02400": {
+      "name": "Kirkkonummi Keskus (Kirkkonummi)",
+      "types": {
+        "studio": { "eurPerM2": 1920, "sales": 26 },
+        "two_room": { "eurPerM2": 2276, "sales": 55 },
+        "three_room_plus": { "eurPerM2": 1753, "sales": 29 },
+        "terraced": { "eurPerM2": 2717, "sales": 46 }
+      }
+    },
+    "02410": {
+      "name": "Gesterby (Kirkkonummi)",
+      "types": {
+        "two_room": { "eurPerM2": 766, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 895, "sales": 8 },
+        "terraced": { "eurPerM2": 1985, "sales": 11 }
+      }
+    },
+    "02430": { "name": "Masala (Kirkkonummi)", "types": { "terraced": { "eurPerM2": 2266, "sales": 38 } } },
+    "02450": { "name": "Sundsberg (Kirkkonummi)", "types": { "terraced": { "eurPerM2": 3828, "sales": 64 } } },
+    "02460": { "name": "Kantvik (Kirkkonummi)", "types": { "terraced": { "eurPerM2": 1934, "sales": 9 } } },
+    "02480": { "name": "Porkkala (Kirkkonummi)", "types": { "terraced": { "eurPerM2": 2734, "sales": 40 } } },
+    "02580": { "name": "Siuntio Asemanseutu (Siuntio)", "types": { "terraced": { "eurPerM2": 1375, "sales": 11 } } },
+    "02600": {
+      "name": "Etelä-Leppävaara (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 4081, "sales": 70 },
+        "two_room": { "eurPerM2": 4097, "sales": 73 },
+        "three_room_plus": { "eurPerM2": 4227, "sales": 113 },
+        "terraced": { "eurPerM2": 3929, "sales": 14 }
+      }
+    },
+    "02610": {
+      "name": "Kilo (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 4136, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 3717, "sales": 7 },
+        "terraced": { "eurPerM2": 3952, "sales": 28 }
+      }
+    },
+    "02620": {
+      "name": "Karakallio (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3057, "sales": 7 },
+        "two_room": { "eurPerM2": 2952, "sales": 27 },
+        "three_room_plus": { "eurPerM2": 2748, "sales": 46 },
+        "terraced": { "eurPerM2": 3247, "sales": 22 }
+      }
+    },
+    "02630": {
+      "name": "Nihtisilta (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 2792, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 2375, "sales": 9 },
+        "terraced": { "eurPerM2": 3538, "sales": 20 }
+      }
+    },
+    "02650": {
+      "name": "Pohjois-Leppävaara (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 4027, "sales": 26 },
+        "two_room": { "eurPerM2": 3897, "sales": 64 },
+        "three_room_plus": { "eurPerM2": 3538, "sales": 81 },
+        "terraced": { "eurPerM2": 3556, "sales": 13 }
+      }
+    },
+    "02660": { "name": "Lintuvaara (Espoo)", "types": { "terraced": { "eurPerM2": 4060, "sales": 24 } } },
+    "02680": {
+      "name": "Uusmäki (Espoo)",
+      "types": { "three_room_plus": { "eurPerM2": 4196, "sales": 13 }, "terraced": { "eurPerM2": 4334, "sales": 37 } }
+    },
+    "02700": {
+      "name": "Kauniainen (Kauniainen)",
+      "types": {
+        "studio": { "eurPerM2": 4699, "sales": 7 },
+        "two_room": { "eurPerM2": 4341, "sales": 43 },
+        "three_room_plus": { "eurPerM2": 4331, "sales": 74 },
+        "terraced": { "eurPerM2": 3940, "sales": 61 }
+      }
+    },
+    "02710": {
+      "name": "Viherlaakso (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3455, "sales": 12 },
+        "two_room": { "eurPerM2": 2652, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 2431, "sales": 33 },
+        "terraced": { "eurPerM2": 3050, "sales": 32 }
+      }
+    },
+    "02720": {
+      "name": "Lähderanta (Espoo)",
+      "types": {
+        "studio": { "eurPerM2": 3111, "sales": 12 },
+        "two_room": { "eurPerM2": 2783, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 2765, "sales": 16 },
+        "terraced": { "eurPerM2": 3438, "sales": 25 }
+      }
+    },
+    "02730": { "name": "Jupperi (Espoo)", "types": { "terraced": { "eurPerM2": 3584, "sales": 36 } } },
+    "02740": { "name": "Bemböle-Pakankylä (Espoo)", "types": { "terraced": { "eurPerM2": 3341, "sales": 17 } } },
+    "02750": {
+      "name": "Sepänkylä-Kuurinniitty (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 3586, "sales": 7 },
+        "three_room_plus": { "eurPerM2": 3292, "sales": 13 },
+        "terraced": { "eurPerM2": 3834, "sales": 36 }
+      }
+    },
+    "02760": {
+      "name": "Tuomarila-Suvela (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 2809, "sales": 32 },
+        "three_room_plus": { "eurPerM2": 2664, "sales": 43 },
+        "terraced": { "eurPerM2": 2964, "sales": 68 }
+      }
+    },
+    "02770": {
+      "name": "Espoon Keskus (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 2262, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 2451, "sales": 15 },
+        "terraced": { "eurPerM2": 3307, "sales": 33 }
+      }
+    },
+    "02780": {
+      "name": "Kauklahti (Espoo)",
+      "types": {
+        "two_room": { "eurPerM2": 3275, "sales": 10 },
+        "three_room_plus": { "eurPerM2": 2612, "sales": 13 },
+        "terraced": { "eurPerM2": 3921, "sales": 86 }
+      }
+    },
+    "02810": { "name": "Gumböle-Karhusuo (Espoo)", "types": { "terraced": { "eurPerM2": 3295, "sales": 12 } } },
+    "02820": { "name": "Nupuri-Nuuksio (Espoo)", "types": { "terraced": { "eurPerM2": 3839, "sales": 6 } } },
+    "02880": { "name": "Veikkola (Kirkkonummi)", "types": { "terraced": { "eurPerM2": 2435, "sales": 34 } } },
+    "02920": { "name": "Niipperi (Espoo)", "types": { "terraced": { "eurPerM2": 3367, "sales": 41 } } },
+    "02940": {
+      "name": "Lippajärvi-Järvenperä (Espoo)",
+      "types": { "three_room_plus": { "eurPerM2": 2735, "sales": 11 }, "terraced": { "eurPerM2": 3063, "sales": 99 } }
+    },
+    "03100": {
+      "name": "Nummela (Vihti)",
+      "types": {
+        "studio": { "eurPerM2": 2406, "sales": 24 },
+        "two_room": { "eurPerM2": 2052, "sales": 57 },
+        "three_room_plus": { "eurPerM2": 2069, "sales": 27 },
+        "terraced": { "eurPerM2": 2001, "sales": 149 }
+      }
+    },
+    "03250": { "name": "Ojakkala (Vihti)", "types": { "terraced": { "eurPerM2": 1716, "sales": 10 } } },
+    "03400": {
+      "name": "Vihti Kirkonkylä (Vihti)",
+      "types": { "two_room": { "eurPerM2": 1253, "sales": 7 }, "terraced": { "eurPerM2": 1427, "sales": 34 } }
+    },
+    "03600": {
+      "name": "Karkkila Keskus (Karkkila)",
+      "types": {
+        "studio": { "eurPerM2": 1197, "sales": 12 },
+        "two_room": { "eurPerM2": 1072, "sales": 19 },
+        "three_room_plus": { "eurPerM2": 1258, "sales": 7 },
+        "terraced": { "eurPerM2": 1311, "sales": 12 }
+      }
+    },
+    "03620": { "name": "Polari (Karkkila)", "types": { "two_room": { "eurPerM2": 968, "sales": 14 } } },
+    "03850": { "name": "Pusula (Lohja)", "types": { "terraced": { "eurPerM2": 815, "sales": 7 } } },
+    "04130": {
+      "name": "Sipoo (Sipoo)",
+      "types": {
+        "studio": { "eurPerM2": 2156, "sales": 10 },
+        "two_room": { "eurPerM2": 2335, "sales": 24 },
+        "three_room_plus": { "eurPerM2": 2627, "sales": 18 },
+        "terraced": { "eurPerM2": 2360, "sales": 19 }
+      }
+    },
+    "04200": {
+      "name": "Kerava Keskus (Kerava)",
+      "types": {
+        "studio": { "eurPerM2": 2611, "sales": 22 },
+        "two_room": { "eurPerM2": 2178, "sales": 73 },
+        "three_room_plus": { "eurPerM2": 2306, "sales": 62 },
+        "terraced": { "eurPerM2": 2197, "sales": 19 }
+      }
+    },
+    "04220": {
+      "name": "Ahjo-Kaskela (Kerava)",
+      "types": {
+        "two_room": { "eurPerM2": 2335, "sales": 9 },
+        "three_room_plus": { "eurPerM2": 2294, "sales": 10 },
+        "terraced": { "eurPerM2": 2175, "sales": 13 }
+      }
+    },
+    "04230": {
+      "name": "Pihkaniitty (Kerava)",
+      "types": {
+        "studio": { "eurPerM2": 2110, "sales": 6 },
+        "two_room": { "eurPerM2": 1894, "sales": 20 },
+        "three_room_plus": { "eurPerM2": 1952, "sales": 13 },
+        "terraced": { "eurPerM2": 2139, "sales": 42 }
+      }
+    },
+    "04250": {
+      "name": "Alikerava (Kerava)",
+      "types": {
+        "studio": { "eurPerM2": 3707, "sales": 8 },
+        "two_room": { "eurPerM2": 2404, "sales": 18 },
+        "three_room_plus": { "eurPerM2": 2333, "sales": 16 },
+        "terraced": { "eurPerM2": 1948, "sales": 10 }
+      }
+    },
+    "04260": {
+      "name": "Savio (Kerava)",
+      "types": {
+        "studio": { "eurPerM2": 1858, "sales": 9 },
+        "two_room": { "eurPerM2": 1589, "sales": 11 },
+        "three_room_plus": { "eurPerM2": 1344, "sales": 15 },
+        "terraced": { "eurPerM2": 2215, "sales": 17 }
+      }
+    },
+    "04300": {
+      "name": "Hyrylä (Tuusula)",
+      "types": {
+        "studio": { "eurPerM2": 2468, "sales": 14 },
+        "two_room": { "eurPerM2": 2299, "sales": 33 },
+        "three_room_plus": { "eurPerM2": 2576, "sales": 29 },
+        "terraced": { "eurPerM2": 2655, "sales": 66 }
+      }
+    },
+    "04310": { "name": "Tuusula Keskus (Tuusula)", "types": { "terraced": { "eurPerM2": 2630, "sales": 14 } } },
+    "04320": {
+      "name": "Riihikallio (Tuusula)",
+      "types": {
+        "two_room": { "eurPerM2": 1840, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 1487, "sales": 17 },
+        "terraced": { "eurPerM2": 2283, "sales": 36 }
+      }
+    },
+    "04330": { "name": "Lahela (Tuusula)", "types": { "terraced": { "eurPerM2": 2392, "sales": 8 } } },
+    "04340": { "name": "Mattila (Tuusula)", "types": { "terraced": { "eurPerM2": 2233, "sales": 7 } } },
+    "04400": {
+      "name": "Loutti (Järvenpää)",
+      "types": {
+        "studio": { "eurPerM2": 2805, "sales": 34 },
+        "two_room": { "eurPerM2": 2382, "sales": 55 },
+        "three_room_plus": { "eurPerM2": 2164, "sales": 49 },
+        "terraced": { "eurPerM2": 2790, "sales": 52 }
+      }
+    },
+    "04410": {
+      "name": "Järvenpää Keskus (Järvenpää)",
+      "types": {
+        "studio": { "eurPerM2": 2856, "sales": 20 },
+        "two_room": { "eurPerM2": 2105, "sales": 26 },
+        "three_room_plus": { "eurPerM2": 2069, "sales": 28 },
+        "terraced": { "eurPerM2": 2587, "sales": 76 }
+      }
+    },
+    "04420": { "name": "Kyrölä (Järvenpää)", "types": { "terraced": { "eurPerM2": 2844, "sales": 58 } } },
+    "04430": {
+      "name": "Kinnari-Mikonkorpi (Järvenpää)",
+      "types": { "two_room": { "eurPerM2": 2410, "sales": 8 }, "terraced": { "eurPerM2": 2736, "sales": 95 } }
+    },
+    "04440": {
+      "name": "Jamppa (Järvenpää)",
+      "types": { "two_room": { "eurPerM2": 997, "sales": 9 }, "terraced": { "eurPerM2": 2166, "sales": 20 } }
+    },
+    "04460": { "name": "Nummenkylä (Järvenpää)", "types": { "terraced": { "eurPerM2": 2517, "sales": 12 } } },
+    "04500": { "name": "Kellokoski (Tuusula)", "types": { "terraced": { "eurPerM2": 2004, "sales": 13 } } },
+    "04600": {
+      "name": "Mäntsälä Keskus (Mäntsälä)",
+      "types": {
+        "studio": { "eurPerM2": 2237, "sales": 33 },
+        "two_room": { "eurPerM2": 1523, "sales": 31 },
+        "three_room_plus": { "eurPerM2": 1653, "sales": 17 },
+        "terraced": { "eurPerM2": 1678, "sales": 65 }
+      }
+    },
+    "04620": { "name": "Kaunismäki (Mäntsälä)", "types": { "terraced": { "eurPerM2": 1784, "sales": 8 } } },
+    "05200": {
+      "name": "Rajamäki (Nurmijärvi)",
+      "types": { "two_room": { "eurPerM2": 1474, "sales": 7 }, "terraced": { "eurPerM2": 2119, "sales": 25 } }
+    },
+    "05400": {
+      "name": "Jokela (Tuusula)",
+      "types": { "two_room": { "eurPerM2": 1798, "sales": 10 }, "terraced": { "eurPerM2": 2299, "sales": 15 } }
+    },
+    "05460": { "name": "Hakalanmäki-Hakala (Hyvinkää)", "types": { "terraced": { "eurPerM2": 1748, "sales": 28 } } },
+    "05620": { "name": "Noppo (Hyvinkää)", "types": { "terraced": { "eurPerM2": 2145, "sales": 9 } } },
+    "05800": {
+      "name": "Hyvinkää Keskus (Hyvinkää)",
+      "types": {
+        "studio": { "eurPerM2": 1809, "sales": 27 },
+        "two_room": { "eurPerM2": 1996, "sales": 84 },
+        "three_room_plus": { "eurPerM2": 2246, "sales": 55 },
+        "terraced": { "eurPerM2": 2158, "sales": 21 }
+      }
+    },
+    "05810": { "name": "Martti (Hyvinkää)", "types": { "terraced": { "eurPerM2": 2375, "sales": 42 } } },
+    "05820": {
+      "name": "Mustamännistö (Hyvinkää)",
+      "types": { "two_room": { "eurPerM2": 1104, "sales": 7 }, "terraced": { "eurPerM2": 2438, "sales": 22 } }
+    },
+    "05830": {
+      "name": "Kirjavatolppa-Kruununpuisto (Hyvinkää)",
+      "types": {
+        "studio": { "eurPerM2": 1814, "sales": 11 },
+        "two_room": { "eurPerM2": 1638, "sales": 22 },
+        "three_room_plus": { "eurPerM2": 1636, "sales": 19 },
+        "terraced": { "eurPerM2": 1778, "sales": 33 }
+      }
+    },
+    "05840": {
+      "name": "Hyvinkäänkylä-Vehkoja (Hyvinkää)",
+      "types": { "two_room": { "eurPerM2": 1052, "sales": 9 }, "terraced": { "eurPerM2": 1790, "sales": 14 } }
+    },
+    "05880": {
+      "name": "Paavola-Vaivero (Hyvinkää)",
+      "types": {
+        "studio": { "eurPerM2": 894, "sales": 11 },
+        "two_room": { "eurPerM2": 823, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 839, "sales": 12 },
+        "terraced": { "eurPerM2": 1506, "sales": 11 }
+      }
+    },
+    "05900": {
+      "name": "Vieremä (Hyvinkää)",
+      "types": {
+        "studio": { "eurPerM2": 1773, "sales": 7 },
+        "two_room": { "eurPerM2": 1721, "sales": 23 },
+        "three_room_plus": { "eurPerM2": 2193, "sales": 21 },
+        "terraced": { "eurPerM2": 2299, "sales": 12 }
+      }
+    },
+    "06100": {
+      "name": "Porvoo Keskus (Porvoo)",
+      "types": {
+        "studio": { "eurPerM2": 2916, "sales": 51 },
+        "two_room": { "eurPerM2": 2808, "sales": 93 },
+        "three_room_plus": { "eurPerM2": 2945, "sales": 73 },
+        "terraced": { "eurPerM2": 2837, "sales": 53 }
+      }
+    },
+    "06150": {
+      "name": "Kevätkumpu (Porvoo)",
+      "types": {
+        "studio": { "eurPerM2": 1820, "sales": 7 },
+        "two_room": { "eurPerM2": 1763, "sales": 26 },
+        "terraced": { "eurPerM2": 2043, "sales": 19 }
+      }
+    },
+    "06400": {
+      "name": "Gammelbacka (Porvoo)",
+      "types": {
+        "studio": { "eurPerM2": 1615, "sales": 6 },
+        "two_room": { "eurPerM2": 1633, "sales": 10 },
+        "terraced": { "eurPerM2": 2373, "sales": 42 }
+      }
+    },
+    "06450": {
+      "name": "Eestinmäki-Ernestas (Porvoo)",
+      "types": { "studio": { "eurPerM2": 2095, "sales": 6 }, "terraced": { "eurPerM2": 2250, "sales": 8 } }
+    },
+    "06650": { "name": "Hamari (Porvoo)", "types": { "terraced": { "eurPerM2": 2268, "sales": 9 } } },
+    "06750": { "name": "Tolkkinen (Porvoo)", "types": { "terraced": { "eurPerM2": 2220, "sales": 8 } } },
+    "07170": { "name": "Keski-Pornainen (Pornainen)", "types": { "terraced": { "eurPerM2": 2164, "sales": 8 } } },
+    "07230": { "name": "Monninkylä (Askola)", "types": { "terraced": { "eurPerM2": 1374, "sales": 6 } } },
+    "07900": {
+      "name": "Loviisa Keskus (Loviisa)",
+      "types": {
+        "studio": { "eurPerM2": 1394, "sales": 9 },
+        "two_room": { "eurPerM2": 1469, "sales": 13 },
+        "three_room_plus": { "eurPerM2": 1168, "sales": 7 },
+        "terraced": { "eurPerM2": 1408, "sales": 10 }
+      }
+    },
+    "07920": { "name": "Etelä-Harju (Loviisa)", "types": { "terraced": { "eurPerM2": 1215, "sales": 6 } } },
+    "08100": {
+      "name": "Lohja Keskus (Lohja)",
+      "types": {
+        "studio": { "eurPerM2": 2423, "sales": 26 },
+        "two_room": { "eurPerM2": 2319, "sales": 63 },
+        "three_room_plus": { "eurPerM2": 2600, "sales": 40 },
+        "terraced": { "eurPerM2": 2566, "sales": 32 }
+      }
+    },
+    "08150": { "name": "Keskilohja (Lohja)", "types": { "terraced": { "eurPerM2": 2286, "sales": 17 } } },
+    "08200": {
+      "name": "Ojamo (Lohja)",
+      "types": {
+        "two_room": { "eurPerM2": 977, "sales": 14 },
+        "three_room_plus": { "eurPerM2": 1032, "sales": 14 },
+        "terraced": { "eurPerM2": 1998, "sales": 26 }
+      }
+    },
+    "08350": {
+      "name": "Routio (Lohja)",
+      "types": { "three_room_plus": { "eurPerM2": 1228, "sales": 9 }, "terraced": { "eurPerM2": 1976, "sales": 14 } }
+    },
+    "08500": { "name": "Ventelä-Millola (Lohja)", "types": { "terraced": { "eurPerM2": 1742, "sales": 38 } } },
+    "08680": { "name": "Muijala (Lohja)", "types": { "terraced": { "eurPerM2": 2200, "sales": 8 } } },
+    "08700": {
+      "name": "Virkkala (Lohja)",
+      "types": {
+        "studio": { "eurPerM2": 926, "sales": 7 },
+        "two_room": { "eurPerM2": 1029, "sales": 18 },
+        "terraced": { "eurPerM2": 1807, "sales": 25 }
+      }
+    },
+    "09430": { "name": "Saukkola (Lohja)", "types": { "terraced": { "eurPerM2": 1306, "sales": 6 } } }
+  }
+}
