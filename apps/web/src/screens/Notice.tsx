@@ -24,6 +24,18 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
       <h1>{text.title}</h1>
       <p className="muted">{t("notice.basis", { items: event.evidence.length, sources })}</p>
       <p className="muted">{t("notice.window")}</p>
+      <p>{text.question}</p>
+      <div className="actions answer-actions">
+        <button type="button" className="primary" onClick={() => onAnswer("confirmed")}>
+          {text.answers.confirm}
+        </button>
+        <button type="button" onClick={() => onAnswer("dismissed")}>
+          {text.answers.notNow}
+        </button>
+        <button type="button" className="quiet" onClick={() => onAnswer("never")}>
+          {text.answers.never}
+        </button>
+      </div>
       <h2>{text.why}</h2>
       <ul className="list evidence-list">
         {event.evidence.map((ev) => {
@@ -46,18 +58,6 @@ export function Notice({ entry, snippets, onRejectEvidence, onAnswer }: Props) {
           );
         })}
       </ul>
-      <p>{text.question}</p>
-      <div className="actions answer-actions">
-        <button type="button" className="primary" onClick={() => onAnswer("confirmed")}>
-          {text.answers.confirm}
-        </button>
-        <button type="button" onClick={() => onAnswer("dismissed")}>
-          {text.answers.notNow}
-        </button>
-        <button type="button" className="quiet" onClick={() => onAnswer("never")}>
-          {text.answers.never}
-        </button>
-      </div>
     </section>
   );
 }

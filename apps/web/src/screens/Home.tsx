@@ -27,7 +27,9 @@ export function Home({ ledger, anySourceOn, checked, checking, progress, error, 
     <section className="home-screen">
       <h1>{t("home.title")}</h1>
       <p className="screen-lead">{t("home.lead")}</p>
-      {pending.length === 0 && <p className="empty">{checked || ledger.length > 0 ? t("home.empty") : t("home.neverChecked")}</p>}
+      {pending.length === 0 && confirmed.length === 0 && (
+        <p className="empty">{checked || ledger.length > 0 ? t("home.empty") : t("home.neverChecked")}</p>
+      )}
       {pending.length > 0 && (
         <>
           <h2>{t("home.pending")}</h2>
