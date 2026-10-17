@@ -44,11 +44,16 @@ async function readAd(request, env) {
       }),
       READER_TIMEOUT_MS,
     );
-  } catch {
+  } catch (e) {
+    // Only the error, never the ad or the token: visible to the account owner with `wrangler tail`.
+    console.error("listing reader unreachable:", e?.name, e?.message);
     return reply({ ok: false, error: "ai_unavailable" }, 503);
   }
   // 401 (token replaced), 429 (the team's hourly limit), 502 (model restarting): the page uses its rules.
-  if (!res.ok) return reply({ ok: false, error: "ai_unavailable", status: res.status }, 503);
+  if (!res.ok) {
+    console.error("listing reader answered", res.status);
+    return reply({ ok: false, error: "ai_unavailable", status: res.status }, 503);
+  }
   let answer;
   try {
     answer = await res.json();
