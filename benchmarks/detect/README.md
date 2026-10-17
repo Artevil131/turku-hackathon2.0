@@ -90,6 +90,39 @@ long trip +89). The caveat below still applies: the noise is ours.
 | 0.9 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 | move +20, first_car +7, long_trip +89 / 0 |
 | 0.9 | 4 | – / 0 | – / 0 | renovation +8, pet +46 / 0 | move +18, first_car +2, long_trip +89 / 0 | move +18, first_car +7, long_trip +89 / 0 | move +18, first_car +7, long_trip +89 / 0 |
 
+## Run 5, 2026-10-17: sms and wifi sources
+
+Two sources were added to every phone, service texts (`sms`: the mover,
+DVV/Posti, Traficom, the airline, the breeder, with parcel notices,
+one-time codes and tickets as noise) and networks joined (`wifi`: the
+student-housing and dealer guest networks, with home, campus and café
+networks as noise), plus one payment-request trap about a friend's move
+per phone, and prototypes and ordinary-life sentences written the way
+those snippets appear. Same parameters as the pick: every planted event
+on all six phones, no false episode, and the guest-network joins bring
+the student's move forward from +23 to +29 days at threshold 2; the
+first mover prototype pulled a parent's question about a sibling's car
+into "move", fixed by naming the firm and the moving day in the
+prototype and by listing a friend's payment request as ordinary life,
+not by touching the thresholds. Run on chili (Slurm job 19021, 274 s,
+2.4 GB peak).
+
+### e5, six phones
+| floor | thr | control-year: detected (lead d) / false | control: detected (lead d) / false | family: detected (lead d) / false | student-sv: detected (lead d) / false | student-year: detected (lead d) / false | student: detected (lead d) / false |
+|---|---|---|---|---|---|---|---|
+| 0.6 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +29, first_car +7, long_trip +89 / 1 (move) | move +29, first_car +7, long_trip +89 / 0 |
+| 0.6 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.6 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.6 | 4 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.75 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +29, first_car +7, long_trip +89 / 1 (move) | move +29, first_car +7, long_trip +89 / 0 |
+| 0.75 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.75 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.75 | 4 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.9 | 2 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +29, first_car +7, long_trip +89 / 0 | move +29, first_car +7, long_trip +89 / 0 |
+| 0.9 | 2.5 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.9 | 3 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+| 0.9 | 4 | – / 0 | – / 0 | renovation +10, pet +46 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 | move +23, first_car +7, long_trip +89 / 0 |
+
 ## What the earlier runs taught
 
 Run 1 (absolute cosine margins): e5's cosines span a fifth of MiniLM's,
