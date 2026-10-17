@@ -165,6 +165,11 @@ service workers; whether the Android build honours it is not confirmed.
   so too. Without it the journey shows the live cache honestly ("no
   warnings"). Refresh the cache with `node scripts/fetch-fmi.ts`.
 - `today=YYYY-MM-DD` pins the date if the demo is not on 17 October.
+- Backup for a dead projector or phone: `node scripts/demo-capture.ts` (after
+  a build) walks the demo script at 390×844 in headless Chrome and writes ten
+  PNGs to `demo-capture/` (git-ignored). It finds buttons by their text, so
+  rerun it after the redesign rather than keeping old images. A screen
+  recording on the real phone is still the better backup video.
 - Sources → Calendar → "Use my calendar file (.ics)" reads a real export
   (PLAN.md stretch 1, A's `IcsAdapter`). Only the parsed entries are kept on
   the phone, never the file; "Remove" goes back to the synthetic calendar,

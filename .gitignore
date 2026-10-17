@@ -54,6 +54,8 @@ libs/embed/models-public/
 apps/web/public/ort/
 # TLS certificate and private key for phone mode (mkcert); the key must never be committed
 apps/web/certs/
+# screenshots from scripts/demo-capture.ts; regenerate after any change to the screens
+demo-capture/
 
 # cached open data for the offline demo is committed (WORK.md, libs/opendata)
 !libs/opendata/data/
