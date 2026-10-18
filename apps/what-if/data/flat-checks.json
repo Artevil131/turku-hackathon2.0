@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Facts behind the questions a flat ad's own words raise: plot lease, energy class, oil heating, moisture damage, condition surveys, company loans, asbestos surveys",
+    "gathered": "2026-10-18",
+    "notes": [
+      "Every fact the page shows has a 'source' id from the sources block. 'type' is primary (the law, a municipality, a ministry) or secondary (press).",
+      "The page reads these questions only from the ad's own words; a negation such as 'ei kosteusvaurioita' doesn't count.",
+      "No heating cost is given for flats: in a housing company heating is paid through the maintenance charge."
+    ]
+  },
+  "sources": {
+    "helsinki-plot": {
+      "publisher": "City of Helsinki",
+      "title": "Asuntotonttien vuokrasopimusten uusiminen",
+      "url": "https://www.hel.fi/fi/kaupunkiymparisto-ja-liikenne/tontit-ja-rakentamisen-luvat/tonttiasioiden-hoitaminen/asuntotonttien-vuokrasopimusten-uusiminen",
+      "checked": "2026-10-18",
+      "type": "primary"
+    },
+    "yle-plot": {
+      "publisher": "Yle",
+      "title": "Kiinteistöliiton asiantuntija varoittaa: taloyhtiöiden alasajoja tulossa aiempaa enemmän",
+      "date": "2026-08-05",
+      "url": "https://yle.fi/a/74-20239360",
+      "checked": "2026-10-18",
+      "type": "secondary"
+    },
+    "energy-act": {
+      "publisher": "Finlex",
+      "title": "Laki rakennuksen energiatodistuksesta 50/2013 (6 §, 8 §, 9 §)",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2013/50",
+      "checked": "2026-10-18",
+      "type": "primary"
+    },
+    "energy-decree": {
+      "publisher": "Finlex",
+      "title": "Ympäristöministeriön asetus rakennuksen energiatodistuksesta 1048/2017",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2017/1048",
+      "checked": "2026-10-18",
+      "type": "primary"
+    },
+    "ym-oil": {
+      "publisher": "Ministry of the Environment (valtioneuvosto.fi)",
+      "title": "Öljylämmityksestä luopumisen ohjelmaluonnos lausunnoille – kieltojen sijaan edetään kannustein",
+      "date": "2021-04-20",
+      "url": "https://valtioneuvosto.fi/-/1410903/oljylammityksesta-luopumisen-ohjelmaluonnos-lausunnoille-kieltojen-sijaan-edetaan-kannustein",
+      "checked": "2026-10-18",
+      "type": "primary"
+    },
+    "fine": {
+      "publisher": "FINE (Vakuutus- ja rahoitusneuvonta)",
+      "title": "Vuokralaisen, osakkaan ja taloyhtiön vakuutukset",
+      "url": "https://www.fine.fi/oppaat/julkaisu/vuokralaisen-osakkaan-ja-taloyhtion-vakuutukset.html",
+      "checked": "2026-10-17 (rent-rules.json, leaks.whoInsuresWhat)",
+      "type": "primary"
+    },
+    "aoyl": {
+      "publisher": "Finlex",
+      "title": "Asunto-osakeyhtiölaki 1599/2009 (6 luku 3 §, 7 luku 27 §)",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2009/1599",
+      "checked": "2026-10-17 (housing-rules.json, buyerChecks)",
+      "type": "primary"
+    },
+    "vna130": {
+      "publisher": "Finlex",
+      "title": "Valtioneuvoston asetus asuntojen markkinoinnissa annettavista tiedoista 130/2001 (8 § 1 mom. 14–15 kohta)",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/2001/130",
+      "checked": "2026-10-17 (housing-rules.json, buyerChecks)",
+      "type": "primary"
+    },
+    "lease-act": {
+      "publisher": "Finlex",
+      "title": "Laki asuinhuoneiston vuokrauksesta 481/1995 (23 § 2 mom, 27 § 2 mom, 63 § 1 mom)",
+      "url": "https://www.finlex.fi/fi/lainsaadanto/1995/481",
+      "checked": "2026-10-17 (rent-rules.json)",
+      "type": "primary"
+    },
+    "kkv-condition": {
+      "publisher": "KKV",
+      "title": "Inadequate condition of a rental apartment",
+      "url": "https://www.kkv.fi/en/consumer-affairs/housing/rental-apartments/inadequate-condition-of-a-rental-apartment/",
+      "checked": "2026-10-17 (rent-rules.json)",
+      "type": "primary"
+    }
+  },
+  "plotLease": {
+    "helsinki": {
+      "yearlyRentPctOfPlotValue": 4,
+      "fullRentAfterYears": 10,
+      "firstYearPctOfNewRent": 50,
+      "neverBelowOldRent": true,
+      "oldRentsLow": true,
+      "quotes": [
+        "Helsingin kaupungin asuntotonttien vuosivuokra on 4 % tontin laskennallisesta arvosta.",
+        "Vuokra nousee vuosittain niin, että vuokralainen maksaa täysmääräisesti uutta vuokraa vasta 10 vuoden kuluttua.",
+        "Perittävä maanvuokra ei voi kuitenkaan olla alhaisempi kuin vanhan maanvuokrasopimuksen mukainen viimeisen vuoden maanvuokra.",
+        "Useimpien tonttien vuokra on jäänyt hyvin alhaiseksi verrattuna nykyiseen vuokratasoon."
+      ],
+      "note": "The page's example: the lessee pays 50 % of the new rent in the first year and 55 % in the second. The city says the 2026 renewals may change the discounts of the first years.",
+      "source": "helsinki-plot"
+    },
+    "press": {
+      "upToTimes": 10,
+      "example": { "city": "Kuopio", "times": 6, "fromEurYear": 6000, "toEurYear": 36000 },
+      "quotes": [
+        "Kunnat perustelevat tonttivuokrien jopa kymmenkertaistamista sillä, että vuokrat ovat jääneet jälkeen yleisestä markkinahintojen kehityksestä.",
+        "Kuopiossa tonttivuokra kuusinkertaistuu",
+        "maavuokra on nousemassa vajaasta 6 000 eurosta yli 36 000 euroon"
+      ],
+      "source": "yle-plot",
+      "secondary": true
+    }
+  },
+  "energy": {
+    "classes": "A–G",
+    "validYearsMax": 10,
+    "scales": {
+      "2018": "Certificates under decree 1048/2017, in force from 1.1.2018: the ad shows the letter with the subscript 2018.",
+      "2013": "Certificates made under the act and decree as they were before 1.1.2018: subscript 2013.",
+      "2007": "Certificates made under the repealed act on energy certificates (487/2007): subscript 2007."
+    },
+    "quotes": [
+      "Energiatodistus on voimassa kunnes se korvataan uudella energiatodistuksella, kuitenkin enintään kymmenen vuotta todistuksen laatimisesta. (50/2013, 8 §)",
+      "Myyntiä tai vuokrausta koskevassa julkisesti esille laitetussa ilmoituksessa tulee mainita myytävää tai vuokrattavaa kohdetta koskeva energiatehokkuutta kuvaava tunnus (50/2013, 6 §)",
+      "Rakennukset jaetaan niiden käyttötarkoituksen mukaan ryhmiin, joilla kullakin on oma luokitteluasteikkonsa. Rakennuksen E-luku lasketaan jakamalla energiamuotojen kertoimilla painotettu rakennuksen vakioituun käyttöön perustuva laskennallinen ostoenergian kulutus rakennuksen pinta-alaa kohden vuodessa. (50/2013, 9 §)",
+      "Todistuksessa ilmoitetaan lisäksi rakennuksen vakioituun käyttöön perustuva laskennallinen ostoenergiankulutus. Toteutunut ostoenergiankulutus on … (50/2013, 9 §)",
+      "… on käytettävä … tunnuksena todistuksessa olevaa kirjainta lisättynä alaindeksillä 2018. (1048/2017)",
+      "Tämä asetus tulee voimaan 1 päivänä tammikuuta 2018. (1048/2017)"
+    ],
+    "source": ["energy-act", "energy-decree"]
+  },
+  "oilHeating": {
+    "goal": "early 2030s",
+    "goalYearSaid": 2021,
+    "existingNotBanned": true,
+    "quotes": [
+      "Hallitusohjelman mukaisesti tavoitteena on luopua öljylämmityksestä 2030-luvun alkuun mennessä",
+      "Rakennusten nykyisiä öljylämmitysjärjestelmiä ei olla kieltämässä, eikä öljylämmittäjille ole suunnitteilla sanktioita."
+    ],
+    "source": "ym-oil"
+  },
+  "moisture": {
+    "notCoveredSlow": "Housing company property insurance does not cover gradual damage such as rust or mould (FINE; rent-rules.json leaks.whoInsuresWhat).",
+    "certificateStatesCondition": "The manager's certificate must state what the company knows about the condition of the buildings and of this flat (AOYL 7:27 §).",
+    "tenantRentReduction": "A tenant whose flat is not in the required condition is released from rent or pays a reasonably reduced rent, from when the landlord knew of the defect (481/1995, 23 § 2 mom).",
+    "tenantHealthHazard": "A tenant may cancel the lease if using the flat is an obvious health hazard (481/1995, 63 § 1 mom).",
+    "source": ["fine", "aoyl", "lease-act", "kkv-condition"]
+  },
+  "companyLoans": {
+    "brochure": "The sales brochure must state decided or otherwise certain major repairs and improvements, with an estimate of their timing and cost to the buyer (VNa 130/2001, 8 § 1 mom. 14–15 kohta).",
+    "source": "vna130"
+  },
+  "conditionSurvey": {
+    "agm": "Each annual general meeting must receive the board's written report on maintenance needed in the next five years (AOYL 6:3 §). A longer-term plan (PTS) is common, but the Act does not require one.",
+    "source": "aoyl"
+  }
+}

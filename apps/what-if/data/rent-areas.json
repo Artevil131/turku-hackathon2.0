@@ -1,0 +1,6843 @@
+{
+  "meta": {
+    "title": "Average rents per m² a month for privately financed rental flats, by municipality and by postal code area, and number of rooms",
+    "publisher": "Statistics Finland (Tilastokeskus), Rents of dwellings (Asuntojen vuokrat)",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "fetched": "2026-10-18",
+    "notes": [
+      "eurPerM2 is Statistics Finland's average rent per m² a month (keskineliövuokra) for privately financed (vapaarahoitteinen) rental flats; obs is the number of observations behind it. Statistics Finland counts separately paid water and heating charges as rent.",
+      "Municipalities also have eurPerM2New and obsNew: new tenancies only (keskineliövuokra uusille vuokrasuhteille), the closer comparison for an ad's asking rent. The table by postal code has no such split.",
+      "Rooms: 1 = studios (yksiöt), 2 = two rooms (kaksiot), 3+ = three rooms or more (kolmiot+); 'all' = every size.",
+      "Postal code rows with fewer than 20 observations are left out to keep the file small (0 cells dropped).",
+      "Statistics Finland renewed the statistic in 2026 (rent index 2025=100). The table by postal code was moved to the archive database with 2025Q4 as its last quarter; the municipal figures come from the current table."
+    ],
+    "sources": [
+      {
+        "id": "municipalities",
+        "table": "15fa",
+        "name": "Statistics Finland, StatFin asvu table 15fa: rent index (2025=100) and average rents per m², 2026Q3",
+        "period": "2026Q3",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__asvu/statfin_asvu_pxt_15fa.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/asvu/15fa.px"
+      },
+      {
+        "id": "postcodes",
+        "table": "13eb",
+        "name": "Statistics Finland, StatFin asvu table 13eb: average rents per m² for non-subsidised rental dwellings by postal code area, 2025Q4",
+        "period": "2025Q4",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin_Passiivi/StatFin_Passiivi__asvu/statfinpas_asvu_pxt_13eb_2025q4.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin_Passiivi/asvu/statfinpas_asvu_pxt_13eb_2025q4.px"
+      }
+    ]
+  },
+  "municipalities": {
+    "Helsinki": {
+      "1": {
+        "eurPerM2": 26.7,
+        "obs": 19310,
+        "eurPerM2New": 26.81,
+        "obsNew": 3327
+      },
+      "2": {
+        "eurPerM2": 20.38,
+        "obs": 16450,
+        "eurPerM2New": 20.99,
+        "obsNew": 2674
+      },
+      "all": {
+        "eurPerM2": 21.37,
+        "obs": 43365,
+        "eurPerM2New": 21.97,
+        "obsNew": 6862
+      },
+      "3+": {
+        "eurPerM2": 18.42,
+        "obs": 7605,
+        "eurPerM2New": 20.15,
+        "obsNew": 861
+      }
+    },
+    "Espoo-Kauniainen": {
+      "1": {
+        "eurPerM2": 23.83,
+        "obs": 5600,
+        "eurPerM2New": 23.49,
+        "obsNew": 1140
+      },
+      "2": {
+        "eurPerM2": 18.3,
+        "obs": 6708,
+        "eurPerM2New": 18.38,
+        "obsNew": 1124
+      },
+      "all": {
+        "eurPerM2": 18.86,
+        "obs": 16194,
+        "eurPerM2New": 18.83,
+        "obsNew": 2752
+      },
+      "3+": {
+        "eurPerM2": 17.1,
+        "obs": 3886,
+        "eurPerM2New": 17.22,
+        "obsNew": 488
+      }
+    },
+    "Vantaa": {
+      "1": {
+        "eurPerM2": 22.98,
+        "obs": 5370,
+        "eurPerM2New": 22.53,
+        "obsNew": 1243
+      },
+      "2": {
+        "eurPerM2": 16.94,
+        "obs": 7924,
+        "eurPerM2New": 16.68,
+        "obsNew": 1223
+      },
+      "all": {
+        "eurPerM2": 17.78,
+        "obs": 17747,
+        "eurPerM2New": 17.64,
+        "obsNew": 2957
+      },
+      "3+": {
+        "eurPerM2": 15.53,
+        "obs": 4453,
+        "eurPerM2New": 15.23,
+        "obsNew": 491
+      }
+    },
+    "Porvoo": {
+      "1": {
+        "eurPerM2": 18.93,
+        "obs": 498,
+        "eurPerM2New": 20.22,
+        "obsNew": 87
+      },
+      "2": {
+        "eurPerM2": 13.5,
+        "obs": 455,
+        "eurPerM2New": 14.64,
+        "obsNew": 111
+      },
+      "all": {
+        "eurPerM2": 14.22,
+        "obs": 1064,
+        "eurPerM2New": 14.93,
+        "obsNew": 227
+      },
+      "3+": {
+        "eurPerM2": 12.07,
+        "obs": 111,
+        "eurPerM2New": 12.89,
+        "obsNew": 29
+      }
+    },
+    "Hyvinkää": {
+      "1": {
+        "eurPerM2": 17.35,
+        "obs": 695,
+        "eurPerM2New": 17.43,
+        "obsNew": 114
+      },
+      "2": {
+        "eurPerM2": 13.9,
+        "obs": 765,
+        "eurPerM2New": 14.16,
+        "obsNew": 162
+      },
+      "all": {
+        "eurPerM2": 14.37,
+        "obs": 1637,
+        "eurPerM2New": 14.19,
+        "obsNew": 311
+      },
+      "3+": {
+        "eurPerM2": 12.81,
+        "obs": 177,
+        "eurPerM2New": 11.96,
+        "obsNew": 35
+      }
+    },
+    "Järvenpää": {
+      "1": {
+        "eurPerM2": 20.4,
+        "obs": 709,
+        "eurPerM2New": 19.97,
+        "obsNew": 117
+      },
+      "2": {
+        "eurPerM2": 15.73,
+        "obs": 918,
+        "eurPerM2New": 15.6,
+        "obsNew": 133
+      },
+      "all": {
+        "eurPerM2": 16.42,
+        "obs": 1960,
+        "eurPerM2New": 16.3,
+        "obsNew": 288
+      },
+      "3+": {
+        "eurPerM2": 14.16,
+        "obs": 333,
+        "eurPerM2New": 14.67,
+        "obsNew": 38
+      }
+    },
+    "Kerava": {
+      "1": {
+        "eurPerM2": 20.49,
+        "obs": 651,
+        "eurPerM2New": 19.79,
+        "obsNew": 121
+      },
+      "2": {
+        "eurPerM2": 14.96,
+        "obs": 1062,
+        "eurPerM2New": 14.57,
+        "obsNew": 118
+      },
+      "all": {
+        "eurPerM2": 15.77,
+        "obs": 2237,
+        "eurPerM2New": 15.56,
+        "obsNew": 292
+      },
+      "3+": {
+        "eurPerM2": 13.46,
+        "obs": 524,
+        "eurPerM2New": 13.75,
+        "obsNew": 53
+      }
+    },
+    "Turku": {
+      "1": {
+        "eurPerM2": 19.59,
+        "obs": 7360,
+        "eurPerM2New": 20.15,
+        "obsNew": 1142
+      },
+      "2": {
+        "eurPerM2": 14.91,
+        "obs": 6496,
+        "eurPerM2New": 14.95,
+        "obsNew": 1118
+      },
+      "all": {
+        "eurPerM2": 15.64,
+        "obs": 15768,
+        "eurPerM2New": 15.69,
+        "obsNew": 2584
+      },
+      "3+": {
+        "eurPerM2": 13.3,
+        "obs": 1912,
+        "eurPerM2New": 13.64,
+        "obsNew": 324
+      }
+    },
+    "Pori": {
+      "1": {
+        "eurPerM2": 13.81,
+        "obs": 1690,
+        "eurPerM2New": 15.1,
+        "obsNew": 274
+      },
+      "2": {
+        "eurPerM2": 10.59,
+        "obs": 1906,
+        "eurPerM2New": 11.44,
+        "obsNew": 366
+      },
+      "all": {
+        "eurPerM2": 10.89,
+        "obs": 4060,
+        "eurPerM2New": 11.48,
+        "obsNew": 744
+      },
+      "3+": {
+        "eurPerM2": 9.11,
+        "obs": 464,
+        "eurPerM2New": 9.67,
+        "obsNew": 104
+      }
+    },
+    "Rauma": {
+      "1": {
+        "eurPerM2": 14.32,
+        "obs": 543,
+        "eurPerM2New": 14.22,
+        "obsNew": 128
+      },
+      "2": {
+        "eurPerM2": 10.72,
+        "obs": 584,
+        "eurPerM2New": 11.34,
+        "obsNew": 111
+      },
+      "all": {
+        "eurPerM2": 10.92,
+        "obs": 1264,
+        "eurPerM2New": 11.47,
+        "obsNew": 280
+      },
+      "3+": {
+        "eurPerM2": 9.16,
+        "obs": 137,
+        "eurPerM2New": 10.23,
+        "obsNew": 41
+      }
+    },
+    "Hämeenlinna": {
+      "1": {
+        "eurPerM2": 18.61,
+        "obs": 1235,
+        "eurPerM2New": 18.48,
+        "obsNew": 206
+      },
+      "2": {
+        "eurPerM2": 13.71,
+        "obs": 1316,
+        "eurPerM2New": 14.18,
+        "obsNew": 190
+      },
+      "all": {
+        "eurPerM2": 14.44,
+        "obs": 2917,
+        "eurPerM2New": 14.83,
+        "obsNew": 452
+      },
+      "3+": {
+        "eurPerM2": 11.86,
+        "obs": 366,
+        "eurPerM2New": 12.7,
+        "obsNew": 56
+      }
+    },
+    "Riihimäki": {
+      "1": {
+        "eurPerM2": 15.75,
+        "obs": 539,
+        "eurPerM2New": 15.51,
+        "obsNew": 78
+      },
+      "2": {
+        "eurPerM2": 12.36,
+        "obs": 531,
+        "eurPerM2New": 12.59,
+        "obsNew": 83
+      },
+      "all": {
+        "eurPerM2": 13,
+        "obs": 1211,
+        "eurPerM2New": 12.83,
+        "obsNew": 189
+      },
+      "3+": {
+        "eurPerM2": 11.24,
+        "obs": 141,
+        "eurPerM2New": 11.11,
+        "obsNew": 28
+      }
+    },
+    "Tampere": {
+      "1": {
+        "eurPerM2": 21.09,
+        "obs": 9572,
+        "eurPerM2New": 21.57,
+        "obsNew": 1337
+      },
+      "2": {
+        "eurPerM2": 15.83,
+        "obs": 8010,
+        "eurPerM2New": 16.43,
+        "obsNew": 1219
+      },
+      "all": {
+        "eurPerM2": 16.98,
+        "obs": 20059,
+        "eurPerM2New": 17.4,
+        "obsNew": 2852
+      },
+      "3+": {
+        "eurPerM2": 14.29,
+        "obs": 2477,
+        "eurPerM2New": 15.11,
+        "obsNew": 296
+      }
+    },
+    "Lahti": {
+      "1": {
+        "eurPerM2": 16.83,
+        "obs": 2640,
+        "eurPerM2New": 17.21,
+        "obsNew": 439
+      },
+      "2": {
+        "eurPerM2": 12.89,
+        "obs": 3244,
+        "eurPerM2New": 12.96,
+        "obsNew": 531
+      },
+      "all": {
+        "eurPerM2": 13.35,
+        "obs": 6737,
+        "eurPerM2New": 13.31,
+        "obsNew": 1133
+      },
+      "3+": {
+        "eurPerM2": 11.52,
+        "obs": 853,
+        "eurPerM2New": 11.41,
+        "obsNew": 163
+      }
+    },
+    "Kotka": {
+      "1": {
+        "eurPerM2": 14.46,
+        "obs": 1007,
+        "eurPerM2New": 15.67,
+        "obsNew": 143
+      },
+      "2": {
+        "eurPerM2": 12.24,
+        "obs": 955,
+        "eurPerM2New": 12.28,
+        "obsNew": 136
+      },
+      "all": {
+        "eurPerM2": 12.17,
+        "obs": 2182,
+        "eurPerM2New": 12.61,
+        "obsNew": 303
+      },
+      "3+": {
+        "eurPerM2": 10.43,
+        "obs": 220,
+        "eurPerM2New": 10.3,
+        "obsNew": 24
+      }
+    },
+    "Kouvola": {
+      "1": {
+        "eurPerM2": 13.68,
+        "obs": 1176,
+        "eurPerM2New": 13.74,
+        "obsNew": 200
+      },
+      "2": {
+        "eurPerM2": 10.58,
+        "obs": 1187,
+        "eurPerM2New": 11.25,
+        "obsNew": 227
+      },
+      "all": {
+        "eurPerM2": 10.82,
+        "obs": 2655,
+        "eurPerM2New": 11.47,
+        "obsNew": 476
+      },
+      "3+": {
+        "eurPerM2": 9,
+        "obs": 292,
+        "eurPerM2New": 9.9,
+        "obsNew": 49
+      }
+    },
+    "Lappeenranta": {
+      "1": {
+        "eurPerM2": 17.75,
+        "obs": 1313,
+        "eurPerM2New": 17.79,
+        "obsNew": 267
+      },
+      "2": {
+        "eurPerM2": 13.51,
+        "obs": 1206,
+        "eurPerM2New": 13.56,
+        "obsNew": 231
+      },
+      "all": {
+        "eurPerM2": 14.02,
+        "obs": 2837,
+        "eurPerM2New": 14.2,
+        "obsNew": 558
+      },
+      "3+": {
+        "eurPerM2": 11.69,
+        "obs": 318,
+        "eurPerM2New": 12.31,
+        "obsNew": 60
+      }
+    },
+    "Mikkeli": {
+      "1": {
+        "eurPerM2": 16.21,
+        "obs": 655,
+        "eurPerM2New": 16.74,
+        "obsNew": 110
+      },
+      "2": {
+        "eurPerM2": 12.09,
+        "obs": 701,
+        "eurPerM2New": 12.7,
+        "obsNew": 132
+      },
+      "all": {
+        "eurPerM2": 12.2,
+        "obs": 1535,
+        "eurPerM2New": 12.71,
+        "obsNew": 278
+      },
+      "3+": {
+        "eurPerM2": 9.63,
+        "obs": 179,
+        "eurPerM2New": 10.64,
+        "obsNew": 36
+      }
+    },
+    "Kuopio": {
+      "1": {
+        "eurPerM2": 19.64,
+        "obs": 2689,
+        "eurPerM2New": 20.47,
+        "obsNew": 368
+      },
+      "2": {
+        "eurPerM2": 14.24,
+        "obs": 3133,
+        "eurPerM2New": 14.91,
+        "obsNew": 507
+      },
+      "all": {
+        "eurPerM2": 14.97,
+        "obs": 6638,
+        "eurPerM2New": 15.45,
+        "obsNew": 1001
+      },
+      "3+": {
+        "eurPerM2": 12.35,
+        "obs": 816,
+        "eurPerM2New": 12.62,
+        "obsNew": 126
+      }
+    },
+    "Joensuu": {
+      "1": {
+        "eurPerM2": 18.27,
+        "obs": 1947,
+        "eurPerM2New": 20.99,
+        "obsNew": 207
+      },
+      "2": {
+        "eurPerM2": 13.76,
+        "obs": 1476,
+        "eurPerM2New": 15.03,
+        "obsNew": 191
+      },
+      "all": {
+        "eurPerM2": 14.29,
+        "obs": 3729,
+        "eurPerM2New": 15.64,
+        "obsNew": 459
+      },
+      "3+": {
+        "eurPerM2": 11.07,
+        "obs": 306,
+        "eurPerM2New": 13.38,
+        "obsNew": 61
+      }
+    },
+    "Jyväskylä": {
+      "1": {
+        "eurPerM2": 18.96,
+        "obs": 4110,
+        "eurPerM2New": 19.17,
+        "obsNew": 807
+      },
+      "2": {
+        "eurPerM2": 13.79,
+        "obs": 4316,
+        "eurPerM2New": 14.16,
+        "obsNew": 791
+      },
+      "all": {
+        "eurPerM2": 14.66,
+        "obs": 9453,
+        "eurPerM2New": 14.92,
+        "obsNew": 1774
+      },
+      "3+": {
+        "eurPerM2": 11.93,
+        "obs": 1027,
+        "eurPerM2New": 12.05,
+        "obsNew": 176
+      }
+    },
+    "Seinäjoki": {
+      "1": {
+        "eurPerM2": 15.9,
+        "obs": 879,
+        "eurPerM2New": 18.05,
+        "obsNew": 59
+      },
+      "2": {
+        "eurPerM2": 12.17,
+        "obs": 1083,
+        "eurPerM2New": 13.81,
+        "obsNew": 71
+      },
+      "all": {
+        "eurPerM2": 12.28,
+        "obs": 2228,
+        "eurPerM2New": 14.08,
+        "obsNew": 155
+      },
+      "3+": {
+        "eurPerM2": 10.37,
+        "obs": 266,
+        "eurPerM2New": 12.45,
+        "obsNew": 25
+      }
+    },
+    "Vaasa": {
+      "1": {
+        "eurPerM2": 17.24,
+        "obs": 1320,
+        "eurPerM2New": 19.29,
+        "obsNew": 48
+      },
+      "2": {
+        "eurPerM2": 12.73,
+        "obs": 1152,
+        "eurPerM2New": 14.55,
+        "obsNew": 62
+      },
+      "all": {
+        "eurPerM2": 13.1,
+        "obs": 2771,
+        "eurPerM2New": 14.58,
+        "obsNew": 128
+      },
+      "3+": {
+        "eurPerM2": 10.57,
+        "obs": 299
+      }
+    },
+    "Kokkola": {
+      "1": {
+        "eurPerM2": 16.93,
+        "obs": 331
+      },
+      "2": {
+        "eurPerM2": 12.14,
+        "obs": 393,
+        "eurPerM2New": 13.49,
+        "obsNew": 21
+      },
+      "all": {
+        "eurPerM2": 12.11,
+        "obs": 836,
+        "eurPerM2New": 13.99,
+        "obsNew": 33
+      },
+      "3+": {
+        "eurPerM2": 9.78,
+        "obs": 112
+      }
+    },
+    "Oulu": {
+      "1": {
+        "eurPerM2": 18.07,
+        "obs": 5463,
+        "eurPerM2New": 19.1,
+        "obsNew": 979
+      },
+      "2": {
+        "eurPerM2": 13.84,
+        "obs": 5255,
+        "eurPerM2New": 14.65,
+        "obsNew": 912
+      },
+      "all": {
+        "eurPerM2": 14.19,
+        "obs": 12129,
+        "eurPerM2New": 15.11,
+        "obsNew": 2097
+      },
+      "3+": {
+        "eurPerM2": 11.87,
+        "obs": 1411,
+        "eurPerM2New": 12.6,
+        "obsNew": 206
+      }
+    },
+    "Kajaani": {
+      "1": {
+        "eurPerM2": 15.85,
+        "obs": 619,
+        "eurPerM2New": 16.67,
+        "obsNew": 89
+      },
+      "2": {
+        "eurPerM2": 11.97,
+        "obs": 465,
+        "eurPerM2New": 12.99,
+        "obsNew": 96
+      },
+      "all": {
+        "eurPerM2": 12.23,
+        "obs": 1221,
+        "eurPerM2New": 13.06,
+        "obsNew": 217
+      },
+      "3+": {
+        "eurPerM2": 9.89,
+        "obs": 137,
+        "eurPerM2New": 11.39,
+        "obsNew": 32
+      }
+    },
+    "Rovaniemi": {
+      "1": {
+        "eurPerM2": 18.63,
+        "obs": 978,
+        "eurPerM2New": 20.14,
+        "obsNew": 55
+      },
+      "2": {
+        "eurPerM2": 14.4,
+        "obs": 1017,
+        "eurPerM2New": 16.4,
+        "obsNew": 87
+      },
+      "all": {
+        "eurPerM2": 14.63,
+        "obs": 2267,
+        "eurPerM2New": 15.93,
+        "obsNew": 174
+      },
+      "3+": {
+        "eurPerM2": 12.29,
+        "obs": 272,
+        "eurPerM2New": 13.66,
+        "obsNew": 32
+      }
+    }
+  },
+  "postcodes": {
+    "10300": {
+      "name": "Karjaa Keskus (Raasepori)",
+      "rooms": {
+        "1": {
+          "obs": 47,
+          "eurPerM2": 15.1
+        },
+        "2": {
+          "obs": 38,
+          "eurPerM2": 11.87
+        }
+      }
+    },
+    "10600": {
+      "name": "Tammisaari Keskus (Raasepori)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 15.08
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 11.83
+        }
+      }
+    },
+    "10900": {
+      "name": "Hanko Keskus (Hanko)",
+      "rooms": {
+        "2": {
+          "obs": 20,
+          "eurPerM2": 11.9
+        }
+      }
+    },
+    "11100": {
+      "name": "Riihimäki Keskus (Riihimäki)",
+      "rooms": {
+        "1": {
+          "obs": 194,
+          "eurPerM2": 16.4
+        },
+        "2": {
+          "obs": 168,
+          "eurPerM2": 12.7
+        },
+        "3+": {
+          "obs": 37,
+          "eurPerM2": 11.73
+        }
+      }
+    },
+    "11120": {
+      "name": "Pohjois-Riihimäki (Riihimäki)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 15.63
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 11.91
+        }
+      }
+    },
+    "11130": {
+      "name": "Peltosaari-Patastenmäki (Riihimäki)",
+      "rooms": {
+        "1": {
+          "obs": 112,
+          "eurPerM2": 15.45
+        },
+        "2": {
+          "obs": 56,
+          "eurPerM2": 11.75
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 11.24
+        }
+      }
+    },
+    "12400": {
+      "name": "Tervakoski (Janakkala)",
+      "rooms": {
+        "2": {
+          "obs": 28,
+          "eurPerM2": 10.74
+        }
+      }
+    },
+    "13100": {
+      "name": "Hämeenlinna Keskus (Hämeenlinna)",
+      "rooms": {
+        "1": {
+          "obs": 459,
+          "eurPerM2": 19.08
+        },
+        "2": {
+          "obs": 346,
+          "eurPerM2": 15.13
+        },
+        "3+": {
+          "obs": 81,
+          "eurPerM2": 13.98
+        }
+      }
+    },
+    "13130": {
+      "name": "Kauriala (Hämeenlinna)",
+      "rooms": {
+        "1": {
+          "obs": 137,
+          "eurPerM2": 17.32
+        },
+        "2": {
+          "obs": 65,
+          "eurPerM2": 13.15
+        }
+      }
+    },
+    "13200": {
+      "name": "Keinusaari (Hämeenlinna)",
+      "rooms": {
+        "1": {
+          "obs": 125,
+          "eurPerM2": 20.94
+        },
+        "2": {
+          "obs": 87,
+          "eurPerM2": 15.7
+        }
+      }
+    },
+    "13210": {
+      "name": "Hätilä (Hämeenlinna)",
+      "rooms": {
+        "1": {
+          "obs": 80,
+          "eurPerM2": 16.6
+        },
+        "2": {
+          "obs": 118,
+          "eurPerM2": 13.44
+        },
+        "3+": {
+          "obs": 40,
+          "eurPerM2": 11.85
+        }
+      }
+    },
+    "13250": {
+      "name": "Katuma (Hämeenlinna)",
+      "rooms": {
+        "2": {
+          "obs": 24,
+          "eurPerM2": 10.54
+        }
+      }
+    },
+    "13500": {
+      "name": "Jukola (Hattula)",
+      "rooms": {
+        "1": {
+          "obs": 38,
+          "eurPerM2": 15.93
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 12.72
+        },
+        "3+": {
+          "obs": 33,
+          "eurPerM2": 11.75
+        }
+      }
+    },
+    "13600": {
+      "name": "Ojoinen (Hämeenlinna)",
+      "rooms": {
+        "1": {
+          "obs": 73,
+          "eurPerM2": 16.87
+        }
+      }
+    },
+    "14200": {
+      "name": "Turenki (Janakkala)",
+      "rooms": {
+        "1": {
+          "obs": 42,
+          "eurPerM2": 14.09
+        },
+        "2": {
+          "obs": 38,
+          "eurPerM2": 11.77
+        }
+      }
+    },
+    "15100": {
+      "name": "Lahti Asemanseutu (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 195,
+          "eurPerM2": 17.9
+        },
+        "2": {
+          "obs": 189,
+          "eurPerM2": 15
+        },
+        "3+": {
+          "obs": 46,
+          "eurPerM2": 14.31
+        }
+      }
+    },
+    "15110": {
+      "name": "Keski-Lahti (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 265,
+          "eurPerM2": 17.55
+        },
+        "2": {
+          "obs": 145,
+          "eurPerM2": 13.72
+        },
+        "3+": {
+          "obs": 40,
+          "eurPerM2": 11.64
+        }
+      }
+    },
+    "15140": {
+      "name": "Kartano-Paavola (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 393,
+          "eurPerM2": 17.58
+        },
+        "2": {
+          "obs": 455,
+          "eurPerM2": 14.87
+        }
+      }
+    },
+    "15150": {
+      "name": "Möysä (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 121,
+          "eurPerM2": 16.57
+        },
+        "2": {
+          "obs": 77,
+          "eurPerM2": 12.62
+        }
+      }
+    },
+    "15170": {
+      "name": "Tenava-Tonttila (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 102,
+          "eurPerM2": 15.5
+        },
+        "2": {
+          "obs": 158,
+          "eurPerM2": 11.7
+        },
+        "3+": {
+          "obs": 50,
+          "eurPerM2": 10.51
+        }
+      }
+    },
+    "15200": {
+      "name": "Kiveriö (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 92,
+          "eurPerM2": 15.47
+        },
+        "2": {
+          "obs": 216,
+          "eurPerM2": 12.82
+        }
+      }
+    },
+    "15210": {
+      "name": "Kivistönmäki (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 103,
+          "eurPerM2": 15.66
+        },
+        "2": {
+          "obs": 97,
+          "eurPerM2": 11.87
+        }
+      }
+    },
+    "15240": {
+      "name": "Mukkula (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 98,
+          "eurPerM2": 15.01
+        },
+        "2": {
+          "obs": 95,
+          "eurPerM2": 11.38
+        },
+        "3+": {
+          "obs": 27,
+          "eurPerM2": 10.19
+        }
+      }
+    },
+    "15300": {
+      "name": "Myllypohja-Koiskala (Lahti)",
+      "rooms": {
+        "2": {
+          "obs": 25,
+          "eurPerM2": 11.75
+        }
+      }
+    },
+    "15500": {
+      "name": "Liipola (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 55,
+          "eurPerM2": 14.64
+        },
+        "2": {
+          "obs": 139,
+          "eurPerM2": 11.6
+        },
+        "3+": {
+          "obs": 50,
+          "eurPerM2": 11.22
+        }
+      }
+    },
+    "15520": {
+      "name": "Saksala (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 14.77
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 14.77
+        }
+      }
+    },
+    "15550": {
+      "name": "Rakokivi (Lahti)",
+      "rooms": {
+        "2": {
+          "obs": 23,
+          "eurPerM2": 10.7
+        }
+      }
+    },
+    "15560": {
+      "name": "Nastola kk (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 12.85
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 11.1
+        }
+      }
+    },
+    "15610": {
+      "name": "Laune-Nikkilä (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 18.18
+        }
+      }
+    },
+    "15700": {
+      "name": "Hennala-Jokimaa (Hollola)",
+      "rooms": {
+        "1": {
+          "obs": 69,
+          "eurPerM2": 16.78
+        },
+        "2": {
+          "obs": 111,
+          "eurPerM2": 14.05
+        }
+      }
+    },
+    "15800": {
+      "name": "Kärpänen (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 94,
+          "eurPerM2": 15.34
+        },
+        "2": {
+          "obs": 33,
+          "eurPerM2": 12.09
+        }
+      }
+    },
+    "15830": {
+      "name": "Metsäkangas (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 68,
+          "eurPerM2": 14.51
+        },
+        "2": {
+          "obs": 47,
+          "eurPerM2": 11.41
+        }
+      }
+    },
+    "15860": {
+      "name": "Kartano (Hollola)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 13.84
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 11.24
+        }
+      }
+    },
+    "15870": {
+      "name": "Salpakangas (Hollola)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 14.13
+        },
+        "2": {
+          "obs": 36,
+          "eurPerM2": 13.12
+        }
+      }
+    },
+    "15950": {
+      "name": "Kiikkula (Lahti)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 15.22
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 12.09
+        }
+      }
+    },
+    "16300": {
+      "name": "Orimattila Keskus (Orimattila)",
+      "rooms": {
+        "1": {
+          "obs": 71,
+          "eurPerM2": 13.11
+        },
+        "2": {
+          "obs": 58,
+          "eurPerM2": 10.79
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 9.29
+        }
+      }
+    },
+    "16900": {
+      "name": "Lammi kk (Hämeenlinna)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 11.04
+        }
+      }
+    },
+    "17200": {
+      "name": "Vääksy Keskus (Asikkala)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 13.31
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.46
+        }
+      }
+    },
+    "18100": {
+      "name": "Heinola Keskus (Heinola)",
+      "rooms": {
+        "1": {
+          "obs": 71,
+          "eurPerM2": 13.06
+        },
+        "2": {
+          "obs": 78,
+          "eurPerM2": 11.09
+        }
+      }
+    },
+    "18130": {
+      "name": "Tommola-Sahanniemi (Heinola)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 12.06
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 9.11
+        }
+      }
+    },
+    "18150": {
+      "name": "Jyränkö (Heinola)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 12
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 8.95
+        }
+      }
+    },
+    "18200": {
+      "name": "Kaakonlampi-Pyhätön (Heinola)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 11.99
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 9.23
+        }
+      }
+    },
+    "20100": {
+      "name": "Turku Keskus (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 1928,
+          "eurPerM2": 19.39
+        },
+        "2": {
+          "obs": 1036,
+          "eurPerM2": 14.78
+        },
+        "3+": {
+          "obs": 249,
+          "eurPerM2": 12.98
+        }
+      }
+    },
+    "20200": {
+      "name": "Iso-Heikkilä (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 144,
+          "eurPerM2": 17.98
+        },
+        "2": {
+          "obs": 65,
+          "eurPerM2": 13.83
+        }
+      }
+    },
+    "20210": {
+      "name": "Pahaniemi (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 86,
+          "eurPerM2": 16.79
+        }
+      }
+    },
+    "20240": {
+      "name": "Pansio-Perno (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 16.39
+        }
+      }
+    },
+    "20300": {
+      "name": "Pohjola-Kastu (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 203,
+          "eurPerM2": 19.32
+        },
+        "2": {
+          "obs": 77,
+          "eurPerM2": 13.85
+        }
+      }
+    },
+    "20320": {
+      "name": "Kuninkoja-Mälikkälä (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 250,
+          "eurPerM2": 16.92
+        },
+        "2": {
+          "obs": 176,
+          "eurPerM2": 14.26
+        },
+        "3+": {
+          "obs": 82,
+          "eurPerM2": 14.33
+        }
+      }
+    },
+    "20360": {
+      "name": "Kärsämäki-Urusvuori-Halinen (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 197,
+          "eurPerM2": 17.57
+        },
+        "2": {
+          "obs": 162,
+          "eurPerM2": 13.16
+        },
+        "3+": {
+          "obs": 76,
+          "eurPerM2": 11.85
+        }
+      }
+    },
+    "20460": {
+      "name": "Jäkärlä (Turku)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.86
+        }
+      }
+    },
+    "20500": {
+      "name": "Vesilinna (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 616,
+          "eurPerM2": 19.26
+        },
+        "2": {
+          "obs": 339,
+          "eurPerM2": 13.72
+        },
+        "3+": {
+          "obs": 67,
+          "eurPerM2": 11.75
+        }
+      }
+    },
+    "20520": {
+      "name": "Kupittaa (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 375,
+          "eurPerM2": 21.17
+        },
+        "2": {
+          "obs": 437,
+          "eurPerM2": 16.42
+        }
+      }
+    },
+    "20540": {
+      "name": "Nummi-Ylioppilaskylä (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 314,
+          "eurPerM2": 18
+        },
+        "2": {
+          "obs": 261,
+          "eurPerM2": 13.96
+        },
+        "3+": {
+          "obs": 82,
+          "eurPerM2": 13.35
+        }
+      }
+    },
+    "20610": {
+      "name": "Varissuo (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 363,
+          "eurPerM2": 19.09
+        },
+        "2": {
+          "obs": 285,
+          "eurPerM2": 13.11
+        },
+        "3+": {
+          "obs": 144,
+          "eurPerM2": 11.97
+        }
+      }
+    },
+    "20700": {
+      "name": "Vartiovuori-Samppalinna (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 333,
+          "eurPerM2": 19.27
+        },
+        "2": {
+          "obs": 217,
+          "eurPerM2": 13.78
+        },
+        "3+": {
+          "obs": 24,
+          "eurPerM2": 10.77
+        }
+      }
+    },
+    "20720": {
+      "name": "Vasaramäki (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 210,
+          "eurPerM2": 18.2
+        },
+        "2": {
+          "obs": 93,
+          "eurPerM2": 12.89
+        }
+      }
+    },
+    "20740": {
+      "name": "Ilpoinen-Harittu (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 72,
+          "eurPerM2": 17
+        },
+        "2": {
+          "obs": 74,
+          "eurPerM2": 13.62
+        }
+      }
+    },
+    "20750": {
+      "name": "Huhkola-Lauste-Vaala (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 55,
+          "eurPerM2": 15.52
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 11.18
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 11.05
+        }
+      }
+    },
+    "20760": {
+      "name": "Piispanristi (Kaarina)",
+      "rooms": {
+        "1": {
+          "obs": 47,
+          "eurPerM2": 16.94
+        },
+        "2": {
+          "obs": 38,
+          "eurPerM2": 15.35
+        }
+      }
+    },
+    "20780": {
+      "name": "Kaarina Keskus (Kaarina)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 15.35
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 12.26
+        }
+      }
+    },
+    "20810": {
+      "name": "Martti-Korppolaismäki (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 431,
+          "eurPerM2": 18.91
+        },
+        "2": {
+          "obs": 488,
+          "eurPerM2": 15.18
+        }
+      }
+    },
+    "20880": {
+      "name": "Uittamo (Turku)",
+      "rooms": {
+        "1": {
+          "obs": 68,
+          "eurPerM2": 16.94
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 11.97
+        }
+      }
+    },
+    "21100": {
+      "name": "Naantali Keskus (Naantali)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 15.4
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 13.31
+        }
+      }
+    },
+    "21200": {
+      "name": "Raisio Keskus (Raisio)",
+      "rooms": {
+        "1": {
+          "obs": 144,
+          "eurPerM2": 16.34
+        },
+        "2": {
+          "obs": 129,
+          "eurPerM2": 13.2
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 12.57
+        }
+      }
+    },
+    "21420": {
+      "name": "Lieto Keskus (Lieto)",
+      "rooms": {
+        "1": {
+          "obs": 52,
+          "eurPerM2": 14.79
+        },
+        "2": {
+          "obs": 30,
+          "eurPerM2": 12.03
+        }
+      }
+    },
+    "21530": {
+      "name": "Paimio Keskus (Paimio)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 13.68
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 10.52
+        }
+      }
+    },
+    "21600": {
+      "name": "Parainen Keskus (Parainen)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 13.73
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 10.62
+        }
+      }
+    },
+    "23500": {
+      "name": "Uusikaupunki Keskus (Uusikaupunki)",
+      "rooms": {
+        "1": {
+          "obs": 72,
+          "eurPerM2": 13.55
+        },
+        "2": {
+          "obs": 55,
+          "eurPerM2": 10.41
+        }
+      }
+    },
+    "23800": {
+      "name": "Laitila Keskus (Laitila)",
+      "rooms": {
+        "1": {
+          "obs": 22,
+          "eurPerM2": 12.46
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 10.08
+        }
+      }
+    },
+    "24100": {
+      "name": "Salo Keskus (Salo)",
+      "rooms": {
+        "1": {
+          "obs": 198,
+          "eurPerM2": 14.3
+        },
+        "2": {
+          "obs": 85,
+          "eurPerM2": 11.59
+        }
+      }
+    },
+    "24240": {
+      "name": "Rappula (Salo)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 13.62
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 10.24
+        }
+      }
+    },
+    "24260": {
+      "name": "Ollikkala (Salo)",
+      "rooms": {
+        "1": {
+          "obs": 24,
+          "eurPerM2": 12.67
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 10.15
+        }
+      }
+    },
+    "24800": {
+      "name": "Halikko Keskus (Salo)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 12.95
+        },
+        "2": {
+          "obs": 34,
+          "eurPerM2": 10.98
+        }
+      }
+    },
+    "26100": {
+      "name": "Rauma Keskus (Rauma)",
+      "rooms": {
+        "1": {
+          "obs": 277,
+          "eurPerM2": 14.52
+        },
+        "2": {
+          "obs": 200,
+          "eurPerM2": 11.14
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 9.21
+        }
+      }
+    },
+    "26200": {
+      "name": "Merirauma-Kappelinluhta (Rauma)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 13.92
+        },
+        "2": {
+          "obs": 21,
+          "eurPerM2": 8.95
+        }
+      }
+    },
+    "26660": {
+      "name": "Paroalho (Rauma)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 12.59
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 9.61
+        }
+      }
+    },
+    "28100": {
+      "name": "Pori Keskus (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 549,
+          "eurPerM2": 14.74
+        },
+        "2": {
+          "obs": 352,
+          "eurPerM2": 11.68
+        },
+        "3+": {
+          "obs": 58,
+          "eurPerM2": 9.6
+        }
+      }
+    },
+    "28120": {
+      "name": "Käppärä-Isomäki (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 73,
+          "eurPerM2": 13.24
+        },
+        "2": {
+          "obs": 75,
+          "eurPerM2": 10.72
+        }
+      }
+    },
+    "28130": {
+      "name": "Impola (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 278,
+          "eurPerM2": 15.97
+        },
+        "2": {
+          "obs": 173,
+          "eurPerM2": 11.4
+        },
+        "3+": {
+          "obs": 39,
+          "eurPerM2": 10.19
+        }
+      }
+    },
+    "28190": {
+      "name": "Pormestarinluoto (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 64,
+          "eurPerM2": 11.96
+        },
+        "2": {
+          "obs": 103,
+          "eurPerM2": 9.39
+        },
+        "3+": {
+          "obs": 22,
+          "eurPerM2": 9.11
+        }
+      }
+    },
+    "28330": {
+      "name": "Koivistonluoto (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 11.53
+        },
+        "2": {
+          "obs": 43,
+          "eurPerM2": 8.83
+        }
+      }
+    },
+    "28360": {
+      "name": "Vanhakoivisto (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 33,
+          "eurPerM2": 13.19
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 10.8
+        }
+      }
+    },
+    "28370": {
+      "name": "Sampola (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 11.99
+        },
+        "2": {
+          "obs": 95,
+          "eurPerM2": 8.88
+        }
+      }
+    },
+    "28400": {
+      "name": "Ulvila Keskus (Ulvila)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.01
+        }
+      }
+    },
+    "28500": {
+      "name": "Keskussairaala-alue-Tiilimäki (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 14.15
+        }
+      }
+    },
+    "28600": {
+      "name": "Vähärauma (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 12.82
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.69
+        }
+      }
+    },
+    "28610": {
+      "name": "Musa-Tiiliruukki (Pori)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 12.67
+        },
+        "2": {
+          "obs": 24,
+          "eurPerM2": 10.01
+        }
+      }
+    },
+    "28800": {
+      "name": "Pihlava (Pori)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 8.55
+        }
+      }
+    },
+    "29200": {
+      "name": "Harjavalta Keskus (Harjavalta)",
+      "rooms": {
+        "1": {
+          "obs": 45,
+          "eurPerM2": 10.94
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 8.82
+        }
+      }
+    },
+    "29600": {
+      "name": "Noormarkku Keskus (Pori)",
+      "rooms": {
+        "2": {
+          "obs": 20,
+          "eurPerM2": 9.92
+        }
+      }
+    },
+    "30100": {
+      "name": "Forssa Keskus (Tammela)",
+      "rooms": {
+        "1": {
+          "obs": 172,
+          "eurPerM2": 12.66
+        },
+        "2": {
+          "obs": 78,
+          "eurPerM2": 10.49
+        }
+      }
+    },
+    "30300": {
+      "name": "Viksberg (Forssa)",
+      "rooms": {
+        "1": {
+          "obs": 39,
+          "eurPerM2": 11.37
+        },
+        "2": {
+          "obs": 67,
+          "eurPerM2": 9.67
+        }
+      }
+    },
+    "30420": {
+      "name": "Tölö (Forssa)",
+      "rooms": {
+        "1": {
+          "obs": 57,
+          "eurPerM2": 12.67
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 10.17
+        }
+      }
+    },
+    "31400": {
+      "name": "Somero Keskus (Somero)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 11.85
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 10.29
+        }
+      }
+    },
+    "32200": {
+      "name": "Loimaa Keskus (Loimaa)",
+      "rooms": {
+        "1": {
+          "obs": 75,
+          "eurPerM2": 11.93
+        },
+        "2": {
+          "obs": 49,
+          "eurPerM2": 9.96
+        }
+      }
+    },
+    "32700": {
+      "name": "Huittinen Keskus (Huittinen)",
+      "rooms": {
+        "1": {
+          "obs": 59,
+          "eurPerM2": 11.87
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 9.79
+        }
+      }
+    },
+    "32800": {
+      "name": "Kokemäki Keskus (Kokemäki)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 10.8
+        },
+        "2": {
+          "obs": 33,
+          "eurPerM2": 8.19
+        }
+      }
+    },
+    "33100": {
+      "name": "Tampere Keskus (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 655,
+          "eurPerM2": 20.42
+        },
+        "2": {
+          "obs": 392,
+          "eurPerM2": 14.75
+        },
+        "3+": {
+          "obs": 97,
+          "eurPerM2": 13.62
+        }
+      }
+    },
+    "33200": {
+      "name": "Tampere Keskus Läntinen (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 350,
+          "eurPerM2": 20.86
+        },
+        "2": {
+          "obs": 235,
+          "eurPerM2": 15.21
+        },
+        "3+": {
+          "obs": 68,
+          "eurPerM2": 15.85
+        }
+      }
+    },
+    "33210": {
+      "name": "Itä-Amuri-Tammerkoski (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 498,
+          "eurPerM2": 21.92
+        },
+        "2": {
+          "obs": 249,
+          "eurPerM2": 15.29
+        },
+        "3+": {
+          "obs": 34,
+          "eurPerM2": 15.74
+        }
+      }
+    },
+    "33230": {
+      "name": "Länsi-Amuri (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 145,
+          "eurPerM2": 19.34
+        },
+        "2": {
+          "obs": 55,
+          "eurPerM2": 13.33
+        }
+      }
+    },
+    "33240": {
+      "name": "Tahmela (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 59,
+          "eurPerM2": 20.69
+        }
+      }
+    },
+    "33250": {
+      "name": "Pispala (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 83,
+          "eurPerM2": 20.72
+        },
+        "2": {
+          "obs": 44,
+          "eurPerM2": 15.6
+        }
+      }
+    },
+    "33270": {
+      "name": "Epilä (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 79,
+          "eurPerM2": 18.49
+        },
+        "2": {
+          "obs": 66,
+          "eurPerM2": 14.85
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 13.46
+        }
+      }
+    },
+    "33300": {
+      "name": "Rahola (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 70,
+          "eurPerM2": 18.58
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 14.09
+        }
+      }
+    },
+    "33310": {
+      "name": "Tesoma (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 75,
+          "eurPerM2": 18.72
+        },
+        "2": {
+          "obs": 127,
+          "eurPerM2": 13.94
+        },
+        "3+": {
+          "obs": 64,
+          "eurPerM2": 12.59
+        }
+      }
+    },
+    "33340": {
+      "name": "Haukiluoma-Ikuri (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 20.6
+        }
+      }
+    },
+    "33400": {
+      "name": "Luoteis-Tampere (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 231,
+          "eurPerM2": 20.29
+        }
+      }
+    },
+    "33410": {
+      "name": "Lentävänniemi (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 145,
+          "eurPerM2": 18.64
+        },
+        "2": {
+          "obs": 83,
+          "eurPerM2": 12.66
+        },
+        "3+": {
+          "obs": 25,
+          "eurPerM2": 11.47
+        }
+      }
+    },
+    "33420": {
+      "name": "Lamminpää (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 18.53
+        }
+      }
+    },
+    "33470": {
+      "name": "Ylöjärvi Keskus (Ylöjärvi)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 15.9
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 13.2
+        },
+        "3+": {
+          "obs": 22,
+          "eurPerM2": 13.41
+        }
+      }
+    },
+    "33500": {
+      "name": "Osmonmäki-Petsamo (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 610,
+          "eurPerM2": 20.76
+        },
+        "2": {
+          "obs": 349,
+          "eurPerM2": 14.85
+        },
+        "3+": {
+          "obs": 62,
+          "eurPerM2": 14.6
+        }
+      }
+    },
+    "33520": {
+      "name": "Keskussairaala-alue-Kauppi (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 19.48
+        },
+        "2": {
+          "obs": 25,
+          "eurPerM2": 14.07
+        }
+      }
+    },
+    "33530": {
+      "name": "Kissanmaa (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 117,
+          "eurPerM2": 18.33
+        },
+        "2": {
+          "obs": 45,
+          "eurPerM2": 13.4
+        }
+      }
+    },
+    "33540": {
+      "name": "Kaleva (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 576,
+          "eurPerM2": 20.44
+        },
+        "2": {
+          "obs": 294,
+          "eurPerM2": 13.86
+        },
+        "3+": {
+          "obs": 105,
+          "eurPerM2": 15.44
+        }
+      }
+    },
+    "33560": {
+      "name": "Takahuhti (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 92,
+          "eurPerM2": 18.64
+        },
+        "2": {
+          "obs": 162,
+          "eurPerM2": 15.23
+        },
+        "3+": {
+          "obs": 66,
+          "eurPerM2": 13.92
+        }
+      }
+    },
+    "33580": {
+      "name": "Atala-Linnainmaa (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 201,
+          "eurPerM2": 19.93
+        },
+        "2": {
+          "obs": 144,
+          "eurPerM2": 16.22
+        }
+      }
+    },
+    "33710": {
+      "name": "Kaukajärvi (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 231,
+          "eurPerM2": 18.52
+        },
+        "2": {
+          "obs": 404,
+          "eurPerM2": 14.83
+        }
+      }
+    },
+    "33720": {
+      "name": "Hervanta (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 965,
+          "eurPerM2": 19.24
+        },
+        "2": {
+          "obs": 1137,
+          "eurPerM2": 14.51
+        }
+      }
+    },
+    "33800": {
+      "name": "Nekala (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 509,
+          "eurPerM2": 20.95
+        },
+        "2": {
+          "obs": 117,
+          "eurPerM2": 14.9
+        }
+      }
+    },
+    "33820": {
+      "name": "Koivistonkylä (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 39,
+          "eurPerM2": 17.96
+        },
+        "2": {
+          "obs": 51,
+          "eurPerM2": 14.15
+        }
+      }
+    },
+    "33840": {
+      "name": "Peltolammi (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 17.26
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 12.69
+        }
+      }
+    },
+    "33850": {
+      "name": "Multisilta (Pirkkala)",
+      "rooms": {
+        "1": {
+          "obs": 58,
+          "eurPerM2": 20.56
+        },
+        "2": {
+          "obs": 25,
+          "eurPerM2": 11.65
+        }
+      }
+    },
+    "33870": {
+      "name": "Vuores (Lempäälä)",
+      "rooms": {
+        "1": {
+          "obs": 261,
+          "eurPerM2": 21.16
+        },
+        "2": {
+          "obs": 141,
+          "eurPerM2": 17.41
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 15.9
+        }
+      }
+    },
+    "33880": {
+      "name": "Höytämö (Lempäälä)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 11.58
+        }
+      }
+    },
+    "33900": {
+      "name": "Härmälä-Rantaperkiö (Tampere)",
+      "rooms": {
+        "1": {
+          "obs": 447,
+          "eurPerM2": 21.02
+        }
+      }
+    },
+    "33950": {
+      "name": "Killo (Pirkkala)",
+      "rooms": {
+        "1": {
+          "obs": 48,
+          "eurPerM2": 18.44
+        },
+        "2": {
+          "obs": 43,
+          "eurPerM2": 15.49
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 13.61
+        }
+      }
+    },
+    "33960": {
+      "name": "Suuppa (Pirkkala)",
+      "rooms": {
+        "1": {
+          "obs": 55,
+          "eurPerM2": 16.86
+        },
+        "2": {
+          "obs": 36,
+          "eurPerM2": 14.74
+        }
+      }
+    },
+    "35300": {
+      "name": "Orivesi Keskus (Orivesi)",
+      "rooms": {
+        "1": {
+          "obs": 47,
+          "eurPerM2": 12.88
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 11.3
+        }
+      }
+    },
+    "35800": {
+      "name": "Mänttä (Mänttä-Vilppula)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 11.82
+        },
+        "2": {
+          "obs": 48,
+          "eurPerM2": 9.31
+        }
+      }
+    },
+    "36200": {
+      "name": "Kangasala Keskus (Kangasala)",
+      "rooms": {
+        "1": {
+          "obs": 71,
+          "eurPerM2": 16.34
+        },
+        "2": {
+          "obs": 30,
+          "eurPerM2": 12.25
+        }
+      }
+    },
+    "36220": {
+      "name": "Suorama (Kangasala)",
+      "rooms": {
+        "2": {
+          "obs": 29,
+          "eurPerM2": 12.73
+        }
+      }
+    },
+    "36240": {
+      "name": "Nattari (Kangasala)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 16.25
+        }
+      }
+    },
+    "37100": {
+      "name": "Nokia Keskus (Nokia)",
+      "rooms": {
+        "1": {
+          "obs": 115,
+          "eurPerM2": 16.38
+        },
+        "2": {
+          "obs": 68,
+          "eurPerM2": 11.39
+        }
+      }
+    },
+    "37120": {
+      "name": "Koskenmäki (Nokia)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 16.21
+        },
+        "2": {
+          "obs": 51,
+          "eurPerM2": 13.47
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 13.7
+        }
+      }
+    },
+    "37500": {
+      "name": "Lempäälä Keskus (Lempäälä)",
+      "rooms": {
+        "1": {
+          "obs": 57,
+          "eurPerM2": 16.54
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 12.15
+        }
+      }
+    },
+    "37600": {
+      "name": "Valkeakoski Keskus (Valkeakoski)",
+      "rooms": {
+        "1": {
+          "obs": 99,
+          "eurPerM2": 14.3
+        },
+        "2": {
+          "obs": 95,
+          "eurPerM2": 10.76
+        }
+      }
+    },
+    "37630": {
+      "name": "Vääräkoivu (Valkeakoski)",
+      "rooms": {
+        "1": {
+          "obs": 63,
+          "eurPerM2": 13.8
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 10.94
+        }
+      }
+    },
+    "37800": {
+      "name": "Toijala keskus (Akaa)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 13.77
+        },
+        "2": {
+          "obs": 76,
+          "eurPerM2": 11.35
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 9.53
+        }
+      }
+    },
+    "37830": {
+      "name": "Viiala Keskus (Akaa)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 13.23
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 10.92
+        }
+      }
+    },
+    "38200": {
+      "name": "Vammala Keskus (Sastamala)",
+      "rooms": {
+        "1": {
+          "obs": 64,
+          "eurPerM2": 13.63
+        },
+        "2": {
+          "obs": 57,
+          "eurPerM2": 11
+        }
+      }
+    },
+    "38210": {
+      "name": "Vammala Asemanseutu (Sastamala)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 12.55
+        },
+        "2": {
+          "obs": 30,
+          "eurPerM2": 9.88
+        }
+      }
+    },
+    "38700": {
+      "name": "Kankaanpää Keskus (Kankaanpää)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 12.15
+        },
+        "2": {
+          "obs": 34,
+          "eurPerM2": 9.1
+        }
+      }
+    },
+    "39500": {
+      "name": "Ikaalinen Keskus (Ikaalinen)",
+      "rooms": {
+        "1": {
+          "obs": 41,
+          "eurPerM2": 11.94
+        },
+        "2": {
+          "obs": 21,
+          "eurPerM2": 9.28
+        }
+      }
+    },
+    "39700": {
+      "name": "Parkano Keskus (Parkano)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 11.68
+        }
+      }
+    },
+    "40100": {
+      "name": "Jyväskylä Keskus (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 885,
+          "eurPerM2": 20.05
+        },
+        "2": {
+          "obs": 771,
+          "eurPerM2": 14.1
+        },
+        "3+": {
+          "obs": 188,
+          "eurPerM2": 13.13
+        }
+      }
+    },
+    "40200": {
+      "name": "Mannila-Taulumäki (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 181,
+          "eurPerM2": 18.42
+        },
+        "2": {
+          "obs": 93,
+          "eurPerM2": 13.51
+        }
+      }
+    },
+    "40250": {
+      "name": "Ritoniemi-Lohikoski (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 16.25
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 13.05
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 11.05
+        }
+      }
+    },
+    "40270": {
+      "name": "Pappilanrinne-Pappilanvuori (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 198,
+          "eurPerM2": 20.22
+        },
+        "2": {
+          "obs": 91,
+          "eurPerM2": 15.22
+        },
+        "3+": {
+          "obs": 31,
+          "eurPerM2": 14.15
+        }
+      }
+    },
+    "40320": {
+      "name": "Seppälän Teollisuusalue (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 123,
+          "eurPerM2": 17.62
+        },
+        "2": {
+          "obs": 135,
+          "eurPerM2": 14.11
+        },
+        "3+": {
+          "obs": 55,
+          "eurPerM2": 13.26
+        }
+      }
+    },
+    "40340": {
+      "name": "Huhtasuo (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 193,
+          "eurPerM2": 15.21
+        },
+        "2": {
+          "obs": 256,
+          "eurPerM2": 11.03
+        },
+        "3+": {
+          "obs": 115,
+          "eurPerM2": 10.44
+        }
+      }
+    },
+    "40400": {
+      "name": "Halssila (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 16.64
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 11.82
+        }
+      }
+    },
+    "40420": {
+      "name": "Jyskä (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 63,
+          "eurPerM2": 16.75
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 12.3
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 12.13
+        }
+      }
+    },
+    "40500": {
+      "name": "Keljo-Ristonmaa (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 79,
+          "eurPerM2": 19.13
+        },
+        "2": {
+          "obs": 57,
+          "eurPerM2": 13.77
+        },
+        "3+": {
+          "obs": 22,
+          "eurPerM2": 12.53
+        }
+      }
+    },
+    "40520": {
+      "name": "Kuokkala-Ristikivi (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 160,
+          "eurPerM2": 17.66
+        },
+        "2": {
+          "obs": 260,
+          "eurPerM2": 13.51
+        }
+      }
+    },
+    "40530": {
+      "name": "Keljonkangas (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 117,
+          "eurPerM2": 19.02
+        }
+      }
+    },
+    "40600": {
+      "name": "Mattilanpelto (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 136,
+          "eurPerM2": 18.37
+        },
+        "2": {
+          "obs": 56,
+          "eurPerM2": 12.91
+        }
+      }
+    },
+    "40630": {
+      "name": "Kypärämäki (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 15.25
+        }
+      }
+    },
+    "40640": {
+      "name": "Keltinmäki (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 128,
+          "eurPerM2": 14.09
+        },
+        "2": {
+          "obs": 80,
+          "eurPerM2": 10.72
+        },
+        "3+": {
+          "obs": 25,
+          "eurPerM2": 9.76
+        }
+      }
+    },
+    "40700": {
+      "name": "Mäki-Matti (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 294,
+          "eurPerM2": 18.88
+        },
+        "2": {
+          "obs": 197,
+          "eurPerM2": 12.96
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 9.77
+        }
+      }
+    },
+    "40720": {
+      "name": "Nisula (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 134,
+          "eurPerM2": 18.04
+        },
+        "2": {
+          "obs": 46,
+          "eurPerM2": 12.41
+        }
+      }
+    },
+    "40740": {
+      "name": "Kortepohja (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 119,
+          "eurPerM2": 16.41
+        },
+        "2": {
+          "obs": 104,
+          "eurPerM2": 12.26
+        }
+      }
+    },
+    "40800": {
+      "name": "Vaajakoski (Jyväskylä)",
+      "rooms": {
+        "1": {
+          "obs": 63,
+          "eurPerM2": 14.93
+        },
+        "2": {
+          "obs": 41,
+          "eurPerM2": 11.96
+        }
+      }
+    },
+    "40900": {
+      "name": "Säynätsalo (Jyväskylä)",
+      "rooms": {
+        "2": {
+          "obs": 25,
+          "eurPerM2": 9.47
+        }
+      }
+    },
+    "41160": {
+      "name": "Tikkakoski (Jyväskylä)",
+      "rooms": {
+        "2": {
+          "obs": 21,
+          "eurPerM2": 9.99
+        }
+      }
+    },
+    "41340": {
+      "name": "Laukaa Keskus (Laukaa)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 13.83
+        }
+      }
+    },
+    "42100": {
+      "name": "Jämsä Keskus (Jämsä)",
+      "rooms": {
+        "1": {
+          "obs": 69,
+          "eurPerM2": 12.03
+        },
+        "2": {
+          "obs": 61,
+          "eurPerM2": 9.95
+        }
+      }
+    },
+    "42300": {
+      "name": "Jämsänkoski Keskus (Jämsä)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 11.56
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 8.89
+        }
+      }
+    },
+    "42700": {
+      "name": "Keuruu Keskus (Keuruu)",
+      "rooms": {
+        "1": {
+          "obs": 75,
+          "eurPerM2": 12.12
+        },
+        "2": {
+          "obs": 52,
+          "eurPerM2": 9.87
+        }
+      }
+    },
+    "43100": {
+      "name": "Saarijärvi Keskus (Saarijärvi)",
+      "rooms": {
+        "1": {
+          "obs": 45,
+          "eurPerM2": 11.53
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 9.56
+        }
+      }
+    },
+    "43500": {
+      "name": "Karstula Keskus (Karstula)",
+      "rooms": {
+        "2": {
+          "obs": 23,
+          "eurPerM2": 9.44
+        }
+      }
+    },
+    "44100": {
+      "name": "Äänekoski Keskus (Äänekoski)",
+      "rooms": {
+        "1": {
+          "obs": 87,
+          "eurPerM2": 13.38
+        },
+        "2": {
+          "obs": 74,
+          "eurPerM2": 10.66
+        }
+      }
+    },
+    "44150": {
+      "name": "Likolahti-Karhunlähde (Äänekoski)",
+      "rooms": {
+        "1": {
+          "obs": 41,
+          "eurPerM2": 12.18
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 9.86
+        }
+      }
+    },
+    "44200": {
+      "name": "Suolahti Keskus (Äänekoski)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 11.5
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 9.24
+        }
+      }
+    },
+    "44500": {
+      "name": "Viitasaari Keskus (Viitasaari)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 12.18
+        }
+      }
+    },
+    "45100": {
+      "name": "Kouvola Keskus (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 186,
+          "eurPerM2": 15.34
+        },
+        "2": {
+          "obs": 153,
+          "eurPerM2": 12.17
+        }
+      }
+    },
+    "45130": {
+      "name": "Korjala-Kaunisnurmi (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 104,
+          "eurPerM2": 15.4
+        },
+        "2": {
+          "obs": 45,
+          "eurPerM2": 12.19
+        }
+      }
+    },
+    "45150": {
+      "name": "Kankaronmäki-Eskolanmäki (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 71,
+          "eurPerM2": 12.36
+        },
+        "2": {
+          "obs": 48,
+          "eurPerM2": 9.17
+        },
+        "3+": {
+          "obs": 23,
+          "eurPerM2": 9.07
+        }
+      }
+    },
+    "45160": {
+      "name": "Lehtomäki (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 53,
+          "eurPerM2": 13.18
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 10.37
+        },
+        "3+": {
+          "obs": 22,
+          "eurPerM2": 9.33
+        }
+      }
+    },
+    "45200": {
+      "name": "Tornionmäki (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 132,
+          "eurPerM2": 14.07
+        },
+        "2": {
+          "obs": 109,
+          "eurPerM2": 10.69
+        }
+      }
+    },
+    "45700": {
+      "name": "Kuusankoski Keskus (Kouvola)",
+      "rooms": {
+        "1": {
+          "obs": 117,
+          "eurPerM2": 13.29
+        },
+        "2": {
+          "obs": 97,
+          "eurPerM2": 10.67
+        },
+        "3+": {
+          "obs": 24,
+          "eurPerM2": 10.09
+        }
+      }
+    },
+    "46800": {
+      "name": "Myllykoski (Kouvola)",
+      "rooms": {
+        "2": {
+          "obs": 30,
+          "eurPerM2": 10.2
+        }
+      }
+    },
+    "47400": {
+      "name": "Kausala (Iitti)",
+      "rooms": {
+        "2": {
+          "obs": 21,
+          "eurPerM2": 9.87
+        }
+      }
+    },
+    "48100": {
+      "name": "Kotkansaari (Kotka)",
+      "rooms": {
+        "1": {
+          "obs": 325,
+          "eurPerM2": 16.5
+        },
+        "2": {
+          "obs": 239,
+          "eurPerM2": 13.2
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 12.4
+        }
+      }
+    },
+    "48200": {
+      "name": "Hovinsaari (Kotka)",
+      "rooms": {
+        "1": {
+          "obs": 59,
+          "eurPerM2": 13.78
+        },
+        "2": {
+          "obs": 58,
+          "eurPerM2": 11.92
+        }
+      }
+    },
+    "48350": {
+      "name": "Karhuvuori (Kotka)",
+      "rooms": {
+        "1": {
+          "obs": 105,
+          "eurPerM2": 12.87
+        },
+        "2": {
+          "obs": 77,
+          "eurPerM2": 9.39
+        },
+        "3+": {
+          "obs": 43,
+          "eurPerM2": 9.41
+        }
+      }
+    },
+    "48600": {
+      "name": "Karhula (Kotka)",
+      "rooms": {
+        "1": {
+          "obs": 109,
+          "eurPerM2": 13.72
+        },
+        "2": {
+          "obs": 62,
+          "eurPerM2": 10.72
+        }
+      }
+    },
+    "48700": {
+      "name": "Kyminlinna (Kotka)",
+      "rooms": {
+        "1": {
+          "obs": 22,
+          "eurPerM2": 12.99
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 10.24
+        }
+      }
+    },
+    "49400": {
+      "name": "Hamina Keskus (Hamina)",
+      "rooms": {
+        "1": {
+          "obs": 86,
+          "eurPerM2": 14.46
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 11.44
+        }
+      }
+    },
+    "49460": {
+      "name": "Hillo (Hamina)",
+      "rooms": {
+        "2": {
+          "obs": 26,
+          "eurPerM2": 10.16
+        }
+      }
+    },
+    "50100": {
+      "name": "Mikkeli Keskus (Mikkeli)",
+      "rooms": {
+        "1": {
+          "obs": 274,
+          "eurPerM2": 17.12
+        },
+        "2": {
+          "obs": 139,
+          "eurPerM2": 12.43
+        },
+        "3+": {
+          "obs": 25,
+          "eurPerM2": 10.67
+        }
+      }
+    },
+    "50120": {
+      "name": "Siekkilä (Mikkeli)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 16.67
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 11.2
+        }
+      }
+    },
+    "50130": {
+      "name": "Nuijamies (Mikkeli)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 17.46
+        }
+      }
+    },
+    "50160": {
+      "name": "Kattilansilta (Mikkeli)",
+      "rooms": {
+        "1": {
+          "obs": 39,
+          "eurPerM2": 13.85
+        },
+        "2": {
+          "obs": 45,
+          "eurPerM2": 10.2
+        }
+      }
+    },
+    "50170": {
+      "name": "Peitsari (Mikkeli)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 14.91
+        }
+      }
+    },
+    "50190": {
+      "name": "Tuppurala (Mikkeli)",
+      "rooms": {
+        "2": {
+          "obs": 32,
+          "eurPerM2": 11.96
+        }
+      }
+    },
+    "51200": {
+      "name": "Kangasniemi Keskus (Kangasniemi)",
+      "rooms": {
+        "1": {
+          "obs": 22,
+          "eurPerM2": 11.41
+        }
+      }
+    },
+    "52700": {
+      "name": "Mäntyharju Keskus (Mäntyharju)",
+      "rooms": {
+        "2": {
+          "obs": 25,
+          "eurPerM2": 9.92
+        }
+      }
+    },
+    "53100": {
+      "name": "Lappeenranta keskus (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 420,
+          "eurPerM2": 18.35
+        },
+        "2": {
+          "obs": 208,
+          "eurPerM2": 14.66
+        },
+        "3+": {
+          "obs": 48,
+          "eurPerM2": 14.16
+        }
+      }
+    },
+    "53300": {
+      "name": "Lauritsala-Mälkiä (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 14.53
+        },
+        "2": {
+          "obs": 64,
+          "eurPerM2": 12.2
+        }
+      }
+    },
+    "53600": {
+      "name": "Kesämäki (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 71,
+          "eurPerM2": 18.29
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 13.52
+        }
+      }
+    },
+    "53810": {
+      "name": "Kuusimäki-Lavola (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 78,
+          "eurPerM2": 15.4
+        },
+        "2": {
+          "obs": 34,
+          "eurPerM2": 10.58
+        }
+      }
+    },
+    "53850": {
+      "name": "Skinnarila (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 151,
+          "eurPerM2": 17.13
+        },
+        "2": {
+          "obs": 136,
+          "eurPerM2": 12.03
+        },
+        "3+": {
+          "obs": 43,
+          "eurPerM2": 10.64
+        }
+      }
+    },
+    "53900": {
+      "name": "Pallo-Tysterniemi-Leiri (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 76,
+          "eurPerM2": 18.14
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 13.65
+        }
+      }
+    },
+    "53920": {
+      "name": "Voisalmi (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 68,
+          "eurPerM2": 14.9
+        },
+        "2": {
+          "obs": 43,
+          "eurPerM2": 11.62
+        }
+      }
+    },
+    "53950": {
+      "name": "Kivisalmi (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 21,
+          "eurPerM2": 13.98
+        },
+        "2": {
+          "obs": 20,
+          "eurPerM2": 10.57
+        }
+      }
+    },
+    "54100": {
+      "name": "Joutseno Keskus (Lappeenranta)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 13.04
+        },
+        "2": {
+          "obs": 25,
+          "eurPerM2": 10.33
+        }
+      }
+    },
+    "55100": {
+      "name": "Imatra Keskus (Imatra)",
+      "rooms": {
+        "1": {
+          "obs": 98,
+          "eurPerM2": 13.84
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 10.94
+        }
+      }
+    },
+    "55120": {
+      "name": "Mansikkala-Tuulikallio (Imatra)",
+      "rooms": {
+        "1": {
+          "obs": 91,
+          "eurPerM2": 13.07
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 10.9
+        }
+      }
+    },
+    "55800": {
+      "name": "Vuoksenniska-Saarlampi (Imatra)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 12.51
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 9.9
+        }
+      }
+    },
+    "57100": {
+      "name": "Heikinpohja-Piispanmäki (Savonlinna)",
+      "rooms": {
+        "1": {
+          "obs": 104,
+          "eurPerM2": 14.61
+        },
+        "2": {
+          "obs": 70,
+          "eurPerM2": 11.02
+        }
+      }
+    },
+    "57130": {
+      "name": "Savonlinna Keskus (Savonlinna)",
+      "rooms": {
+        "1": {
+          "obs": 59,
+          "eurPerM2": 14.77
+        },
+        "2": {
+          "obs": 45,
+          "eurPerM2": 11.45
+        }
+      }
+    },
+    "57170": {
+      "name": "Sortteerinlahti-Talvisalo (Savonlinna)",
+      "rooms": {
+        "1": {
+          "obs": 36,
+          "eurPerM2": 13.73
+        }
+      }
+    },
+    "57200": {
+      "name": "Miekonniemi-Venäjänniemi (Savonlinna)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 12.63
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.42
+        }
+      }
+    },
+    "57210": {
+      "name": "Nojanmaa (Savonlinna)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 13.94
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 10.19
+        }
+      }
+    },
+    "60100": {
+      "name": "Seinäjoki Keskus (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 319,
+          "eurPerM2": 15.95
+        },
+        "2": {
+          "obs": 302,
+          "eurPerM2": 12.06
+        },
+        "3+": {
+          "obs": 59,
+          "eurPerM2": 10.46
+        }
+      }
+    },
+    "60120": {
+      "name": "Pohja (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 16.15
+        },
+        "2": {
+          "obs": 33,
+          "eurPerM2": 11.92
+        }
+      }
+    },
+    "60150": {
+      "name": "Kasperi (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 14
+        },
+        "2": {
+          "obs": 43,
+          "eurPerM2": 10.54
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 9.82
+        }
+      }
+    },
+    "60200": {
+      "name": "Törnävä (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 129,
+          "eurPerM2": 16.36
+        },
+        "2": {
+          "obs": 118,
+          "eurPerM2": 12.6
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 10.86
+        }
+      }
+    },
+    "60220": {
+      "name": "Huhtala (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 33,
+          "eurPerM2": 15.49
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 10.96
+        }
+      }
+    },
+    "60320": {
+      "name": "Alakylä-Jouppi (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 65,
+          "eurPerM2": 17.46
+        },
+        "2": {
+          "obs": 71,
+          "eurPerM2": 12.07
+        },
+        "3+": {
+          "obs": 23,
+          "eurPerM2": 10.94
+        }
+      }
+    },
+    "60510": {
+      "name": "Hyllykallio (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 15.58
+        },
+        "2": {
+          "obs": 46,
+          "eurPerM2": 12.87
+        }
+      }
+    },
+    "60550": {
+      "name": "Nurmo Keskus (Seinäjoki)",
+      "rooms": {
+        "1": {
+          "obs": 22,
+          "eurPerM2": 16.21
+        }
+      }
+    },
+    "60800": {
+      "name": "Ilmajoki Keskus (Ilmajoki)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 11.64
+        },
+        "2": {
+          "obs": 25,
+          "eurPerM2": 10.45
+        }
+      }
+    },
+    "61300": {
+      "name": "Kurikka Keskus (Kurikka)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 11.75
+        },
+        "2": {
+          "obs": 48,
+          "eurPerM2": 10.19
+        }
+      }
+    },
+    "61600": {
+      "name": "Jalasjärvi Keskus (Kurikka)",
+      "rooms": {
+        "2": {
+          "obs": 36,
+          "eurPerM2": 9.02
+        }
+      }
+    },
+    "61800": {
+      "name": "Kauhajoki Keskus (Kauhajoki)",
+      "rooms": {
+        "1": {
+          "obs": 43,
+          "eurPerM2": 11.74
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 10.4
+        }
+      }
+    },
+    "62100": {
+      "name": "Lapua Keskus (Lapua)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 12.27
+        },
+        "2": {
+          "obs": 48,
+          "eurPerM2": 10.13
+        }
+      }
+    },
+    "62200": {
+      "name": "Kauhava Keskus (Kauhava)",
+      "rooms": {
+        "2": {
+          "obs": 34,
+          "eurPerM2": 9.48
+        }
+      }
+    },
+    "62900": {
+      "name": "Alajärvi Keskus (Alajärvi)",
+      "rooms": {
+        "2": {
+          "obs": 29,
+          "eurPerM2": 10.18
+        }
+      }
+    },
+    "63300": {
+      "name": "Alavus Keskus (Alavus)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 11.54
+        },
+        "2": {
+          "obs": 24,
+          "eurPerM2": 10.08
+        }
+      }
+    },
+    "63700": {
+      "name": "Ähtäri Keskus (Ähtäri)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 11.07
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 9.45
+        }
+      }
+    },
+    "65100": {
+      "name": "Vaasa Keskus (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 730,
+          "eurPerM2": 17.72
+        },
+        "2": {
+          "obs": 487,
+          "eurPerM2": 12.19
+        },
+        "3+": {
+          "obs": 88,
+          "eurPerM2": 8.96
+        }
+      }
+    },
+    "65200": {
+      "name": "Palosaari (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 199,
+          "eurPerM2": 16.45
+        },
+        "2": {
+          "obs": 153,
+          "eurPerM2": 11.41
+        },
+        "3+": {
+          "obs": 28,
+          "eurPerM2": 8.27
+        }
+      }
+    },
+    "65230": {
+      "name": "Vetokannas (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 14.18
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.39
+        }
+      }
+    },
+    "65320": {
+      "name": "Huutoniemi (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 15.37
+        }
+      }
+    },
+    "65350": {
+      "name": "Suvilahti (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 14.17
+        },
+        "2": {
+          "obs": 25,
+          "eurPerM2": 11.34
+        }
+      }
+    },
+    "65370": {
+      "name": "Ristinummi (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 14.38
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 9.78
+        }
+      }
+    },
+    "65380": {
+      "name": "Vanha Vaasa (Vaasa)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 13.59
+        }
+      }
+    },
+    "65610": {
+      "name": "Mustasaari Keskus (Mustasaari)",
+      "rooms": {
+        "2": {
+          "obs": 23,
+          "eurPerM2": 10.79
+        }
+      }
+    },
+    "66400": {
+      "name": "Laihia Keskus (Laihia)",
+      "rooms": {
+        "2": {
+          "obs": 26,
+          "eurPerM2": 9.95
+        }
+      }
+    },
+    "67100": {
+      "name": "Kokkola Keskus (Kokkola)",
+      "rooms": {
+        "1": {
+          "obs": 196,
+          "eurPerM2": 17.26
+        },
+        "2": {
+          "obs": 145,
+          "eurPerM2": 12.33
+        },
+        "3+": {
+          "obs": 38,
+          "eurPerM2": 10.1
+        }
+      }
+    },
+    "67200": {
+      "name": "Kiviniitty-Tullimäki (Kokkola)",
+      "rooms": {
+        "1": {
+          "obs": 46,
+          "eurPerM2": 17.48
+        },
+        "2": {
+          "obs": 56,
+          "eurPerM2": 11.58
+        }
+      }
+    },
+    "67800": {
+      "name": "Koivuhaka (Kokkola)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 14.62
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 9.4
+        }
+      }
+    },
+    "68600": {
+      "name": "Pietarsaari Keskus (Pietarsaari)",
+      "rooms": {
+        "1": {
+          "obs": 77,
+          "eurPerM2": 14.51
+        },
+        "2": {
+          "obs": 73,
+          "eurPerM2": 11.02
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 9.58
+        }
+      }
+    },
+    "68620": {
+      "name": "Skutnäs-Västermalm (Pietarsaari)",
+      "rooms": {
+        "1": {
+          "obs": 35,
+          "eurPerM2": 15.8
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 11.94
+        }
+      }
+    },
+    "70100": {
+      "name": "Kuopio Keskus (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 586,
+          "eurPerM2": 20.14
+        },
+        "2": {
+          "obs": 393,
+          "eurPerM2": 14.83
+        }
+      }
+    },
+    "70110": {
+      "name": "Etu-Niirala (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 321,
+          "eurPerM2": 19.85
+        },
+        "2": {
+          "obs": 156,
+          "eurPerM2": 13.41
+        },
+        "3+": {
+          "obs": 28,
+          "eurPerM2": 9.16
+        }
+      }
+    },
+    "70150": {
+      "name": "Neulamäki (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 154,
+          "eurPerM2": 17.81
+        },
+        "2": {
+          "obs": 202,
+          "eurPerM2": 14.38
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 10.63
+        }
+      }
+    },
+    "70200": {
+      "name": "Puijonlaakso (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 234,
+          "eurPerM2": 18.8
+        },
+        "2": {
+          "obs": 291,
+          "eurPerM2": 14.21
+        }
+      }
+    },
+    "70280": {
+      "name": "Länsi-Puijo (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 44,
+          "eurPerM2": 16.79
+        }
+      }
+    },
+    "70340": {
+      "name": "Inkilänmäki (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 47,
+          "eurPerM2": 18.38
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 12.34
+        }
+      }
+    },
+    "70460": {
+      "name": "Saarijärvi (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 53,
+          "eurPerM2": 16.99
+        },
+        "2": {
+          "obs": 124,
+          "eurPerM2": 12.2
+        },
+        "3+": {
+          "obs": 30,
+          "eurPerM2": 10.55
+        }
+      }
+    },
+    "70500": {
+      "name": "Männistö (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 165,
+          "eurPerM2": 16.85
+        },
+        "2": {
+          "obs": 135,
+          "eurPerM2": 13.03
+        },
+        "3+": {
+          "obs": 32,
+          "eurPerM2": 11.16
+        }
+      }
+    },
+    "70600": {
+      "name": "Niirala-Huuhanmäki (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 110,
+          "eurPerM2": 19.67
+        },
+        "2": {
+          "obs": 79,
+          "eurPerM2": 12.52
+        }
+      }
+    },
+    "70620": {
+      "name": "Haapaniemi (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 43,
+          "eurPerM2": 18.24
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 12.98
+        }
+      }
+    },
+    "70700": {
+      "name": "Särkiniemi (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 39,
+          "eurPerM2": 16.94
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 12.61
+        }
+      }
+    },
+    "70780": {
+      "name": "Jynkkä (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 18.33
+        },
+        "2": {
+          "obs": 50,
+          "eurPerM2": 12.16
+        }
+      }
+    },
+    "70820": {
+      "name": "Litmanen (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 18.75
+        }
+      }
+    },
+    "70840": {
+      "name": "Jynkänmäki (Kuopio)",
+      "rooms": {
+        "1": {
+          "obs": 72,
+          "eurPerM2": 19.88
+        },
+        "2": {
+          "obs": 62,
+          "eurPerM2": 13.04
+        }
+      }
+    },
+    "71800": {
+      "name": "Siilinjärvi Keskus (Siilinjärvi)",
+      "rooms": {
+        "1": {
+          "obs": 79,
+          "eurPerM2": 15.58
+        },
+        "2": {
+          "obs": 52,
+          "eurPerM2": 13.04
+        },
+        "3+": {
+          "obs": 28,
+          "eurPerM2": 10.71
+        }
+      }
+    },
+    "73100": {
+      "name": "Lapinlahti Keskus (Lapinlahti)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 11.35
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 9.99
+        }
+      }
+    },
+    "73300": {
+      "name": "Nilsiä Keskus (Kuopio)",
+      "rooms": {
+        "2": {
+          "obs": 33,
+          "eurPerM2": 10.54
+        }
+      }
+    },
+    "74100": {
+      "name": "Iisalmi Keskus, Eteläinen (Iisalmi)",
+      "rooms": {
+        "1": {
+          "obs": 109,
+          "eurPerM2": 14.62
+        },
+        "2": {
+          "obs": 62,
+          "eurPerM2": 11.7
+        }
+      }
+    },
+    "74120": {
+      "name": "Iisalmi Keskus Pohjoinen (Iisalmi)",
+      "rooms": {
+        "1": {
+          "obs": 58,
+          "eurPerM2": 13.72
+        },
+        "2": {
+          "obs": 34,
+          "eurPerM2": 10.34
+        }
+      }
+    },
+    "74130": {
+      "name": "Kihmula (Iisalmi)",
+      "rooms": {
+        "2": {
+          "obs": 25,
+          "eurPerM2": 10.99
+        }
+      }
+    },
+    "74700": {
+      "name": "Kiuruvesi Keskus (Kiuruvesi)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 11.26
+        }
+      }
+    },
+    "75500": {
+      "name": "Nurmes Keskus (Nurmes)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 12.27
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 9.9
+        }
+      }
+    },
+    "75530": {
+      "name": "Porokylä (Nurmes)",
+      "rooms": {
+        "1": {
+          "obs": 24,
+          "eurPerM2": 11.65
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 9.76
+        }
+      }
+    },
+    "76100": {
+      "name": "Pieksämäki Keskus (Pieksämäki)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 11.56
+        },
+        "2": {
+          "obs": 74,
+          "eurPerM2": 9.38
+        }
+      }
+    },
+    "76150": {
+      "name": "Länsirinne (Pieksämäki)",
+      "rooms": {
+        "1": {
+          "obs": 45,
+          "eurPerM2": 11.92
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 9.23
+        }
+      }
+    },
+    "77600": {
+      "name": "Suonenjoki Keskus (Suonenjoki)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 12.43
+        },
+        "2": {
+          "obs": 51,
+          "eurPerM2": 10.06
+        }
+      }
+    },
+    "78200": {
+      "name": "Varkaus Keskus (Leppävirta)",
+      "rooms": {
+        "1": {
+          "obs": 143,
+          "eurPerM2": 11.77
+        },
+        "2": {
+          "obs": 106,
+          "eurPerM2": 9.49
+        }
+      }
+    },
+    "78300": {
+      "name": "Kommila (Varkaus)",
+      "rooms": {
+        "2": {
+          "obs": 36,
+          "eurPerM2": 8.69
+        }
+      }
+    },
+    "79100": {
+      "name": "Leppävirta Keskus (Leppävirta)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 11.75
+        },
+        "2": {
+          "obs": 36,
+          "eurPerM2": 10.42
+        }
+      }
+    },
+    "80100": {
+      "name": "Joensuu Keskus, Pohjoinen (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 549,
+          "eurPerM2": 18.65
+        },
+        "2": {
+          "obs": 257,
+          "eurPerM2": 12.7
+        },
+        "3+": {
+          "obs": 39,
+          "eurPerM2": 10.1
+        }
+      }
+    },
+    "80110": {
+      "name": "Joensuu Keskus Eteläinen (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 341,
+          "eurPerM2": 18.26
+        },
+        "2": {
+          "obs": 130,
+          "eurPerM2": 11.93
+        },
+        "3+": {
+          "obs": 22,
+          "eurPerM2": 9.83
+        }
+      }
+    },
+    "80140": {
+      "name": "Noljakka (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 55,
+          "eurPerM2": 17.53
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 13.12
+        }
+      }
+    },
+    "80160": {
+      "name": "Rantakylä-Latola (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 102,
+          "eurPerM2": 15.95
+        },
+        "2": {
+          "obs": 107,
+          "eurPerM2": 12.47
+        },
+        "3+": {
+          "obs": 26,
+          "eurPerM2": 9.46
+        }
+      }
+    },
+    "80200": {
+      "name": "Niinivaara (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 138,
+          "eurPerM2": 18.23
+        },
+        "2": {
+          "obs": 73,
+          "eurPerM2": 12.51
+        }
+      }
+    },
+    "80220": {
+      "name": "Penttilä (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 141,
+          "eurPerM2": 20.53
+        },
+        "2": {
+          "obs": 58,
+          "eurPerM2": 13.35
+        }
+      }
+    },
+    "80230": {
+      "name": "Hukanhauta (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 22,
+          "eurPerM2": 16.42
+        },
+        "2": {
+          "obs": 24,
+          "eurPerM2": 10.79
+        }
+      }
+    },
+    "80260": {
+      "name": "Kettuvaara (Joensuu)",
+      "rooms": {
+        "1": {
+          "obs": 53,
+          "eurPerM2": 15.96
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 12.81
+        }
+      }
+    },
+    "81200": {
+      "name": "Eno Keskus (Joensuu)",
+      "rooms": {
+        "2": {
+          "obs": 22,
+          "eurPerM2": 10.15
+        }
+      }
+    },
+    "81700": {
+      "name": "Lieksa Keskus (Lieksa)",
+      "rooms": {
+        "1": {
+          "obs": 47,
+          "eurPerM2": 11.72
+        },
+        "2": {
+          "obs": 37,
+          "eurPerM2": 9.27
+        }
+      }
+    },
+    "82500": {
+      "name": "Kitee Keskus (Kitee)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 11.5
+        },
+        "2": {
+          "obs": 40,
+          "eurPerM2": 9.42
+        }
+      }
+    },
+    "83500": {
+      "name": "Outokumpu Keskus (Outokumpu)",
+      "rooms": {
+        "1": {
+          "obs": 55,
+          "eurPerM2": 12.07
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 9.44
+        }
+      }
+    },
+    "84100": {
+      "name": "Ylivieska Keskus (Ylivieska)",
+      "rooms": {
+        "1": {
+          "obs": 70,
+          "eurPerM2": 13.32
+        },
+        "2": {
+          "obs": 91,
+          "eurPerM2": 10.77
+        },
+        "3+": {
+          "obs": 23,
+          "eurPerM2": 9.88
+        }
+      }
+    },
+    "85500": {
+      "name": "Nivala Keskus (Nivala)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 11.64
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 10.09
+        }
+      }
+    },
+    "85800": {
+      "name": "Haapajärvi Keskus (Haapajärvi)",
+      "rooms": {
+        "2": {
+          "obs": 24,
+          "eurPerM2": 9.56
+        }
+      }
+    },
+    "86300": {
+      "name": "Oulainen Keskus (Oulainen)",
+      "rooms": {
+        "1": {
+          "obs": 41,
+          "eurPerM2": 11.18
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 9.51
+        }
+      }
+    },
+    "86600": {
+      "name": "Haapavesi Keskus (Haapavesi)",
+      "rooms": {
+        "2": {
+          "obs": 20,
+          "eurPerM2": 9.09
+        }
+      }
+    },
+    "87100": {
+      "name": "Kajaani Keskus (Kajaani)",
+      "rooms": {
+        "1": {
+          "obs": 310,
+          "eurPerM2": 16.55
+        },
+        "2": {
+          "obs": 118,
+          "eurPerM2": 12.34
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 10.4
+        }
+      }
+    },
+    "87200": {
+      "name": "Teppana (Kajaani)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 15.29
+        },
+        "2": {
+          "obs": 21,
+          "eurPerM2": 11.87
+        }
+      }
+    },
+    "87500": {
+      "name": "Lehtikangas (Kajaani)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 14.34
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 10.29
+        }
+      }
+    },
+    "88600": {
+      "name": "Sotkamo Keskus (Sotkamo)",
+      "rooms": {
+        "1": {
+          "obs": 45,
+          "eurPerM2": 14.55
+        }
+      }
+    },
+    "90100": {
+      "name": "Oulu Keskus (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 459,
+          "eurPerM2": 18.34
+        },
+        "2": {
+          "obs": 299,
+          "eurPerM2": 12.82
+        },
+        "3+": {
+          "obs": 84,
+          "eurPerM2": 12.13
+        }
+      }
+    },
+    "90120": {
+      "name": "Heinäpää (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 435,
+          "eurPerM2": 17.46
+        },
+        "2": {
+          "obs": 396,
+          "eurPerM2": 13.24
+        },
+        "3+": {
+          "obs": 86,
+          "eurPerM2": 12.94
+        }
+      }
+    },
+    "90130": {
+      "name": "Raksila (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 255,
+          "eurPerM2": 17.86
+        },
+        "2": {
+          "obs": 138,
+          "eurPerM2": 13.91
+        },
+        "3+": {
+          "obs": 40,
+          "eurPerM2": 12.27
+        }
+      }
+    },
+    "90140": {
+      "name": "Karjasilta (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 111,
+          "eurPerM2": 16.66
+        },
+        "2": {
+          "obs": 41,
+          "eurPerM2": 12.4
+        }
+      }
+    },
+    "90150": {
+      "name": "Höyhtyä (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 89,
+          "eurPerM2": 17.07
+        },
+        "2": {
+          "obs": 55,
+          "eurPerM2": 11.21
+        }
+      }
+    },
+    "90230": {
+      "name": "Värttö-Maikkula (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 76,
+          "eurPerM2": 17.06
+        },
+        "2": {
+          "obs": 108,
+          "eurPerM2": 14.51
+        }
+      }
+    },
+    "90240": {
+      "name": "Iinatti (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 15.06
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 10.72
+        }
+      }
+    },
+    "90250": {
+      "name": "Kaukovainio (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 236,
+          "eurPerM2": 15.83
+        },
+        "2": {
+          "obs": 222,
+          "eurPerM2": 12.75
+        }
+      }
+    },
+    "90400": {
+      "name": "Äimärautio (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 120,
+          "eurPerM2": 19.52
+        },
+        "2": {
+          "obs": 101,
+          "eurPerM2": 15.15
+        }
+      }
+    },
+    "90420": {
+      "name": "Metsokangas (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 67,
+          "eurPerM2": 17.87
+        },
+        "2": {
+          "obs": 60,
+          "eurPerM2": 13.55
+        },
+        "3+": {
+          "obs": 34,
+          "eurPerM2": 13.05
+        }
+      }
+    },
+    "90440": {
+      "name": "Kempele Keskus (Kempele)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 15.74
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 12.45
+        }
+      }
+    },
+    "90450": {
+      "name": "Honkanen (Kempele)",
+      "rooms": {
+        "2": {
+          "obs": 21,
+          "eurPerM2": 12.47
+        }
+      }
+    },
+    "90500": {
+      "name": "Tuira (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 745,
+          "eurPerM2": 17.37
+        },
+        "2": {
+          "obs": 581,
+          "eurPerM2": 13.12
+        }
+      }
+    },
+    "90510": {
+      "name": "Hietasaari (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 24,
+          "eurPerM2": 18.58
+        },
+        "2": {
+          "obs": 20,
+          "eurPerM2": 12.63
+        }
+      }
+    },
+    "90520": {
+      "name": "Taskila-Toppila (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 223,
+          "eurPerM2": 19.07
+        },
+        "2": {
+          "obs": 128,
+          "eurPerM2": 13.02
+        },
+        "3+": {
+          "obs": 39,
+          "eurPerM2": 10.83
+        }
+      }
+    },
+    "90530": {
+      "name": "Välivainio (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 245,
+          "eurPerM2": 17.31
+        },
+        "2": {
+          "obs": 236,
+          "eurPerM2": 13.1
+        },
+        "3+": {
+          "obs": 46,
+          "eurPerM2": 11.94
+        }
+      }
+    },
+    "90540": {
+      "name": "Kuivasjärvi (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 43,
+          "eurPerM2": 19.38
+        },
+        "2": {
+          "obs": 32,
+          "eurPerM2": 12.36
+        }
+      }
+    },
+    "90550": {
+      "name": "Pyykösjärvi-Puolivälikangas (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 64,
+          "eurPerM2": 15.41
+        },
+        "2": {
+          "obs": 90,
+          "eurPerM2": 12.11
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 10.56
+        }
+      }
+    },
+    "90560": {
+      "name": "Koskela-Oulu (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 84,
+          "eurPerM2": 15.14
+        },
+        "2": {
+          "obs": 48,
+          "eurPerM2": 10.53
+        }
+      }
+    },
+    "90570": {
+      "name": "Kaijonharju-Linnanmaa (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 360,
+          "eurPerM2": 18.73
+        },
+        "2": {
+          "obs": 201,
+          "eurPerM2": 13.24
+        },
+        "3+": {
+          "obs": 36,
+          "eurPerM2": 10.36
+        }
+      }
+    },
+    "90580": {
+      "name": "Rajakylä (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 15.32
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 10.93
+        },
+        "3+": {
+          "obs": 31,
+          "eurPerM2": 10.39
+        }
+      }
+    },
+    "90650": {
+      "name": "Haapalehto (Oulu)",
+      "rooms": {
+        "1": {
+          "obs": 78,
+          "eurPerM2": 16.43
+        },
+        "2": {
+          "obs": 43,
+          "eurPerM2": 11.46
+        }
+      }
+    },
+    "90830": {
+      "name": "Haukipudas Keskus (Oulu)",
+      "rooms": {
+        "2": {
+          "obs": 30,
+          "eurPerM2": 11.75
+        }
+      }
+    },
+    "90900": {
+      "name": "Kiiminki Keskus (Oulu)",
+      "rooms": {
+        "2": {
+          "obs": 28,
+          "eurPerM2": 11.65
+        }
+      }
+    },
+    "91100": {
+      "name": "Ii Keskus (Ii)",
+      "rooms": {
+        "2": {
+          "obs": 34,
+          "eurPerM2": 11.83
+        }
+      }
+    },
+    "91500": {
+      "name": "Muhos Keskus (Muhos)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 13.13
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 11.01
+        }
+      }
+    },
+    "92100": {
+      "name": "Raahe Keskus (Raahe)",
+      "rooms": {
+        "1": {
+          "obs": 82,
+          "eurPerM2": 13.26
+        },
+        "2": {
+          "obs": 50,
+          "eurPerM2": 10.72
+        }
+      }
+    },
+    "92130": {
+      "name": "Isoholmi-Antinkangas (Raahe)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 13.15
+        }
+      }
+    },
+    "93100": {
+      "name": "Pudasjärvi Keskus (Pudasjärvi)",
+      "rooms": {
+        "2": {
+          "obs": 21,
+          "eurPerM2": 11.11
+        }
+      }
+    },
+    "93600": {
+      "name": "Kuusamo (Kuusamo)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 14.88
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 11.38
+        }
+      }
+    },
+    "94100": {
+      "name": "Kemi Keskus (Kemi)",
+      "rooms": {
+        "1": {
+          "obs": 162,
+          "eurPerM2": 13.66
+        },
+        "2": {
+          "obs": 141,
+          "eurPerM2": 10.29
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 9.39
+        }
+      }
+    },
+    "94700": {
+      "name": "Takajärvi-Haukkari (Kemi)",
+      "rooms": {
+        "1": {
+          "obs": 39,
+          "eurPerM2": 12.38
+        },
+        "2": {
+          "obs": 50,
+          "eurPerM2": 8.74
+        }
+      }
+    },
+    "94830": {
+      "name": "Pikku Berliini-Hepola (Kemi)",
+      "rooms": {
+        "2": {
+          "obs": 36,
+          "eurPerM2": 8.8
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 8.1
+        }
+      }
+    },
+    "95400": {
+      "name": "Tornio Keskus (Tornio)",
+      "rooms": {
+        "1": {
+          "obs": 57,
+          "eurPerM2": 15.47
+        },
+        "2": {
+          "obs": 52,
+          "eurPerM2": 12.22
+        }
+      }
+    },
+    "95430": {
+      "name": "Suensaari (Tornio)",
+      "rooms": {
+        "1": {
+          "obs": 38,
+          "eurPerM2": 13.64
+        },
+        "2": {
+          "obs": 21,
+          "eurPerM2": 10.46
+        }
+      }
+    },
+    "96100": {
+      "name": "Rovaniemi Keskus (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 289,
+          "eurPerM2": 18.17
+        },
+        "2": {
+          "obs": 183,
+          "eurPerM2": 13.48
+        },
+        "3+": {
+          "obs": 32,
+          "eurPerM2": 10.08
+        }
+      }
+    },
+    "96200": {
+      "name": "Sahanperä-Ratantaus (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 157,
+          "eurPerM2": 18.33
+        },
+        "2": {
+          "obs": 149,
+          "eurPerM2": 15.89
+        }
+      }
+    },
+    "96300": {
+      "name": "Niemelänkangas-Korvanniemi (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 175,
+          "eurPerM2": 17.66
+        },
+        "2": {
+          "obs": 131,
+          "eurPerM2": 13.35
+        }
+      }
+    },
+    "96400": {
+      "name": "Pullinranta-Kiiruna (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 17.44
+        }
+      }
+    },
+    "96440": {
+      "name": "Ounasrinne (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 15.23
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 9.52
+        }
+      }
+    },
+    "96500": {
+      "name": "Korkalovaara (Rovaniemi)",
+      "rooms": {
+        "1": {
+          "obs": 66,
+          "eurPerM2": 15.11
+        },
+        "2": {
+          "obs": 97,
+          "eurPerM2": 10.64
+        },
+        "3+": {
+          "obs": 24,
+          "eurPerM2": 9.18
+        }
+      }
+    },
+    "99600": {
+      "name": "Sodankylä Keskus (Sodankylä)",
+      "rooms": {
+        "2": {
+          "obs": 21,
+          "eurPerM2": 11.73
+        }
+      }
+    },
+    "00100": {
+      "name": "Helsinki Keskusta - Etu-Töölö (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 746,
+          "eurPerM2": 29.43
+        },
+        "2": {
+          "obs": 353,
+          "eurPerM2": 23.34
+        },
+        "3+": {
+          "obs": 76,
+          "eurPerM2": 20.31
+        }
+      }
+    },
+    "00120": {
+      "name": "Punavuori (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 177,
+          "eurPerM2": 28.65
+        },
+        "2": {
+          "obs": 89,
+          "eurPerM2": 20.66
+        },
+        "3+": {
+          "obs": 25,
+          "eurPerM2": 17.34
+        }
+      }
+    },
+    "00130": {
+      "name": "Kaartinkaupunki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 29.48
+        }
+      }
+    },
+    "00140": {
+      "name": "Kaivopuisto - Ullanlinna (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 211,
+          "eurPerM2": 28.11
+        },
+        "2": {
+          "obs": 66,
+          "eurPerM2": 17.43
+        }
+      }
+    },
+    "00150": {
+      "name": "Eira - Hernesaari (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 408,
+          "eurPerM2": 28.45
+        },
+        "2": {
+          "obs": 160,
+          "eurPerM2": 21.5
+        },
+        "3+": {
+          "obs": 51,
+          "eurPerM2": 26.02
+        }
+      }
+    },
+    "00160": {
+      "name": "Katajanokka (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 118,
+          "eurPerM2": 29.95
+        }
+      }
+    },
+    "00170": {
+      "name": "Kruununhaka (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 167,
+          "eurPerM2": 27.64
+        },
+        "2": {
+          "obs": 76,
+          "eurPerM2": 18.04
+        }
+      }
+    },
+    "00180": {
+      "name": "Kamppi - Ruoholahti (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 315,
+          "eurPerM2": 28.03
+        },
+        "2": {
+          "obs": 202,
+          "eurPerM2": 23.13
+        },
+        "3+": {
+          "obs": 41,
+          "eurPerM2": 20.8
+        }
+      }
+    },
+    "00200": {
+      "name": "Lauttasaari (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 434,
+          "eurPerM2": 26.78
+        },
+        "2": {
+          "obs": 194,
+          "eurPerM2": 18.92
+        },
+        "3+": {
+          "obs": 46,
+          "eurPerM2": 20.61
+        }
+      }
+    },
+    "00210": {
+      "name": "Vattuniemi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 70,
+          "eurPerM2": 23.92
+        },
+        "2": {
+          "obs": 96,
+          "eurPerM2": 22.92
+        },
+        "3+": {
+          "obs": 27,
+          "eurPerM2": 24.46
+        }
+      }
+    },
+    "00240": {
+      "name": "Länsi-Pasila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 43,
+          "eurPerM2": 26.02
+        }
+      }
+    },
+    "00250": {
+      "name": "Taka-Töölö (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 559,
+          "eurPerM2": 28.65
+        },
+        "2": {
+          "obs": 227,
+          "eurPerM2": 18.85
+        },
+        "3+": {
+          "obs": 41,
+          "eurPerM2": 18.49
+        }
+      }
+    },
+    "00260": {
+      "name": "Keski-Töölö (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 184,
+          "eurPerM2": 27.39
+        },
+        "2": {
+          "obs": 85,
+          "eurPerM2": 20.43
+        }
+      }
+    },
+    "00270": {
+      "name": "Pohjois-Meilahti (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 246,
+          "eurPerM2": 28.36
+        },
+        "2": {
+          "obs": 111,
+          "eurPerM2": 18.95
+        }
+      }
+    },
+    "00280": {
+      "name": "Ruskeasuo (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 51,
+          "eurPerM2": 25.48
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 16.73
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 15.86
+        }
+      }
+    },
+    "00300": {
+      "name": "Pikku Huopalahti (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 24.55
+        }
+      }
+    },
+    "00310": {
+      "name": "Kivihaka (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 21,
+          "eurPerM2": 22.49
+        }
+      }
+    },
+    "00320": {
+      "name": "Etelä-Haaga (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 506,
+          "eurPerM2": 25.7
+        },
+        "2": {
+          "obs": 106,
+          "eurPerM2": 17.82
+        }
+      }
+    },
+    "00330": {
+      "name": "Munkkiniemi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 173,
+          "eurPerM2": 26.49
+        },
+        "2": {
+          "obs": 128,
+          "eurPerM2": 20.36
+        },
+        "3+": {
+          "obs": 55,
+          "eurPerM2": 18.43
+        }
+      }
+    },
+    "00350": {
+      "name": "Munkkivuori-Niemenmäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 417,
+          "eurPerM2": 26.36
+        },
+        "2": {
+          "obs": 127,
+          "eurPerM2": 20.57
+        }
+      }
+    },
+    "00360": {
+      "name": "Pajamäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 93,
+          "eurPerM2": 27.42
+        },
+        "2": {
+          "obs": 74,
+          "eurPerM2": 18.62
+        }
+      }
+    },
+    "00370": {
+      "name": "Reimarla (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 64,
+          "eurPerM2": 22.52
+        }
+      }
+    },
+    "00390": {
+      "name": "Konala (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 150,
+          "eurPerM2": 24.35
+        }
+      }
+    },
+    "00400": {
+      "name": "Pohjois-Haaga (Helsinki)",
+      "rooms": {
+        "2": {
+          "obs": 233,
+          "eurPerM2": 17.93
+        }
+      }
+    },
+    "00410": {
+      "name": "Malminkartano (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 73,
+          "eurPerM2": 22.02
+        },
+        "2": {
+          "obs": 125,
+          "eurPerM2": 16.29
+        }
+      }
+    },
+    "00420": {
+      "name": "Kannelmäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 321,
+          "eurPerM2": 24.21
+        },
+        "2": {
+          "obs": 278,
+          "eurPerM2": 17.48
+        }
+      }
+    },
+    "00440": {
+      "name": "Lassila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 92,
+          "eurPerM2": 22.59
+        },
+        "2": {
+          "obs": 69,
+          "eurPerM2": 18.74
+        }
+      }
+    },
+    "00500": {
+      "name": "Sörnäinen (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 1184,
+          "eurPerM2": 27.73
+        },
+        "2": {
+          "obs": 488,
+          "eurPerM2": 21.48
+        }
+      }
+    },
+    "00510": {
+      "name": "Etu-Vallila - Alppila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 682,
+          "eurPerM2": 27.08
+        },
+        "2": {
+          "obs": 182,
+          "eurPerM2": 20.55
+        }
+      }
+    },
+    "00520": {
+      "name": "Itä-Pasila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 357,
+          "eurPerM2": 28.8
+        }
+      }
+    },
+    "00530": {
+      "name": "Kallio (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 1031,
+          "eurPerM2": 26.82
+        },
+        "2": {
+          "obs": 431,
+          "eurPerM2": 21.31
+        },
+        "3+": {
+          "obs": 123,
+          "eurPerM2": 18.95
+        }
+      }
+    },
+    "00550": {
+      "name": "Vallila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 320,
+          "eurPerM2": 25.05
+        },
+        "2": {
+          "obs": 115,
+          "eurPerM2": 17.97
+        }
+      }
+    },
+    "00560": {
+      "name": "Toukola-Vanhakaupunki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 105,
+          "eurPerM2": 28.42
+        },
+        "2": {
+          "obs": 271,
+          "eurPerM2": 21.96
+        }
+      }
+    },
+    "00570": {
+      "name": "Kulosaari (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 68,
+          "eurPerM2": 24.7
+        },
+        "2": {
+          "obs": 35,
+          "eurPerM2": 18.83
+        }
+      }
+    },
+    "00600": {
+      "name": "Koskela-Helsinki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 26,
+          "eurPerM2": 22.39
+        }
+      }
+    },
+    "00610": {
+      "name": "Käpylä (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 60,
+          "eurPerM2": 23.53
+        },
+        "2": {
+          "obs": 57,
+          "eurPerM2": 17.68
+        }
+      }
+    },
+    "00620": {
+      "name": "Metsälä-Etelä-Oulunkylä (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 23.82
+        },
+        "2": {
+          "obs": 22,
+          "eurPerM2": 17.07
+        }
+      }
+    },
+    "00630": {
+      "name": "Maunula-Suursuo (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 88,
+          "eurPerM2": 25.08
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 19.86
+        }
+      }
+    },
+    "00640": {
+      "name": "Oulunkylä-Patola (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 114,
+          "eurPerM2": 23.9
+        },
+        "2": {
+          "obs": 81,
+          "eurPerM2": 16.68
+        }
+      }
+    },
+    "00700": {
+      "name": "Malmi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 181,
+          "eurPerM2": 24.69
+        }
+      }
+    },
+    "00710": {
+      "name": "Pihlajamäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 196,
+          "eurPerM2": 22.63
+        },
+        "2": {
+          "obs": 328,
+          "eurPerM2": 16.84
+        }
+      }
+    },
+    "00720": {
+      "name": "Pukinmäki-Savela (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 100,
+          "eurPerM2": 22.82
+        }
+      }
+    },
+    "00730": {
+      "name": "Tapanila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 41,
+          "eurPerM2": 23.71
+        },
+        "2": {
+          "obs": 72,
+          "eurPerM2": 17.38
+        }
+      }
+    },
+    "00740": {
+      "name": "Siltamäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 35,
+          "eurPerM2": 20.85
+        },
+        "2": {
+          "obs": 113,
+          "eurPerM2": 18.94
+        }
+      }
+    },
+    "00750": {
+      "name": "Puistola (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 99,
+          "eurPerM2": 21.42
+        }
+      }
+    },
+    "00770": {
+      "name": "Jakomäki - Alppikylä (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 24,
+          "eurPerM2": 20.73
+        },
+        "2": {
+          "obs": 91,
+          "eurPerM2": 17.05
+        },
+        "3+": {
+          "obs": 47,
+          "eurPerM2": 15
+        }
+      }
+    },
+    "00780": {
+      "name": "Tapaninvainio (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 21.77
+        }
+      }
+    },
+    "00790": {
+      "name": "Viikki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 42,
+          "eurPerM2": 24.63
+        },
+        "2": {
+          "obs": 119,
+          "eurPerM2": 20.08
+        }
+      }
+    },
+    "00800": {
+      "name": "Länsi-Herttoniemi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 81,
+          "eurPerM2": 24.58
+        },
+        "2": {
+          "obs": 28,
+          "eurPerM2": 16.96
+        }
+      }
+    },
+    "00810": {
+      "name": "Herttoniemi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 139,
+          "eurPerM2": 27.66
+        }
+      }
+    },
+    "00820": {
+      "name": "Roihuvuori (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 159,
+          "eurPerM2": 26.01
+        },
+        "2": {
+          "obs": 115,
+          "eurPerM2": 18.14
+        }
+      }
+    },
+    "00840": {
+      "name": "Laajasalo (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 110,
+          "eurPerM2": 23.99
+        },
+        "2": {
+          "obs": 51,
+          "eurPerM2": 16.87
+        }
+      }
+    },
+    "00870": {
+      "name": "Etelä-Laajasalo (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 22.54
+        }
+      }
+    },
+    "00900": {
+      "name": "Puotinharju (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 72,
+          "eurPerM2": 25.5
+        },
+        "2": {
+          "obs": 55,
+          "eurPerM2": 17.41
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 17
+        }
+      }
+    },
+    "00910": {
+      "name": "Puotila (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 202,
+          "eurPerM2": 23.75
+        },
+        "2": {
+          "obs": 204,
+          "eurPerM2": 19.08
+        }
+      }
+    },
+    "00920": {
+      "name": "Myllypuro (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 84,
+          "eurPerM2": 23.59
+        },
+        "2": {
+          "obs": 162,
+          "eurPerM2": 17.7
+        },
+        "3+": {
+          "obs": 76,
+          "eurPerM2": 16.58
+        }
+      }
+    },
+    "00930": {
+      "name": "Itäkeskus-Marjaniemi (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 85,
+          "eurPerM2": 24.01
+        }
+      }
+    },
+    "00940": {
+      "name": "Kontula - Vesala (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 594,
+          "eurPerM2": 25.34
+        },
+        "2": {
+          "obs": 723,
+          "eurPerM2": 17.85
+        }
+      }
+    },
+    "00960": {
+      "name": "Pohjois-Vuosaari (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 143,
+          "eurPerM2": 23.29
+        },
+        "2": {
+          "obs": 112,
+          "eurPerM2": 15.63
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 16.84
+        }
+      }
+    },
+    "00970": {
+      "name": "Mellunmäki (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 150,
+          "eurPerM2": 22.82
+        },
+        "2": {
+          "obs": 249,
+          "eurPerM2": 18.63
+        },
+        "3+": {
+          "obs": 114,
+          "eurPerM2": 17.55
+        }
+      }
+    },
+    "00980": {
+      "name": "Etelä-Vuosaari (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 266,
+          "eurPerM2": 23.2
+        }
+      }
+    },
+    "00990": {
+      "name": "Aurinkolahti (Helsinki)",
+      "rooms": {
+        "1": {
+          "obs": 92,
+          "eurPerM2": 24.16
+        }
+      }
+    },
+    "01200": {
+      "name": "Hakunila (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 241,
+          "eurPerM2": 22.81
+        }
+      }
+    },
+    "01230": {
+      "name": "Vaarala (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 21.06
+        }
+      }
+    },
+    "01280": {
+      "name": "Länsimäki (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 149,
+          "eurPerM2": 21.02
+        }
+      }
+    },
+    "01300": {
+      "name": "Tikkurila (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 475,
+          "eurPerM2": 24.23
+        }
+      }
+    },
+    "01350": {
+      "name": "Hiekkaharju (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 235,
+          "eurPerM2": 22.16
+        }
+      }
+    },
+    "01360": {
+      "name": "Koivukylä-Havukoski (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 213,
+          "eurPerM2": 20.55
+        },
+        "2": {
+          "obs": 455,
+          "eurPerM2": 15.21
+        }
+      }
+    },
+    "01400": {
+      "name": "Rekola (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 54,
+          "eurPerM2": 24.23
+        }
+      }
+    },
+    "01450": {
+      "name": "Korso (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 165,
+          "eurPerM2": 20.15
+        }
+      }
+    },
+    "01480": {
+      "name": "Mikkola (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 70,
+          "eurPerM2": 21.17
+        },
+        "2": {
+          "obs": 56,
+          "eurPerM2": 15.49
+        }
+      }
+    },
+    "01510": {
+      "name": "Kirkonkylä-Veromäki (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 79,
+          "eurPerM2": 22.67
+        }
+      }
+    },
+    "01600": {
+      "name": "Myyrmäki (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 425,
+          "eurPerM2": 24.1
+        }
+      }
+    },
+    "01610": {
+      "name": "Kaivoksela (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 186,
+          "eurPerM2": 23.32
+        },
+        "2": {
+          "obs": 230,
+          "eurPerM2": 18.04
+        }
+      }
+    },
+    "01620": {
+      "name": "Martinlaakso (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 507,
+          "eurPerM2": 25.37
+        }
+      }
+    },
+    "01640": {
+      "name": "Hämevaara (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 24,
+          "eurPerM2": 23.16
+        }
+      }
+    },
+    "01650": {
+      "name": "Vapaala (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 31,
+          "eurPerM2": 20.87
+        },
+        "2": {
+          "obs": 51,
+          "eurPerM2": 17.31
+        }
+      }
+    },
+    "01700": {
+      "name": "Kivistö (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 281,
+          "eurPerM2": 24.1
+        },
+        "2": {
+          "obs": 146,
+          "eurPerM2": 18.92
+        },
+        "3+": {
+          "obs": 81,
+          "eurPerM2": 18.02
+        }
+      }
+    },
+    "01710": {
+      "name": "Pähkinärinne (Vantaa)",
+      "rooms": {
+        "1": {
+          "obs": 119,
+          "eurPerM2": 21.02
+        },
+        "2": {
+          "obs": 142,
+          "eurPerM2": 16.12
+        }
+      }
+    },
+    "01800": {
+      "name": "Klaukkala Keskus (Nurmijärvi)",
+      "rooms": {
+        "1": {
+          "obs": 80,
+          "eurPerM2": 19.4
+        },
+        "2": {
+          "obs": 52,
+          "eurPerM2": 15.29
+        },
+        "3+": {
+          "obs": 29,
+          "eurPerM2": 13.6
+        }
+      }
+    },
+    "01900": {
+      "name": "Nurmijärvi Keskus (Nurmijärvi)",
+      "rooms": {
+        "1": {
+          "obs": 67,
+          "eurPerM2": 17.51
+        },
+        "2": {
+          "obs": 63,
+          "eurPerM2": 14.12
+        }
+      }
+    },
+    "02100": {
+      "name": "Tapiola (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 186,
+          "eurPerM2": 25.12
+        }
+      }
+    },
+    "02110": {
+      "name": "Otsolahti (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 63,
+          "eurPerM2": 25.01
+        },
+        "2": {
+          "obs": 62,
+          "eurPerM2": 19.36
+        }
+      }
+    },
+    "02120": {
+      "name": "Länsikorkee-Suvikumpu (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 81,
+          "eurPerM2": 26.36
+        },
+        "2": {
+          "obs": 45,
+          "eurPerM2": 18.92
+        }
+      }
+    },
+    "02130": {
+      "name": "Pohjois-Tapiola (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 93,
+          "eurPerM2": 26.77
+        },
+        "2": {
+          "obs": 60,
+          "eurPerM2": 16.78
+        }
+      }
+    },
+    "02150": {
+      "name": "Otaniemi (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 29,
+          "eurPerM2": 24.73
+        }
+      }
+    },
+    "02170": {
+      "name": "Haukilahti (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 32,
+          "eurPerM2": 24.53
+        }
+      }
+    },
+    "02210": {
+      "name": "Olari (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 139,
+          "eurPerM2": 23.13
+        },
+        "2": {
+          "obs": 121,
+          "eurPerM2": 16.85
+        },
+        "3+": {
+          "obs": 48,
+          "eurPerM2": 17.11
+        }
+      }
+    },
+    "02230": {
+      "name": "Matinkylä (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 225,
+          "eurPerM2": 23.3
+        }
+      }
+    },
+    "02260": {
+      "name": "Kaitaa (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 23.29
+        },
+        "2": {
+          "obs": 23,
+          "eurPerM2": 19.14
+        }
+      }
+    },
+    "02320": {
+      "name": "Espoonlahti (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 222,
+          "eurPerM2": 20.38
+        },
+        "2": {
+          "obs": 279,
+          "eurPerM2": 16.73
+        }
+      }
+    },
+    "02330": {
+      "name": "Saunalahti-Kattilalaakso (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 161,
+          "eurPerM2": 22.48
+        }
+      }
+    },
+    "02360": {
+      "name": "Soukka (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 139,
+          "eurPerM2": 21.56
+        }
+      }
+    },
+    "02400": {
+      "name": "Kirkkonummi Keskus (Kirkkonummi)",
+      "rooms": {
+        "1": {
+          "obs": 110,
+          "eurPerM2": 19.64
+        },
+        "2": {
+          "obs": 155,
+          "eurPerM2": 14.92
+        }
+      }
+    },
+    "02410": {
+      "name": "Gesterby (Kirkkonummi)",
+      "rooms": {
+        "1": {
+          "obs": 43,
+          "eurPerM2": 16.88
+        },
+        "2": {
+          "obs": 57,
+          "eurPerM2": 12.31
+        }
+      }
+    },
+    "02430": {
+      "name": "Masala (Kirkkonummi)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 22.09
+        },
+        "2": {
+          "obs": 39,
+          "eurPerM2": 17.78
+        },
+        "3+": {
+          "obs": 21,
+          "eurPerM2": 15.25
+        }
+      }
+    },
+    "02600": {
+      "name": "Etelä-Leppävaara (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 509,
+          "eurPerM2": 24.85
+        }
+      }
+    },
+    "02610": {
+      "name": "Kilo (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 95,
+          "eurPerM2": 22.95
+        }
+      }
+    },
+    "02620": {
+      "name": "Karakallio (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 107,
+          "eurPerM2": 23.77
+        }
+      }
+    },
+    "02650": {
+      "name": "Pohjois-Leppävaara (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 144,
+          "eurPerM2": 22.3
+        },
+        "2": {
+          "obs": 185,
+          "eurPerM2": 18.14
+        }
+      }
+    },
+    "02700": {
+      "name": "Kauniainen (Kauniainen)",
+      "rooms": {
+        "1": {
+          "obs": 77,
+          "eurPerM2": 22.79
+        },
+        "2": {
+          "obs": 77,
+          "eurPerM2": 20
+        }
+      }
+    },
+    "02710": {
+      "name": "Viherlaakso (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 92,
+          "eurPerM2": 24.07
+        }
+      }
+    },
+    "02720": {
+      "name": "Lähderanta (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 76,
+          "eurPerM2": 22.55
+        }
+      }
+    },
+    "02750": {
+      "name": "Sepänkylä-Kuurinniitty (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 23,
+          "eurPerM2": 22.25
+        },
+        "3+": {
+          "obs": 36,
+          "eurPerM2": 16.11
+        }
+      }
+    },
+    "02760": {
+      "name": "Tuomarila-Suvela (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 181,
+          "eurPerM2": 21.11
+        }
+      }
+    },
+    "02770": {
+      "name": "Espoon Keskus (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 96,
+          "eurPerM2": 22.95
+        }
+      }
+    },
+    "02940": {
+      "name": "Lippajärvi-Järvenperä (Espoo)",
+      "rooms": {
+        "1": {
+          "obs": 120,
+          "eurPerM2": 24.5
+        }
+      }
+    },
+    "03100": {
+      "name": "Nummela (Vihti)",
+      "rooms": {
+        "1": {
+          "obs": 118,
+          "eurPerM2": 17.61
+        },
+        "2": {
+          "obs": 110,
+          "eurPerM2": 13.85
+        },
+        "3+": {
+          "obs": 30,
+          "eurPerM2": 13.45
+        }
+      }
+    },
+    "03400": {
+      "name": "Vihti Kirkonkylä (Vihti)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 16.13
+        }
+      }
+    },
+    "03600": {
+      "name": "Karkkila Keskus (Karkkila)",
+      "rooms": {
+        "1": {
+          "obs": 34,
+          "eurPerM2": 14.17
+        },
+        "2": {
+          "obs": 29,
+          "eurPerM2": 11.64
+        }
+      }
+    },
+    "04130": {
+      "name": "Sipoo (Sipoo)",
+      "rooms": {
+        "1": {
+          "obs": 28,
+          "eurPerM2": 17.72
+        }
+      }
+    },
+    "04200": {
+      "name": "Kerava Keskus (Kerava)",
+      "rooms": {
+        "1": {
+          "obs": 215,
+          "eurPerM2": 20.35
+        },
+        "2": {
+          "obs": 379,
+          "eurPerM2": 15.84
+        }
+      }
+    },
+    "04230": {
+      "name": "Pihkaniitty (Kerava)",
+      "rooms": {
+        "1": {
+          "obs": 30,
+          "eurPerM2": 19.41
+        }
+      }
+    },
+    "04250": {
+      "name": "Alikerava (Kerava)",
+      "rooms": {
+        "1": {
+          "obs": 103,
+          "eurPerM2": 22.54
+        }
+      }
+    },
+    "04260": {
+      "name": "Savio (Kerava)",
+      "rooms": {
+        "1": {
+          "obs": 107,
+          "eurPerM2": 20.18
+        }
+      }
+    },
+    "04300": {
+      "name": "Hyrylä (Tuusula)",
+      "rooms": {
+        "1": {
+          "obs": 107,
+          "eurPerM2": 20.09
+        }
+      }
+    },
+    "04320": {
+      "name": "Riihikallio (Tuusula)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 19.12
+        }
+      }
+    },
+    "04400": {
+      "name": "Loutti (Järvenpää)",
+      "rooms": {
+        "1": {
+          "obs": 188,
+          "eurPerM2": 20.33
+        },
+        "2": {
+          "obs": 219,
+          "eurPerM2": 17.13
+        }
+      }
+    },
+    "04410": {
+      "name": "Järvenpää Keskus (Järvenpää)",
+      "rooms": {
+        "1": {
+          "obs": 182,
+          "eurPerM2": 20.79
+        },
+        "2": {
+          "obs": 209,
+          "eurPerM2": 16.3
+        }
+      }
+    },
+    "04430": {
+      "name": "Kinnari-Mikonkorpi (Järvenpää)",
+      "rooms": {
+        "1": {
+          "obs": 25,
+          "eurPerM2": 19.07
+        },
+        "2": {
+          "obs": 53,
+          "eurPerM2": 16.47
+        },
+        "3+": {
+          "obs": 23,
+          "eurPerM2": 14.63
+        }
+      }
+    },
+    "04440": {
+      "name": "Jamppa (Järvenpää)",
+      "rooms": {
+        "1": {
+          "obs": 65,
+          "eurPerM2": 18.64
+        },
+        "2": {
+          "obs": 160,
+          "eurPerM2": 13.97
+        }
+      }
+    },
+    "04600": {
+      "name": "Mäntsälä Keskus (Mäntsälä)",
+      "rooms": {
+        "1": {
+          "obs": 49,
+          "eurPerM2": 16.35
+        },
+        "2": {
+          "obs": 119,
+          "eurPerM2": 14.79
+        }
+      }
+    },
+    "05200": {
+      "name": "Rajamäki (Nurmijärvi)",
+      "rooms": {
+        "1": {
+          "obs": 21,
+          "eurPerM2": 15.66
+        }
+      }
+    },
+    "05800": {
+      "name": "Hyvinkää Keskus (Hyvinkää)",
+      "rooms": {
+        "1": {
+          "obs": 182,
+          "eurPerM2": 17.96
+        },
+        "2": {
+          "obs": 167,
+          "eurPerM2": 15.57
+        },
+        "3+": {
+          "obs": 40,
+          "eurPerM2": 14.58
+        }
+      }
+    },
+    "05830": {
+      "name": "Kirjavatolppa-Kruununpuisto (Hyvinkää)",
+      "rooms": {
+        "1": {
+          "obs": 70,
+          "eurPerM2": 18.09
+        },
+        "2": {
+          "obs": 42,
+          "eurPerM2": 13.31
+        }
+      }
+    },
+    "05840": {
+      "name": "Hyvinkäänkylä-Vehkoja (Hyvinkää)",
+      "rooms": {
+        "1": {
+          "obs": 20,
+          "eurPerM2": 16.25
+        }
+      }
+    },
+    "05880": {
+      "name": "Paavola-Vaivero (Hyvinkää)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 16.07
+        },
+        "2": {
+          "obs": 31,
+          "eurPerM2": 11.08
+        }
+      }
+    },
+    "05900": {
+      "name": "Vieremä (Hyvinkää)",
+      "rooms": {
+        "1": {
+          "obs": 83,
+          "eurPerM2": 18.6
+        },
+        "2": {
+          "obs": 61,
+          "eurPerM2": 15.01
+        },
+        "3+": {
+          "obs": 24,
+          "eurPerM2": 13.69
+        }
+      }
+    },
+    "06100": {
+      "name": "Porvoo Keskus (Porvoo)",
+      "rooms": {
+        "1": {
+          "obs": 218,
+          "eurPerM2": 19.77
+        },
+        "2": {
+          "obs": 113,
+          "eurPerM2": 14.62
+        },
+        "3+": {
+          "obs": 23,
+          "eurPerM2": 13.22
+        }
+      }
+    },
+    "06150": {
+      "name": "Kevätkumpu (Porvoo)",
+      "rooms": {
+        "1": {
+          "obs": 45,
+          "eurPerM2": 18.08
+        },
+        "2": {
+          "obs": 26,
+          "eurPerM2": 13.05
+        }
+      }
+    },
+    "06400": {
+      "name": "Gammelbacka (Porvoo)",
+      "rooms": {
+        "1": {
+          "obs": 50,
+          "eurPerM2": 18.13
+        },
+        "2": {
+          "obs": 74,
+          "eurPerM2": 12.69
+        },
+        "3+": {
+          "obs": 20,
+          "eurPerM2": 12.38
+        }
+      }
+    },
+    "07900": {
+      "name": "Loviisa Keskus (Loviisa)",
+      "rooms": {
+        "1": {
+          "obs": 37,
+          "eurPerM2": 15.36
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 11.61
+        }
+      }
+    },
+    "08100": {
+      "name": "Lohja Keskus (Lohja)",
+      "rooms": {
+        "1": {
+          "obs": 89,
+          "eurPerM2": 16.89
+        },
+        "2": {
+          "obs": 56,
+          "eurPerM2": 13.33
+        }
+      }
+    },
+    "08200": {
+      "name": "Ojamo (Lohja)",
+      "rooms": {
+        "2": {
+          "obs": 33,
+          "eurPerM2": 12.61
+        }
+      }
+    },
+    "08700": {
+      "name": "Virkkala (Lohja)",
+      "rooms": {
+        "1": {
+          "obs": 27,
+          "eurPerM2": 15.85
+        },
+        "2": {
+          "obs": 27,
+          "eurPerM2": 12.92
+        }
+      }
+    }
+  }
+}

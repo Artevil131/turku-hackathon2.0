@@ -18,6 +18,10 @@ All files are UTF-8 JSON with a 2-space indent. None holds personal data. Raw do
 | `powertrain-models.json` (5 KB) | The 11 Traficom model keys that are electric only (Nissan Leaf, Tesla Model 3/S/X/Y, VW ID.3/ID.4, Škoda Enyaq, Hyundai IONIQ 5, Polestar 2, Mercedes-Benz EQA), each with the maker's page and the phrase read there on 18.10.2026; the mixed keys left out and why (Golf includes the e-Golf); why there is no hybrid list. An electric car's safer choice compares it only with these | Tesla's pages refuse automated requests, so their URLs come from a web search of tesla.com the same day |
 | `car-running-costs.json` (64 KB) | Energy cost over two years (km a year, fuel and electricity prices, the WLTP real-world gap), electric-car service and battery-test prices, battery warranties by make, and how to check recalls | `status`: primary, secondary, derived or missing, with a `basis`. Every number has a `source` id from `meta.sources`. Added 18 October 2026. |
 | `car-recalls-eu.json` (1.5 MB) | 3,048 EU Safety Gate recall alerts for passenger cars, October 2016 to October 2026 | All Safety Gate's, except our normalised make names and parsed years. Built by `tools/recalls-snapshot.mjs`. |
+| `rent-areas.json` (122 KB) | Statistics Finland's average rent per m² a month for privately financed rental flats: 27 municipalities by rooms (1, 2, 3+, all; also new leases only) from table 15fa, latest quarter, and 473 postal code areas by rooms from table 13eb, its last quarter. Built by `tools/fetch-rent-areas.mjs` | All Statistics Finland's (CC BY 4.0); only the needed columns are kept. Added 18 October 2026. |
+| `flat-checks.json` (9 KB) | The facts behind the questions a flat ad's own words raise: plot lease renewal, energy class, oil heating, moisture damage, condition surveys, company loans | Every fact has a `source` id; `type` primary or secondary (Yle on plot rents is secondary). Added 18 October 2026. |
+
+The price of old flats by postal code (Statistics Finland table 13mu, 2025) is not copied here: `tools/build-data.mjs` reads it from `libs/listing/data/prices-postcode.json`.
 
 `test/car-running-costs.test.mjs` checks both new files: every number has a known source id, and the values pass sanity checks.
 
@@ -253,6 +257,28 @@ Key numbers:
 
 **Rebuild.** `node apps/what-if/tools/recalls-snapshot.mjs CACHE_DIR` downloads the weekly reports it does not have yet (about 100 MB for ten years) and rewrites the file.
 
+## rent-areas.json
+
+**What it holds.** Average rents per m² a month (keskineliövuokra) for privately financed (vapaarahoitteinen) rental flats, with the number of observations.
+
+- `municipalities`: the 27 municipalities in table 15fa (Espoo and Kauniainen together), by rooms `1`, `2`, `3+` and `all`, for the latest quarter (2026Q3 when fetched). Each cell also has `eurPerM2New` and `obsNew`, new leases only, the closer comparison for an ad's asking rent.
+- `postcodes`: the 473 postal code areas in table 13eb with at least one room group, by rooms `1`, `2`, `3+`, for 2025Q4. Statistics Finland moved 13eb to its archive database when it renewed the statistic in 2026, so 2025Q4 is the latest by postcode. Cells under 20 observations would be dropped; Statistics Finland publishes none.
+
+**How the page uses it.** A rental's rent per m² against the same number of rooms in the ad's postcode; with no postcode or no row, against new leases of that size in the municipality. Statistics Finland counts separately paid water and heating as rent, so the page says when the ad's water fee comes on top.
+
+**Sources.** Statistics Finland, Rents of dwellings: StatFin tables 15fa and 13eb through the PxWeb API (CC BY 4.0). Refresh with `node apps/what-if/tools/fetch-rent-areas.mjs` (a few small requests, free).
+
+## flat-checks.json
+
+**What it holds.** One block per question the ad's words raise, each with a `source` id:
+
+- `plotLease`: the City of Helsinki's rule for renewed residential plot leases (yearly rent 4 % of the plot's calculated value, phased in over 10 years, 50 % in the first year of the city's example, never below the old rent; old rents have stayed very low), and Yle 5.8.2026 (secondary: municipalities have raised some plot rents up to tenfold; a Kuopio company's rose sixfold, from about €6,000 to €36,000 a year).
+- `energy`: the Energy Performance Certificate Act 50/2013 (6 §: a valid certificate on show at a viewing, a copy to the buyer or tenant, the class in the ad; 8 §: valid ten years at most; 9 §: the class places the building's E-value on the scale for its type) and Decree 1048/2017 (in force 1.1.2018; the subscript 2018, or 2013 and 2007 for older certificates).
+- `oilHeating`: the Ministry of the Environment, 20.4.2021: the aim is to give up oil heating by the early 2030s; existing oil heating is not banned.
+- `moisture`, `companyLoans`, `conditionSurvey`: facts already checked in `housing-rules.json` and `rent-rules.json` (FINE, AOYL 6:3 § and 7:27 §, VNa 130/2001 8 §, Residential Leases Act 23 § and 63 §).
+
+**Still missing.** No plot rent rule from a municipality other than Helsinki; no national figure for how much plot rents rise at renewal. Energy class limits (kWh/m² a year by building type) are not in the file.
+
 ## What the reader can rely on
 
 - All Traficom inspection numbers: counts, rejection %, km and causes. A second check matched them to Traficom's own tables.
@@ -294,7 +320,7 @@ Show these with their basis, or leave them out.
 AGENTS.md makes these team decisions. Record each one in DECISIONS.md.
 
 - Where the files live. AGENTS.md puts data in the repo-level `data/` folder. These files are in `apps/what-if/data` because the task asked for that path.
-- Thresholds: the housing `proposedRules`, when rent per m² counts as "expensive", and whether to show any young-driver premium.
+- Thresholds: the housing `proposedRules`, when rent per m² counts as "expensive", and whether to show any young-driver premium. The page now ranks a price or rent 10 % above the area's average as a question about it, and calls under 20 sales a small sample (see the suggested decision for flats).
 - Whether to show the rent-reduction ranges.
 - The output keys and value lists in `sample-ads.json` → `meta.fieldKeys`.
 - Four readings of car law: a dealer's general "as is" clause, the private buyer's burden of proof, online auctions, and the "normal wear" example for the 1-year presumption.
