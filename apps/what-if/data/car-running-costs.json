@@ -1,0 +1,1527 @@
+{
+  "meta": {
+    "title": "Used car in Finland: energy cost, electric-car specifics and recalls",
+    "area": "car",
+    "retrieved": "2026-10-18",
+    "conventions": {
+      "status": "primary = official statistics, law, an authority, or the maker's or importer's own page; secondary = a garage price list, marketplace or magazine; derived = our arithmetic on primary or secondary numbers (see 'basis'); missing = nothing reliable found (value null).",
+      "source": "'source' is one id or a list of ids from 'sources'. Every number sits in an object that has a 'source', or below one.",
+      "money": "EUR incl. VAT unless a unit says otherwise; fuel in cents per litre, electricity in cents per kWh.",
+      "months": "YYYY-MM; prices are monthly averages for that month."
+    },
+    "relatedFiles": {
+      "car-rules.json": "vehicle tax, timing belt, clutch, brakes, tyres and periodic service prices (not repeated here)",
+      "car-recalls-eu.json": "the Safety Gate recall snapshot",
+      "traficom-inspections.json": "inspection results and km by model"
+    },
+    "sources": {
+      "sf-12ge": {
+        "name": "Statistics Finland, StatFin table 12ge: consumer prices of liquid fuels (incl. VAT), monthly",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ehi/12ge.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/ehi/12ge.px",
+        "landingPage": "https://stat.fi/tilasto/ehi",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-09-24",
+        "retrieved": "2026-10-18",
+        "note": "Table note: the average price is not weighted by sales volume yet; renewable diesel is a separate series (not used here)."
+      },
+      "sf-13rb": {
+        "name": "Statistics Finland, StatFin table 13rb: price of electricity by type of consumer, monthly (c/kWh)",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ehi/13rb.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/ehi/13rb.px",
+        "landingPage": "https://stat.fi/tilasto/ehi",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-09-24",
+        "retrieved": "2026-10-18",
+        "note": "Table note: sellers' energy prices by consumer type are combined with the transmission (network) prices published by the Energy Authority (Energiavirasto). Household taxes include VAT."
+      },
+      "sf-12jx": {
+        "name": "Statistics Finland, StatFin table 12jx: traffic volume on streets and roads by vehicle class (million vehicle-km)",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__tiet/12jx.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/tiet/12jx.px",
+        "landingPage": "https://stat.fi/tilasto/tiet",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-04-16",
+        "retrieved": "2026-10-18"
+      },
+      "sf-11ie": {
+        "name": "Statistics Finland, StatFin table 11ie: cars by motive power, in traffic use at year end",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__mkan/11ie.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/mkan/11ie.px",
+        "landingPage": "https://stat.fi/tilasto/mkan",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-03-02",
+        "retrieved": "2026-10-18"
+      },
+      "sf-terms": {
+        "name": "Statistics Finland terms of use: open data under Creative Commons Attribution 4.0",
+        "publisher": "Tilastokeskus",
+        "url": "https://stat.fi/fi/tietoa-meista/tutustu-tilastokeskukseen/lainsaadanto/kayttoehdot",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "traficom-pxweb-030": {
+        "name": "Traficom statistics database 030_kats_tau_103: periodic inspections by motive power and vehicle age, passenger cars, inspection year 2025 (average and median km)",
+        "publisher": "Traficom",
+        "url": "https://trafi2.stat.fi/PXWeb/pxweb/fi/TraFi/TraFi__Katsastuksen_vikatilastot/030_kats_tau_103.px/",
+        "api": "https://trafi2.stat.fi/PXWeb/api/v1/fi/TraFi/Katsastuksen_vikatilastot/030_kats_tau_103.px",
+        "type": "primary",
+        "updated": "2026-05-06",
+        "retrieved": "2026-10-18"
+      },
+      "ec-com-2024-122": {
+        "name": "Commission report COM(2024) 122 final (18.3.2024) on the evolution of the real-world CO2 emissions gap for passenger cars and light commercial vehicles, Table 3 (cars first registered in 2021, OBFCM data)",
+        "publisher": "European Commission",
+        "url": "https://climate.ec.europa.eu/document/download/b644dafe-1385-4b56-98d9-21e7e9f3601b_en",
+        "type": "primary",
+        "licence": "CC BY 4.0 (Commission reuse policy)",
+        "retrieved": "2026-10-18"
+      },
+      "aj-ev-service-tesla": {
+        "name": "AutoJerry price guide: Tesla määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/tesla/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-polestar": {
+        "name": "AutoJerry price guide: Polestar määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/polestar/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-tesla-model-3": {
+        "name": "AutoJerry price guide: Tesla Model 3 määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/tesla/model-3/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-tesla-model-y": {
+        "name": "AutoJerry price guide: Tesla Model Y määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/tesla/model-y/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-vw-id3": {
+        "name": "AutoJerry price guide: Volkswagen ID.3 määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/volkswagen/id3/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-vw-id4": {
+        "name": "AutoJerry price guide: Volkswagen ID.4 määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/volkswagen/id4/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-skoda-enyaq": {
+        "name": "AutoJerry price guide: Skoda Enyaq määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/skoda/enyaq/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-nissan-leaf": {
+        "name": "AutoJerry price guide: Nissan Leaf määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/nissan/leaf/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-hyundai-ioniq5": {
+        "name": "AutoJerry price guide: Hyundai Ioniq 5 määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/hyundai/ioniq-5/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-ev-service-kia-ev6": {
+        "name": "AutoJerry price guide: Kia EV6 määräaikaishuolto (periodic service)",
+        "publisher": "AutoJerry (service marketplace)",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/kia/ev6/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "basis": "AutoJerry's own estimate from offers made through its platform ('perustuvat palvelussa välitettyihin tuhansiin huoltotarjouksiin'); no date per figure, page titled 2026."
+      },
+      "aj-service-all": {
+        "name": "AutoJerry price guide: määräaikaishuolto, all makes",
+        "publisher": "AutoJerry",
+        "url": "https://www.autojerry.fi/hinnat/maaraaikaishuolto-hinta/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "aj-soh-test": {
+        "name": "AutoJerry price guide: SOH-testi",
+        "publisher": "AutoJerry",
+        "url": "https://www.autojerry.fi/hinnat/soh-testi-hinta/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "aj-ev-battery-test": {
+        "name": "AutoJerry price guide: sähköauton akun testaus",
+        "publisher": "AutoJerry",
+        "url": "https://www.autojerry.fi/hinnat/sahkoauton-akun-testaus-hinta/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "moottori-2026-akkutesti": {
+        "name": "Moottori: 'Käytetty sähköauto houkuttaa ja arveluttaa – mitä akkutesti paljastaa' (24.3.2026)",
+        "publisher": "Moottori (Autoliitto)",
+        "url": "https://moottori.fi/uutinen/kaytetty-sahkoauto-houkuttaa-ja-arveluttaa-mita-akkutesti-paljastaa/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "moottori-2023-aviloo": {
+        "name": "Moottori: 'Akkutestit osoittavat: pikalataus heikentää sähköauton ajoakun kapasiteettia' (29.8.2023)",
+        "publisher": "Moottori (Autoliitto)",
+        "url": "https://moottori.fi/uutinen/akkutestit-osoittavat-pikalataus-heikentaa-sahkoauton-ajoakun-kapasiteettia/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "w-tesla": {
+        "name": "Tesla Suomi: ajoneuvon takuu",
+        "publisher": "Tesla",
+        "url": "https://www.tesla.com/fi_fi/support/vehicle-warranty",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-vw": {
+        "name": "Volkswagen Suomi: takuu",
+        "publisher": "Volkswagen / K-Auto",
+        "url": "https://www.volkswagen.fi/fi/auton-hankinta/takuu.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-skoda": {
+        "name": "Škoda Suomi: ajoakku ja turvallisuus",
+        "publisher": "Škoda / K-Auto",
+        "url": "https://www.skoda.fi/sahkoautot-ja-hybridit/ajoakku-ja-turvallisuus",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-audi": {
+        "name": "Audi Suomi: takuu",
+        "publisher": "Audi / K-Auto",
+        "url": "https://www.audi.fi/fi/takuu/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-cupra": {
+        "name": "CUPRA Suomi: takuu",
+        "publisher": "CUPRA / K-Auto",
+        "url": "https://www.cupraofficial.fi/services/takuu",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-nissan": {
+        "name": "Nissan Suomi: Nissan-takuu",
+        "publisher": "Nissan",
+        "url": "https://www.nissan.fi/omistajuus/nissan-takuu.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-nissan-uk": {
+        "name": "Nissan UK: car warranty (battery capacity bars)",
+        "publisher": "Nissan UK",
+        "url": "https://www.nissan.co.uk/owners/car-warranty.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-hyundai": {
+        "name": "Hyundai Suomi: takuuehdot",
+        "publisher": "Hyundai Motor Finland",
+        "url": "https://www.hyundai.fi/takuu",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-hyundai-owner": {
+        "name": "Hyundai Suomi: omistajalle – takuu",
+        "publisher": "Hyundai Motor Finland",
+        "url": "https://www.hyundai.fi/omistajalle/takuu/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-kia": {
+        "name": "Kia Suomi: 7 vuoden takuu",
+        "publisher": "Kia Finland",
+        "url": "https://www.kia.com/fi/tietoa-kiasta/7-vuoden-takuu/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-bmw": {
+        "name": "BMW Suomi: Premium Selection -vaihtoautot (korkeajänniteakun takuu)",
+        "publisher": "BMW Group Finland",
+        "url": "https://www.bmw.fi/fi/aiheet/tuotteet-tarjoukset/premium-selection-vaihtoautot.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-mb": {
+        "name": "Mercedes-Benz Suomi: Akkusertifikaatti 02/2026 (täyssähköautot)",
+        "publisher": "Mercedes-Benz / Veho",
+        "url": "https://www.mercedes-benz.fi/static/pdfs/MB_HA_BEV_Akkusertikaatti.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "version": "02/2026"
+      },
+      "w-volvo": {
+        "name": "Volvo Cars Suomi: sähköauton akku",
+        "publisher": "Volvo Car Finland",
+        "url": "https://www.volvocars.com/fi/cars/electrification/battery/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-volvo-terms": {
+        "name": "Volvo Cars Suomi: Volvo-ajoneuvojen takuuehdot",
+        "publisher": "Volvo Car Finland",
+        "url": "https://www.volvocars.com/fi/l/volvon-takuut/volvo-ajoneuvojen-takuuehdot/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-polestar": {
+        "name": "Polestar Suomi: FAQ – takuu",
+        "publisher": "Polestar",
+        "url": "https://www.polestar.com/fi/support/faq/warranty/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-toyota": {
+        "name": "Toyota Suomi: Toyota-takuu",
+        "publisher": "Toyota Auto Finland",
+        "url": "https://www.toyota.fi/omistajalle/takuu/toyota-takuu",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-toyota-akkuturva": {
+        "name": "Toyota Suomi: akkuturva (hybridiakkuturva ja EV-akkuturva)",
+        "publisher": "Toyota Auto Finland",
+        "url": "https://www.toyota.fi/omistajalle/takuu/akkuturva",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-toyota-used-pdf": {
+        "name": "Toyota Suomi: Hybridiakkuturva vaihtoautolle (PDF)",
+        "publisher": "Toyota Auto Finland",
+        "url": "https://scene7.toyota.eu/is/content/toyotaeurope/toyota/nmsc/finland/pdf-files/takuu/Hybridiakkuturva-vaihtoautolle.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-toyota-relax": {
+        "name": "Toyota Suomi: Toyota Relax",
+        "publisher": "Toyota Auto Finland",
+        "url": "https://www.toyota.fi/omistajalle/takuu/toyota-relax",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-ford": {
+        "name": "Ford Suomi: sähköistetyt autot – edut",
+        "publisher": "Ford Motor Company Oy",
+        "url": "https://www.ford.fi/hybridi/edut",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-renault": {
+        "name": "Renault Suomi: Renault-takuu",
+        "publisher": "Renault Suomi",
+        "url": "https://www.renault.fi/renault-takuu/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-peugeot": {
+        "name": "Peugeot Suomi: Peugeot-takuu",
+        "publisher": "Peugeot Suomi",
+        "url": "https://www.peugeot.fi/omistajan-palvelut/tiepalvelu/peugeot-takuu.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-opel": {
+        "name": "Opel Suomi: tehdastakuut",
+        "publisher": "Opel / Auto-Bon",
+        "url": "https://www.opel.fi/huolto-ja-palvelut/takuut-ja-hoito/tehdastakuut.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-citroen": {
+        "name": "Citroën Suomi: takuu",
+        "publisher": "Citroën Suomi",
+        "url": "https://www.citroen.fi/huolto/takuu.html",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-mg": {
+        "name": "MG Motor Finland: FAQ",
+        "publisher": "MG Motor Finland",
+        "url": "https://www.mgmotor.fi/faq",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-byd": {
+        "name": "BYD Suomi: takuuehdot (warranty policy)",
+        "publisher": "BYD",
+        "url": "https://www.byd.com/fi/huollon-palvelut/warranty-policy",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-lexus": {
+        "name": "Lexus Suomi: valmistajan takuu",
+        "publisher": "Lexus / Toyota Auto Finland",
+        "url": "https://www.lexus.fi/omistajalle/takuu/valmistajan-takuu",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-lexus-check": {
+        "name": "Lexus Suomi: hybridin kuntotarkastus",
+        "publisher": "Lexus / Toyota Auto Finland",
+        "url": "https://www.lexus.fi/omistajalle/huoltopalvelut/hybridin-kuntotarkastus",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-suzuki": {
+        "name": "Suzuki Suomi: takuu",
+        "publisher": "Suzuki / Nordic Automotive Trading",
+        "url": "https://www.suzuki.fi/suzuki-huolto/takuu/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "w-honda": {
+        "name": "Honda Suomi: tietoja takuustamme",
+        "publisher": "Honda",
+        "url": "https://cars.honda.fi/minun-honda/tietoja-takuustamme",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "traficom-recalls-page": {
+        "name": "Traficom: Takaisinkutsut (recalls), driver's page",
+        "publisher": "Traficom",
+        "url": "https://www.traficom.fi/fi/autoilijat/vinkkeja-liikenteeseen/takaisinkutsut",
+        "urlEn": "https://www.traficom.fi/en/drivers-and-vehicles/tips-traffic/recalls",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "traficom-recall-db": {
+        "name": "Traficom: Tietokanta takaisinkutsukampanjoista (recall campaign database)",
+        "publisher": "Traficom",
+        "url": "https://takaisinkutsut.traficom.fi/",
+        "about": "https://takaisinkutsut.traficom.fi/recall/about",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "traficom-open-data": {
+        "name": "Traficom: Open data (list of datasets and their licences)",
+        "publisher": "Traficom",
+        "url": "https://tieto.traficom.fi/en/open-data",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "safety-gate-weekly-xml": {
+        "name": "EU Safety Gate weekly reports, XML (list of reports 2005–)",
+        "publisher": "European Commission, DG JUST",
+        "url": "https://ec.europa.eu/safety-gate-alerts/api/download/weeklyReport/list/xml/en",
+        "landingPage": "https://ec.europa.eu/safety-gate-alerts/screen/webReport",
+        "type": "primary",
+        "licence": "CC0 1.0 (as listed on data.europa.eu for this distribution)",
+        "retrieved": "2026-10-18"
+      },
+      "data-europa-safety-gate": {
+        "name": "data.europa.eu: Safety Gate (the EU rapid alert system – non-food), distributions and licences",
+        "publisher": "Publications Office of the EU",
+        "url": "https://data.europa.eu/data/datasets/rapex-rapid-alert-system-non-food",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "ec-legal-notice": {
+        "name": "European Commission legal notice: reuse of Commission content under CC BY 4.0, except third-party content",
+        "publisher": "European Commission",
+        "url": "https://commission.europa.eu/legal-notice_en",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      }
+    }
+  },
+  "energy": {
+    "kmPerYear": {
+      "national": {
+        "status": "derived",
+        "valueKm": 14471,
+        "year": 2025,
+        "inputs": {
+          "passengerCarKmMillion2025": 39019,
+          "passengerCarsInTraffic31Dec2025": 2696432,
+          "passengerCarKmMillion2024": 38619,
+          "passengerCarsInTraffic31Dec2024": 2767803,
+          "valueKm2024": 13953
+        },
+        "basis": "Our division: Statistics Finland's passenger-car traffic volume on Finnish streets and roads (12jx) divided by passenger cars in traffic use at the end of the same year (11ie). The volume also counts foreign cars driving in Finland and leaves out Finnish cars abroad, and the fleet is a year-end count, so this is an approximation. Rounded to the km.",
+        "source": ["sf-12jx", "sf-11ie"]
+      },
+      "byPowertrainFromInspections": {
+        "status": "derived",
+        "basis": "Traficom's average and median odometer reading at the 2025 periodic inspection, by motive power and vehicle age. medianKmPerYearOfAge = medianKm / ageYears, rounded to 100 km: the average yearly km over the car's life so far, not last year's km. Survivors only (cars still in use), and buyers who drive a lot choose diesel, so do not read the gap as caused by the fuel. Rows under 100 inspections are left out.",
+        "inspectionYear": 2025,
+        "rows": [
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 4,
+            "inspections": 107200,
+            "avgKm": 73000,
+            "medianKm": 65000,
+            "medianKmPerYearOfAge": 16300
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 6,
+            "inspections": 109149,
+            "avgKm": 103000,
+            "medianKm": 93000,
+            "medianKmPerYearOfAge": 15500
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 8,
+            "inspections": 38076,
+            "avgKm": 156000,
+            "medianKm": 141000,
+            "medianKmPerYearOfAge": 17600
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 10,
+            "inspections": 126933,
+            "avgKm": 172000,
+            "medianKm": 162000,
+            "medianKmPerYearOfAge": 16200
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 12,
+            "inspections": 112960,
+            "avgKm": 200000,
+            "medianKm": 190000,
+            "medianKmPerYearOfAge": 15800
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 15,
+            "inspections": 110875,
+            "avgKm": 239000,
+            "medianKm": 228000,
+            "medianKmPerYearOfAge": 15200
+          },
+          {
+            "powertrain": "all",
+            "powertrainFi": "Käyttövoimat yhteensä",
+            "ageYears": 20,
+            "inspections": 103271,
+            "avgKm": 266000,
+            "medianKm": 255000,
+            "medianKmPerYearOfAge": 12800
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 4,
+            "inspections": 51981,
+            "avgKm": 62000,
+            "medianKm": 56000,
+            "medianKmPerYearOfAge": 14000
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 6,
+            "inspections": 73908,
+            "avgKm": 87000,
+            "medianKm": 82000,
+            "medianKmPerYearOfAge": 13700
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 8,
+            "inspections": 18701,
+            "avgKm": 118000,
+            "medianKm": 113000,
+            "medianKmPerYearOfAge": 14100
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 10,
+            "inspections": 71230,
+            "avgKm": 134000,
+            "medianKm": 130000,
+            "medianKmPerYearOfAge": 13000
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 12,
+            "inspections": 65613,
+            "avgKm": 159000,
+            "medianKm": 156000,
+            "medianKmPerYearOfAge": 13000
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 15,
+            "inspections": 64733,
+            "avgKm": 192000,
+            "medianKm": 189000,
+            "medianKmPerYearOfAge": 12600
+          },
+          {
+            "powertrain": "petrol",
+            "powertrainFi": "Bensiini",
+            "ageYears": 20,
+            "inspections": 86692,
+            "avgKm": 245000,
+            "medianKm": 243000,
+            "medianKmPerYearOfAge": 12200
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 4,
+            "inspections": 9744,
+            "avgKm": 108000,
+            "medianKm": 93000,
+            "medianKmPerYearOfAge": 23300
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 6,
+            "inspections": 19583,
+            "avgKm": 155000,
+            "medianKm": 138000,
+            "medianKmPerYearOfAge": 23000
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 8,
+            "inspections": 14432,
+            "avgKm": 209000,
+            "medianKm": 191000,
+            "medianKmPerYearOfAge": 23900
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 10,
+            "inspections": 49230,
+            "avgKm": 223000,
+            "medianKm": 216000,
+            "medianKmPerYearOfAge": 21600
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 12,
+            "inspections": 44355,
+            "avgKm": 258000,
+            "medianKm": 252000,
+            "medianKmPerYearOfAge": 21000
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 15,
+            "inspections": 45073,
+            "avgKm": 306000,
+            "medianKm": 302000,
+            "medianKmPerYearOfAge": 20100
+          },
+          {
+            "powertrain": "diesel",
+            "powertrainFi": "Diesel",
+            "ageYears": 20,
+            "inspections": 16345,
+            "avgKm": 377000,
+            "medianKm": 381000,
+            "medianKmPerYearOfAge": 19100
+          },
+          {
+            "powertrain": "electric (BEV)",
+            "powertrainFi": "Sähkö",
+            "ageYears": 4,
+            "inspections": 17346,
+            "avgKm": 80000,
+            "medianKm": 74000,
+            "medianKmPerYearOfAge": 18500
+          },
+          {
+            "powertrain": "electric (BEV)",
+            "powertrainFi": "Sähkö",
+            "ageYears": 6,
+            "inspections": 3935,
+            "avgKm": 121000,
+            "medianKm": 115000,
+            "medianKmPerYearOfAge": 19200
+          },
+          {
+            "powertrain": "electric (BEV)",
+            "powertrainFi": "Sähkö",
+            "ageYears": 8,
+            "inspections": 642,
+            "avgKm": 146000,
+            "medianKm": 136000,
+            "medianKmPerYearOfAge": 17000
+          },
+          {
+            "powertrain": "electric (BEV)",
+            "powertrainFi": "Sähkö",
+            "ageYears": 10,
+            "inspections": 771,
+            "avgKm": 190000,
+            "medianKm": 181000,
+            "medianKmPerYearOfAge": 18100
+          },
+          {
+            "powertrain": "electric (BEV)",
+            "powertrainFi": "Sähkö",
+            "ageYears": 12,
+            "inspections": 174,
+            "avgKm": 182000,
+            "medianKm": 164000,
+            "medianKmPerYearOfAge": 13700
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "powertrainFi": "Bensiinihybridi (ladattava)",
+            "ageYears": 4,
+            "inspections": 26034,
+            "avgKm": 76000,
+            "medianKm": 71000,
+            "medianKmPerYearOfAge": 17800
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "powertrainFi": "Bensiinihybridi (ladattava)",
+            "ageYears": 6,
+            "inspections": 9053,
+            "avgKm": 111000,
+            "medianKm": 106000,
+            "medianKmPerYearOfAge": 17700
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "powertrainFi": "Bensiinihybridi (ladattava)",
+            "ageYears": 8,
+            "inspections": 3712,
+            "avgKm": 144000,
+            "medianKm": 140000,
+            "medianKmPerYearOfAge": 17500
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "powertrainFi": "Bensiinihybridi (ladattava)",
+            "ageYears": 10,
+            "inspections": 4060,
+            "avgKm": 187000,
+            "medianKm": 185000,
+            "medianKmPerYearOfAge": 18500
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "powertrainFi": "Bensiinihybridi (ladattava)",
+            "ageYears": 12,
+            "inspections": 1202,
+            "avgKm": 222000,
+            "medianKm": 219000,
+            "medianKmPerYearOfAge": 18300
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "powertrainFi": "Dieselhybridi (ladattava)",
+            "ageYears": 4,
+            "inspections": 1174,
+            "avgKm": 104000,
+            "medianKm": 95000,
+            "medianKmPerYearOfAge": 23800
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "powertrainFi": "Dieselhybridi (ladattava)",
+            "ageYears": 6,
+            "inspections": 488,
+            "avgKm": 164000,
+            "medianKm": 137000,
+            "medianKmPerYearOfAge": 22800
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "powertrainFi": "Dieselhybridi (ladattava)",
+            "ageYears": 8,
+            "inspections": 187,
+            "avgKm": 176000,
+            "medianKm": 170000,
+            "medianKmPerYearOfAge": 21300
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "powertrainFi": "Dieselhybridi (ladattava)",
+            "ageYears": 10,
+            "inspections": 412,
+            "avgKm": 230000,
+            "medianKm": 225000,
+            "medianKmPerYearOfAge": 22500
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "powertrainFi": "Dieselhybridi (ladattava)",
+            "ageYears": 12,
+            "inspections": 653,
+            "avgKm": 274000,
+            "medianKm": 271000,
+            "medianKmPerYearOfAge": 22600
+          }
+        ],
+        "source": "traficom-pxweb-030"
+      },
+      "gap": "No official per-car yearly km by fuel was found (Traficom and Statistics Finland publish totals, fleet counts and odometer readings, not km per car per year by fuel)."
+    },
+    "fuelPrices": {
+      "status": "primary",
+      "unit": "cents per litre, incl. VAT, monthly average, whole country",
+      "months": [
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06"
+      ],
+      "petrol95E10": [174, 169, 173, 171, 172, 175, 176, 176, 193, 207, 209, 209],
+      "diesel": [167, 161, 163, 161, 166, 174, 177, 180, 208, 234, 226, 215],
+      "latest": {
+        "month": "2026-06",
+        "petrol95E10": 209,
+        "diesel": 215
+      },
+      "twelveMonthAverage": {
+        "status": "derived",
+        "from": "2025-07",
+        "to": "2026-06",
+        "petrol95E10": 183.7,
+        "diesel": 186.0,
+        "basis": "Our unweighted mean of the 12 monthly values above, rounded to 0.1 c."
+      },
+      "note": "Prices rose sharply in March–June 2026. For a two-year estimate, show which price is used (latest month or 12-month average).",
+      "source": "sf-12ge"
+    },
+    "electricityPrices": {
+      "status": "primary",
+      "unit": "cents per kWh, monthly",
+      "months": [
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06"
+      ],
+      "components": {
+        "energy": "electric energy, excl. taxes",
+        "network": "network service fee (transfer), excl. taxes",
+        "taxes": "electricity tax and VAT",
+        "total": "total price = energy + network + taxes"
+      },
+      "householdTypes": {
+        "C": {
+          "label": "household, 2,500–4,999 kWh a year (e.g. a flat)",
+          "energy": [6.69, 7.88, 7.33, 7.38, 7.53, 6.96, 9.8, 10.45, 6.83, 7.3, 7.57, 7.39],
+          "network": [8.717, 8.721, 8.737, 8.876, 8.884, 8.884, 9.16, 9.165, 9.192, 9.203, 9.199, 9.175],
+          "taxes": [6.756, 7.061, 6.925, 6.973, 7.013, 6.868, 7.662, 7.829, 6.913, 7.126, 7.194, 7.142],
+          "total": [22.163, 23.662, 22.992, 23.229, 23.428, 22.712, 26.622, 27.444, 22.935, 23.629, 23.963, 23.707],
+          "latest": {
+            "month": "2026-06",
+            "total": 23.707
+          },
+          "twelveMonthAverageTotal": {
+            "status": "derived",
+            "value": 23.9,
+            "basis": "Our unweighted mean of the 12 monthly totals, rounded to 0.1 c."
+          }
+        },
+        "D": {
+          "label": "household, 5,000–15,000 kWh a year (e.g. a house without electric heating, or home EV charging)",
+          "energy": [5.92, 7.18, 6.46, 6.57, 6.75, 6.1, 8.93, 9.66, 5.94, 6.41, 6.65, 6.48],
+          "network": [5.275, 5.279, 5.287, 5.315, 5.327, 5.327, 5.452, 5.453, 5.462, 5.478, 5.474, 5.466],
+          "taxes": [5.682, 6.005, 5.823, 5.858, 5.907, 5.741, 6.495, 6.681, 5.735, 5.949, 6.01, 5.964],
+          "total": [16.877, 18.463, 17.57, 17.743, 17.984, 17.168, 20.877, 21.795, 17.137, 17.837, 18.134, 17.91],
+          "latest": {
+            "month": "2026-06",
+            "total": 17.91
+          },
+          "twelveMonthAverageTotal": {
+            "status": "derived",
+            "value": 18.3,
+            "basis": "Our unweighted mean of the 12 monthly totals, rounded to 0.1 c."
+          }
+        }
+      },
+      "source": "sf-13rb"
+    },
+    "fastCharging": {
+      "status": "missing",
+      "value": null,
+      "basis": "No official or otherwise solid source for public (fast) charging prices in Finland was found. Charging operators set their own prices; none is given here."
+    },
+    "consumption": {
+      "rule": "Use the ad's own combined consumption (yhdistetty kulutus) when it gives one. The figures below only adjust an official WLTP value to real-world use; they are not a consumption to assume for a car.",
+      "realWorldGapWLTP": {
+        "status": "primary",
+        "year": "new cars first registered in 2021, first year of use (EU-wide OBFCM data)",
+        "rows": [
+          {
+            "powertrain": "petrol",
+            "realWorldLper100km": 7.89,
+            "wltpLper100km": 6.38,
+            "gapPct": 23.7,
+            "gapPctKmWeighted": 20.4
+          },
+          {
+            "powertrain": "diesel",
+            "realWorldLper100km": 6.88,
+            "wltpLper100km": 5.82,
+            "gapPct": 18.1,
+            "gapPctKmWeighted": 16.7
+          },
+          {
+            "powertrain": "plug-in hybrid (petrol)",
+            "realWorldLper100km": 5.97,
+            "wltpLper100km": 1.76,
+            "gapPct": 238,
+            "gapPctKmWeighted": 251
+          },
+          {
+            "powertrain": "plug-in hybrid (diesel)",
+            "realWorldLper100km": 5.83,
+            "wltpLper100km": 1.41,
+            "gapPct": 312,
+            "gapPctKmWeighted": 318
+          }
+        ],
+        "quote": "the real-world fuel consumption experienced by drivers remains on average 1-1.5 l/100km higher than what is indicated on the official documents",
+        "caveats": "Applies to WLTP values only (cars type-approved under WLTP, roughly first registered from 2019 on). The old NEDC gap had grown to around 40 % by 2017 (same report). Heavy cars (SUVs, luxury) have a gap 1.5–2.5 times larger in g/km. The plug-in hybrid figure depends on how often the car is charged. No gap for electric cars is in the report.",
+        "source": "ec-com-2024-122"
+      },
+      "gap": "No official Finnish fleet-average consumption by fuel, and no official real-world gap for electric cars, was found. Leave consumption empty when the ad gives none."
+    }
+  },
+  "electricCars": {
+    "servicePrices": {
+      "status": "secondary",
+      "unit": "EUR per periodic service (määräaikaishuolto), AutoJerry average and its 'vaihtelee n.' range",
+      "rows": [
+        {
+          "make": "Tesla",
+          "model": null,
+          "avgEur": 200,
+          "lowEur": 149,
+          "highEur": 350,
+          "source": "aj-ev-service-tesla"
+        },
+        {
+          "make": "Polestar",
+          "model": null,
+          "avgEur": 199,
+          "lowEur": 130,
+          "highEur": 289,
+          "source": "aj-ev-service-polestar"
+        },
+        {
+          "make": "Tesla",
+          "model": "Model 3",
+          "avgEur": 200,
+          "lowEur": 150,
+          "highEur": 326,
+          "source": "aj-ev-service-tesla-model-3"
+        },
+        {
+          "make": "Tesla",
+          "model": "Model Y",
+          "avgEur": 210,
+          "lowEur": 143,
+          "highEur": 353,
+          "source": "aj-ev-service-tesla-model-y"
+        },
+        {
+          "make": "Volkswagen",
+          "model": "ID.3",
+          "avgEur": 207,
+          "lowEur": 160,
+          "highEur": 290,
+          "source": "aj-ev-service-vw-id3"
+        },
+        {
+          "make": "Volkswagen",
+          "model": "ID.4",
+          "avgEur": 210,
+          "lowEur": 158,
+          "highEur": 310,
+          "source": "aj-ev-service-vw-id4"
+        },
+        {
+          "make": "Skoda",
+          "model": "Enyaq",
+          "avgEur": 219,
+          "lowEur": 160,
+          "highEur": 346,
+          "source": "aj-ev-service-skoda-enyaq"
+        },
+        {
+          "make": "Nissan",
+          "model": "Leaf",
+          "avgEur": 190,
+          "lowEur": 129,
+          "highEur": 280,
+          "source": "aj-ev-service-nissan-leaf"
+        },
+        {
+          "make": "Hyundai",
+          "model": "Ioniq 5",
+          "avgEur": 200,
+          "lowEur": 160,
+          "highEur": 361,
+          "source": "aj-ev-service-hyundai-ioniq5"
+        },
+        {
+          "make": "Kia",
+          "model": "EV6",
+          "avgEur": 200,
+          "lowEur": 150,
+          "highEur": 298,
+          "source": "aj-ev-service-kia-ev6"
+        }
+      ],
+      "allMakesForComparison": {
+        "avgEur": 225,
+        "lowEur": 159,
+        "highEur": 395,
+        "source": "aj-service-all",
+        "note": "Same figure as car-rules.json → wearItems 'periodic service'."
+      },
+      "note": "Only makes and models that are electric-only are listed, so the price is an electric car's. Service intervals are model-specific and not given by the source.",
+      "source": [
+        "aj-ev-service-tesla",
+        "aj-ev-service-polestar",
+        "aj-ev-service-tesla-model-3",
+        "aj-ev-service-tesla-model-y",
+        "aj-ev-service-vw-id3",
+        "aj-ev-service-vw-id4",
+        "aj-ev-service-skoda-enyaq",
+        "aj-ev-service-nissan-leaf",
+        "aj-ev-service-hyundai-ioniq5",
+        "aj-ev-service-kia-ev6",
+        "aj-service-all"
+      ]
+    },
+    "batteryHealthTest": {
+      "rows": [
+        {
+          "what": "SOH test (garage)",
+          "avgEur": 99,
+          "lowEur": 35,
+          "highEur": 136,
+          "status": "secondary",
+          "source": "aj-soh-test"
+        },
+        {
+          "what": "EV battery test (sähköauton akun testaus), garage",
+          "avgEur": 89,
+          "lowEur": null,
+          "highEur": null,
+          "status": "secondary",
+          "source": "aj-ev-battery-test",
+          "note": "The page gives an average only."
+        },
+        {
+          "what": "AVILOO Flash test at Bosch Car Service Auto MAN, Vantaa",
+          "priceEur": 100,
+          "date": "2026-03-24",
+          "status": "secondary",
+          "source": "moottori-2026-akkutesti",
+          "quote": "Aviloo Flash -testi Auto MANilla maksaa 100 euroa / auto."
+        },
+        {
+          "what": "AVILOO Premium test (recommended retail price in Finland, 2023)",
+          "priceEur": 129,
+          "date": "2023-08-29",
+          "status": "secondary",
+          "source": "moottori-2023-aviloo",
+          "quote": "Aviloon Premium-akkutestin suositushinta Suomessa on tällä hetkellä 129 euroa.",
+          "note": "Premium: a device in the OBD port while the battery is driven from full to about 10 % (up to 7 days). Flash: a few minutes on a parked car. 2023 price; not rechecked against AVILOO's own shop, which did not load."
+        }
+      ],
+      "source": ["aj-soh-test", "aj-ev-battery-test", "moottori-2026-akkutesti", "moottori-2023-aviloo"]
+    },
+    "batteryWarranty": {
+      "note": "From each maker's or Finnish importer's own page, read on 2026-10-18. 'years' and 'km': whichever comes first. minSoHPct null = the page states no threshold. The warranty runs from first registration or delivery, so check a used car's first-registration date; most terms also need regular servicing.",
+      "rows": [
+        {
+          "make": "Tesla",
+          "models": "Model S, Model X",
+          "years": 8,
+          "km": 240000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-tesla",
+          "quote": "Model S Model X 8 vuotta tai 240 000 km sen mukaan, kumpi täyttyy ensin, akun kapasiteetti vähintään 70 % takuuaikana."
+        },
+        {
+          "make": "Tesla",
+          "models": "Model 3 RWD, Model Y RWD",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-tesla",
+          "quote": "Model 3 RWD Model Y RWD 8 vuotta tai 160 000 km sen mukaan, kumpi täyttyy ensin, akun kapasiteetti vähintään 70 % takuuaikana."
+        },
+        {
+          "make": "Tesla",
+          "models": "Model 3 / Model Y Premium Long Range RWD and AWD, Performance AWD",
+          "years": 8,
+          "km": 192000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-tesla",
+          "quote": "… Model Y Performance AWD 8 vuotta tai 192 000 km sen mukaan, kumpi täyttyy ensin, akun kapasiteetti vähintään 70 % takuuaikana."
+        },
+        {
+          "make": "Volkswagen",
+          "models": "ID models (BEV)",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-vw",
+          "quote": "korkeajänniteakkujen takuu on 8 vuotta / 160 000 km. Takuuajan ensimmäisen 24kk aikana ei ole kilometrirajoitusta … 70%:ia täyssähköauton (BEV) korkeajänniteakun alkuperäisestä nettokapasiteetista säilyy",
+          "conditions": "No km limit in the first 24 months; 70 % of the original net capacity."
+        },
+        {
+          "make": "Škoda",
+          "models": "Enyaq, Elroq",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-skoda",
+          "quote": "ensimmäisten 8 vuoden kuluessa tai ennen kuin auto saavuttaa 160 000 kilometrin … ettei korkeajänniteakun kokonaiskapasiteetti laske alle 70 %:iin"
+        },
+        {
+          "make": "Audi",
+          "models": "all BEV (e-tron, Q4 e-tron, Q6 e-tron …)",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-audi",
+          "quote": "korkeajänniteakkujen takuuaika on 8 vuotta tai 160 000 km … Takuunantaja takaa, että 70%:ia täyssähköauton (BEV) korkeajänniteakun alkuperäisestä nettokapasiteetista säilyy",
+          "conditions": "No km limit in the first 24 months; runs from the delivery date on the warranty certificate."
+        },
+        {
+          "make": "CUPRA",
+          "models": "Born, Tavascan",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-cupra",
+          "quote": "korkeajänniteakkujen takuu on 8 vuotta / 160 000 km … 70%:ia täyssähköauton (BEV) korkeajänniteakun alkuperäisestä nettokapasiteetista säilyy",
+          "conditions": "No km limit in the first 24 months."
+        },
+        {
+          "make": "Nissan",
+          "models": "Leaf, Ariya",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-nissan",
+          "quote": "TÄYSSÄHKÖISTEN MALLIEN LITIUMIONIAKKUJEN TAKUU 8 vuoden tai 160 000 km:n takuu … kuntotakuun, joka suojaa akun kapasiteetin asteittaista menetystä",
+          "conditions": "The Finnish page names a capacity warranty (kuntotakuu) but no threshold. Nissan UK states it as fewer than 9 of 12 capacity bars, and 5 years / 60,000 miles for Leafs before model year 2022; that is the UK page, not Finland's.",
+          "ukNote": {
+            "source": "w-nissan-uk",
+            "quote": "protects against battery capacity loss (less than 9 bars out of 12) … LEAF pre-MY22 5 years/60000 miles"
+          }
+        },
+        {
+          "make": "Hyundai",
+          "models": "all BEV",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-hyundai",
+          "quote": "1.3.4 Korkeajänniteakuston takuu on kahdeksan (8) vuotta / 160 000 km, kumpi ensin täyttyy. • 70 % korkeajänniteakuston alkuperäisestä nettokapasiteetista säilyy",
+          "conditions": "Taxis and rental cars: 3 years / 100,000 km on the battery (terms changed 1.4.2026)."
+        },
+        {
+          "make": "Kia",
+          "models": "model year 2026 and newer (EV, HEV, PHEV)",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-kia",
+          "quote": "Mallivuosi 2026 ja uudemmat: 8 vuoden tai 160 000 kilometrin takuu hybridi- ja sähköautojen (HEV/PHEV/EV) korkeajänniteakustolle",
+          "conditions": "No capacity threshold stated on the page."
+        },
+        {
+          "make": "Kia",
+          "models": "model year 2025 and older (EV, HEV, PHEV)",
+          "years": 7,
+          "km": 150000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-kia",
+          "quote": "Mallivuosi 2025 ja vanhemmat: 7 vuoden tai 150 000 kilometrin …",
+          "conditions": "No capacity threshold stated on the page."
+        },
+        {
+          "make": "BMW",
+          "models": "BMW i models (BEV); i3 60 Ah: 100,000 km",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-bmw",
+          "quote": "korkeajänniteakun takuulla, joka on voimassa 8 vuotta tai 160 000 kilometrin ajomäärään asti (BMW i3 60 Ah: 100 000 km)",
+          "conditions": "No capacity threshold on the page (the linked certificate PDF did not download)."
+        },
+        {
+          "make": "Mercedes-Benz",
+          "models": "EQA, EQB, EQC, electric CLA, GLB, GLC, G 580",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-mb",
+          "quote": "korkeajänniteakun maksimaalinen kapasiteetti ei ole alle 70 %",
+          "conditions": "From first use or first registration, whichever is earlier."
+        },
+        {
+          "make": "Mercedes-Benz",
+          "models": "EQE, EQE SUV, EQS, EQS SUV, Maybach EQS 680",
+          "years": 10,
+          "km": 250000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-mb",
+          "quote": "Mercedes-Benz EQS / EQS SUV 10 vuotta / 250 000 km"
+        },
+        {
+          "make": "Volvo",
+          "models": "all BEV",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": ["w-volvo", "w-volvo-terms"],
+          "quote": "8 vuoden tai 160 000 kilometrin takuu … Jos akun kapasiteetti laskee alle 70 prosenttiin alkuperäisestä tasosta takuuaikana, se korjataan tai vaihdetaan",
+          "conditions": "Volvo's warranty terms cover a drop below 70 % only when a manufacturing or material defect causes it; normal degradation is not covered."
+        },
+        {
+          "make": "Polestar",
+          "models": "all",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-polestar",
+          "quote": "8 vuoden tai 160 000 km aikana … Mikäli akun kuntoindeksi (State of Health, SoH) laskee alle 70 %"
+        },
+        {
+          "make": "Toyota",
+          "models": "bZ4X, Urban Cruiser and other BEV passenger cars (not Proace)",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-toyota",
+          "quote": "Säännöllisesti huollettujen sähköautojen akkutakuu 8 v/160 000 km kun akun heikentyminen alle 70 %:iin alkuperäisestä kapasiteetista",
+          "conditions": "Regularly serviced cars."
+        },
+        {
+          "make": "Toyota",
+          "models": "EV-akkuturva extension for BEV passenger cars",
+          "years": 10,
+          "km": 1000000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-toyota-akkuturva",
+          "quote": "EV-akkuturva täydentää valmistajan akkutakuuta ja mahdollistaa takuuajan jälkeen akun suojan jatkumisen jopa 10 vuoteen tai 1 miljoonaan kilometriin asti.",
+          "conditions": "Renewed one service interval at a time at each scheduled Toyota service with a battery check; covers capacity below 70 % and battery faults; mechanical damage to the battery ends it. Proace excluded."
+        },
+        {
+          "make": "Ford",
+          "models": "all Ford BEVs (Mustang Mach-E, Explorer …)",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-ford",
+          "quote": "kaikissa Ford-sähköautoissa on kahdeksan vuoden ja 160 000 kilometrin takuu sähköauton akulle (vähintään 70 %:n kapasiteetti"
+        },
+        {
+          "make": "Renault",
+          "models": "R4, R5, Megane, Scenic E-Tech",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-renault",
+          "quote": "Ajoakun takuu 8 vuotta/160 000 km* (akun SOH-taso 70 %)"
+        },
+        {
+          "make": "Peugeot",
+          "models": "BEV",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-peugeot",
+          "quote": "Takuuaikana ajoakun alkuperäisestä kapasiteetista säilyy käytettävissä vähintään 70 %. Voimassa 8 vuotta tai 160 000 km",
+          "conditions": "From the date the car was put into use."
+        },
+        {
+          "make": "Opel",
+          "models": "BEV",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-opel",
+          "quote": "8 vuoden / 160 000 km takuu ajoakulle (vähintään 70% varaustaso)"
+        },
+        {
+          "make": "Citroën",
+          "models": "BEV and PHEV",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-citroen",
+          "quote": "AJOAKKU (sähkö- ja lataushybridiautot) … 8 vuotta tai 160 000 km, kumpi saavutetaankaan aikaisemmin",
+          "conditions": "No capacity threshold on the page."
+        },
+        {
+          "make": "MG",
+          "models": "MG4, MGS5, MGS6, Cyberster",
+          "years": 7,
+          "km": 150000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-mg",
+          "quote": "84 kuukauden tai 150 000 kilometrin takuun (sen mukaan, kumpi tulee aikaisemmin) suurjänniteakulle",
+          "conditions": "84 months. No capacity threshold stated."
+        },
+        {
+          "make": "BYD",
+          "models": "all models (Dolphin, Dolphin Surf, Seal, Seal U, Sealion 7, Atto 2, Atto 3, Tang, Han, DM-i)",
+          "years": 8,
+          "km": 250000,
+          "minSoHPct": 70,
+          "status": "primary",
+          "source": "w-byd",
+          "quote": "Ajoakku 8 vuotta, 250 000 km SOH 70 %"
+        }
+      ],
+      "gaps": "No capacity threshold stated by BMW, Kia, Citroën, MG or Nissan Finland. Nissan's bar rule is only on its UK page."
+    },
+    "hybridBatteryWarranty": {
+      "note": "Hybrid (HEV/PHEV) drive-battery warranties stated on Finnish pages.",
+      "rows": [
+        {
+          "make": "Toyota",
+          "models": "full hybrids: hybrid system warranty",
+          "years": 5,
+          "km": 100000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-toyota",
+          "quote": "Hybrideillämme on normaalin takuun lisäksi 5 vuoden / 100 000 km hybridijärjestelmän takuu, ensin täyteen tulevan ollessa määräävä."
+        },
+        {
+          "make": "Toyota",
+          "models": "Toyota hybridiakkuturva (full hybrids)",
+          "years": 10,
+          "km": 350000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": ["w-toyota-akkuturva", "w-toyota-used-pdf", "w-toyota-relax"],
+          "quote": "Toyota myöntää Toyota-merkkihuollossa huolletuille hybridiautoille 10 vuoden / 350 000 km Toyota hybridiakkuturvan. Hybridiakkuturva myönnetään Euroopan tuontialueelle ensirekisteröidyille malleille. Pitkän akkuturvan taustalla on vuosittain huollon yhteydessä tehtävä Hybrid Health Check -tarkistus.",
+          "conditions": "Renewed one service interval (1 year / 15,000 km) at each scheduled service at an authorised Toyota workshop; a missed service ends the cover until a later service with a passed check restores it. Passes to the next owner. Battery only, valid in Finland, cars imported by Toyota Auto Finland (used-car PDF). Toyota Relax does not cover the hybrid battery. No price for the check is published. Plug-in hybrids: no separate term found.",
+          "checkCostEur": null
+        },
+        {
+          "make": "Lexus",
+          "models": "hybrid components and battery",
+          "years": 5,
+          "km": 100000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-lexus",
+          "quote": "viiden vuoden / 100 000 km takuu hybridikomponenteille ja akulle"
+        },
+        {
+          "make": "Lexus",
+          "models": "Lexus hybridiakkuturva",
+          "years": 10,
+          "km": 350000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": ["w-lexus", "w-lexus-check"],
+          "quote": "yhden lisävuoden (tai 15 000 km) hybridiakkuturvan sekä merkinnän huoltokirjaasi. Tätä voidaan jatkaa vuosittain 10 vuoteen ja 350 000 km saakka auton ensirekisteröinnistä.",
+          "conditions": "Renewed yearly with a hybrid health check at a scheduled Lexus service.",
+          "checkCostEur": 0,
+          "checkQuote": "Vuosittainen hybridin kuntotarkastus on maksuton Lexus-huollon yhteydessä."
+        },
+        {
+          "make": "Suzuki",
+          "models": "hybrid system",
+          "years": 5,
+          "km": 100000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-suzuki",
+          "quote": "5 vuotta tai 100 000 km… 2 ensimmäistä vuotta ilman kilometrirajaa",
+          "conditions": "No km limit in the first 2 years."
+        },
+        {
+          "make": "Suzuki",
+          "models": "hybridiakkuturva, Across and Swace only (Toyota-built)",
+          "years": 10,
+          "km": 350000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-suzuki",
+          "quote": "10 vuotta tai 350 000 km",
+          "conditions": "Renewed each service interval (1 year / 20,000 km) after a yearly battery check. Check price not stated."
+        },
+        {
+          "make": "Hyundai",
+          "models": "HEV and PHEV high-voltage battery",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-hyundai-owner",
+          "quote": "Tehokkailla korkeajänniteakustoilla on kahdeksan (8) vuoden tai 160 000 km:n takuu… koskee täyssähkö-, hybridi- ja pistokehybridiautojamme",
+          "conditions": "48 V mild hybrids: 5 years, no km limit. Hyundai's terms (w-hyundai) state 70 % of net capacity in the battery clause; we did not confirm that it applies to hybrids, so it is left out here."
+        },
+        {
+          "make": "Kia",
+          "models": "HEV and PHEV, model year 2026 and newer",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-kia",
+          "quote": "Mallivuosi 2026 ja uudemmat: 8 vuoden tai 160 000 kilometrin takuu hybridi- ja sähköautojen (HEV/PHEV/EV) korkeajänniteakustolle",
+          "conditions": "Model year 2025 and older: 7 years / 150,000 km."
+        },
+        {
+          "make": "Honda",
+          "models": "hybrid system",
+          "years": 5,
+          "km": 100000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-honda",
+          "quote": "Hybridijärjestelmän takuu: 5 vuotta/100 000 km",
+          "conditions": "No separate HEV/PHEV battery term found."
+        },
+        {
+          "make": "Citroën",
+          "models": "PHEV drive battery",
+          "years": 8,
+          "km": 160000,
+          "minSoHPct": null,
+          "status": "primary",
+          "source": "w-citroen",
+          "quote": "AJOAKKU (sähkö- ja lataushybridiautot) … 8 vuotta tai 160 000 km, kumpi saavutetaankaan aikaisemmin"
+        }
+      ],
+      "gaps": "BMW, Ford, Volvo and Mercedes-Benz plug-in hybrid battery terms: the pages did not load or gave no PHEV figure; Renault's figure was only on its French site. Not included. No Toyota hybrid health-check price is published."
+    }
+  },
+  "recalls": {
+    "traficom": {
+      "what": "Traficom keeps a database of recall campaigns reported to it (ajoneuvolaki 82/2021): cars, vans, motorcycles, mopeds, tractors, trailers and more, active and closed. Minor service or repair campaigns need not be reported and are not in it. Safety Gate notifications from 2021 and 2022 are missing from it; Traficom lists them in a separate PDF.",
+      "status": "primary",
+      "counts": {
+        "allCampaigns": 4385,
+        "passengerCarCampaigns": 2791,
+        "oldestStartDate": "2002-11-12",
+        "asOf": "2026-10-18",
+        "basis": "Counts as the database's search returned them on the date; it covers 2002 onward."
+      },
+      "fields": "make and vehicle type, model text (free text, e.g. 'Octavia, Karoq, Superb, Kodiaq'), fault, fault description, start and end date, campaign code, number of vehicles in Finland, the company running the campaign and an EC type-approval number. No structured model years; years appear only in some descriptions.",
+      "linkPatterns": {
+        "searchByKeyword": "https://takaisinkutsut.traficom.fi/recall?keyword={model}",
+        "filterByMake": "https://takaisinkutsut.traficom.fi/recall/filter/date/desc/2/{makeId}",
+        "oneCampaign": "https://takaisinkutsut.traficom.fi/recall/{id}",
+        "notes": "From the site's own routes. 'keyword' searches the text fields (model names match; 'Octavia' gave 25 campaigns). '2' is the vehicle type Henkilöauto; makeId is the site's id for a make (e.g. Audi 5, BMW 7) from its make list. The keyword link is the simplest for the app: 'Check recalls for this model' → keyword = the model name from the ad."
+      },
+      "openData": "None found. The database is not on Traficom's open-data list (which gives CC BY 4.0 for the vehicle register and other listed datasets). The site reads its own JSON endpoint (/api/recall), which is undocumented and comes with no licence or terms of reuse.",
+      "source": ["traficom-recalls-page", "traficom-recall-db", "traficom-open-data"]
+    },
+    "safetyGate": {
+      "what": "The EU rapid alert system for dangerous non-food products. Its 'Motor vehicles' category holds recalls notified by EU/EEA authorities. Of the 3,048 passenger-car alerts from October 2016 to October 2026, Germany notified 1,826 and France 610; Finland none. Traficom's database page points to Safety Gate for recall details in other languages.",
+      "status": "primary",
+      "openData": "Weekly reports since 2005 as XML and Excel; data.europa.eu lists the XML and Excel distributions under CC0 and the search pages under the Commission's reuse policy (CC BY 4.0). Pictures may contain third-party rights and are not copied.",
+      "linkPattern": "https://ec.europa.eu/safety-gate-alerts/screen/webReport/alertDetail/{alertId}",
+      "source": ["safety-gate-weekly-xml", "data-europa-safety-gate", "ec-legal-notice"]
+    },
+    "verdict": {
+      "snapshotBuilt": "car-recalls-eu.json: Safety Gate passenger-car alerts from 2016-10-01, built by tools/recalls-snapshot.mjs. Legally clear (CC0) and practical (one file, no server). Limit: it is EU-wide, not 'sold in Finland', and it has production dates, not Finnish registration years.",
+      "traficomSnapshot": "Not built. It is practical (one JSON endpoint, about 2,800 car campaigns), but no licence or reuse terms are published for this database, its endpoint is undocumented, and each record names a contact person at the importer, which we must not copy. Ask Traficom (tietojenluovutus@traficom.fi, the contact on its open-data page) whether the database may be reused and under which licence before snapshotting it. Until then, link to it with the keyword pattern.",
+      "appCanShowNow": "A 'Check recalls for this model' link to Traficom's search with the ad's model as keyword, and, from the EU snapshot, alerts whose make matches and whose years overlap the car's year, each with its Safety Gate link.",
+      "source": ["traficom-recall-db", "traficom-open-data", "safety-gate-weekly-xml", "data-europa-safety-gate"]
+    }
+  }
+}

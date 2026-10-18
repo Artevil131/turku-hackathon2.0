@@ -16,6 +16,10 @@ All files are UTF-8 JSON with a 2-space indent. None holds personal data. Raw do
 | `moto-rules.json` (13 KB) | Used motorcycle: no periodic inspection, what modifications need an inspection, licence classes, who pays (traffic insurance, kasko, wear), winter storage, vehicle tax, ABS | Every fact has a `source` id from its `sources` block, checked on 17 October 2026 against Finlex, Traficom, LVK, EUR-Lex and If's published terms. Nothing unverified is in it: there is no published price for a modification or registration inspection, so none is given. |
 | `sample-ads-moto.json` (6 KB) | Nettimoto's labels, plus 5 motorcycle test ads and 4 ads that must stay unsupported (mopeds, a snowmobile, an ATV) | Nettimoto's labels were read from a public ad page. Test ads are synthetic, except moto-4, which is Vaishnav's example. |
 | `powertrain-models.json` (5 KB) | The 11 Traficom model keys that are electric only (Nissan Leaf, Tesla Model 3/S/X/Y, VW ID.3/ID.4, Škoda Enyaq, Hyundai IONIQ 5, Polestar 2, Mercedes-Benz EQA), each with the maker's page and the phrase read there on 18.10.2026; the mixed keys left out and why (Golf includes the e-Golf); why there is no hybrid list. An electric car's safer choice compares it only with these | Tesla's pages refuse automated requests, so their URLs come from a web search of tesla.com the same day |
+| `car-running-costs.json` (64 KB) | Energy cost over two years (km a year, fuel and electricity prices, the WLTP real-world gap), electric-car service and battery-test prices, battery warranties by make, and how to check recalls | `status`: primary, secondary, derived or missing, with a `basis`. Every number has a `source` id from `meta.sources`. Added 18 October 2026. |
+| `car-recalls-eu.json` (1.5 MB) | 3,048 EU Safety Gate recall alerts for passenger cars, October 2016 to October 2026 | All Safety Gate's, except our normalised make names and parsed years. Built by `tools/recalls-snapshot.mjs`. |
+
+`test/car-running-costs.test.mjs` checks both new files: every number has a known source id, and the values pass sanity checks.
 
 `moto-rules.json` also records a correction: Valtioneuvoston asetus 1455/2019, which `traficom-inspections.json` cites for the inspection schedule, was repealed by the Vehicles Act 82/2021. The schedule itself is unchanged; the duties are now in the Act.
 
@@ -196,6 +200,59 @@ Key observations:
 - Copying from different browsers was not tested. No-break spaces may not survive a copy.
 - The output keys are a proposal, not a team decision.
 
+## car-running-costs.json
+
+**What it holds.** The numbers for "what will this car cost to run for two years", plus electric-car specifics and recalls. Gathered on 18 October 2026. Vehicle tax and wear items (timing belt, clutch, brakes, tyres, periodic service) are in `car-rules.json` and are not repeated.
+
+- `energy.kmPerYear`: a national average (derived) and, by powertrain, the median km at the 2025 inspection divided by the car's age.
+- `energy.fuelPrices`: petrol 95E10 and diesel, monthly, July 2025 to June 2026, with a 12-month average.
+- `energy.electricityPrices`: household electricity for two consumer types, monthly, split into energy, network (transfer) and taxes, with the total.
+- `energy.consumption.realWorldGapWLTP`: how far real-world consumption is above the WLTP figure, by fuel.
+- `energy.fastCharging`: empty (see below).
+- `electricCars.servicePrices`: periodic service for 10 electric-only makes and models.
+- `electricCars.batteryHealthTest`: what a battery (SoH) test costs.
+- `electricCars.batteryWarranty`: 25 rows for 20 makes; `hybridBatteryWarranty`: 10 rows for Toyota, Lexus, Suzuki, Hyundai, Kia, Honda and Citroën.
+- `recalls`: how to check recalls for Finland, link patterns, licences and the verdict on a snapshot.
+
+Key numbers:
+- About 14,500 km a year per passenger car in 2025 (39,019 million km ÷ 2,696,432 cars in traffic). By powertrain, from inspections: petrol about 14,000 km a year of age at 4 years, diesel 23,200, electric 18,500, petrol plug-in hybrid 17,800.
+- Petrol 95E10 cost 209 c/l and diesel 215 c/l in June 2026. The 12-month averages are 183.7 and 186.0 c/l. Prices jumped in March–June 2026.
+- Household electricity, total with transfer and taxes, June 2026: 17.91 c/kWh at 5,000–15,000 kWh a year, 23.71 c/kWh at 2,500–4,999 kWh.
+- Real-world consumption is 23.7 % above WLTP for petrol cars and 18.1 % for diesel (cars first registered in 2021). For plug-in hybrids it is 238 % above (petrol PHEVs).
+- A periodic service for an electric car costs on average 190–219 € by model (all makes: 225 €). A garage SoH test averages 99 € (35–136 €). An AVILOO Flash test cost 100 € at one garage in March 2026.
+- Battery warranty: most makes give 8 years / 160,000 km and 70 % capacity. Exceptions: Tesla S/X 240,000 km and long-range 3/Y 192,000 km; Mercedes EQE/EQS 10 years / 250,000 km; BYD 8 years / 250,000 km; MG 7 years / 150,000 km; Kia model year 2025 and older 7 years / 150,000 km. Toyota's EV-akkuturva extends to 10 years / 1,000,000 km with yearly Toyota service.
+- Toyota and Lexus hybrid battery cover can be renewed yearly up to 10 years / 350,000 km with a service at the brand's workshop. Lexus's yearly hybrid check is free; Toyota publishes no price for it.
+
+**Sources.**
+- Primary: Statistics Finland StatFin tables 12ge, 13rb, 12jx and 11ie (CC BY 4.0); Traficom's statistics database table 030_kats_tau_103; the European Commission's report COM(2024) 122; each maker's or importer's Finnish warranty page (Mercedes: battery certificate PDF 02/2026); Traficom's recall pages; Safety Gate and data.europa.eu.
+- Secondary: AutoJerry's price guide (prices from offers made through its platform), Moottori (24.3.2026 and 29.8.2023), and Nissan UK for the Leaf's capacity-bar rule.
+
+**Derived (our arithmetic).** The national km a year; km per year of age; the 12-month averages. Each has a `basis`.
+
+**Still missing.**
+- No official km a year per car by fuel. The inspection-based figures are lifetime averages for cars still in use. Diesel buyers drive more to begin with, so the gap is not caused by the fuel.
+- No solid source for public fast-charging prices. Operators set their own prices, so none is given.
+- No official Finnish fleet-average consumption by fuel, and no official real-world gap for electric cars. Use the ad's own "yhdistetty kulutus". The WLTP gap does not apply to cars type-approved under NEDC (roughly before 2019).
+- The EV service prices are AutoJerry estimates with no service interval. The AVILOO Premium price (129 €) is from 2023; AVILOO's own shop did not load.
+- No capacity threshold is stated by BMW, Kia, Citroën, MG or Nissan Finland. Nissan's "fewer than 9 of 12 bars" rule is only on its UK page.
+- Plug-in hybrid battery terms for BMW, Ford, Volvo, Mercedes-Benz and Renault were not confirmed on a Finnish page, so they are left out. Hyundai's 70 % may also cover hybrids, but that was not confirmed.
+- Volvo's terms cover a drop below 70 % only when a manufacturing defect causes it.
+
+## car-recalls-eu.json
+
+**What it holds.** 3,048 EU Safety Gate alerts in the "Motor vehicles" category whose product is a passenger car, passenger van or camper van, published from 1 October 2016 to 16 October 2026. Each alert has the case number, the week, the makes, the models, type-approval numbers, the production dates, a year range, the risk, the first sentence of the danger text, the measures, the notifying country and the alert number (the link pattern is in `meta.urlPattern`).
+
+**Why Safety Gate and not Traficom.** Traficom's recall database (takaisinkutsut.traficom.fi) is the right list for Finland, but it has no open-data release and no stated licence. It is not on Traficom's open-data page, where the vehicle register is CC BY 4.0. The site reads an undocumented JSON endpoint, and each record names a contact person at the importer. Safety Gate's weekly XML reports are listed as CC0 on data.europa.eu. The app can link to Traficom with `https://takaisinkutsut.traficom.fi/recall?keyword={model}`.
+
+**Limits.**
+- EU-wide. Safety Gate does not say whether a car was sold in Finland. Germany notified 1,826 of them and France 610; Finland none.
+- Years are production dates, not Finnish first-registration years. 'years' is our parsing (51 alerts have none).
+- The same recall can appear under several case numbers when more than one country notified it.
+- Make names are split and normalised by us ("VW" → "Volkswagen", "Citroen, Ds" → Citroën and DS). A few alerts put a model in the brand field ("A-Class", "Sprinter"); those stay as given. Model text is Safety Gate's, cut at 200 characters.
+- Safety Gate's pictures are not copied, since they may carry third-party rights.
+
+**Rebuild.** `node apps/what-if/tools/recalls-snapshot.mjs CACHE_DIR` downloads the weekly reports it does not have yet (about 100 MB for ten years) and rewrites the file.
+
 ## What the reader can rely on
 
 - All Traficom inspection numbers: counts, rejection %, km and causes. A second check matched them to Traficom's own tables.
@@ -209,6 +266,10 @@ Key observations:
 - Consumer Disputes Board decisions as single cases (90 %, 15 %, 70 % and 40 % rent cuts) and its 20 €/hour rate for a landlord's own work.
 - KKV's used-car complaint figures, and Liikenneturva's and OTI's figures on young drivers.
 - What the ad sites show: labels, price sums and distractors, as seen on 17.10.2026.
+- Fuel and household electricity prices, monthly to June 2026 (Statistics Finland), and passenger-car km and fleet counts for 2025.
+- The WLTP real-world gap by fuel (European Commission, COM(2024) 122).
+- Battery and hybrid-battery warranties as each maker states them on its Finnish page on 18.10.2026, each with a quote.
+- The Safety Gate alerts, as published (except the parsed years and normalised makes).
 
 ## Labelled estimates
 
@@ -226,6 +287,7 @@ Show these with their basis, or leave them out.
 - The car inspection reminder algorithm and the 4 `interpretation` items in `car-rules.json`.
 - Rent-reduction ranges, how long a flat is unusable, who pays for the works, who arranges housing, and the home-insurance interpretations.
 - Every value in the 12 test ads, and the search-snippet examples in `sample-ads.json`.
+- `car-running-costs.json`: the national km a year and the km per year of age (derived), the 12-month price averages (derived), the electric-car service and battery-test prices (AutoJerry, Moottori), and the Nissan capacity-bar rule (UK page).
 
 ## Needs a team decision
 
@@ -236,3 +298,5 @@ AGENTS.md makes these team decisions. Record each one in DECISIONS.md.
 - Whether to show the rent-reduction ranges.
 - The output keys and value lists in `sample-ads.json` → `meta.fieldKeys`.
 - Four readings of car law: a dealer's general "as is" clause, the private buyer's burden of proof, online auctions, and the "normal wear" example for the 1-year presumption.
+- Energy cost: which km a year (national or by powertrain), which price (latest month or 12-month average), and whether to apply the WLTP gap to an ad's consumption.
+- Recalls: whether to ship the EU Safety Gate snapshot, link to Traficom's search, or both, and whether to ask Traficom for permission to reuse its recall database.
