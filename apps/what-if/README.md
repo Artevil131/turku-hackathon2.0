@@ -14,7 +14,7 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
 | `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, houses, real-page quirks and powertrains (no timing belt on an electric car, no clutch on an automatic). Currently 17 of 17 pass. |
-| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), and a pasted link making no call. Currently 112 of 112 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), and a pasted link making no call. Currently 113 of 113 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
