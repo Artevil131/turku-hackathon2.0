@@ -12,6 +12,10 @@ const housing = read("housing-rules.json");
 const car = read("car-rules.json");
 const rent = read("rent-rules.json");
 const powertrain = read("powertrain-models.json");
+const flatChecks = read("flat-checks.json");
+const rentAreas = read("rent-areas.json");
+// Statistics Finland's prices of old flats by postcode (table 13mu), read from libs/listing so the two never drift apart.
+const salePrices = JSON.parse(readFileSync(join(root, "..", "..", "libs", "listing", "data", "prices-postcode.json"), "utf8"));
 // Motorcycle facts are used as they are: every fact the page shows carries its own source id.
 const { meta: _motoMeta, notes: _motoNotes, ...moto } = read("moto-rules.json");
 
@@ -202,6 +206,35 @@ run.sources = Object.fromEntries([...rcUsed].map((id) => {
   const s = rc.meta.sources[id];
   return [id, { text: s.name + (s.type === "secondary" ? " (estimate)" : ""), url: s.url }];
 }));
+// Flats: the price of old flats by postcode, as [name, studio, two rooms, three rooms or more, terraced], each [€/m², sales] or 0.
+const SALE_TYPES = ["studio", "two_room", "three_room_plus", "terraced"];
+const saleCell = (c) => (c && c.eurPerM2 > 0 && c.sales > 0 ? [c.eurPerM2, c.sales] : 0);
+const areaPrices = {
+  year: salePrices.year, url: salePrices.url,
+  by: Object.fromEntries(Object.entries(salePrices.byPostcode).map(([pc, a]) => [pc, [a.name, ...SALE_TYPES.map((t) => saleCell(a.types[t]))]])),
+};
+// Rentals: average rent per m² a month for privately financed flats, by rooms 1, 2, 3+ (and every size for municipalities).
+const RENT_ROOMS = ["1", "2", "3+", "all"];
+const rentSrc = Object.fromEntries(rentAreas.meta.sources.map((s) => [s.id, s]));
+const rentCell = (c) => (c && c.eurPerM2 > 0 ? [c.eurPerM2, c.obs ?? null, c.eurPerM2New ?? null, c.obsNew ?? null] : 0);
+const rents = {
+  muni: Object.fromEntries(Object.entries(rentAreas.municipalities).map(([name, m]) => [name, RENT_ROOMS.map((k) => rentCell(m[k]))])),
+  // A postcode's name is left out (0) when the sale prices already have the same one.
+  post: Object.fromEntries(Object.entries(rentAreas.postcodes).map(([pc, p]) => [pc, [areaPrices.by[pc]?.[0] === p.name ? 0 : p.name,
+    ...RENT_ROOMS.slice(0, 3).map((k) => (p.rooms[k]?.eurPerM2 > 0 ? [p.rooms[k].eurPerM2, p.rooms[k].obs] : 0))]])),
+  muniPeriod: rentSrc.municipalities.period, muniUrl: rentSrc.municipalities.url,
+  postPeriod: rentSrc.postcodes.period, postUrl: rentSrc.postcodes.url,
+};
+if (!rents.muni.Tampere || !rents.post["33720"]) throw new Error("rent-areas.json: Tampere or 33720 missing; refetch with tools/fetch-rent-areas.mjs");
+// The facts behind the questions a flat ad's own words raise, with their sources.
+const fc = flatChecks;
+const flat = {
+  src: Object.fromEntries(Object.entries(fc.sources).map(([id, s]) => [id, { text: `${s.publisher}: ${s.title}${s.date ? ` (${s.date.slice(0, 4)})` : ""}`, url: s.url, secondary: s.type === "secondary" }])),
+  plot: { pct: fc.plotLease.helsinki.yearlyRentPctOfPlotValue, fullAfter: fc.plotLease.helsinki.fullRentAfterYears, firstPct: fc.plotLease.helsinki.firstYearPctOfNewRent,
+    upTo: fc.plotLease.press.upToTimes, exCity: fc.plotLease.press.example.city, exTimes: fc.plotLease.press.example.times, pressDate: fc.sources["yle-plot"].date },
+  energyValid: fc.energy.validYearsMax,
+  oilSaid: fc.oilHeating.goalYearSaid,
+};
 
 const data = {
   v: 1,
@@ -234,6 +267,9 @@ const data = {
     ev,
     run,
     rentDepositMaxMonths: rent.deposit.maxMonthsOfRent.value,
+    areaPrices,
+    rents,
+    flat,
     moto,
   },
 };

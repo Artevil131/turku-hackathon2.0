@@ -11,9 +11,10 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | Path | What it is |
 |---|---|
 | `index.html` | The whole app in one file. Deployment copies it to the site root as is. Opened from disk or as the claude.ai artifact it is rules-only and contacts no outside server; on our own site it can also ask the AI reader (below). |
-| `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
-| `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
-| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, houses, real-page quirks and powertrains (no timing belt on an electric car, no clutch on an automatic). Currently 17 of 17 pass. |
+| `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; Statistics Finland's rents by postcode and municipality (`rent-areas.json`); the facts behind the flat questions (`flat-checks.json`); 17 test ads in real site formats. |
+| `tools/build-data.mjs` | Builds the compact data from `data/`, plus Statistics Finland's prices of old flats by postcode from `libs/listing/data/prices-postcode.json`, and writes it into `index.html`. Run after changing anything in `data/`. |
+| `tools/fetch-rent-areas.mjs` | Fetches Statistics Finland's average rents (StatFin tables 15fa and 13eb) into `data/rent-areas.json`. A few small requests, free. |
+| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, houses, real-page quirks, powertrains (no timing belt on an electric car, no clutch on an automatic), and flats: the ad's own words with negations, the plot lease, the price and rent against the area. Currently 17 of 17 pass. |
 | `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), and a pasted link making no call. Currently 113 of 113 pass. |
 
 ```
@@ -39,6 +40,17 @@ node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
 2. **`analyse(adText)`** turns those fields plus the data into the result: the three asks, the costs, the
    who-pays label on every what-if ("Not covered, you pay" or "Covered by insurance, after your excess"),
    the safer choice and the sources.
+
+   For flats for sale the asks are ranked the same way: the pipe renovation; what the ad's own words raise (moisture
+   damage or mould, a leased plot and when its lease ends, a condition survey or PTS, a planned company loan, an
+   asbestos survey, oil heating, the energy class), each quoting the ad and ignoring negations such as "ei
+   kosteusvaurioita"; the debt-free price per m² against Statistics Finland's average for the same kind of flat in the
+   ad's postcode (`areaprice`; never matched by district name; under 20 sales is called a small sample); the 5-year
+   plan; then the generic leak question. Rentals: an over-the-limit deposit, moisture damage, a pipe renovation, the
+   rent per m² against the same rooms in the postcode or new leases in the municipality, the deposit, notice, and
+   the generic insurance question. Three are shown and the rest go into `more`. New fields: `postcode`,
+   `plotLeaseEnds`, `energyClass`, `energyClassScale`, `heating` and `says` (the ad's words) for homes, `postcode` and
+   `says.damage` for rentals.
 
    For cars the three asks are ranked: the inspection numbers first (or, when the ad's last inspection is
    overdue, why it hasn't been inspected), then a timing belt that may be due or an electric car's battery, changes

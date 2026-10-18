@@ -24,8 +24,8 @@ const CORE = {
   car: ["make", "model", "year", "km", "price", "previousPrice", "officeFee", "fuel", "gearbox", "sellerType", "city", "lastInspection",
     "flags.timingBeltReplaced", "flags.timingChain", "flags.serviceBook", "flags.rustMentioned", "flags.hybridBatteryChecked", "flags.imported"],
   home: ["buildingYear", "livingAreaM2", "debtFreePrice", "sellingPrice", "debtShare", "maintenanceCharge", "financingCharge", "plotRentCharge",
-    "city", "district", "rooms", "pipeRenovation.status", "pipeRenovation.years"],
-  rent: ["rent", "deposit", "depositMonths", "buildingYear", "livingAreaM2", "homeInsuranceRequired", "city", "district", "rooms"],
+    "city", "district", "rooms", "pipeRenovation.status", "pipeRenovation.years", "postcode", "plotLeaseEnds", "energyClass", "energyClassScale", "heating"],
+  rent: ["rent", "deposit", "depositMonths", "buildingYear", "livingAreaM2", "homeInsuranceRequired", "city", "district", "rooms", "postcode"],
   moto: ["make", "model", "year", "km", "price", "officeFee", "engineCc", "powerKw", "licence", "sellerType", "city", "lastInspection", "abs", "modified"],
 };
 const get = (o, path) => path.split(".").reduce((v, k) => (v == null ? v : v[k]), o);
@@ -440,6 +440,73 @@ for (const fields of [{ make: "Tesla", model: "Model 3", year: 2021, km: 50000, 
 }
 if (aiBad.length) structural++;
 console.log(`${aiBad.length ? "FAIL" : "pass"}  AI-built costs   ${aiBad.join("; ")}`);
+// Flats: what the ad's own words raise, ranked above the generic leak question, which moves to "more".
+const qs = (r) => r.asks.map((a) => a.q);
+const allQs = (r) => [...r.asks, ...(r.more ?? [])].map((a) => a.q);
+const has = (r, re) => r.asks.some((a) => re.test(a.q));
+const inMore = (r, re) => (r.more ?? []).some((a) => re.test(a.q));
+const nowhere = (r, re) => !allQs(r).some((q) => re.test(q));
+const flat = (lines) => `Myydään kaksio, Tampere\nKerrostalo, rakennusvuosi 1985\n2h, k, kph\n55 m²\nVelaton hinta 150 000 €\nHoitovastike 250 € / kk\n${lines}`;
+const LEAK = /water damage/;
+group("flat words", [
+  ["kosteusvaurio", flat("Kylpyhuoneessa todettu kosteusvaurio 2023, korjattu 2024."),
+    ["asks where", (r) => has(r, /moisture damage, and how was it repaired/)], ["quotes the ad", (r) => /“Kylpyhuoneessa todettu kosteusvaurio 2023, korjattu 2024”/.test(r.asks.find((a) => /moisture/.test(a.q))?.why ?? "")],
+    ["slow damage not covered", (r) => /builds up slowly, such as mould/.test(said(r))], ["leak moves to more", (r) => !has(r, LEAK) && inMore(r, LEAK)]],
+  ["hometta", flat("Makuuhuoneen nurkassa havaittu hometta."), ["asks about mould", (r) => has(r, /Where was the mould/)]],
+  ["ei kosteusvaurioita", flat("Ei kosteusvaurioita. Kuntotarkastuksessa ei havaittu hometta."), ["nothing", (r) => nowhere(r, /moisture|mould/)]],
+  ["ei ole havaittu", flat("Kosteusvaurioita ei ole havaittu."), ["nothing", (r) => nowhere(r, /moisture|mould/)]],
+  ["English 'home'", flat("A sweet home in a quiet street, close to the tram."), ["no mould", (r) => nowhere(r, /mould/)]],
+  ["kuntotutkimus done", flat("Julkisivujen kuntotutkimus tehty 2021."), ["asks for it", (r) => has(r, /Can I see the condition survey, and what did it find/)]],
+  ["PTS", flat("PTS päivitetty 2024."), ["asks for the plan", (r) => allQs(r).some((q) => /long-term maintenance plan \(PTS\)/.test(q))]],
+  ["öljylämmitys", flat("Lämmitys\nÖljylämmitys"),
+    ["asks", (r, f) => f.heating === "oil" && allQs(r).some((q) => /oil heating/.test(q))], ["no heating cost", (r) => !/€/.test(JSON.stringify([...r.asks, ...(r.more ?? [])].filter((a) => /oil/.test(a.q))))],
+    ["sourced", (r) => r.sources.includes("f-ym-oil")]],
+  ["oil heating replaced", flat("Öljylämmitys vaihdettu maalämpöön 2019.\nLämmitys\nMaalämpö (ent. öljy)"), ["no oil", (r, f) => f.heating !== "oil" && nowhere(r, /oil heating/)]],
+  ["loan-funded work", flat("Julkisivuremontti 2027 rahoitetaan yhtiölainalla."), ["asks about the new loan", (r) => allQs(r).some((q) => /taking a new loan/.test(q))]],
+  ["no company loan", flat("Taloyhtiöllä ei ole lainaa."), ["nothing", (r) => nowhere(r, /loan/)]],
+  ["asbestikartoitus", flat("Asbestikartoitus tehty 2022."),
+    ["asks for the survey", (r) => allQs(r).some((q) => /asbestos survey, and what did it find/.test(q))], ["not twice", (r) => nowhere(r, /Has the flat been surveyed for asbestos/)]],
+  ["energy F (2013)", flat("Energialuokka\nF (2013)"),
+    ["reads it", (r, f) => f.energyClass === "F" && f.energyClassScale === 2013], ["still valid?", (r) => allQs(r).some((q) => /still valid/.test(q))],
+    ["explains", (r) => /from A, the most efficient, to G/.test(said(r) + JSON.stringify(r.more)) && r.sources.includes("f-energy-act")]],
+  ["energy C, no year", flat("Energialuokka C"), ["reads it", (r, f) => f.energyClass === "C" && f.energyClassScale == null]],
+  ["nothing said", flat("Valoisa koti hyvien kulkuyhteyksien varrella."), ["leak still asked", (r) => has(r, LEAK)]],
+]);
+
+// A leased plot: when the lease ends and what the rent will be, with the city's and the press's facts.
+group("plot lease", [
+  ["vuokrasopimus päättyy 2035", flat("Vuokratontti, vuokrasopimus päättyy 2035.\nTontin vuokravastike 120 € / kk"),
+    ["reads 2035", (r, f) => f.plotLeaseEnds === "2035" && f.plotRentCharge === 120],
+    ["asks", (r) => has(r, /When does the plot lease end, and what will the rent be after that/)],
+    ["says when", (r) => /ends in 2035, 9 years from now/.test(said(r))], ["sixfold what-if", (r) => /€120 a month would become about €720/.test(said(r))],
+    ["sources", (r) => r.sources.includes("f-helsinki-plot") && r.sources.includes("f-yle-plot") && /secondary/.test(engine.SRC["f-yle-plot"].text)]],
+  ["tontin vuokra, no date", flat("Tontin omistus\nVuokra"), ["asks", (r, f) => f.plotLeased && f.plotLeaseEnds == null && allQs(r).some((q) => /plot lease end/.test(q))]],
+  ["a tenant's lease isn't the plot's", flat("Asunto on vuokrattu, vuokrasopimus päättyy 31.5.2027.\nTontin omistus\nOma"),
+    ["nothing", (r, f) => f.plotLeaseEnds == null && nowhere(r, /plot lease/)]],
+]);
+
+// The price against Statistics Finland's average for the same kind of flat in the same postcode.
+const raasepori = "Rivitalo, Raasepori\nEsimerkkitie 1, 10420 Raasepori\n3h, k, s\n80 m²\nRakennusvuosi 1980\nVelaton hinta 70 000 €\nHoitovastike 300 € / kk";
+const kaleva = samples.tests.find((t) => t.id === "home-1").text;
+group("area price", [
+  ["home-1, 33500", kaleva,
+    ["21% below", (r) => /€2,537 per m².*33500 Osmonmäki-Petsamo \(Tampere\).*€3,212 per m² in 2025, from 56 sales: this one is 21% below/.test(said(r))], ["sourced", (r) => r.sources.includes("areaprice")]],
+  ["small sample", raasepori, ["says so", (r) => /Only 8 sales is a small sample/.test(said(r) + JSON.stringify(r.more))]],
+  ["no postcode", samples.tests.find((t) => t.id === "home-4").text, ["nothing", (r) => !r.sources.includes("areaprice")]],
+  ["type unknown", "Myydään kolmio\nEsimerkkikatu 1, 33500 Tampere\n3h, k\n70 m²\nRakennusvuosi 1990\nVelaton hinta 200 000 €\nHoitovastike 300 € / kk", ["nothing", (r) => !r.sources.includes("areaprice")]],
+]);
+
+// The rent against the same number of rooms in the postcode, or new leases in the municipality.
+group("area rent", [
+  ["rent-1, 90100", samples.tests.find((t) => t.id === "rent-1").text,
+    ["27% above, first", (r) => /rent above the area’s average/.test(r.asks[0].q) && /€16\.29 per m².*90100 Oulu Keskus \(Oulu\) was €12\.82 per m² in 2025 Q4 \(299 rents\): this one is 27% above/.test(said(r))],
+    ["water noted", (r) => /water fee comes on top/.test(said(r))], ["insurance in more", (r) => inMore(r, /own home insurance/) && !has(r, /own home insurance/)],
+    ["sources", (r) => r.sources.includes("rentpost") && r.sources.includes("rentmuni")]],
+  ["Helsinki, no postcode", "Vuokrataan yksiö, Helsinki\nKerrostalo 1961\n27 m²\nVuokra 890 €/kk\nVakuus 3 kk:n vuokra",
+    ["new leases in Helsinki", (r) => /New leases for privately financed studios in Helsinki averaged €[\d.]+ per m² in 2026 Q3/.test(said(r))]],
+  ["kosteusvaurio", "Vuokrataan kaksio, Tampere\nKerrostalo 2005\n50 m²\nVuokra 800 €/kk\nVakuus 2 kk:n vuokra\nKylpyhuoneessa kosteusvaurio, korjataan keväällä 2027.",
+    ["asks", (r) => has(r, /moisture damage, and has it been fixed/)], ["rights", (r) => /reasonably reduced rent/.test(said(r))]],
+]);
 
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
