@@ -583,6 +583,15 @@ function createEngine(DATA, today) {
     + "italiasta|espanjasta|itävallasta|sveitsistä|englannista|britanniasta|iso-britanniasta|japanista|usa:sta|yhdysvalloista|kanadasta|"
     + "ulkomailta|euroopasta|keski-euroopasta|eu-alueelta|eu:sta";
   const IMPORTED = new RegExp(String.raw`(?<!\p{L})(?:tuontiauto\p{L}*|tuontiajoneuvo\p{L}*|maahantuotu\p{L}*|(?:tuotu|tuonti) (?:maahan )?(?:${ABROAD})|imported|import car|grey import)(?![\p{L}:])`, "gu");
+  const CAR_MODS = [
+    ["engine tuning", /(?<!\p{L})(?:viritetty|viritys|chipattu|chippi\p{L}*|chip-?tun\p{L}*|lastutettu|lastutus|tehoja nostettu|tehonnosto|tehonlisäys|remap\p{L}*|stage ?[123](?!\d)|tuned)(?!\p{L})/gu],
+    ["a changed turbo or supercharger", /(?<!\p{L})(?:ahdin vaihdettu|turbo vaihdettu|isompi turbo|isompi ahdin|bigger turbo)(?!\p{L})/gu],
+    ["exhaust changes", /(?<!\p{L})(?:urheilupako\p{L}*|suorapuhal\p{L}*|downpipe|kissa poistettu|katalysaattori poistettu|sport exhaust|straight pipe)(?!\p{L})/gu],
+    ["lowered suspension", /(?<!\p{L})(?:madallettu|madallus\p{L}*|madalletut|alustamadallus|coilover\p{L}*|kierrejal\p{L}*|lowered|lowering springs)(?!\p{L})/gu],
+  ];
+  const MOD_INSPECTED = /(?<!\p{L})(?:muutoskatsastettu|muutoskatsastus tehty|muutokset katsastettu|muutoskatsastettuna)(?!\p{L})/gu;
+  // Whether the ad says it, not counting "ei tuontiauto", "not tuned", "ilman madallusta".
+  const stated = (low, re) => [...low.matchAll(re)].some((m) => !/(?<!\p{L})(?:ei|eikä|not|never|no|ilman|without)\s+(?:\p{L}+\s+)?$/u.test(low.slice(Math.max(0, m.index - 16), m.index)));
 
   function readCar(P) {
     const low = P.low;
@@ -704,11 +713,11 @@ function createEngine(DATA, today) {
     // Imported: "tuontiauto", "maahantuotu", "tuotu Saksasta", "imported". "Maahantuojan takuu" or "virallinen maahantuoja"
     // is an official importer's warranty or a car first sold here, not a used import, so those words don't count;
     // nor does "ei tuontiauto" or "not imported".
-    for (const m of low.matchAll(IMPORTED)) {
-      if (/(?<!\p{L})(?:ei|eikä|not|never|no)\s+(?:\p{L}+\s+)?$/u.test(low.slice(Math.max(0, m.index - 16), m.index))) continue;
-      f.imported = true;
-      break;
-    }
+    if (stated(low, IMPORTED)) f.imported = true;
+    // Changes to the car, in the ad's own words only, never judged from its power. Plain "pakoputkisto" doesn't count:
+    // "uusi pakoputkisto" is usually a repair.
+    c.modifications = CAR_MODS.filter(([, re]) => stated(low, re)).map(([w]) => w);
+    if (stated(low, MOD_INSPECTED)) f.modInspected = true;
     const w = P.text.match(/takuu\s+([^.\n]{2,30})/i);
     if (w && !/^ei\b/i.test(w[1])) f.dealerWarranty = w[1].trim();
     return c;
@@ -1203,6 +1212,14 @@ function createEngine(DATA, today) {
         why: `${c.batterySoh ? `The ad says the battery is at ${c.batterySoh}%. ` : ""}An electric car’s battery holds less charge as it ages, and its range drops with it. A garage or the maker can read the battery’s state of health (SoH): ask for the report, and whether the maker’s battery warranty is still valid.`,
         whatif: "What if the battery has worn more than you thought? The range stays shorter.", cost: "", who: "you", tag: "Ask the seller" }, []]);
     }
+    const mods = c.modifications ?? [];
+    if (mods.length || f.modInspected) {
+      const risk = M.riskIncrease;
+      more.push([{ q: f.modInspected ? "“What was changed, and can I see the modification inspection papers?”" : "“What was changed, and is it in the registration?”",
+        why: `The ad ${mods.length ? `mentions ${and(mods)}` : "says the car was changed"}${f.modInspected ? ", and that the changes were inspected" : ""}. A change with more than a minor effect on safety or emissions, or on the details in the register, needs a modification inspection (muutoskatsastus), Traficom says.${risk ? ` ${risk.rule}` : ""}`,
+        whatif: "What if you crash and the insurer wasn’t told about a change? A kasko payout can be cut or refused.", cost: "", who: "you",
+        tag: "Traficom: modification inspection · Insurance Contracts Act 543/1994", real: true }, mSrc("traficom-modification", risk?.source)]);
+    }
     if (f.imported) {
       more.push([{ q: "“What is its history from before it came to Finland?”",
         why: "The ad says the car is imported. Ask for its service records, km readings and any accident history from abroad: Finland’s register may not have them. In KKV’s study of complaints about used cars bought from dealers, finding out afterwards that a car had been crashed or imported was a frequent surprise.",
@@ -1339,7 +1356,8 @@ function createEngine(DATA, today) {
         details: [["Car", c.year ? `${name}, ${c.year}` : name], c.km ? ["Km", grp(c.km)] : null, c.city ? ["Area", esc(c.city)] : null].filter(Boolean) },
       readout: [["Car", name], ["Year", shown(c.year)], ["Km", shown(c.km, grp)], ["Price", shown(c.price, eur)], ["Seller", shown(c.sellerType)], ["Fuel", shown(c.fuel)],
         ["Gearbox", shown(c.gearbox)], ["Last inspection", shown(c.lastInspection)], ["Area", shown(c.city, esc)],
-        electric ? ["Battery", c.batterySoh ? `${c.batterySoh}% health, says the ad` : nf] : ["Timing belt", belt]],
+        electric ? ["Battery", c.batterySoh ? `${c.batterySoh}% health, says the ad` : nf] : ["Timing belt", belt],
+        ...(mods.length || f.modInspected ? [["Changes", `${mods.length ? esc(and(mods)) : "changed"}${f.modInspected ? ", inspected, says the ad" : ", says the ad"}`]] : [])],
       sources: uniq(sources),
     };
   }

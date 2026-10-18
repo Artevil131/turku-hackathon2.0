@@ -248,6 +248,16 @@ group("overdue", [
     ["not overdue", (r) => /last inspection report/.test(r.asks[0].q) && !r.sources.includes("useban") && r.later.list.some((l) => l.when === "Aug 2027")]],
 ]);
 
+// A changed car, from the ad's own words; negations and a repaired exhaust don't count.
+const focus = (line) => `Ford Focus 2.0\n2012\n150 000 km\nBensiini\nManuaali\nJakoketju\nHinta 5 900 €\nYksityinen myyjä, Turku\n${line}`;
+const modAsk = (r) => r.asks.find((a) => /What was changed/.test(a.q));
+group("modified car", [
+  ["chipattu, madallettu", focus("Chipattu ja madallettu, kierrejalat."),
+    ["asks", (r) => /engine tuning and lowered suspension/.test(modAsk(r)?.why ?? "")], ["sources", (r) => r.sources.includes("m-traficom-modification") && r.sources.includes("m-vsl")]],
+  ["muutoskatsastettu", focus("Tehoja nostettu, muutoskatsastettu 2023."), ["asks for the papers", (r) => /modification inspection papers/.test(modAsk(r)?.q ?? "")]],
+  ["ei viritetty", focus("Täysin vakio, ei viritetty. Uusi pakoputkisto 2025."), ["nothing", (r, f) => !modAsk(r) && !f.modifications.length]],
+]);
+
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
   ["Kia Cee'd SW 1.6", "kia|ceed"], ["Kia pro_cee'd GT", "kia|proceed"], ["Mazda3 2.0 Skyactiv", "mazda|3"], ["Mazda 6 Wagon", "mazda|6"],
