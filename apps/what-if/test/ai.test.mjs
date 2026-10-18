@@ -112,6 +112,10 @@ let calls = 0;
 const counting = async () => { calls++; return reply(200, carAnswer)(); };
 await engine.analyseWithAI(samples[0].text, { fetch: counting });
 ok("fetch: an ad the rules read in full makes no call", calls === 0);
+// A pasted link (D-031): nothing goes out, not even the link; the page gets the address for "Open the ad".
+const viaLink = await engine.analyseWithAI("https://www.nettiauto.com/skoda/octavia/16000001", { fetch: counting });
+ok("fetch: a pasted Nettiauto link makes no call", calls === 0);
+ok("fetch: a pasted Nettiauto link comes back with its address and help", viaLink?.link?.url === "https://www.nettiauto.com/skoda/octavia/16000001" && /link to Nettiauto/.test(viaLink.message));
 
 const rules = (text) => JSON.stringify(engine.analyse(text));
 const FAILS = [

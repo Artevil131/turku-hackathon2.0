@@ -241,6 +241,9 @@ dl.kv dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
 /* Screenshots dragged over the form: the box shows where to let go */
 form.dropping textarea { border: 2px dashed var(--blue); background: var(--blue-soft); }
 .dropnote { margin: 0; font: 600 15px/1.3 var(--font); color: var(--blue); }
+.linkhelp { display: grid; gap: 10px; }
+.linkhelp .btn { text-decoration: none; }
+.linkhelp .bm { cursor: grab; border-style: dashed; }
 .notice .textbtn { padding: 0; font-size: 15px; text-align: left; text-underline-offset: 3px; text-decoration: underline; }
 
 .sources { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
@@ -955,6 +958,42 @@ function createEngine(DATA, today) {
   const SITES = [[/nettiauto/i, "Nettiauto"], [/autotalli/i, "Autotalli"], [/etuovi/i, "Etuovi"], [/oikotie/i, "Oikotie"], [/vuokraovi/i, "Vuokraovi"],
     [/nettimoto/i, "Nettimoto"], [/nettivene/i, "Nettivene"], [/tori\.fi/i, "Tori"]];
 
+  /* ---------- a link instead of the ad (D-031) ---------- */
+  // No server opens ad pages: Nettiauto answers anything but a browser with a Cloudflare challenge, and Alma's Nettix
+  // API needs a partner's credentials. So a pasted link gets help to bring the ad's text over from the person's own
+  // browser, where the ad is already open, and the link itself goes nowhere.
+  const LINK_TEXT_MAX = 15000;
+  function adLink(raw) {
+    const P = prep(raw);
+    if (P.lines.length > 3 || !/https?:\/\/|www\./i.test(P.text)) return null;
+    const site = SITES.find(([re]) => re.test(P.text))?.[1] ?? null;
+    const m = P.text.match(/(?:https?:\/\/|www\.)[^\s<>"'`]+/i);
+    let url = null;
+    try {
+      const u = new URL(/^www\./i.test(m[0]) ? `https://${m[0]}` : m[0]);
+      if (/^https?:$/.test(u.protocol)) url = u.href;
+    } catch {}
+    return { url, site };
+  }
+  // The bookmarklet the person keeps in their browser's bookmarks bar. Clicked on an ad's page, it takes the text they
+  // selected, or else the page's main text, and opens What if… in a new tab with that text after "#ad=". A URL's
+  // fragment is never sent to any server, and noreferrer keeps the ad's address from going with the page request.
+  function bookmarklet(appUrl) {
+    const code = `(function(){var s=String(getSelection()||"").trim(),m=document.querySelector("main"),`
+      + `t=s.length>=30?s:m&&m.innerText.trim().length>=200?m.innerText:document.body.innerText;`
+      + `window.open(${JSON.stringify(String(appUrl).replace(/#.*$/, ""))}+"#ad="+encodeURIComponent(t.trim().slice(0,${LINK_TEXT_MAX})),"_blank","noopener,noreferrer")})()`;
+    return `javascript:${encodeURIComponent(code)}`;
+  }
+  // What the bookmarklet handed over: the ad's text from "#ad=…", or null.
+  function adFromHash(hash) {
+    const m = String(hash ?? "").match(/^#?ad=([\s\S]*)$/);
+    if (!m) return null;
+    let t;
+    try { t = decodeURIComponent(m[1]); } catch { return null; }
+    t = t.slice(0, LINK_TEXT_MAX).trim();
+    return t || null;
+  }
+
   /* ---------- the rules: what to ask, what it costs, who pays ---------- */
   const READS = "This version reads used cars and motorcycles (Nettiauto, Autotalli, Nettimoto), flats for sale (Etuovi, Oikotie) and flats to rent (Vuokraovi, Oikotie).";
   const nf = "<i>not in the ad</i>";
@@ -1515,10 +1554,10 @@ function createEngine(DATA, today) {
   function analyse(raw) {
     const P = prep(raw);
     if (P.text.length < 30) return { message: "Paste the whole ad: everything from the title down to the seller’s details." };
-    const site = SITES.find(([re]) => re.test(P.text))?.[1];
-    if (P.lines.length <= 3 && /https?:\/\/|www\./i.test(P.text)) {
-      if (site === "Nettivene") return { message: `That’s a link to Nettivene. ${READS} Boats come in the full version.` };
-      return { message: `That’s a link${site ? ` to ${site}` : ""}. This page can’t open other websites. Open the ad, select all its text, copy it and paste it here.` };
+    const link = adLink(raw);
+    if (link) {
+      if (link.site === "Nettivene") return { message: `That’s a link to Nettivene. ${READS} Boats come in the full version.` };
+      return { link, message: `That’s a link${link.site ? ` to ${link.site}` : ""}. This page doesn’t open other websites, so the link went nowhere. Open the ad, select all its text, copy it and paste it here.` };
     }
     const car = readCar(P);
     const odd = unsupported(P, car);
@@ -1791,7 +1830,7 @@ function createEngine(DATA, today) {
   }
   const sendScreenshot = (image, confirm, opts) => sendScreenshots([image], (list) => confirm(list[0]), opts);
 
-  return { read, analyse, plan, stripContacts, fromAI, draftResult, analyseWithAI, analyseImage, analyseImages, sendScreenshot, sendScreenshots, SHOTS_MAX, SHOT_FAIL, SRC, COVER, esc };
+  return { read, analyse, plan, adLink, bookmarklet, adFromHash, LINK_TEXT_MAX, stripContacts, fromAI, draftResult, analyseWithAI, analyseImage, analyseImages, sendScreenshot, sendScreenshots, SHOTS_MAX, SHOT_FAIL, SRC, COVER, esc };
 }
 /* engine:end */
 
@@ -2001,8 +2040,24 @@ function show(html, still) {
   if (!still) window.scrollTo({ top: 0, behavior: "auto" });
 }
 
+/* ---------- A link instead of the ad (D-031) ---------- */
+// The bookmarklet opens this page where it can read: our own site, or the live site from the file or the artifact.
+const LIVE_URL = "https://what-if.what-if.workers.dev/";
+const APP_URL = AI_ON ? location.origin + location.pathname : LIVE_URL;
+function linkHelp(link) {
+  const open = link?.url ? `<a class="btn ghost small" href="${engine.esc(link.url)}" target="_blank" rel="noopener noreferrer">Open the ad ↗</a>` : "";
+  return `
+      <div class="linkhelp" id="linkHelp">
+        ${open}
+        <p class="fine"><b>On a phone:</b> open the ad, press and hold on its text, tap Select all, then Copy, and paste it in the box above.${AI_ON ? " Or upload screenshots of it." : ""}</p>
+        <p class="fine"><b>On a computer:</b> drag this button to your bookmarks bar once.</p>
+        <a class="btn ghost small bm" id="bmLink" href="${engine.esc(engine.bookmarklet(APP_URL))}">What if… this ad</a>
+        <p class="fine" id="bmNote">Then click it on the ad’s page. Your browser copies the text from the page you have open into What if… in a new tab${AI_ON ? "" : " on our live site"}, and the check starts. Only the text moves, from one tab to the other: the link isn’t sent anywhere, and no server opens the ad’s page.</p>
+      </div>`;
+}
+
 /* ---------- Home ---------- */
-function home(message) {
+function home(message, link) {
   const picked = curatedFor(state.text);
   show(`
     <section class="stack-lg">
@@ -2025,6 +2080,7 @@ function home(message) {
         </div>
       </div>
       ${message ? `<p class="notice" role="alert">${message}</p>` : ""}
+      ${link ? linkHelp(link) : ""}
       <button class="btn" type="submit" id="checkBtn">Check this ad</button>
       <p class="fine">Reads used cars and motorcycles (Nettiauto, Autotalli, Nettimoto), flats for sale (Etuovi, Oikotie) and flats to rent (Vuokraovi, Oikotie). Paste the ad’s text, not the link. ${AI_ON ? "For other ads, an AI model writes a first draft." : "Other ads come in the full version."} Figures with a source are real; the rest are labelled estimates.</p>
       <p class="fine">${AI_ON ? "If our rules can’t read an ad, its text, without phone numbers or email addresses, goes through our server at Cloudflare to an AI model on our team’s own computer. Nothing is stored, nothing about you is sent, and nothing goes to If." : "Nothing you paste leaves your phone."}</p>
@@ -2039,6 +2095,11 @@ function home(message) {
     screen.querySelectorAll("[data-example]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.example === now)));
   });
   document.getElementById("clearBtn").addEventListener("click", () => { state.text = ""; box.value = ""; box.dispatchEvent(new Event("input")); box.focus(); });
+  // Clicked here, the bookmarklet would only read this page: it is meant to be dragged to the bookmarks bar.
+  document.getElementById("bmLink")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("bmNote").textContent = "Drag it to your bookmarks bar instead of clicking it here. Then open the ad and click it there.";
+  });
   const shot = document.getElementById("shot");
   if (shot) {
     const form = document.getElementById("checkForm");
@@ -2105,7 +2166,7 @@ function home(message) {
     } else {
       r = engine.analyse(state.text);
     }
-    if (r.message) return home(r.message);
+    if (r.message) return home(r.message, r.link);
     if (r.kind === "draft") return draftView(r);
     check(r, "ad:" + squash(state.text).length + ":" + r.name);
   });
@@ -2536,5 +2597,14 @@ function wire() {
   }));
 }
 
-home();
+// Opened by the bookmarklet: the ad's text is in "#ad=…". Take it out of the address at once, so it stays out of the
+// history, put it in the box and check it as if it had been pasted.
+const handed = engine.adFromHash(location.hash);
+if (handed) {
+  history.replaceState(null, "", location.pathname + location.search);
+  state.text = handed;
+  home();
+  const form = document.getElementById("checkForm");
+  if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event("submit", { cancelable: true }));
+} else home();
 </script>

@@ -13,8 +13,8 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `index.html` | The whole app in one file. Deployment copies it to the site root as is. Opened from disk or as the claude.ai artifact it is rules-only and contacts no outside server; on our own site it can also ask the AI reader (below). |
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
-| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses, real-page quirks and powertrains (no timing belt on an electric car, no clutch on an automatic). Currently 17 of 17 pass. |
-| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four). Currently 110 of 110 pass. |
+| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, houses, real-page quirks and powertrains (no timing belt on an electric car, no clutch on an automatic). Currently 17 of 17 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), and a pasted link making no call. Currently 112 of 112 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
@@ -119,7 +119,20 @@ screenshots…". The check shows every picture with a Remove button; removing th
 5. **On any failure, or `kind` none:** "We couldn't read an ad from that screenshot. Try one that shows the
    whole ad, or paste the ad's text." Nothing else changes.
 
-Links stay as they were: the page asks for the ad's text.
+### A link instead of the ad (D-031)
+
+No server opens the ad: Nettiauto answers anything but a browser with a Cloudflare challenge (HTTP 403, "Just a
+moment..."), and Alma's Nettix API needs a partner's credentials. So a pasted link (`adLink()`) gets help to bring
+the ad over from the person's own browser, where it is already open:
+
+- **Open the ad ↗** opens the link in their browser. The link itself is sent nowhere.
+- **On a phone:** press and hold on the ad's text, Select all, Copy, paste (or screenshots, on our site).
+- **On a computer:** a bookmarklet, "What if… this ad" (`bookmarklet(appUrl)`), dragged to the bookmarks bar once.
+  Clicked on the ad's page it takes the selected text, or else the text of `<main>` (when it has at least 200
+  characters) or the whole page, at most 15,000 characters (`LINK_TEXT_MAX`), and opens What if… in a new tab at
+  `#ad=…` with `noopener,noreferrer`. A fragment never reaches a server. The page reads it (`adFromHash()`), takes it
+  out of the address at once and checks the text as if it had been pasted. From the file on disk or the artifact it
+  opens the live site.
 
 ## Rules we keep
 

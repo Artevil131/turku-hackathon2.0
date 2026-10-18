@@ -157,5 +157,51 @@ const spellBad = SPELLINGS.map(([title, key]) => [title, key, engine.read(`${tit
 if (spellBad.length) structural++;
 console.log(`${spellBad.length ? "FAIL" : "pass"}  model spellings  ${spellBad.map(([t, k, g]) => `${t}: expected ${k}, got ${g}`).join("; ")}`);
 
+// A pasted link (D-031): no network at all, the link's address for "Open the ad", and the bookmarklet that brings the
+// ad's text over from the person's own browser in "#ad=…". fetch throws here, so any attempt to go out fails the test.
+const realFetch = globalThis.fetch;
+let netCalls = 0;
+globalThis.fetch = async () => { netCalls++; throw new Error("no network in tests"); };
+const linkBad = [];
+const naLink = engine.analyse("https://www.nettiauto.com/skoda/octavia/16000001");
+if (naLink.link?.url !== "https://www.nettiauto.com/skoda/octavia/16000001" || naLink.link?.site !== "Nettiauto") linkBad.push(`Nettiauto link: ${JSON.stringify(naLink.link)}`);
+if (!/went nowhere/.test(naLink.message)) linkBad.push("the message doesn't say the link went nowhere");
+if (engine.adLink("www.nettiauto.com/bmw/320/16000002")?.url !== "https://www.nettiauto.com/bmw/320/16000002") linkBad.push("www. link without https://");
+if (engine.adLink("Katso tämä\nhttps://www.nettimoto.com/yamaha/mt-07/1234567")?.site !== "Nettimoto") linkBad.push("a link under a line of text");
+if (engine.adLink(`https://www.nettiauto.com/a/b/1"><img src=x onerror=alert(1)>`)?.url !== "https://www.nettiauto.com/a/b/1") linkBad.push("a link with markup after it");
+if (engine.adLink("javascript:alert(1)") !== null) linkBad.push("javascript: read as a link");
+for (const t of samples.tests) if (engine.adLink(t.text)) linkBad.push(`${t.id} read as a link`);
+// The bookmarklet, run against a fake ad page.
+const app = "https://what-if.what-if.workers.dev/";
+const bm = engine.bookmarklet(`${app}#old`);
+if (!bm.startsWith("javascript:")) linkBad.push("bookmarklet isn't a javascript: link");
+const runBookmarklet = ({ selection = "", main = null, body = "" }) => {
+  const opened = [];
+  const doc = { querySelector: (s) => (s === "main" && main != null ? { innerText: main } : null), body: { innerText: body } };
+  const win = { open: (...a) => { opened.push(a); return null; } };
+  new Function("document", "window", "getSelection", decodeURIComponent(bm.slice("javascript:".length)))(doc, win, () => selection);
+  return opened;
+};
+const naAd = samples.tests.find((t) => /nettiauto/i.test(t.site)) ?? samples.tests[0];
+const fromMain = runBookmarklet({ main: naAd.text, body: `Kirjaudu\nOma Netti\n${naAd.text}\nEvästeasetukset` });
+const [openUrl, openTarget, openFeatures] = fromMain[0] ?? [];
+if (fromMain.length !== 1 || openTarget !== "_blank" || !/noopener/.test(openFeatures) || !/noreferrer/.test(openFeatures)) linkBad.push(`bookmarklet open: ${JSON.stringify(fromMain)}`);
+if (!openUrl?.startsWith(`${app}#ad=`)) linkBad.push(`bookmarklet opens ${openUrl?.slice(0, 60)}`);
+const handed = engine.adFromHash(new URL(openUrl).hash);
+if (handed !== naAd.text.trim()) linkBad.push("the text that arrived isn't the ad's main text");
+const handedRead = engine.read(handed), pastedRead = engine.read(naAd.text);
+if (JSON.stringify(handedRead) !== JSON.stringify(pastedRead)) linkBad.push("the handed-over ad reads differently from the pasted one");
+const fromSel = runBookmarklet({ selection: "Skoda Octavia 1.6 TDI 2014, 189 000 km, valittu teksti", main: naAd.text, body: naAd.text });
+if (engine.adFromHash(new URL(fromSel[0][0]).hash) !== "Skoda Octavia 1.6 TDI 2014, 189 000 km, valittu teksti") linkBad.push("a selection isn't preferred");
+const fromBody = runBookmarklet({ main: "Valikko", body: naAd.text });
+if (engine.adFromHash(new URL(fromBody[0][0]).hash) !== naAd.text.trim()) linkBad.push("a short <main> isn't skipped for the body");
+const huge = runBookmarklet({ body: `${naAd.text}\n${"ä".repeat(40000)}` });
+if (engine.adFromHash(new URL(huge[0][0]).hash).length !== engine.LINK_TEXT_MAX) linkBad.push("a long page isn't cut to LINK_TEXT_MAX");
+for (const h of ["", "#", "#foo=bar", "#ad=", "#ad=%E0%A4%A"]) if (engine.adFromHash(h) !== null) linkBad.push(`adFromHash(${JSON.stringify(h)}) isn't null`);
+if (netCalls) linkBad.push(`${netCalls} network call(s)`);
+globalThis.fetch = realFetch;
+if (linkBad.length) structural++;
+console.log(`${linkBad.length ? "FAIL" : "pass"}  link, bookmarklet ${linkBad.join("; ")}`);
+
 console.log(`\nSample ads: ${pass} of ${pass + fail} pass. Results and odd ads: ${structural ? `${structural} problem(s)` : "all fine"}.`);
 process.exit(fail || structural ? 1 : 0);
