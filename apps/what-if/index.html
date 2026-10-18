@@ -697,6 +697,28 @@ function createEngine(DATA, today) {
     // An electric car's battery health as the ad states it: "SoH 92 %", "akun kunto 92 %".
     const soh = +(low.match(/(?:soh|akun kunto|akun terveys|battery health|state of health)[^\d\n]{0,15}(\d{2,3})\s?%/)?.[1] ?? 0);
     c.batterySoh = soh >= 30 && soh <= 100 ? soh : null;
+    // Consumption as the ad states it: l/100 km or kWh/100 km. Only a combined or average figure ("yhdistetty kulutus",
+    // "keskikulutus", "combined") is used for the energy cost; a city or highway figure is kept only to say why not.
+    const consOf = (s) => {
+      const m = s.match(/^[\s:=]*(?:n\.|noin|ca\.?|about|approx\.?)?\s*(\d{1,2}(?:[.,]\d{1,2})?) ?(l|kwh) ?\/ ?100 ?km(?!\p{L})/iu);
+      if (!m) return null;
+      const v = toNum(m[1]), unit = m[2].toLowerCase() === "l" ? "l" : "kWh";
+      return (unit === "l" ? v >= 2 && v <= 30 : v >= 8 && v <= 40) ? { v, unit } : null;
+    };
+    const COMBINED = String.raw`(?:(?:polttoaineen |sähkön |energian )?kulutus,? ?\(?(?:yhdistetty|yhd\.?|keskim\.?|keskimäärin)\)?|yhdistetty kulutus|yhdistetty|yhd\. kulutus|keskikulutus|keskimääräinen kulutus|`
+      + String.raw`(?:wltp )?(?:combined|average|avg\.?) (?:fuel |energy |electricity |power )?consumption|(?:wltp )?combined|wltp yhdistetty)`;
+    const PARTIAL = { city: "kaupunkikulutus|kaupunki|kaupungissa|taajama|taajamassa|city|urban", highway: "maantiekulutus|maantie|maantiellä|highway|extra-urban|motorway",
+      unnamed: "(?:polttoaineen |sähkön |energian )?kulutus|(?:fuel |energy |electricity )?consumption" };
+    c.consumption = field(P, COMBINED, consOf) ?? inline(P, COMBINED, consOf)
+      ?? ((m) => (m ? consOf(m[1]) : null))(P.text.match(/(\d{1,2}(?:[.,]\d{1,2})? ?(?:l|kwh) ?\/ ?100 ?km) ?\(? ?(?:yhdistetty|yhd\.|combined|keskikulutus)/iu));
+    c.consumptionOnly = c.consumption ? null
+      : Object.entries(PARTIAL).map(([k, src]) => [k, field(P, src, consOf) ?? inline(P, src, consOf)]).filter(([, v]) => v).map(([k, v]) => ({ kind: k, ...v }));
+    if (!c.consumptionOnly?.length) c.consumptionOnly = null;
+    // Suzuki's Across and Swace are built by Toyota and have Toyota's hybrid battery cover; Traficom has no Across.
+    if (c.make === "Suzuki" && !c.model) c.model = P.text.match(/suzuki[ -]+(across|swace)(?!\p{L})/iu)?.[1] ?? null;
+    // The ad's own words, for a battery warranty that depends on the version ("Long Range", "60 Ah"). Not enumerable,
+    // so it stays out of what read() returns.
+    Object.defineProperty(c, "adText", { value: fold(P.text.slice(0, 4000)), enumerable: false });
 
     // For the vehicle tax: CO2 g/km and how it was measured (NEDC or WLTP, only when the ad says), the date of first use,
     // and the total mass (kokonaismassa), which the motive-power tax is counted on. Omamassa (kerb weight) is a different
@@ -1137,6 +1159,128 @@ function createEngine(DATA, today) {
     return { byMethod: { NEDC: year365(base.NEDC), WLTP: year365(base.WLTP) }, motive };
   }
 
+  /* ---------- running a used car (data/car-running-costs.json) ----------
+     Energy for two years, an electric car's services, battery test and warranty, Toyota-group hybrid battery cover and
+     Traficom's recall search. Every figure keeps its source; secondary ones say "estimate". */
+  const R = F.run ?? null;
+  for (const [id, s] of Object.entries(R?.sources ?? {})) SRC[`c-${id}`] = s;
+  const cSrc = (...ids) => ids.flat().filter(Boolean).map((id) => `c-${id}`).filter((id) => SRC[id]);
+  const monthName = (ym) => `${MONTH_NAMES[+ym.slice(5, 7) - 1]} ${ym.slice(0, 4)}`;
+  const dec = (v) => v.toLocaleString("en-GB", { maximumFractionDigits: 2 });
+  const normModel = (s) => fold(s ?? "").replace(/[^a-z0-9]/g, "");
+
+  // Whether a car is within a warranty of `years` or `km`, whichever comes first: "in", "out" or "maybe". It counts from
+  // the date of first use when the ad gives one. Otherwise from the year, which may be a model year: first used a year
+  // before at the earliest, and taken as first used by the year after at the latest. An unknown km is never "in".
+  function warrantyState(c, years, km) {
+    let time = "maybe";
+    if (c.firstUse) {
+      const [y, m] = c.firstUse.split("-").map(Number);
+      time = NOW < new Date(y + years, m - 1, 1) ? "in" : NOW >= new Date(y + years, m, 1) ? "out" : "maybe";
+    } else if (c.year) {
+      time = NOW < new Date(c.year - 1 + years, 0, 1) ? "in" : NOW >= new Date(c.year + 1 + years, 0, 1) ? "out" : "maybe";
+    }
+    const dist = c.km == null ? "maybe" : c.km < km ? "in" : "out";
+    const why = [dist === "out" && `it has ${grp(c.km)} km`, time === "out" && (c.firstUse ? `it was first used in ${monthName(c.firstUse)}` : `it is from ${c.year}`)].filter(Boolean);
+    return { state: why.length ? "out" : time === "in" && dist === "in" ? "in" : "maybe", why };
+  }
+
+  // The maker's battery warranty rows for this electric car: by model where the maker's terms differ by model, by
+  // version ("Long Range", "60 Ah") when the ad says it, by model year for Kia. Several rows when the ad doesn't say.
+  function batteryWarranty(c) {
+    const rows = (R?.warranty ?? []).filter((w) => w.make === fold(c.make ?? ""));
+    const title = fold([c.model, c.modelKey?.split("|")[1]].filter(Boolean).join(" "));
+    const text = c.adText ?? title;
+    let hit = rows.filter((w) => (!w.base || new RegExp(w.base, "u").test(title))
+      && (!w.my || !c.year || ((w.my[0] == null || c.year >= w.my[0]) && (w.my[1] == null || c.year <= w.my[1]))));
+    const specific = hit.find((w) => w.variant && new RegExp(w.variant, "u").test(text));
+    if (specific) return [specific];
+    const plain = hit.filter((w) => !w.variant);
+    return plain.length ? plain : hit;
+  }
+  function warrantyText(c, rows) {
+    const w = rows[0];
+    const several = (R.warranty.filter((x) => x.make === w.make).length > 1);
+    const limit = (x) => `${x.years} years or ${grp(x.km)} km`;
+    const same = rows.every((x) => x.years === w.years && x.km === w.km && x.soh === w.soh && x.defectOnly === w.defectOnly && x.start === w.start);
+    const terms = same
+      ? `${esc(w.maker)}’s battery warranty${several ? ` for the ${esc(w.models)}` : ""} is ${limit(w)}`
+      : `${esc(w.maker)}’s battery warranty depends on the version: ${rows.map((x) => `${limit(x)} for the ${esc(x.models)}`).join("; ")}`;
+    const soh = w.soh == null ? `. Its Finnish page states no minimum capacity`
+      : w.defectOnly ? `. It covers a drop below ${w.soh}% of the capacity only when a manufacturing or material defect causes it`
+      : `, and covers the battery falling below ${w.soh}% of its capacity`;
+    const states = rows.map((x) => warrantyState(c, x.years, x.km));
+    const st = states.every((s) => s.state === states[0].state) ? states[0] : { state: "maybe", why: [] };
+    const by = c.firstUse ? `first use (${monthName(c.firstUse)})` : `year (${c.year})`;
+    const status = st.state === "in" ? `By its ${by} and km (${grp(c.km)}), this car is within it.`
+      : st.state === "out" ? `This car is past it: ${and(st.why)}.`
+      : `This car may still be within it: check that date in its papers${c.km == null ? ", and the km" : ""}.`;
+    return `${terms}, whichever comes first, counted ${w.start}${soh}. ${status}`;
+  }
+
+  // Toyota's, Lexus's and Suzuki's (Across, Swace) hybrid battery cover, renewed yearly with servicing, as each maker
+  // states it. Not for Toyota or Lexus plug-in hybrids: no separate term was found for them.
+  function hybridCover(c) {
+    const H = R?.hybrid, mk = fold(c.make ?? ""), plugIn = c.fuel === "plug-in hybrid";
+    if (!H) return null;
+    let h = null, text = "";
+    if (mk === "toyota" && !plugIn) {
+      h = H.toyota;
+      text = `Toyota’s hybrid battery cover (hybridiakkuturva) is renewed at each yearly service at an authorised Toyota workshop, up to ${h.years} years or ${grp(h.km)} km. A missed service ends it until a later service with a passed check, and it passes to the next owner. It covers cars imported by Toyota Auto Finland.`;
+    } else if (mk === "lexus" && !plugIn) {
+      h = H.lexus;
+      text = `Lexus’s hybrid battery cover is renewed for a year at each scheduled Lexus service with a hybrid health check${h.freeCheck ? ", which is free" : ""}, up to ${h.years} years or ${grp(h.km)} km from first registration.`;
+    } else if (mk === "suzuki" && /^(?:across|swace)/.test(normModel(c.model))) {
+      h = H.suzuki;
+      text = `Suzuki’s hybrid battery cover for the Across and Swace, which Toyota builds, is renewed at each service after a yearly battery check, up to ${h.years} years or ${grp(h.km)} km.`;
+    }
+    if (!h) return null;
+    const st = warrantyState(c, h.years, h.km);
+    return { text: `${text} ${st.state === "out" ? `This car is past it: ${and(st.why)}.` : "Ask for the service book: it shows whether it was serviced there every year."}`,
+      tag: `${MAKE_BY_FOLD[mk] ?? esc(c.make)}’s hybrid battery cover`, src: cSrc(h.src) };
+  }
+
+  // Energy for two years: Finland's km a year × the ad's own combined consumption × the latest month's price.
+  // Never adjusted and never guessed: no combined figure, a plug-in hybrid or a fuel without a price gives no number.
+  function energyRow(c, electric) {
+    if (!R) return null;
+    const fuel = electric ? "electric" : c.fuel ?? null;
+    const what = fuel === "electric" ? "Electricity" : fuel === "plug-in hybrid" ? "Fuel and electricity" : "Fuel";
+    const none = (note, src = []) => ({ row: { what, note, eur: null, none: "Not worked out", seg: "run", open: fuel === "electric" ? "electricity" : "fuel" }, src });
+    if (fuel === "plug-in hybrid") {
+      const g = c.plugInOf === "diesel" ? R.gap.phevDiesel : c.plugInOf === "petrol" ? R.gap.phevPetrol : null;
+      return none("A plug-in hybrid runs on fuel and electricity, and how much of each depends on how often it’s charged, so we don’t work it out."
+        + (g ? ` In the EU’s measurements, ${c.plugInOf} plug-in hybrids used ${Math.round(g)}% more fuel than their official figure.` : ""), g ? cSrc(R.gap.src) : []);
+    }
+    const P = fuel === "electric" ? { c: R.elec.c, unit: "kWh", per: "c/kWh", month: R.elec.month, src: R.elec.src,
+        label: `household electricity at ${R.elec.band} with transfer and taxes, the band Statistics Finland gives for home charging` }
+      : /petrol/.test(fuel ?? "") ? { c: R.fuel.petrol, unit: "l", per: "c/l", month: R.fuel.month, src: R.fuel.src, label: "petrol 95E10", gap: R.gap.petrol, kind: "petrol" }
+      : /diesel/.test(fuel ?? "") ? { c: R.fuel.diesel, unit: "l", per: "c/l", month: R.fuel.month, src: R.fuel.src, label: "diesel", gap: R.gap.diesel, kind: "diesel" } : null;
+    if (!P) return none(fuel ? "Our price data covers petrol, diesel and electricity, not this fuel, so we don’t work it out." : "The ad doesn’t say what fuel it uses, so we don’t work it out.");
+    const k = c.consumption?.unit === P.unit ? c.consumption : null;
+    if (!k) {
+      const only = (c.consumptionOnly ?? []).filter((x) => x.unit === P.unit);
+      const named = only.filter((x) => x.kind !== "unnamed");
+      const u = `${P.unit}/100 km`;
+      return none(named.length ? `The ad gives only ${named.length > 1 ? `${and(named.map((x) => x.kind))} figures` : `a ${named[0].kind} figure`} (${and(named.map((x) => dec(x.v)))} ${u}), not a combined one, so we don’t work it out.`
+        : only.length ? `The ad gives ${dec(only[0].v)} ${u} but doesn’t say it’s the combined figure, so we don’t work it out.`
+        : `The ad doesn’t give its combined consumption in ${u}, so we don’t work it out.`);
+    }
+    const nedc = c.co2Method === "NEDC" || (c.co2Method !== "WLTP" && !(c.year >= 2019));
+    const gap = P.gap ? ` Real use is usually higher: +${Math.round(P.gap)}% for ${P.kind} cars’ WLTP figures in the EU’s measurements${nedc ? `, and around ${R.gap.nedc}% for older NEDC figures by ${R.gap.nedcYear}` : ""}. Not added here.`
+      : " The EU’s measurements of real use cover petrol and diesel cars, not electric ones. Public charging is priced by each operator, so it isn’t included.";
+    return { row: { what, eur: 2 * R.km.v * (k.v / 100) * (P.c / 100), seg: "run",
+      note: `The ad’s combined ${dec(k.v)} ${P.unit}/100 km × ${grp(R.km.v)} km a year (Finland’s ${R.km.year} average, an estimate) × ${dec(P.c)} ${P.per}, ${P.label}, ${monthName(P.month)} · Statistics Finland.${gap}` },
+      src: cSrc(R.km.src, P.src, P.gap ? R.gap.src : null) };
+  }
+
+  // An electric car's periodic service from AutoJerry's price guide: its model, else its make, else none.
+  function evService(c) {
+    const rows = (R?.service ?? []).filter((r) => r.make === fold(c.make ?? ""));
+    const mine = [normModel(c.modelKey?.split("|")[1]), normModel(c.model)].filter(Boolean);
+    return rows.find((r) => r.model && mine.some((m) => m.startsWith(normModel(r.model)))) ?? rows.find((r) => !r.model) ?? null;
+  }
+
   function carResult(c) {
     const name = esc([c.make, c.model].filter(Boolean).join(" ") || "Used car");
     // Traficom counts BMWs by series and Mercedes by class: "BMW 3 Series", not "BMW 320d".
@@ -1234,9 +1378,15 @@ function createEngine(DATA, today) {
         tip: `If it’s due, ask for about ${eur(F.belt.typical)} off. That’s a typical garage price.`, who: "you", tag: beltTag, real: true }, ["belt"]]);
     }
     if (electric) {
+      // The maker's battery warranty when we have its terms, and what a test costs when the seller has no report.
+      const T = R?.test, W = R ? batteryWarranty(c) : [];
       more.push([{ q: "“Can I see a report on the battery’s health?”",
-        why: `${c.batterySoh ? `The ad says the battery is at ${c.batterySoh}%. ` : ""}An electric car’s battery holds less charge as it ages, and its range drops with it. A garage or the maker can read the battery’s state of health (SoH): ask for the report, and whether the maker’s battery warranty is still valid.`,
-        whatif: "What if the battery has worn more than you thought? The range stays shorter.", cost: "", who: "you", tag: "Ask the seller" }, []]);
+        why: `${c.batterySoh ? `The ad says the battery is at ${c.batterySoh}%. ` : ""}An electric car’s battery holds less charge as it ages, and its range drops with it. A garage or the maker can read the battery’s state of health (SoH): ask for the report`
+          + (W.length ? `. ${warrantyText(c, W)}` : ", and whether the maker’s battery warranty is still valid."),
+        whatif: "What if the battery has worn more than you thought? The range stays shorter.", cost: T ? `Test ≈ ${eur(T.avg)}` : "", who: "you",
+        tip: T ? `With no report, a garage test costs ${eur(T.avg)} on average (${eur(T.low)}–${T.high}), an estimate from AutoJerry. An ${T.aviloo.what} cost ${eur(T.aviloo.eur)} at one garage in ${monthName(T.aviloo.date)}, Moottori reported.` : "",
+        tag: [W.length && `${esc(W[0].maker)}’s battery warranty terms`, T && "AutoJerry 2026 and Moottori test prices, estimates"].filter(Boolean).join(" · ") || "Ask the seller", real: W.length > 0 },
+        [...cSrc(W.flatMap((w) => w.src)), ...cSrc(T?.src, T?.aviloo.src)]]);
     }
     const mods = c.modifications ?? [];
     if (mods.length || f.modInspected) {
@@ -1253,13 +1403,17 @@ function createEngine(DATA, today) {
         link: { href: SRC.lookup.url, text: "Look up what Finland has recorded at Traficom" }, tag: "From the ad · KKV 2024", real: true }, ["kkv", "lookup"]]);
     }
     if (hybrid) {
-      more.push([f.hybridBatteryChecked
+      // Toyota's, Lexus's and Suzuki's cover replaces the general "ask whether the warranty is still valid".
+      const hc = hybridCover(c);
+      const withCover = ([ask, src]) => (hc ? [{ ...ask, why: ask.why.replace(" Ask too whether the maker’s hybrid battery warranty is still valid.", "").replace(", and whether the maker’s hybrid battery warranty is still valid.", ".") + ` ${hc.text}`,
+        tag: `${ask.tag} · ${hc.tag}`, real: true }, [...src, ...hc.src]] : [ask, src]);
+      more.push(withCover([f.hybridBatteryChecked
         ? { q: "“Can I see the report from the hybrid battery check?”",
           why: "The ad says the hybrid battery was checked. The report shows what was measured and when. Ask too whether the maker’s hybrid battery warranty is still valid.",
           whatif: "What if the battery has worn more than you thought? It’s wear, so you pay for it.", cost: "", who: "you", tag: "From the ad" }
         : { q: "“Has the hybrid battery’s condition been checked?”",
           why: "A hybrid’s drive battery wears with age and use, like an electric car’s. A garage or the maker’s dealer can test it: ask for the report, and whether the maker’s hybrid battery warranty is still valid.",
-          whatif: "What if the battery has worn more than you thought? It’s wear, so you pay for it.", cost: "", who: "you", tag: "Ask the seller" }, []]);
+          whatif: "What if the battery has worn more than you thought? It’s wear, so you pay for it.", cost: "", who: "you", tag: "Ask the seller" }, []]));
     }
 
     // Who you are buying from changes your rights.
@@ -1298,6 +1452,15 @@ function createEngine(DATA, today) {
       why: `${f.serviceBook ? "The ad mentions a service book. " : ""}Stamped services and receipts show the car was looked after. A regular service costs €${F.service.low}–${F.service.high} at a garage.`,
       whatif: "What if services were skipped? Worn parts show up later as bigger repairs.", cost: "", who: "you",
       tag: "AutoJerry 2026 service prices", real: true }, ["service"]]);
+    // Recalls: always worth checking, so it goes last, under the three. Traficom's search by the ad's model name.
+    const recallKw = c.model ?? c.make;
+    if (R?.recall && recallKw) {
+      more.push([{ q: "“Has its recall work been done?”",
+        why: `Makers report their recall campaigns to Traficom, which lists them, active and closed. Minor service campaigns needn’t be reported, so they aren’t there. Search for the ${esc(recallKw)}, then ask the seller or a ${esc(c.make ?? "brand")} garage whether this car’s recall work was done.`,
+        whatif: "What if a recall was never done? The fault it was meant to fix may still be there.", cost: "", who: "Check before you buy",
+        link: { href: R.recall.url.replace("{model}", encodeURIComponent(recallKw)), text: `Search Traficom’s recalls for “${esc(recallKw)}”` },
+        tag: "Traficom recall database", real: true }, cSrc(R.recall.src)]);
+    }
     for (const [ask, src] of more.slice(0, 2)) { asks.push(ask); sources.push(...src); }
     // Everything else that fired goes under them, collapsed, in the same order.
     const extra = more.slice(2).map(([ask, src]) => { sources.push(...src); return ask; });
@@ -1309,9 +1472,18 @@ function createEngine(DATA, today) {
     if (beltDue || beltNotDone) costs.push({ what: "Timing belt, if due", note: `Typical garage price · AutoJerry 2026`, eur: F.belt.typical, seg: "fix" });
     const inspections = age == null ? 1 : age >= 9 ? 2 : age >= 2 ? 1 : 0;
     if (inspections) costs.push({ what: nextDue?.overdue ? (inspections === 2 ? "Inspection now, and one more" : "Inspection now") : inspections === 2 ? "Two inspections" : "One inspection", note: `About ${eur(F.inspectionFee.walkIn)} each · Traficom ${F.inspectionFee.year} average price`, eur: inspections * F.inspectionFee.walkIn, seg: "run" });
-    costs.push({ what: "Two services", note: electric
-      ? `Typical garage price ${eur(F.service.typical)} each for a petrol or diesel car · AutoJerry 2026 · an electric car’s may differ`
-      : `Typical garage price ${eur(F.service.typical)} each · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * F.service.typical, seg: "run" });
+    // An electric car's service price is AutoJerry's for its model or make, where it has one.
+    const evSvc = electric ? evService(c) : null;
+    if (evSvc) {
+      costs.push({ what: "Two services", note: `${eur(evSvc.avg)} each on average (${eur(evSvc.low)}–${evSvc.high}) for the ${esc(c.make)}${evSvc.model ? ` ${esc(evSvc.model)}` : ""} · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * evSvc.avg, seg: "run" });
+      sources.push(...cSrc(evSvc.src));
+    } else {
+      costs.push({ what: "Two services", note: electric
+        ? `Typical garage price ${eur(F.service.typical)} each for all makes: AutoJerry has no electric-car price for this model · AutoJerry 2026 · estimate`
+        : `Typical garage price ${eur(F.service.typical)} each · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * F.service.typical, seg: "run" });
+    }
+    const energy = energyRow(c, electric);
+    if (energy) { costs.push(energy.row); sources.push(...energy.src); }
     // Vehicle tax for the two years, from the ad's CO2, first use and total mass. Without them: Traficom's calculator.
     const tax = vehicleTax({ fuel: electric ? "electric" : c.fuel, co2: c.co2 ?? null, co2Method: c.co2Method ?? null, firstUse: c.firstUse ?? null,
       year: c.year ?? null, totalMassKg: c.totalMassKg ?? null, plugInOf: c.plugInOf ?? null });
@@ -1334,7 +1506,7 @@ function createEngine(DATA, today) {
     }
     costs.push({ what: "Insurance", note: "Depends on you and the car", eur: null, seg: "ins" });
     if (inspections) sources.push("fee");
-    sources.push("service");
+    if (!evSvc) sources.push("service");
 
     // Is there a safer choice? Common cars of the same year that failed least; for an electric car, electric ones only.
     // Not for a performance or variant badge: Traficom counts it with its everyday model, and an everyday car
@@ -1385,7 +1557,10 @@ function createEngine(DATA, today) {
       insure: { label: "Drive it home", title: "Get reminders for this car.", text: "They come with If car insurance. Traffic insurance is required by law from the moment the car is yours.",
         details: [["Car", c.year ? `${name}, ${c.year}` : name], c.km ? ["Km", grp(c.km)] : null, c.city ? ["Area", esc(c.city)] : null].filter(Boolean) },
       readout: [["Car", name], ["Year", shown(c.year)], ["Km", shown(c.km, grp)], ["Price", shown(c.price, eur)], ["Seller", shown(c.sellerType)], ["Fuel", shown(c.fuel)],
-        ["Gearbox", shown(c.gearbox)], ["Last inspection", shown(c.lastInspection)], ["Area", shown(c.city, esc)],
+        ["Gearbox", shown(c.gearbox)],
+        ["Consumption", c.consumption ? `${dec(c.consumption.v)} ${c.consumption.unit}/100 km combined, says the ad`
+          : c.consumptionOnly ? `${and(c.consumptionOnly.map((x) => `${x.kind === "unnamed" ? "" : `${x.kind} `}${dec(x.v)} ${x.unit}/100 km`))}, says the ad` : nf],
+        ["Last inspection", shown(c.lastInspection)], ["Area", shown(c.city, esc)],
         electric ? ["Battery", c.batterySoh ? `${c.batterySoh}% health, says the ad` : nf] : ["Timing belt", belt],
         ...(mods.length || f.modInspected ? [["Changes", `${mods.length ? esc(and(mods)) : "changed"}${f.modInspected ? ", inspected, says the ad" : ", says the ad"}`]] : [])],
       sources: uniq(sources),
@@ -2614,7 +2789,7 @@ function costHtml(c) {
           <li><span class="key" style="background:${keyColor[r.seg]}"></span>
             <span class="what">${r.what}<small>${r.note}</small></span>
             ${r.eur != null ? `<span class="eur">${eur(r.eur)}</span>`
-              : r.link ? `<a class="eur open" href="${r.link.href}" target="_blank" rel="noopener">${r.link.text} ↗</a>` : `<span class="eur open">Your price below</span>`}</li>`).join("")}
+              : r.link ? `<a class="eur open" href="${r.link.href}" target="_blank" rel="noopener">${r.link.text} ↗</a>` : `<span class="eur open">${r.none ?? "Your price below"}</span>`}</li>`).join("")}
       </ul>
       <div class="total"><span class="kicker">${c.period}${open.length ? `, before ${open.join(" and ")}` : ""}</span><span class="eur">≈ ${eur(Math.round(sum(c.costs) / 100) * 100)}</span></div>
       <p class="fine">${c.costNote}</p>
