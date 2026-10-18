@@ -356,6 +356,91 @@ group("real Impreza ad", [
     ["no power judged", (r, f) => !f.modifications.length && !r.asks.concat(r.more ?? []).some((a) => /What was changed/.test(a.q))]],
 ]);
 
+// Running costs (data/car-running-costs.json): energy for two years from the ad's own combined consumption, never
+// a guessed one; an electric car's battery warranty, test price and service price; Toyota-group hybrid cover; recalls.
+const run = data.facts.run;
+const energyRow = (r) => r.costs?.find((x) => /^(?:Fuel|Electricity|Fuel and electricity)$/.test(x.what));
+const serviceRow = (r) => r.costs?.find((x) => x.what === "Two services");
+const allAsks = (r) => [...r.asks, ...(r.more ?? [])];
+const batteryAsk = (r) => allAsks(r).find((a) => /battery’s health/.test(a.q));
+const hybridAsk = (r) => allAsks(r).find((a) => /hybrid battery/.test(a.q));
+const near1 = (a, b) => a != null && Math.abs(a - b) < 0.01;
+group("energy", [
+  ["petrol, combined", "Toyota Corolla 1.8\n2019\n60 000 km\nBensiini\nManuaali\nYhdistetty kulutus 6,5 l/100 km\nHinta 15 900 €\nYksityinen myyjä, Turku",
+    ["km × l/100 km × June's petrol price", (r) => near1(energyRow(r)?.eur, 2 * run.km.v * 0.065 * run.fuel.petrol / 100) && /June 2026/.test(energyRow(r).note) && /petrol 95E10/.test(energyRow(r).note)],
+    ["the WLTP gap said, not added", (r) => /\+24% for petrol cars/.test(energyRow(r).note) && /Not added here/.test(energyRow(r).note)],
+    ["sourced", (r) => ["c-sf-12ge", "c-sf-12jx", "c-sf-11ie", "c-ec-com-2024-122"].every((s) => r.sources.includes(s))]],
+  ["diesel, combined in English, NEDC era", "Volkswagen Golf 1.6 TDI\n2014\n150 000 km\nDiesel\nManual\nCombined consumption: 4.1 l/100 km\nPrice 7 900 €\nPrivate seller, Oulu",
+    ["diesel price", (r) => near1(energyRow(r)?.eur, 2 * run.km.v * 0.041 * run.fuel.diesel / 100)], ["NEDC gap too", (r) => /\+18% for diesel/.test(energyRow(r).note) && /40% for older NEDC figures by 2017/.test(energyRow(r).note)]],
+  ["electric, combined", "Tesla Model 3 Long Range\n2022\n40 000 km\nSähkö\nAutomaatti\nYhdistetty kulutus 14,9 kWh/100 km\nHinta 29 000 €\nAutoliike, Espoo",
+    ["km × kWh/100 km × band D", (r) => near1(energyRow(r)?.eur, 2 * run.km.v * 0.149 * run.elec.c / 100) && energyRow(r).what === "Electricity"],
+    ["names the band and month", (r) => /5,000–15,000 kWh a year/.test(energyRow(r).note) && /home charging/.test(energyRow(r).note) && /June 2026/.test(energyRow(r).note)],
+    ["sourced", (r) => r.sources.includes("c-sf-13rb")]],
+  ["Subaru: highway only", IMPREZA,
+    ["no number, says why", (r, f) => energyRow(r)?.eur === null && /only a highway figure \(9 l\/100 km\)/.test(energyRow(r).note) && f.consumption == null]],
+  ["city and highway", "Volkswagen Golf\n2015\n100 000 km\nDiesel\nManuaali\nKaupunki: 7 l/100 km\nMaantie: 4,5 l/100 km\nHinta 9 000 €\nYksityinen myyjä, Pori",
+    ["no number", (r) => energyRow(r)?.eur === null && /only city and highway figures/.test(energyRow(r).note)]],
+  ["no consumption", "Ford Focus 1.6\n2010\n160 000 km\nBensiini\nManuaali\nHinta 3 900 €\nYksityinen myyjä, Pori",
+    ["no number", (r) => energyRow(r)?.eur === null && /doesn’t give its combined consumption/.test(energyRow(r).note) && energyRow(r).none]],
+  ["plug-in hybrid", "Volkswagen Passat GTE\n2019\n90 000 km\nKäyttövoima: Bensiini/sähkö plug-in hybrid\nYhdistetty kulutus 1,6 l/100 km\nHinta 21 900 €\nAutoliike, Espoo",
+    ["skipped, says why", (r) => energyRow(r)?.what === "Fuel and electricity" && energyRow(r).eur === null && /how often it’s charged/.test(energyRow(r).note)]],
+]);
+group("electric car", [
+  ["within warranty", "Tesla Model 3 Long Range\n2022\n40 000 km\nSähkö\nAutomaatti\nHinta 29 000 €\nAutoliike, Espoo",
+    ["Long Range terms", (r) => /8 years or 192,000 km/.test(batteryAsk(r).why) && /below 70%/.test(batteryAsk(r).why) && /counted from first registration or delivery/.test(batteryAsk(r).why)],
+    ["within it", (r) => /By its year \(2022\) and km \(40,000\), this car is within it/.test(batteryAsk(r).why)],
+    ["test price as its cost", (r) => batteryAsk(r).cost === `Test ≈ €${run.test.avg}` && /AVILOO Flash test cost €100 at one garage in March 2026/.test(batteryAsk(r).tip) && /estimate/.test(batteryAsk(r).tip)],
+    ["EV service price, no 'may differ'", (r) => serviceRow(r).eur === 400 && /Tesla Model 3/.test(serviceRow(r).note) && !/may differ/.test(said(r))],
+    ["sourced", (r) => ["c-w-tesla", "c-aj-soh-test", "c-moottori-2026-akkutesti", "c-aj-ev-service-tesla-model-3"].every((s) => r.sources.includes(s))]],
+  ["first use from the ad", "Volkswagen ID.3 Pro\n2021\n68 000 km\nTäyssähkö\nKäyttöönottopäivä 15.03.2021\nHinta 19 500 €\nAutoliike, Tampere",
+    ["within it by first use", (r) => /By its first use \(March 2021\) and km \(68,000\), this car is within it/.test(batteryAsk(r).why)]],
+  ["past it by age", "Tesla Model S 85D\n2015\n110 000 km\nSähkö\nAutomaatti\nHinta 19 000 €\nYksityinen myyjä, Vantaa",
+    ["S/X terms, past it", (r) => /8 years or 240,000 km/.test(batteryAsk(r).why) && /This car is past it: it is from 2015/.test(batteryAsk(r).why)]],
+  ["past it by km", "Nissan Leaf\n2020\n172 000 km\nSähkö\nAutomaatti\nHinta 9 000 €\nYksityinen myyjä, Turku",
+    ["past it, no threshold claimed", (r) => /This car is past it: it has 172,000 km/.test(batteryAsk(r).why) && /states no minimum capacity/.test(batteryAsk(r).why)]],
+  ["version unknown", "Tesla Model 3\n2019\n90 000 km\nSähkö\nAutomaatti\nHinta 21 000 €\nYksityinen myyjä, Turku",
+    ["both terms, may still be", (r) => /depends on the version/.test(batteryAsk(r).why) && /160,000 km/.test(batteryAsk(r).why) && /192,000 km/.test(batteryAsk(r).why) && /may still be within it/.test(batteryAsk(r).why)]],
+  ["make not in the data", "Renault Zoe\n2019\n60 000 km\nSähkö\nAutomaatti\nHinta 11 000 €\nYksityinen myyjä, Turku",
+    ["asks, claims nothing", (r) => /whether the maker’s battery warranty is still valid/.test(batteryAsk(r).why) && !/years or/.test(batteryAsk(r).why) && /no electric-car price/.test(serviceRow(r).note)]],
+]);
+group("hybrid cover", [
+  ["Toyota hybrid", "Toyota Corolla 1.8 Hybrid\n2020\n60 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nJakoketju\nHinta 19 900 €\nAutoliike, Turku",
+    ["10 years / 350,000 km with Toyota servicing", (r) => /renewed at each yearly service at an authorised Toyota workshop, up to 10 years or 350,000 km/.test(hybridAsk(r).why) && !/whether the maker’s hybrid battery warranty/.test(hybridAsk(r).why)],
+    ["sourced", (r) => r.sources.includes("c-w-toyota-akkuturva")]],
+  ["Toyota hybrid past it", "Toyota Auris Hybrid\n2012\n240 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 6 900 €\nYksityinen myyjä, Turku",
+    ["past it", (r) => /This car is past it: it is from 2012/.test(hybridAsk(r).why)]],
+  ["Lexus", "Lexus CT 200h\n2018\n120 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 16 900 €\nAutoliike, Espoo",
+    ["free check, from first registration", (r) => /which is free, up to 10 years or 350,000 km from first registration/.test(hybridAsk(r).why)]],
+  ["Suzuki Swace", "Suzuki Swace 1.8 Hybrid\n2022\n30 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 23 900 €\nAutoliike, Oulu",
+    ["Across and Swace cover", (r) => /Suzuki’s hybrid battery cover for the Across and Swace/.test(hybridAsk(r).why)]],
+  ["Hyundai hybrid: none claimed", "Hyundai Ioniq Hybrid\n2018\n110 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 13 900 €\nAutoliike, Espoo",
+    ["general ask", (r) => /whether the maker’s hybrid battery warranty is still valid/.test(hybridAsk(r).why) && !/350,000/.test(hybridAsk(r).why)]],
+]);
+// Recalls: in "more", with Traficom's search for the model, never among the three. The EU snapshot isn't shipped.
+const recallAsk = (r) => allAsks(r).find((a) => /recall work/.test(a.q));
+const recallBad = [];
+for (const t of [...samples.tests.filter((x) => x.kind === "car"), { id: "Subaru", text: IMPREZA }]) {
+  const r = engine.analyse(t.text);
+  const ask = recallAsk(r);
+  if (!ask || r.asks.includes(ask)) recallBad.push(`${t.id}: ${ask ? "among the three" : "no recall ask"}`);
+  else if (!ask.link?.href.startsWith("https://takaisinkutsut.traficom.fi/recall?keyword=") || !/c-traficom-recall-db/.test(r.sources.join(" "))) recallBad.push(`${t.id}: ${ask.link?.href}`);
+}
+if (recallAsk(engine.analyse("Tesla Model 3\n2020\n90 000 km\nSähkö\nHinta 21 000 €")).link.href !== "https://takaisinkutsut.traficom.fi/recall?keyword=Model%203") recallBad.push("keyword not encoded");
+if (/safety-gate|webReport\/alertDetail/i.test(JSON.stringify(data))) recallBad.push("car-recalls-eu.json is in the page");
+if (recallBad.length) structural++;
+console.log(`${recallBad.length ? "FAIL" : "pass"}  recalls          ${recallBad.join("; ")}`);
+// Cars built from the AI's fields have no consumption, first use or ad text: rows degrade, nothing reads undefined.
+const aiBad = [];
+for (const fields of [{ make: "Tesla", model: "Model 3", year: 2021, km: 50000, price: 25000, fuel: "electric" },
+  { make: "Toyota", model: "Yaris", year: 2019, price: 12000, fuel: "hybrid-petrol" }, { make: "Volkswagen", model: "Passat", fuel: "plug-in hybrid" }]) {
+  const r = engine.fromAI("car", fields, "", "m");
+  check(`AI ${fields.make}`, r);
+  if (/undefined|NaN/.test(JSON.stringify(r))) aiBad.push(`${fields.make}: undefined or NaN`);
+  if (energyRow(r)?.eur !== null) aiBad.push(`${fields.make}: an energy number without a consumption`);
+}
+if (aiBad.length) structural++;
+console.log(`${aiBad.length ? "FAIL" : "pass"}  AI-built costs   ${aiBad.join("; ")}`);
+
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
   ["Kia Cee'd SW 1.6", "kia|ceed"], ["Kia pro_cee'd GT", "kia|proceed"], ["Mazda3 2.0 Skyactiv", "mazda|3"], ["Mazda 6 Wagon", "mazda|6"],
