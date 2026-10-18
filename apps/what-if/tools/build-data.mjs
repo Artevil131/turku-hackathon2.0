@@ -206,6 +206,79 @@ run.sources = Object.fromEntries([...rcUsed].map((id) => {
   const s = rc.meta.sources[id];
   return [id, { text: s.name + (s.type === "secondary" ? " (estimate)" : ""), url: s.url }];
 }));
+// Timing belt, chain or wet belt by engine (timing-drive.json), for the used-car belt question. Only what matching and
+// wording need is shipped, as strings with short indexes:
+//   src: one per source, "name|url". A name starting with "~" is a secondary source (the page adds "(estimate)"); a url
+//     starting with "N^" continues prefixes[N].
+//   badges, codes: every engine name and engine code, joined by "|"; entries point to them by index.
+//   m: per Traficom model key, its entries joined by " ". An entry is [0] first year − 2000 and [1] last year − 2000,
+//     base 36 · [2] fuel (index in fuels) · [3] drive (index in drives) · [4] flags: 1 secondary, 2 don't state the
+//     interval · [5–6] source · [7–8] interval km / 1000 (00 none) · [9] interval years (0 none) · [10–11]
+//     displacement × 100 · then badges, "/", engine codes, two base-36 characters each.
+// An interval isn't stated when the evidence says its schedule is not for Finland, or when it isn't from the cited source
+// (a primary source on an entry marked secondary: the interval came from an extra source the page doesn't ship).
+// timing-drive-evidence.json is not shipped; it is read only for that flag.
+const tdFile = read("timing-drive.json");
+const tdEvidence = read(tdFile.meta.evidenceFile);
+const TD_FUELS = ["petrol", "diesel", "hybrid", "plug-in hybrid", "CNG"];
+const TD_DRIVES = ["belt", "chain", "wet belt"];
+// Haynes labels many schedules "Europe except Norway, Finland, Sweden" (or "except Finland"): such an interval isn't stated.
+const NOT_FINLAND = /except[^)\]'"]{0,40}\b(?:Finland|Scandinavia|Nordic)|Nordic schedule may differ|Finland-specific schedule/i;
+const TD_URL_PREFIXES = ["https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/", "https://uk.haynes.com/pages/maintenance-plans-car-",
+  "https://www.vdveer-engineering.nl/edocmanviewer/", "https://www.volkspage.net/technik/ssp/"];
+const b36 = (n, w) => {
+  const s = n.toString(36);
+  if (n < 0 || !Number.isInteger(n) || s.length > w) throw new Error(`timing-drive: ${n} doesn't fit ${w} base-36 characters`);
+  return s.padStart(w, "0");
+};
+// A short name for the page ("ADAC Autokatalog", "Haynes: Volvo V70/XC70 2008-2016", "VW Self-study Programme 423: The
+// Golf 2009"); its link goes to the exact page.
+const tdName = (n) => {
+  if (/^ADAC Autokatalog/.test(n)) return "ADAC Autokatalog";
+  if (/^Haynes/i.test(n)) return `Haynes: ${n.replace(/^Haynes(?: Maintenance Plans| maintenance plans?)?:\s*/i, "").replace(/ Maintenance Plans$/, "").replace(/ \(.*$/, "")}`;
+  let t = n.replace(/\s*(?:\.\.\.|…)$/, "").split(/ \((?:maker|English|French|printed|created|syys|Volkswagen Academy|BMW of|Daimle|answer|A\. Paiola|Shane)| ['"“](?=[A-Z0-9])|, maker document|, PDF hosted|, file |, Specifications|, Finnish owner/)[0].replace(/:$/, "").trim();
+  if (t.length > 80) t = `${t.slice(0, 80).replace(/[ ,(:;-]+\S*$/, "")}…`;
+  return t;
+};
+const tdUsed = [...new Set(tdFile.entries.map((e) => e.source))];
+const tdById = new Map(tdFile.meta.sources.map((s) => [s.id, s]));
+for (const id of tdUsed) if (!tdById.has(id)) throw new Error(`timing-drive.json: an entry references unknown source ${id}`);
+const tdSrc = tdUsed.map((id) => {
+  const s = tdById.get(id);
+  const p = TD_URL_PREFIXES.findIndex((x) => s.url.startsWith(x));
+  const name = tdName(s.name);
+  if (/[|~^]/.test(name + s.url)) throw new Error(`timing-drive.json source ${id}: | ~ or ^ in its name or url`);
+  return `${s.primary ? "" : "~"}${name}|${p < 0 ? s.url : `${p}^${s.url.slice(TD_URL_PREFIXES[p].length)}`}`;
+});
+const tdBadges = [], tdCodes = [];
+const tdRef = (list, x) => {
+  if (/[|/]/.test(x)) throw new Error(`timing-drive.json: | or / in "${x}"`);
+  let i = list.indexOf(x);
+  if (i < 0) i = list.push(x) - 1;
+  return b36(i, 2);
+};
+const tdM = {};
+let tdNotFinland = 0, tdElsewhere = 0;
+for (const e of tdFile.entries) {
+  const key = `${fold(e.make)}|${fold(e.model)}`;
+  if (!m[key]) throw new Error(`timing-drive.json ${e.id}: ${key} is not a Traficom model key`);
+  const fuel = TD_FUELS.indexOf(e.fuel), drive = TD_DRIVES.indexOf(e.drive);
+  if (fuel < 0 || drive < 0) throw new Error(`timing-drive.json ${e.id}: fuel ${e.fuel} or drive ${e.drive}`);
+  if (e.drive === "chain" && (e.intervalKm || e.intervalYears)) throw new Error(`timing-drive.json ${e.id}: a chain with an interval`);
+  if (e.intervalKm != null && e.intervalKm % 1000) throw new Error(`timing-drive.json ${e.id}: interval ${e.intervalKm} km isn't whole thousands`);
+  const ev = tdEvidence.entries[e.id];
+  if (!ev) throw new Error(`timing-drive.json ${e.id}: no evidence`);
+  const hasInterval = !!(e.intervalKm || e.intervalYears);
+  const notFinland = hasInterval && NOT_FINLAND.test(`${ev.evidence ?? ""} ${ev.note ?? ""}`);
+  const elsewhere = hasInterval && e.secondary && tdById.get(e.source).primary;
+  if (notFinland) tdNotFinland++;
+  if (elsewhere && !notFinland) tdElsewhere++;
+  (tdM[key] ??= []).push(b36(e.years[0] - 2000, 1) + b36(e.years[1] - 2000, 1) + fuel + drive + ((e.secondary ? 1 : 0) | (notFinland || elsewhere ? 2 : 0))
+    + b36(tdUsed.indexOf(e.source), 2) + b36((e.intervalKm ?? 0) / 1000, 2) + b36(e.intervalYears ?? 0, 1) + b36(Math.round((e.engine.displacementL ?? 0) * 100), 2)
+    + e.engine.badges.map((b) => tdRef(tdBadges, b)).join("") + "/" + (e.engine.codes ?? []).map((c) => tdRef(tdCodes, c)).join(""));
+}
+const td = { fuels: TD_FUELS, drives: TD_DRIVES, prefixes: TD_URL_PREFIXES, src: tdSrc, badges: tdBadges.join("|"), codes: tdCodes.join("|"),
+  m: Object.fromEntries(Object.entries(tdM).map(([k, list]) => [k, list.join(" ")])) };
 // Flats: the price of old flats by postcode, as [name, studio, two rooms, three rooms or more, terraced], each [€/m², sales] or 0.
 const SALE_TYPES = ["studio", "two_room", "three_room_plus", "terraced"];
 const saleCell = (c) => (c && c.eurPerM2 > 0 && c.sales > 0 ? [c.eurPerM2, c.sales] : 0);
@@ -351,6 +424,7 @@ const data = {
     tax,
     ev,
     run,
+    td,
     rentDepositMaxMonths: rent.deposit.maxMonthsOfRent.value,
     areaPrices,
     rents,
@@ -371,3 +445,4 @@ const end = html.indexOf("</script>", start);
 if (start < 0 || end < 0) throw new Error("index.html has no wi-data block");
 writeFileSync(file, html.slice(0, start + open.length) + json + html.slice(end));
 console.log(`wi-data: ${(json.length / 1024).toFixed(1)} KB, ${Object.keys(m).length} models, ${areas.length} fault areas`);
+console.log(`timing drive: ${(JSON.stringify(td).length / 1024).toFixed(1)} KB, ${tdFile.entries.length} entries for ${Object.keys(td.m).length} models, ${tdNotFinland} intervals not for Finland and ${tdElsewhere} not from the cited source, so not stated`);

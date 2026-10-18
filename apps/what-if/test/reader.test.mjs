@@ -131,7 +131,9 @@ const POWERTRAINS = [
   ["electric", "Tesla Model 3 Long Range\n2019\n142 000 km\nSähkö\nAutomaatti\nHinta 21 900 €\nYksityinen myyjä, Turku", "electric", /battery/i, /timing belt|clutch/i],
   ["electric, English", "Nissan Leaf 40 kWh\n2018\n96 000 km\nFuel: Electric\nAutomatic\nPrice 9 900 €\nPrivate seller, Espoo\nBattery health (SoH) 87 %", "electric", /at 87%/, /timing belt|clutch/i],
   ["electric, dealer", "Volkswagen ID.3 Pro\n2021\n68 000 km\nTäyssähkö\nHinta 19 500 €\nAutoliike, Tampere\nToimistomaksu 199 €", "electric", /electric motor fails/, /timing belt|clutch/i],
-  ["automatic petrol", "Toyota Corolla 1.6\n2012\n188 000 km\nBensiini\nAutomaatti\nHinta 7 900 €\nYksityinen myyjä, Oulu", "petrol", /timing belt/i, /clutch/i],
+  ["automatic petrol", "Mazda 2 1.5\n2012\n188 000 km\nBensiini\nAutomaatti\nHinta 7 900 €\nYksityinen myyjä, Oulu", "petrol", /timing belt/i, /clutch/i],
+  // data/timing-drive.json: the Corolla's 1.6 has a chain, so no belt anywhere and "engine" in who pays.
+  ["automatic petrol, chain", "Toyota Corolla 1.6\n2012\n188 000 km\nBensiini\nAutomaatti\nHinta 7 900 €\nYksityinen myyjä, Oulu", "petrol", /breaks down: engine, gearbox.*Timing chain \(/, /timing belt|clutch/i],
   ["hybrid", "Toyota Auris Hybrid\n2015\n180 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 10 900 €\nYksityinen myyjä, Turku", "hybrid-petrol", /hybrid battery/, /clutch/i],
   ["manual petrol", "Ford Focus 1.6\n2010\n160 000 km\nManuaali\nSähköikkunat, electric mirrors\nHinta 3 900 €\nYksityinen myyjä, Pori", null, /timing belt.*clutch/i, /battery/i],
 ];
@@ -223,7 +225,10 @@ group("low km", [
 group("hybrid battery", [
   ["chain, not checked", "Toyota Corolla 1.8 Hybrid\n2020\n60 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nJakoketju\nHinta 19 900 €\nAutoliike, Turku",
     ["asks about it second", (r) => /hybrid battery’s condition/.test(r.asks[1].q)]],
-  ["checked, belt unknown", samples.tests.find((t) => t.id === "car-4").text,
+  // The Auris's 1.8 Hybrid has a chain (data/timing-drive.json), so the report comes straight after the inspection.
+  ["checked, chain by the data", samples.tests.find((t) => t.id === "car-4").text,
+    ["no belt, the report second", (r) => ![...r.asks, ...(r.more ?? [])].some((a) => /timing belt/.test(a.q)) && /report from the hybrid battery check/.test(r.asks[1].q)]],
+  ["checked, belt unknown", "Kia Niro 1.6 Hybrid\n2017\n150 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHybridiakku tarkastettu 2026.\nHinta 13 900 €\nAutoliike, Turku",
     ["belt first, then the report", (r) => /timing belt/.test(r.asks[1].q) && /report from the hybrid battery check/.test(r.asks[2].q)]],
 ]);
 
@@ -349,12 +354,68 @@ group("real Impreza ad", [
   ["Subaru Impreza WRX", IMPREZA,
     ["reads it", (r, f) => f.kind === "car" && f.modelKey === "subaru|impreza" && f.year === 2005 && f.km === 272000 && f.price === 12500 && f.lastInspection === "2024-05" && f.badge === "WRX"],
     ["overdue inspection first", (r) => /since May 2024/.test(r.asks[0].q) && /due by May 2025/.test(r.asks[0].why) && /plate, ABC-123/.test(r.asks[0].why)],
-    ["belt asked", (r) => r.asks.some((a) => /timing belt/.test(a.q))],
+    ["belt asked, the general question: no Impreza in data/timing-drive.json", (r) => r.asks.some((a) => /Has the timing belt been changed\? Or does it have a chain\?/.test(a.q))
+      && !Object.keys(data.facts.td.m).some((k) => k.startsWith("subaru|impreza"))],
     ["seller asked", (r) => r.asks.some((a) => /dealer or a private seller/.test(a.q))],
     ["WRX caveat", (r) => /all Subaru Impreza cars together, not only the WRX/.test(r.asks[0].why) && !r.safer],
     ["tax from 219 g/km, total mass not kerb weight", (r, f) => f.co2 === 219 && f.totalMassKg === 1850 && taxRow(r)?.eur === 2 * yearOf(data.facts.tax.nedc[219])],
     ["no power judged", (r, f) => !f.modifications.length && !r.asks.concat(r.more ?? []).some((a) => /What was changed/.test(a.q))]],
 ]);
+
+// Timing belt or chain by engine (data/timing-drive.json): a claim only when every entry matching the model, year,
+// fuel and the engine the ad names agrees; otherwise, and for a model or engine not in the data, the general question.
+const beltQ = (r) => [...r.asks, ...(r.more ?? [])].find((a) => /timing belt/.test(a.q));
+const drive = (r) => strip(r.readout.find(([k]) => /^Timing (?:drive|belt)$/.test(k))?.join(": ") ?? "");
+const beltCost = (r) => r.costs.some((x) => x.what === "Timing belt, if due");
+const breakdown = (r) => r.cover.items.find((i) => /breaks down/.test(i.what)).what;
+const tdSourced = (r) => r.sources.some((s) => /^t-\d+$/.test(s) && engine.SRC[s].url);
+const GENERAL = /Has the timing belt been changed\? Or does it have a chain\?/;
+const general = (r) => GENERAL.test(beltQ(r)?.q ?? "") && /^Timing belt: /.test(drive(r)) && beltCost(r) && !r.sources.some((s) => s.startsWith("t-"));
+group("timing drive", [
+  ["Toyota Auris Hybrid 2015: chain", "Toyota Auris 1.8 Hybrid Active\n2015\n120 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 11 900 €\nYksityinen myyjä, Turku",
+    ["no belt question or cost", (r) => !beltQ(r) && !beltCost(r)], ["readout", (r) => drive(r) === "Timing drive: Timing chain (Auris HSD press kit)"],
+    ["engine, not timing belt, in who pays", (r) => breakdown(r) === "It breaks down: engine, gearbox, hybrid battery"], ["sourced", tdSourced]],
+  ["VW Golf 1.6 TDI 2014: belt, no interval in the source", "Volkswagen Golf 1.6 TDI\n2014\n150 000 km\nDiesel\nManuaali\nHinta 7 900 €\nYksityinen myyjä, Oulu",
+    ["names its belt", (r) => beltQ(r)?.q === "“Has the timing belt been changed?”" && /^This engine has a timing belt \(Volkswagen Self Study Program 820433\)\. Belts are usually changed around every/.test(strip(beltQ(r).why))],
+    ["no interval stated", (r) => !/This engine’s belt is changed every/.test(strip(beltQ(r).why))],
+    ["cost and readout", (r) => beltCost(r) && /^Timing drive: Timing belt \(Volkswagen/.test(drive(r)) && breakdown(r) === "It breaks down: timing belt, clutch, gearbox"], ["sourced", tdSourced]],
+  ["Ford Focus 1.6 2010: belt with its interval", "Ford Focus 1.6\n2010\n160 000 km\nBensiini\nManuaali\nHinta 3 900 €\nYksityinen myyjä, Pori",
+    ["states it with its source", (r) => /^This engine’s belt is changed every 160,000 km or 8 years, whichever comes first, says Haynes’s maintenance plan for the Ford Focus Mk II 2004-2012 \(estimate\)\./.test(strip(beltQ(r)?.why))],
+    ["against the car's km and age", (r) => /This one has driven 160,000 km and is about 16 years old, so it is past that/.test(strip(beltQ(r).why))],
+    ["readout", (r) => /^Timing drive: Timing belt, every 160,000 km or 8 years, whichever comes first \(Haynes’s maintenance plan for the Ford Focus Mk II 2004-2012, estimate\)$/.test(drive(r))],
+    ["the source says estimate", (r) => r.sources.some((s) => /^t-/.test(s) && /\(estimate\)$/.test(engine.SRC[s].text))]],
+  ["Peugeot 308 1.6 BlueHDi 2016: interval not for Finland", "Peugeot 308 SW 1.6 BlueHDi 120\n2016\n170 000 km\nDiesel\nManuaali\nHinta 8 900 €",
+    ["belt, no interval", (r) => /^This engine has a timing belt \(Haynes’s/.test(strip(beltQ(r)?.why)) && !/175,000|every \d/.test(drive(r)) && !/175,000/.test(strip(beltQ(r).why))]],
+  ["Ford Fiesta 1.0 EcoBoost 2014: wet belt", "Ford Fiesta 1.0 EcoBoost\n2014\n90 000 km\nBensiini\nManuaali\nHinta 6 900 €",
+    ["says so", (r) => /^This engine has a wet belt, a timing belt that runs in engine oil \(/.test(strip(beltQ(r)?.why)) && /^Timing drive: Wet belt, in engine oil \(/.test(drive(r))]],
+  ["engine code", "Volkswagen Golf\n2014\n150 000 km\nDiesel\nMoottorikoodi CRKB\nHinta 7 900 €", ["belt by its code", (r) => /^Timing drive: Timing belt \(/.test(drive(r))]],
+  ["the ad's belt change with the data's belt", "Volkswagen Golf 1.6 TDI\n2014\n150 000 km\nDiesel\nManuaali\nJakohihna vaihdettu 120 000 km\nHinta 7 900 €",
+    ["receipt", (r) => /This engine has a timing belt \(Volkswagen/.test(strip(beltQ(r)?.why)) && /changed at 120,000 km, says the ad$/.test(drive(r))]],
+  ["the ad says belt, the data chain: the ad stands", "Toyota Auris 1.8 Hybrid\n2015\n150 000 km\nHybridi\nAutomaatti\nJakohihna vaihdettu 2022\nHinta 7 900 €",
+    ["no claim", (r) => drive(r) === "Timing belt: changed in 2022, says the ad" && !r.sources.some((s) => s.startsWith("t-"))]],
+  ["the ad says chain", "Toyota Corolla 1.8 Hybrid\n2020\n60 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nJakoketju\nHinta 19 900 €\nAutoliike, Turku",
+    ["as before", (r) => drive(r) === "Timing belt: timing chain, says the ad" && !beltQ(r)]],
+  // Audi's 2.0 TDI has a belt and its 2.7 TDI a chain: "TDI" alone matches both.
+  ["entries disagree", "Audi A4 Avant TDI quattro\n2010\n200 000 km\nDiesel\nAutomaatti\nHinta 9 900 €", ["general question", general]],
+  // A Golf 1.4 TSI of 2012 isn't in the data; its "1.4" must not match the 1.4 MPI entry.
+  ["engine not in the data", "Volkswagen Golf 1.4 TSI\n2012\n160 000 km\nBensiini\nManuaali\nHinta 6 900 €", ["general question", general]],
+  ["model not in the data", "Skoda Kodiaq 2.0 TDI\n2018\n150 000 km\nDiesel\nAutomaatti\nHinta 24 900 €", ["general question", general]],
+  ["make not in Traficom's data", "Lada Niva 1.7\n2012\n100 000 km\nBensiini\nManuaali\nHinta 3 900 €", ["general question", general]],
+  ["real Impreza ad", IMPREZA, ["general question", general]],
+]);
+{
+  // Cars built from the AI's fields have no engine text: the general question, nothing undefined.
+  const bad = [];
+  for (const fields of [{ make: "Toyota", model: "Auris", year: 2015, km: 150000, price: 9000, fuel: "hybrid-petrol" },
+    { make: "Volkswagen", model: "Golf", year: 2014, km: 150000, price: 7900, fuel: "diesel" }]) {
+    const r = engine.fromAI("car", fields, "", "m");
+    check(`AI ${fields.model}`, r);
+    if (!general(r)) bad.push(`${fields.model}: ${drive(r)} · ${beltQ(r)?.q}`);
+    if (/undefined|NaN/.test(JSON.stringify(r))) bad.push(`${fields.model}: undefined or NaN`);
+  }
+  if (bad.length) structural++;
+  console.log(`${bad.length ? "FAIL" : "pass"}  AI-built belt    ${bad.join("; ")}`);
+}
 
 // Running costs (data/car-running-costs.json): energy for two years from the ad's own combined consumption, never
 // a guessed one; an electric car's battery warranty, test price and service price; Toyota-group hybrid cover; recalls.
