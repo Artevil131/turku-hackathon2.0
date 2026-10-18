@@ -73,6 +73,12 @@ ok("AI fields: the rules' values win (year 2010 and €5,000 from the ad), the A
 ok("AI fields: garbage gives no result", engine.fromAI("car", { make: 42, model: ["x"], year: "soon" }, "", "m") === null);
 const evil = engine.fromAI("car", { make: "<img src=x onerror=alert(1)>", model: "<b>X</b>" }, "", "m");
 ok("AI fields: HTML from the AI is escaped", !evil || !/<img|<b>/.test(JSON.stringify(evil)), JSON.stringify(evil?.name));
+// The AI sends no CO2, first use or total mass: the tax row goes to Traficom's calculator, with no undefined or NaN text.
+const aiEv = engine.fromAI("car", { make: "Nissan", model: "Leaf", year: 2019, km: 60000, price: 12900, fuel: "electric", sellerType: "private", flags: { imported: true, hybridBatteryChecked: false } }, "", "m");
+const aiTax = aiEv?.costs?.find((x) => x.what === "Vehicle tax");
+ok("AI fields: new car fields degrade gracefully (tax to the calculator, electric comparison, import ask)",
+  full(aiEv) && aiTax?.eur == null && /ajoneuvoverolaskuri/.test(aiTax?.link?.href ?? "") && !/undefined|NaN/.test(JSON.stringify(aiEv))
+  && /electric cars from 2019/.test(aiEv.safer?.title ?? "") && /before it came to Finland/.test(JSON.stringify(aiEv.asks)), JSON.stringify(aiTax));
 
 // 4. A draft card from a fixture.
 const d = engine.draftResult(draftFixture.draft, draftFixture.model);

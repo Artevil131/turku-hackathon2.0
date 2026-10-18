@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "Traficom model keys that are electric only",
+    "purpose": "The safer-choice comparison for an electric car compares it only with these models. A key is listed only when every car Traficom counts under it is electric, according to the maker's own page. Keys are 'make|model' as in traficom-inspections.json (lowercase, no accents).",
+    "checked": "2026-10-18",
+    "howChecked": "Each URL was opened on 18.10.2026 and the quoted phrase read on the page, except Tesla's, which refuses automated requests (HTTP 403); those URLs were found on tesla.com by a web search on the same day, and Tesla builds only electric cars.",
+    "hybrids": "No hybrid-only list. Of the hybrid model keys, only toyota|prius, toyota|prius plus, toyota|prius plug-in hybrid and lexus|ct are hybrid only, and none of them has 800 inspections in any year (the safer choice's floor), so a hybrid comparison would always be empty. Toyota Auris, Corolla, Yaris, C-HR, RAV4, Kia Niro, Hyundai Ioniq and Lexus UX/NX/RX were also sold with petrol, diesel or fully electric versions under the same key."
+  },
+  "electricOnly": [
+    { "key": "nissan|leaf", "name": "Nissan Leaf", "source": { "publisher": "Nissan Finland", "url": "https://www.nissan.fi/ajoneuvot/henkiloautot/leaf.html", "quote": "Täyssähköinen perheauto" } },
+    { "key": "tesla|model 3", "name": "Tesla Model 3", "source": { "publisher": "Tesla", "url": "https://www.tesla.com/en_sa/model3", "quote": "Model 3 (fetch blocked, see meta.howChecked)" } },
+    { "key": "tesla|model s", "name": "Tesla Model S", "source": { "publisher": "Tesla", "url": "https://www.tesla.com/en_ca/models", "quote": "Model S - Luxury Electric Sedan" } },
+    { "key": "tesla|model x", "name": "Tesla Model X", "source": { "publisher": "Tesla", "url": "https://www.tesla.com/en_ca/modelx", "quote": "Model X (fetch blocked, see meta.howChecked)" } },
+    { "key": "tesla|model y", "name": "Tesla Model Y", "source": { "publisher": "Tesla", "url": "https://www.tesla.com/modely", "quote": "Model Y (fetch blocked, see meta.howChecked)" } },
+    { "key": "volkswagen|id.3", "name": "Volkswagen ID.3", "source": { "publisher": "Volkswagen Finland", "url": "https://www.volkswagen.fi/fi/mallit/id3.html", "quote": "tilava ja kompakti sähköauto" } },
+    { "key": "volkswagen|id.4", "name": "Volkswagen ID.4", "source": { "publisher": "Volkswagen Finland", "url": "https://www.volkswagen.fi/fi/mallit/id4.html", "quote": "Täysin sähköinen katumaasturi" } },
+    { "key": "skoda|enyaq", "name": "Škoda Enyaq", "source": { "publisher": "Škoda Finland", "url": "https://www.skoda.fi/autot/enyaq/enyaq", "quote": "Täyssähkö" } },
+    { "key": "hyundai|ioniq5", "name": "Hyundai IONIQ 5", "source": { "publisher": "Hyundai Finland", "url": "https://www.hyundai.fi/mallisto/ioniq-5/", "quote": "IONIQ 5 on yksi markkinoiden nopeimmin latautuvia sähköautoja" } },
+    { "key": "polestar|2", "name": "Polestar 2", "source": { "publisher": "Polestar", "url": "https://www.polestar.com/global/news/polestar-2-our-first-fully-electric-car-is-still-as-beautiful-as-ever/", "quote": "Polestar 2: Our first fully electric car" } },
+    { "key": "mercedes-benz|eqa", "name": "Mercedes-Benz EQA", "source": { "publisher": "Mercedes-Benz Finland", "url": "https://www.mercedes-benz.fi/models/eqa-806-2/", "quote": "listed under Täyssähköautot" } }
+  ],
+  "mixedKeys": [
+    { "key": "volkswagen|golf", "why": "Includes the e-Golf (the reader maps 'e-Golf' to this key)" },
+    { "key": "volkswagen|up!", "why": "Includes the e-up!" },
+    { "key": "seat|mii", "why": "Petrol Mii and Mii electric share the key" },
+    { "key": "skoda|citigo", "why": "Petrol Citigo and Citigo e iV share the key" },
+    { "key": "hyundai|kona", "why": "Petrol, hybrid and electric" },
+    { "key": "hyundai|ioniq", "why": "Hybrid, plug-in hybrid and electric" },
+    { "key": "kia|niro", "why": "Hybrid, plug-in hybrid and electric" },
+    { "key": "kia|soul", "why": "Petrol, diesel and electric" },
+    { "key": "peugeot|208", "why": "Includes the e-208" },
+    { "key": "peugeot|2008", "why": "Includes the e-2008" },
+    { "key": "bmw|i3", "why": "The i3 REx has a petrol range extender" },
+    { "key": "opel|ampera", "why": "The 2012–2013 Ampera has a petrol range extender" }
+  ],
+  "notListed": "audi|e-tron, jaguar|i-pace, mercedes-benz|eqc, ford|mustang mach-e and renault|zoe are electric, but no maker page for them was found on 18.10.2026 (the models are discontinued or renamed). None has 800 inspections in a year, so leaving them out changes no comparison; an ad for one gets the old behaviour unless it says the car is electric."
+}

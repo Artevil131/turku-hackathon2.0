@@ -22,7 +22,7 @@ const show = process.argv.includes("--show");
 // The fields the rules use. Only fields with a non-null expected value are compared.
 const CORE = {
   car: ["make", "model", "year", "km", "price", "previousPrice", "officeFee", "fuel", "gearbox", "sellerType", "city", "lastInspection",
-    "flags.timingBeltReplaced", "flags.timingChain", "flags.serviceBook", "flags.rustMentioned"],
+    "flags.timingBeltReplaced", "flags.timingChain", "flags.serviceBook", "flags.rustMentioned", "flags.hybridBatteryChecked", "flags.imported"],
   home: ["buildingYear", "livingAreaM2", "debtFreePrice", "sellingPrice", "debtShare", "maintenanceCharge", "financingCharge", "plotRentCharge",
     "city", "district", "rooms", "pipeRenovation.status", "pipeRenovation.years"],
   rent: ["rent", "deposit", "depositMonths", "buildingYear", "livingAreaM2", "homeInsuranceRequired", "city", "district", "rooms"],
@@ -146,6 +146,96 @@ for (const [label, text, fuel, must, never] of POWERTRAINS) {
 }
 if (powerBad.length) structural++;
 console.log(`${powerBad.length ? "FAIL" : "pass"}  powertrains      ${powerBad.join("; ")}`);
+
+// Each ad must give a full result; `want` lists what must be true of it. `said` is everything a person reads.
+const said = (r) => strip(JSON.stringify([r.asks, r.costs, r.safer, r.sources]));
+const taxRow = (r) => r.costs?.find((x) => x.what === "Vehicle tax");
+const group = (label, cases) => {
+  const bad = [];
+  for (const [name, text, ...wants] of cases) {
+    const r = engine.analyse(text);
+    check(`${label}: ${name}`, r);
+    for (const [why, ok] of wants) if (!ok(r, engine.read(text))) bad.push(`${name}: ${why}`);
+  }
+  if (bad.length) structural++;
+  console.log(`${bad.length ? "FAIL" : "pass"}  ${label.padEnd(16)} ${bad.join("; ")}`);
+};
+
+// 1. An electric car is compared only with electric models (data/powertrain-models.json). In 2018 no other electric
+// model had 800 inspections, so the result says so instead of suggesting a petrol car.
+const EV_NAMES = /^(?:Nissan Leaf|Tesla Model [3SXY]|Volkswagen ID\.[34]|\S+ Enyaq|Hyundai Ioniq ?5|Polestar 2|Mercedes-Benz EQA)$/i;
+const evOnly = (r) => r.safer.bars.filter((b) => !/this ad|All cars/.test(b.label)).every((b) => EV_NAMES.test(strip(b.label)));
+group("electric safer", [
+  ["Leaf 2018", "Nissan Leaf 40 kWh\n2018\n96 000 km\nFuel: Electric\nAutomatic\nPrice 9 900 €\nPrivate seller, Espoo",
+    ["says too few", (r) => /Too few electric cars from 2018/.test(r.safer?.title)], ["no petrol cars", (r) => !/Avensis|Auris|Golf/.test(said(r))]],
+  ["Leaf 2019", "Nissan Leaf\n2019\n70 000 km\nSähkö\nAutomaatti\nHinta 13 900 €\nYksityinen myyjä, Turku",
+    ["electric title", (r) => /electric cars from 2019/.test(r.safer?.title)], ["Model 3 in it", (r) => /Tesla Model 3/.test(said(r))], ["electric only", (r) => evOnly(r)]],
+  ["Model 3, no fuel line", "Tesla Model 3 Long Range\n2021\n80 000 km\nAutomaatti\nHinta 26 900 €\nAutoliike, Vantaa",
+    ["electric only", (r) => /electric cars from 2021/.test(r.safer?.title) && evOnly(r)], ["battery, no belt", (r) => /battery’s health/.test(said(r)) && !/timing belt/i.test(said(r)), ]],
+  ["e-Golf stays mixed", "Volkswagen e-Golf\n2018\n90 000 km\nAutomaatti\nHinta 12 900 €\nYksityinen myyjä",
+    ["old comparison", (r) => /^(Common cars|This one is among the cars) from 2018/.test(r.safer?.title)]],
+]);
+
+// 2. Vehicle tax: the worked examples in car-rules.json, then the same through ads, and the calculator when inputs are missing.
+const carRules = JSON.parse(readFileSync(join(root, "data", "car-rules.json"), "utf8"));
+const EXAMPLE_INPUTS = {
+  "Petrol car, NEDC 150 g/km": { fuel: "petrol", co2: 150, co2Method: "NEDC", year: 2015 },
+  "Diesel car, NEDC 120 g/km, total mass 1,900 kg": { fuel: "diesel", co2: 120, co2Method: "NEDC", year: 2015, totalMassKg: 1900 },
+  "Electric car first used on or after 1.10.2021, total mass 2,200 kg": { fuel: "electric", firstUse: "2021-10-01", totalMassKg: 2200 },
+};
+const exBad = carRules.vehicleTax.examples.map((ex) => [ex, engine.vehicleTax(EXAMPLE_INPUTS[ex.label] ?? {})])
+  .filter(([ex, got]) => got.eur !== ex.eurPerYear).map(([ex, got]) => `${ex.label}: expected ${ex.eurPerYear}, got ${JSON.stringify(got)}`);
+if (!exBad.length && engine.vehicleTax({ fuel: "electric", firstUse: "2021-09-30", totalMassKg: 2200 }).eur !== Math.floor(((291 + 19 * 22) * 365) / 10) / 100) exBad.push("electric before 1.10.2021 has no extra");
+if (exBad.length) structural++;
+console.log(`${exBad.length ? "FAIL" : "pass"}  tax examples     ${exBad.join("; ")}`);
+const ex = Object.fromEntries(carRules.vehicleTax.examples.map((e, i) => [i, e.eurPerYear]));
+const calcLink = (r) => taxRow(r)?.eur == null && /ajoneuvoverolaskuri/.test(taxRow(r)?.link?.href ?? "");
+group("vehicle tax", [
+  ["petrol NEDC", "Toyota Avensis 1.8\n2014\n150 000 km\nBensiini\nManuaali\nHinta 7 900 €\nCO2-päästöt (NEDC) 150 g/km\nYksityinen myyjä, Turku",
+    ["two years of example 1", (r) => taxRow(r)?.eur === 2 * ex[0]]],
+  ["diesel, Nettiauto labels", "Skoda Octavia\n2015\n189 000 km\nDiesel\nAutomaatti\nHinta 9 990 €\nKäyttöönottopäivä\n18.05.2015\nEnergiamerkintä\nB\n120 g/km (NEDC)\nKokonaismassa\n1 900 kg\nOmamassa\n1 340 kg\nAutoliike, Tampere",
+    ["two years of example 2", (r) => taxRow(r)?.eur === 2 * ex[1]], ["reads 2015-05-18", (r, f) => f.firstUse === "2015-05-18" && f.totalMassKg === 1900]],
+  ["electric, first reg. 11-2021", "Volkswagen ID.4 Pro\nVuosimalli 2022 (ensirek. 11-2021)\n40 000 km\nSähkö\nHinta 32 900 €\nKokonaismassa 2 200 kg\nAutoliike, Espoo",
+    ["two years of example 3", (r) => taxRow(r)?.eur === 2 * ex[2]]],
+  ["diesel, only omamassa", "Skoda Octavia\n2015\n189 000 km\nDiesel\nHinta 9 990 €\nCO2 120 g/km (NEDC)\nOmamassa 1 340 kg\nYksityinen myyjä, Turku",
+    ["calculator, never the kerb weight", (r, f) => calcLink(r) && f.totalMassKg == null && /total mass/.test(taxRow(r).note)]],
+  ["CO2 without a method", "Toyota Avensis\n2010\n243 000 km\nPetrol\nPrice 6 200 €\nEnergy label\nD\n154 g/km\nPrivate seller, Kuopio",
+    ["both amounts, no total", (r) => calcLink(r) && /NEDC/.test(taxRow(r).note) && /WLTP/.test(taxRow(r).note)]],
+  ["nothing about tax", "Ford Focus 1.6\n2010\n160 000 km\nBensiini\nManuaali\nHinta 3 900 €\nYksityinen myyjä, Pori",
+    ["calculator", (r) => calcLink(r) && /CO2 figure/.test(taxRow(r).note)]],
+  ["ordinary hybrid", "Toyota Auris Hybrid\n2015\n180 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nCO2 (NEDC) 79 g/km\nKokonaismassa 1 760 kg\nHinta 10 900 €\nYksityinen myyjä, Turku",
+    ["calculator", (r) => calcLink(r)]],
+]);
+
+// 3. Far fewer km than the model's median for its year: worth checking, never an accusation.
+group("low km", [
+  ["Avensis at 12,000 km", "Toyota Avensis\n2010\n12 000 km\nBensiini\nManuaali\nHinta 6 000 €\nYksityinen myyjä, Kuopio",
+    ["worth checking", (r) => /under half the median, which is worth checking/.test(strip(r.asks[0].why)) && /traficom/i.test(r.asks[0].link?.href ?? "")]],
+  ["Avensis at 243,000 km", "Toyota Avensis\n2010\n243 000 km\nBensiini\nManuaali\nHinta 6 000 €\nYksityinen myyjä, Kuopio",
+    ["nothing said", (r) => !/worth checking/.test(strip(r.asks[0].why))]],
+]);
+
+// 4. A hybrid's battery: a report if the ad says it was checked; below a timing belt that may be due.
+group("hybrid battery", [
+  ["chain, not checked", "Toyota Corolla 1.8 Hybrid\n2020\n60 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nJakoketju\nHinta 19 900 €\nAutoliike, Turku",
+    ["asks about it second", (r) => /hybrid battery’s condition/.test(r.asks[1].q)]],
+  ["checked, belt unknown", samples.tests.find((t) => t.id === "car-4").text,
+    ["belt first, then the report", (r) => /timing belt/.test(r.asks[1].q) && /report from the hybrid battery check/.test(r.asks[2].q)]],
+]);
+
+// 5. Imported cars, and the words that don't make one.
+const imp = (r, f) => f.flags.imported === true && /before it came to Finland/.test(said(r));
+const notImp = (r, f) => f.flags.imported === undefined && !/before it came to Finland/.test(said(r));
+const golf = (line) => `Volkswagen Golf 1.4 TSI\n2016\n120 000 km\nBensiini\nAutomaatti\nHinta 11 900 €\nAutoliike, Espoo\n${line}`;
+group("imported", [
+  ["tuontiauto Saksasta", golf("Tuontiauto Saksasta, maahantuotu 2019."), ["imported", imp]],
+  ["tuotu Ruotsista", golf("Auto on tuotu Ruotsista 2021, huoltokirja mukana."), ["imported", imp]],
+  ["English", golf("Imported from Germany in 2020."), ["imported", imp]],
+  ["importer's warranty", golf("Maahantuojan takuu voimassa 2027 asti."), ["not imported", notImp]],
+  ["official importer", golf("Virallisen maahantuojan huoltama Suomi-auto."), ["not imported", notImp]],
+  ["ei tuontiauto", golf("Suomi-auto, ei tuontiauto."), ["not imported", notImp]],
+  ["not imported", golf("Not imported, first owner in Finland."), ["not imported", notImp]],
+]);
 
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],

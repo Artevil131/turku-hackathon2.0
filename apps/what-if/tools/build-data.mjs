@@ -11,6 +11,7 @@ const trafi = read("traficom-inspections.json");
 const housing = read("housing-rules.json");
 const car = read("car-rules.json");
 const rent = read("rent-rules.json");
+const powertrain = read("powertrain-models.json");
 // Motorcycle facts are used as they are: every fact the page shows carries its own source id.
 const { meta: _motoMeta, notes: _motoNotes, ...moto } = read("moto-rules.json");
 
@@ -74,6 +75,33 @@ const belt = wear(/timing belt/), clutch = wear(/clutch/), service = wear(/perio
 const fee = trafi.inspectionPrices.byYear.find((y) => y.year === 2025);
 const disputes = car.extras.usedCarDisputes;
 
+// Vehicle tax from 1.1.2026 (Ajoneuvoverolaki 1281/2003 as amended by 814/2024): the tables and rates as they are in
+// car-rules.json. The few numbers that are only in its text (the electric-car rule, 400 g/km and more) are read from
+// that text, so a change there can't go unnoticed.
+const vt = car.vehicleTax;
+const evRule = vt.basicTax.evRule.match(/plus ([\d.]+) cents\/day/);
+const evFrom = vt.basicTax.evRule.match(/on or after (\d{1,2})\.(\d{1,2})\.(\d{4})/);
+const over400 = vt.basicTax.tableIndexNote.match(/400 g\/km or more: ([\d.]+) cents\/day/);
+if (!evRule || !evFrom || !over400) throw new Error("car-rules.json vehicleTax: the electric-car rule or the 400 g/km rate changed shape");
+const pad2 = (n) => String(n).padStart(2, "0");
+const tax = {
+  nedc: vt.basicTax.table1NEDC_centsPerDayByGkm,
+  wltp: vt.basicTax.table1A_WLTP_centsPerDayByGkm,
+  over400: +over400[1],
+  mass: vt.basicTax.table2ByTotalMassKg.map((r) => [r.maxKg, r.centsPerDay]),
+  motive: vt.motivePowerTax.centsPer100kgPerDay,
+  evExtra: +evRule[1],
+  evFrom: `${evFrom[3]}-${pad2(evFrom[2])}-${pad2(evFrom[1])}`,
+  lawUrl: vt.basicTax.source.find((s) => s.ref === "AVL").url,
+  calcUrl: vt.officialCalculator.url,
+};
+if (tax.nedc.length !== 400 || tax.wltp.length !== 400) throw new Error("vehicle tax tables must have 400 rows (0–399 g/km)");
+for (const ex of vt.examples) if (!(ex.eurPerYear > 0)) throw new Error(`vehicle tax example without eurPerYear: ${ex.label}`);
+
+// Model keys that are electric only (powertrain-models.json, each with the maker's page).
+const ev = powertrain.electricOnly.map((e) => e.key);
+for (const k of ev) if (!m[k]) throw new Error(`powertrain-models.json: ${k} is not a Traficom model key`);
+
 const data = {
   v: 1,
   trafi: {
@@ -101,6 +129,8 @@ const data = {
     service: { low: service.costEurLow, high: service.costEurHigh, typical: service.costEurTypical, url: firstUrl(service.source) },
     inspectionFee: { walkIn: fee.periodicInspection, booked: fee.periodicInspectionBooked, year: fee.year, url: srcUrl(trafi.sources, "traficom-tilannekatsaus-2025") },
     disputes: { usedShare: disputes.facts[0].value, defectShare: disputes.facts[1].value, url: disputes.source.url },
+    tax,
+    ev,
     rentDepositMaxMonths: rent.deposit.maxMonthsOfRent.value,
     moto,
   },
