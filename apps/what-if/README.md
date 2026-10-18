@@ -19,7 +19,7 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
 | `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses and real-page quirks. Currently 17 of 17 pass. |
 | `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four). Currently 110 of 110 pass. |
-| `test/timing-drive.test.mjs` | Checks `data/timing-drive.json`: known source ids, Traficom make and model names, no two entries an ad could match, and prints the share of 2025 inspections covered. Not yet used by the page. |
+| `test/timing-drive.test.mjs` | Checks `data/timing-drive.json`: known source ids, Traficom make and model names, no two entries an ad could match, and prints the share of 2025 inspections covered. The page names a car's timing drive from it when the ad names the engine and all matching entries agree (D-036). |
 
 ```
 node apps/what-if/tools/build-data.mjs
