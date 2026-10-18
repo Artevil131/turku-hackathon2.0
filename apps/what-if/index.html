@@ -121,6 +121,10 @@ textarea.short { min-height: 84px; }
 /* What the reader found, for checking against the ad */
 .read { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 12px; }
 .read summary { cursor: pointer; font: 600 15px/1.3 var(--font); color: var(--blue); }
+.more-asks { border-top: 1px solid var(--line); padding-top: 14px; }
+.more-asks summary { cursor: pointer; font: 600 16px/1.3 var(--font); color: var(--blue); }
+.more-asks[open] summary { margin-bottom: 4px; }
+.more-asks .ask:first-child { border-top: 0; }
 dl.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; margin: 12px 0 0; font-size: 15px; }
 dl.kv dt { color: var(--muted); }
 dl.kv dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
@@ -1293,6 +1297,8 @@ function createEngine(DATA, today) {
       whatif: "What if services were skipped? Worn parts show up later as bigger repairs.", cost: "", who: "you",
       tag: "AutoJerry 2026 service prices", real: true }, ["service"]]);
     for (const [ask, src] of more.slice(0, 2)) { asks.push(ask); sources.push(...src); }
+    // Everything else that fired goes under them, collapsed, in the same order.
+    const extra = more.slice(2).map(([ask, src]) => { sources.push(...src); return ask; });
 
     // Costs over two years: only numbers from the ad or with a source.
     const costs = [];
@@ -1370,7 +1376,7 @@ function createEngine(DATA, today) {
       kind: "car", stamp: "Used car", name, specs, price: c.price, priceLabel: "Asking price",
       steps: ["Reading the ad", c.year ? `Finding inspection results for ${c.year} ${name}` : `Finding inspection results for ${name}`,
         c.km ? `Checking what usually needs doing at ${grp(c.km)} km` : "Checking what usually needs doing", "Checking who pays if something goes wrong"],
-      asks: asks.slice(0, 3), period: "Over two years", costs,
+      asks: asks.slice(0, 3), more: extra, period: "Over two years", costs,
       costNote: "Only numbers from the ad or with a source. Insurance depends on you, so get your own price below.",
       safer, cover,
       later: { label: "After you buy", notif: { meta: "Tue 20:12", title: "Frost on your route tomorrow", text: "Black ice likely around 6:40. Leave ten minutes early and keep your distance." }, list: later },
@@ -2555,8 +2561,8 @@ function barsHtml(bars) {
     </div>`;
 }
 
-function asksHtml(c) {
-  return c.asks.map((a) => `
+function asksHtml(c, list = c.asks) {
+  return list.map((a) => `
     <li class="ask"><div class="ask-body">
       <span class="q">${a.q}</span>
       <p>${a.why}</p>
@@ -2570,6 +2576,17 @@ function asksHtml(c) {
       ${a.link ? `<a class="link" href="${a.link.href}" target="_blank" rel="noopener">${a.link.text} ↗</a>` : ""}
       <span class="tag ${a.real ? "real" : ""}">${a.tag}</span>
     </div></li>`).join("");
+}
+
+// Asks beyond the three, collapsed under them in the same style, numbered on from 4. Any result may carry `more`.
+function moreHtml(c) {
+  const n = c.more?.length ?? 0;
+  if (!n) return "";
+  return `
+      <details class="more-asks">
+        <summary>${n} more thing${n === 1 ? "" : "s"} to check</summary>
+        <ol class="asks" start="${c.asks.length + 1}" style="counter-reset: ask ${c.asks.length}">${asksHtml(c, c.more)}</ol>
+      </details>`;
 }
 
 function stackHtml(rows, scaleMax, label) {
@@ -2751,6 +2768,7 @@ function result(c, key, still) {
       <p class="eyebrow">Before you sign</p>
       <h2>Ask these ${c.asks.length} things</h2>
       <ol class="asks">${asksHtml(c)}</ol>
+      ${moreHtml(c)}
     </section>
     ${costHtml(c)}
     ${compareHtml(c)}

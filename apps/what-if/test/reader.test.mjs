@@ -86,7 +86,7 @@ const check = (label, r) => {
   if (r.message) problems.push(`message instead of a result: ${r.message}`);
   else {
     if (r.asks.length !== 3) problems.push(`${r.asks.length} asks`);
-    r.asks.forEach((a, i) => { if (!a.who) problems.push(`ask ${i + 1} has no who-pays`); if (!a.tag) problems.push(`ask ${i + 1} has no tag`); });
+    [...r.asks, ...(r.more ?? [])].forEach((a, i) => { if (!a.who) problems.push(`ask ${i + 1} has no who-pays`); if (!a.tag) problems.push(`ask ${i + 1} has no tag`); });
     if (!r.insure?.title || !/reminders/i.test(r.insure.title)) problems.push("no hand-over card");
     if (!r.cover?.items?.length) problems.push("no who-pays section");
     for (const id of r.sources) if (!engine.SRC[id]?.url) problems.push(`unknown source ${id}`);
@@ -267,6 +267,14 @@ group("variant badge", [
   ["BMW M3", "BMW M3\n2010\n120 000 km\nBensiini\nManuaali\nHinta 29 900 €\nYksityinen myyjä, Vantaa", caveat("M3", "BMW 3 Series")],
   ["Golf R-Line is a trim", "Volkswagen Golf R-Line 1.4 TSI\n2016\n120 000 km\nBensiini\nAutomaatti\nHinta 13 900 €\nAutoliike, Espoo", plain],
   ["Focus ST-Line is a trim", "Ford Focus ST-Line 1.0\n2019\n60 000 km\nBensiini\nManuaali\nHinta 15 900 €\nAutoliike, Turku", plain],
+]);
+
+// Asks beyond the three go into `more`, in order: none is lost, and the three stay the top-ranked ones.
+group("more to check", [
+  ["imported, modified, rusty, belt due", "Volkswagen Golf 1.4 TSI\n2012\n160 000 km\nBensiini\nManuaali\nHinta 6 900 €\nYksityinen myyjä, Turku\nTuontiauto Saksasta. Chipattu. Pientä ruostetta helmoissa.",
+    ["three asks, belt second", (r) => r.asks.length === 3 && /timing belt/.test(r.asks[1].q) && /What was changed/.test(r.asks[2].q)],
+    ["the rest in more", (r) => ["before it came to Finland", "take it to a garage", "rust", "service history"].every((w) => r.more?.some((a) => a.q.includes(w)))],
+    ["their sources too", (r) => r.sources.includes("kkv") && r.sources.includes("service")]],
 ]);
 
 // How ads spell models that Traficom names differently.
