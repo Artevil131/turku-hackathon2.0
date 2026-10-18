@@ -1,5 +1,9 @@
 # The listing model: how to change the AI
 
+**Retired on 2026-10-18**, after the hackathon: the sync timer is disabled, the pin and
+`project-model.env` are moved to `~/llm/etc/retired-turku-hackathon2.0/` on chili and the block
+in `ninfer.env` is removed, so merges no longer change the model and chili's own default applies.
+
 The "Analyse an ad" feature (D-024), an experimental AI reader beside the If entry What if… (`apps/what-if`, rule-based, D-017, D-018), has two halves, and both are changed
 through this repository. Nobody needs an account on the GPU server.
 

@@ -1,5 +1,10 @@
 # The API on chili, behind a team token
 
+**Taken down on 2026-10-18**, after the hackathon: `ahead-api`, `ahead-tunnel` and the
+`hackathon-model-sync` timer are stopped and disabled on chili, and the team token is deleted
+(only its hash is left in `~/.config/ahead/api.env`). To bring it back, follow the install below
+and make a new token.
+
     phone / laptop ──HTTPS──▶ Cloudflare Tunnel ──▶ apps/api on chili (127.0.0.1:8787)
                                                       │  team token checked, ads per hour limited
                                                       ▼

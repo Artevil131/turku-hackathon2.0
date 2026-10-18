@@ -1,5 +1,9 @@
 # What if… on Cloudflare
 
+**Since 2026-10-18** the listing reader on chili is down (deploy/api), so `/api/read` always
+answers `ai_unavailable` and the page reads ads with its rules alone. The Worker's two secrets
+are now useless; whoever owns the Worker can delete them (`wrangler secret delete`).
+
 Live at **https://what-if.what-if.workers.dev** (DECISIONS.md D-028, D-029): the page from
 `apps/what-if/index.html`, served by a Worker on Cloudflare's free plan, plus one route,
 `POST /api/read`, that passes ads the page's rules can't read, or a screenshot the person chose
