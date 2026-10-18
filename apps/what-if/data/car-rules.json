@@ -819,6 +819,18 @@
       "rule": "For passenger cars and vans up to 3,500 kg, the basic tax depends on the manufacturer's CO2 value in the register: Table 1 for NEDC-measured cars (passenger cars first used on or after 1.1.2001 if <= 2,500 kg, or on or after 1.1.2002 if heavier), Table 1 A for WLTP-measured cars, Table 2 (by total mass) when no valid CO2 value is registered.",
       "evRule": "Electric or hydrogen car: the lowest amount of its table; if first used on or after 1.10.2021, the lowest amount plus 17.80 cents/day (Traficom: 171.18 €/yr vs 106.21 €/yr).",
       "measuredAtInspection": "Emissions measured at inspection do not affect the tax (Traficom).",
+      "table1AScope": {
+        "rule": "Table 1 A applies to a car whose CO2 value was determined with the WLTP test procedure of Commission Regulation (EU) 2017/1151 (of 1 June 2017); Table 1 applies to other cars with a CO2 value.",
+        "quoteFi": "Verotaulukkoa 1 A sovelletaan autoon, jonka yhdistettyä kulutusta vastaava hiilidioksidipäästö on määritelty … komission asetuksessa (EU) 2017/1151 ja sen liitteessä XXI tarkoitetulla yhdenmukaistetulla kevyiden hyötyajoneuvojen kansainvälisellä testimenetelmällä. Verotaulukkoa 1 sovelletaan muuhun autoon …",
+        "readerRule": "A car of a model year, or first used, before 2017 was type-approved before Regulation (EU) 2017/1151 existed, so its registered CO2 value is NEDC and Table 1 applies. From 2017 on the reader needs the ad to say NEDC or WLTP.",
+        "nedcBeforeYear": 2017,
+        "source": [
+          { "ref": "AVL", "url": "https://www.finlex.fi/fi/lainsaadanto/2003/1281", "where": "10 § 2 mom." },
+          { "ref": "EU_2017_1151", "url": "https://eur-lex.europa.eu/eli/reg/2017/1151/oj", "where": "Commission Regulation (EU) 2017/1151 of 1 June 2017, Annex XXI (WLTP)" }
+        ],
+        "checked": "2026-10-18: the Finnish quote read from the Finlex consolidated text; readerRule is our reading",
+        "real": true
+      },
       "table1NEDC_centsPerDayByGkm": [
         29.1,
         29.1,

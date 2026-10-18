@@ -40,6 +40,15 @@ node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
    who-pays label on every what-if ("Not covered, you pay" or "Covered by insurance, after your excess"),
    the safer choice and the sources.
 
+   For cars the three asks are ranked: the inspection numbers first (or, when the ad's last inspection is
+   overdue, why it hasn't been inspected), then a timing belt that may be due or an electric car's battery, changes
+   to the car, an import's history, a hybrid's battery, who you're buying from, a belt receipt, rust and the service
+   history. Whatever doesn't fit goes into "N more things to check" (`more`). The costs include the vehicle tax for
+   two years when the ad gives the CO2 figure (NEDC or WLTP; any car from before 2017 is NEDC), the first-use date
+   and the total mass (kokonaismassa, never omamassa); otherwise the row links to Traficom's calculator. An
+   electric car is compared only with electric models (`data/powertrain-models.json`); a badge Traficom counts
+   under the model (WRX, GTI, M3) gets a caveat and no "safer choice".
+
 ## The AI reader, for ads the rules can't read
 
 The rules stay first. The page asks an AI model only when they can't give a full result, and only on our

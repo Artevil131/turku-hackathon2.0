@@ -92,6 +92,7 @@ const tax = {
   motive: vt.motivePowerTax.centsPer100kgPerDay,
   evExtra: +evRule[1],
   evFrom: `${evFrom[3]}-${pad2(evFrom[2])}-${pad2(evFrom[1])}`,
+  nedcBefore: vt.basicTax.table1AScope.nedcBeforeYear,
   lawUrl: vt.basicTax.source.find((s) => s.ref === "AVL").url,
   calcUrl: vt.officialCalculator.url,
 };

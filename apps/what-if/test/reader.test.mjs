@@ -189,6 +189,8 @@ if (!exBad.length && engine.vehicleTax({ fuel: "electric", firstUse: "2021-09-30
 if (exBad.length) structural++;
 console.log(`${exBad.length ? "FAIL" : "pass"}  tax examples     ${exBad.join("; ")}`);
 const ex = Object.fromEntries(carRules.vehicleTax.examples.map((e, i) => [i, e.eurPerYear]));
+// A year's tax for a daily rate in cents, rounded down to the cent (the act's rule).
+const yearOf = (cents) => Math.floor((Math.round(cents * 10) * 365) / 10) / 100;
 const calcLink = (r) => taxRow(r)?.eur == null && /ajoneuvoverolaskuri/.test(taxRow(r)?.link?.href ?? "");
 group("vehicle tax", [
   ["petrol NEDC", "Toyota Avensis 1.8\n2014\n150 000 km\nBensiini\nManuaali\nHinta 7 900 €\nCO2-päästöt (NEDC) 150 g/km\nYksityinen myyjä, Turku",
@@ -199,8 +201,10 @@ group("vehicle tax", [
     ["two years of example 3", (r) => taxRow(r)?.eur === 2 * ex[2]]],
   ["diesel, only omamassa", "Skoda Octavia\n2015\n189 000 km\nDiesel\nHinta 9 990 €\nCO2 120 g/km (NEDC)\nOmamassa 1 340 kg\nYksityinen myyjä, Turku",
     ["calculator, never the kerb weight", (r, f) => calcLink(r) && f.totalMassKg == null && /total mass/.test(taxRow(r).note)]],
-  ["CO2 without a method", "Toyota Avensis\n2010\n243 000 km\nPetrol\nPrice 6 200 €\nEnergy label\nD\n154 g/km\nPrivate seller, Kuopio",
+  ["CO2 without a method, 2019", "Toyota Corolla\n2019\n43 000 km\nPetrol\nPrice 18 200 €\nEnergy label\nD\n154 g/km\nPrivate seller, Kuopio",
     ["both amounts, no total", (r) => calcLink(r) && /NEDC/.test(taxRow(r).note) && /WLTP/.test(taxRow(r).note)]],
+  ["CO2 without a method, 2010: NEDC", "Toyota Avensis\n2010\n243 000 km\nPetrol\nPrice 6 200 €\nEnergy label\nD\n154 g/km\nPrivate seller, Kuopio",
+    ["Table 1", (r) => taxRow(r)?.eur === 2 * yearOf(data.facts.tax.nedc[154]) && /NEDC, as for every car from before 2017/.test(taxRow(r).note)]],
   ["nothing about tax", "Ford Focus 1.6\n2010\n160 000 km\nBensiini\nManuaali\nHinta 3 900 €\nYksityinen myyjä, Pori",
     ["calculator", (r) => calcLink(r) && /CO2 figure/.test(taxRow(r).note)]],
   ["ordinary hybrid", "Toyota Auris Hybrid\n2015\n180 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nCO2 (NEDC) 79 g/km\nKokonaismassa 1 760 kg\nHinta 10 900 €\nYksityinen myyjä, Turku",
@@ -275,6 +279,81 @@ group("more to check", [
     ["three asks, belt second", (r) => r.asks.length === 3 && /timing belt/.test(r.asks[1].q) && /What was changed/.test(r.asks[2].q)],
     ["the rest in more", (r) => ["before it came to Finland", "take it to a garage", "rust", "service history"].every((w) => r.more?.some((a) => a.q.includes(w)))],
     ["their sources too", (r) => r.sources.includes("kkv") && r.sources.includes("service")]],
+]);
+
+// A real Nettiauto ad (17.10.2026), as it was copied, with a made-up plate.
+const IMPREZA = `Subaru Impreza
+12 500 €
+alk. 228,55 €/kk
+Päivitetty 10.10.2026 Lieto, Varsinais-Suomi
+ID 16009895
+Large icon
+Compare
+Favorites
+next
+prev
+Subaru Impreza
+Subaru Impreza
+Jaa
+Vertaa
+Bensiini
+2005
+272 000 km
+Manuaali
+Siisti ja ripeä WRX testimielessä myyntiin hetkellisestä aivohäiriöstä, kun on uutta harrastetta mielessä.
+Perustiedot
+Rekisterinumero
+ABC-123
+Mittarilukema
+272 000 km
+Moottori
+2,0 l, Bensiini
+Vuosimalli
+2005
+Vaihteisto
+Manuaali
+Vetotapa
+Neliveto
+Katsastettu
+5/2024
+Korimalli
+Sedan
+Auton tyyppi
+Henkilöauto
+Väri
+Sininen metalliväri
+Tekniset tiedot
+Teho
+207 kW / 282 Hv
+Vääntö
+400 Nm
+Henkilömäärä
+5
+Ovien lkm
+4
+Ohjauslaite
+Vasemmalla
+Omamassa
+1 445 kg
+Kokonaismassa
+1 850 kg
+CO2 -päästöt
+219 g/km
+Polttoaineen kulutus
+Maantie: 9 l/100 km
+Energiamerkintä
+Avaa
+G
+219 g/km`;
+group("real Impreza ad", [
+  ["Subaru Impreza WRX", IMPREZA,
+    ["reads it", (r, f) => f.kind === "car" && f.modelKey === "subaru|impreza" && f.year === 2005 && f.km === 272000 && f.price === 12500 && f.lastInspection === "2024-05" && f.badge === "WRX"],
+    ["overdue inspection first", (r) => /since May 2024/.test(r.asks[0].q) && /due by May 2025/.test(r.asks[0].why) && /plate, ABC-123/.test(r.asks[0].why)],
+    ["belt asked", (r) => r.asks.some((a) => /timing belt/.test(a.q))],
+    ["seller asked", (r) => r.asks.some((a) => /dealer or a private seller/.test(a.q))],
+    ["WRX caveat", (r) => /all Subaru Impreza cars together, not only the WRX/.test(r.asks[0].why) && !r.safer],
+    ["tax from 219 g/km, total mass not kerb weight", (r, f) => f.co2 === 219 && f.totalMassKg === 1850 && taxRow(r)?.eur === 2 * yearOf(data.facts.tax.nedc[219])],
+    ["no power judged", (r, f) => !f.modifications.length && !r.asks.concat(r.more ?? []).some((a) => /What was changed/.test(a.q))]],
 ]);
 
 // How ads spell models that Traficom names differently.
