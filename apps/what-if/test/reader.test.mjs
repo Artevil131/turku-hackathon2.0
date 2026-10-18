@@ -258,6 +258,17 @@ group("modified car", [
   ["ei viritetty", focus("Täysin vakio, ei viritetty. Uusi pakoputkisto 2025."), ["nothing", (r, f) => !modAsk(r) && !f.modifications.length]],
 ]);
 
+// A performance or variant badge that Traficom counts under the model: a caveat, and no everyday "safer choice".
+const caveat = (badge, model) => [`says ${badge}`, (r, f) => f.badge === badge && new RegExp(`all ${model} cars together, not only the ${badge}`).test(r.asks[0].why) && !r.safer];
+const plain = ["no badge", (r, f) => f.badge == null && !/not only the/.test(r.asks[0].why)];
+group("variant badge", [
+  ["Golf GTI", "Volkswagen Golf GTI\n2014\n140 000 km\nBensiini\nManuaali\nHinta 14 900 €\nYksityinen myyjä, Espoo", caveat("GTI", "Volkswagen Golf")],
+  ["Focus ST", "Ford Focus ST 2.5\n2008\n180 000 km\nBensiini\nManuaali\nHinta 6 900 €\nYksityinen myyjä, Oulu", caveat("ST", "Ford Focus")],
+  ["BMW M3", "BMW M3\n2010\n120 000 km\nBensiini\nManuaali\nHinta 29 900 €\nYksityinen myyjä, Vantaa", caveat("M3", "BMW 3 Series")],
+  ["Golf R-Line is a trim", "Volkswagen Golf R-Line 1.4 TSI\n2016\n120 000 km\nBensiini\nAutomaatti\nHinta 13 900 €\nAutoliike, Espoo", plain],
+  ["Focus ST-Line is a trim", "Ford Focus ST-Line 1.0\n2019\n60 000 km\nBensiini\nManuaali\nHinta 15 900 €\nAutoliike, Turku", plain],
+]);
+
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
   ["Kia Cee'd SW 1.6", "kia|ceed"], ["Kia pro_cee'd GT", "kia|proceed"], ["Mazda3 2.0 Skyactiv", "mazda|3"], ["Mazda 6 Wagon", "mazda|6"],

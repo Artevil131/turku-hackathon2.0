@@ -593,10 +593,29 @@ function createEngine(DATA, today) {
   // Whether the ad says it, not counting "ei tuontiauto", "not tuned", "ilman madallusta".
   const stated = (low, re) => [...low.matchAll(re)].some((m) => !/(?<!\p{L})(?:ei|eikä|not|never|no|ilman|without)\s+(?:\p{L}+\s+)?$/u.test(low.slice(Math.max(0, m.index - 16), m.index)));
 
+  // A performance or variant badge that Traficom counts under the model: "WRX", "GTI", "Golf R", "Focus ST", "M3".
+  // Long badges count anywhere in the ad; short ones only right after the model's name. "R-Line", "ST-Line" and
+  // "N Line" are trim levels, not performance models.
+  const BADGE_ANY = /(?<![\p{L}\d])(WRX(?: STI)?|STI|GTI|AMG|Type[ -]R|JCW|Nismo|Cupra|GR(?= (?:Yaris|Corolla|Supra|86)))(?![\p{L}\d-])/iu;
+  const BADGE_AFTER = /^[ -]?(RS ?\d?|R|ST|N|OPC|GRMN)(?![\p{L}\d-])(?! ?Line)/u;
+  function badgeOf(P, mm) {
+    if (!mm?.key || !mm.text) return null;
+    if (mm.key.startsWith("bmw|") && /^m\d/i.test(mm.text)) return mm.text.toUpperCase().replace(/\s+/g, "");
+    const any = P.text.match(BADGE_ANY)?.[1];
+    if (any && !(mm.key.startsWith("cupra|") && /^cupra$/i.test(any))) return /^type/i.test(any) ? "Type R" : /^nismo$/i.test(any) ? "Nismo" : /^cupra$/i.test(any) ? "Cupra" : any.toUpperCase();
+    for (const line of P.lines.slice(0, 15)) {
+      const i = line.indexOf(mm.text);
+      const b = i >= 0 ? line.slice(i + mm.text.length).match(BADGE_AFTER)?.[1] : null;
+      if (b) return b;
+    }
+    return null;
+  }
+
   function readCar(P) {
     const low = P.low;
     const mm = makeModel(P);
     const c = { make: mm?.make ?? null, model: mm?.text ?? null, modelKey: mm?.key ?? null, flags: {} };
+    c.badge = badgeOf(P, mm);
 
     c.year = field(P, "vuosimalli|year model|model year|vuosi|year|ensirekisteröinti|rekisteröity|käyttöönottovuosi", pYear)
       ?? P.lines.map((l) => l.match(/^(19[5-9]\d|20[0-3]\d)(?:\s*[●,|·•]|$)/)?.[1]).find(Boolean)
@@ -1133,7 +1152,8 @@ function createEngine(DATA, today) {
       const lowKm = mkm && c.km && I.ry === c.year && c.km < (mkm * 1000) / 2;
       a1.why = `In ${DATA.trafi.year}, ${p.toFixed(1)}% of ${I.ry} ${statName} cars failed their inspection, out of ${grp(n)} inspections. For all cars from ${I.ry} it was ${I.avg[0].toFixed(1)}%. ${verdict}${nearYear}`
         + (mkm && c.km ? ` Those cars had a median of ${grp(mkm * 1000)} km; this one has ${grp(c.km)} km.` : "")
-        + (lowKm ? " That’s under half the median, which is worth checking: the km is recorded at every inspection, so compare the readings in Traficom’s vehicle lookup." : "");
+        + (lowKm ? " That’s under half the median, which is worth checking: the km is recorded at every inspection, so compare the readings in Traficom’s vehicle lookup." : "")
+        + (c.badge ? ` Traficom counts all ${statName} cars together, not only the ${esc(c.badge)}.` : "");
       a1.bars = [
         { label: `${statName}, ${I.ry}`, pct: p, tone: diff >= 2 ? "bad" : diff <= -2 ? "good" : "", me: true },
         { label: `All cars from ${I.ry}`, pct: avg, tone: "" },
@@ -1309,8 +1329,10 @@ function createEngine(DATA, today) {
     sources.push("service");
 
     // Is there a safer choice? Common cars of the same year that failed least; for an electric car, electric ones only.
+    // Not for a performance or variant badge: Traficom counts it with its everyday model, and an everyday car
+    // that failed less is no answer to a WRX.
     let safer = null;
-    if (c.year && DATA.avg[c.year]) {
+    if (c.year && DATA.avg[c.year] && !c.badge) {
       const kind = electric ? "electric cars" : "cars";
       const pool = Object.entries(DATA.m).filter(([k, ys]) => ys[c.year] && ys[c.year][1] >= 800 && k !== c.modelKey && (!electric || EV_KEYS.has(k)))
         .sort((a, b) => a[1][c.year][0] - b[1][c.year][0]).slice(0, 3);
