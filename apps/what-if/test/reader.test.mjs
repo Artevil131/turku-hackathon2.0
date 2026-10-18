@@ -67,6 +67,7 @@ const EXTRA = [
   ["BMW, dealer, English", "BMW 320d Touring\n€14,900\nYear model 2016 (first reg. 3-2016)\nMileage 178 000 km\nDiesel, automatic\nInspection date 11/2025\nSeller: Autotalo Esimerkki, Espoo\nOffice fee 249 €"],
   ["Mercedes, no seller", "Mercedes-Benz C 220 CDI\n2011\n265 000 km\nDiesel\nAutomaatti\nHinta 7 450 €\nVantaa"],
   ["old home, no pipes", "Myydään kaksio Pori\nKerrostalo, rakennusvuosi 1968\n52 m²\nVelaton hinta 79 000 €\nMyyntihinta 79 000 €\nHoitovastike 260 € / kk"],
+  ["detached house, short", "Omakotitalo, Kaarina\n5h, k, s, 142 m²\nRakennusvuosi 1979\nHinta 245 000 €\nTontti 1 200 m², oma"],
   ["capital-region rental", "Vuokrataan yksiö, Helsinki Kallio\nKerrostalo 1961\n27 m²\nVuokra 890 €/kk\nVakuus 3 kk:n vuokra\nKotivakuutus vaaditaan"],
   ["motorbike, short", "Yamaha MT-07 689 cm³\n2019\n15 000 km\nMoottoripyörä, katupyörä\nHinta 5 900 €\nTampere"],
 ];
@@ -74,9 +75,8 @@ const ODD = [
   ["link", "https://www.nettiauto.com/skoda/octavia/16000001", /link to Nettiauto/],
   ["motorbike link", "https://www.nettimoto.com/yamaha/mt-07/1234567", /link to Nettimoto.*paste it here/],
   ...motoSamples.notSupported.map((x) => [x.id, x.text, new RegExp(`looks like an? ${x.want === "atv" ? "ATV" : x.want}.*full version`)]),
-  ["detached house", "Omakotitalo, Kaarina\n5h, k, s, 142 m²\nRakennusvuosi 1979\nHinta 245 000 €\nTontti 1 200 m², oma", /house or cottage/],
-  // Oikotie puts the house type far down the page, under the site's own menu.
-  ["house, Oikotie", "Kirjaudu\nMyytävät asunnot\nTurku\nTurku\nEsimerkkitie 1, 20900 Turku\nPalaa hakutuloksiin\n557 000 €\n●\n142,5 m²\nMyyntihinta\n557 000 €\nAsuinpinta-ala\n142,5 m²\nRakennusvuosi\n2026\nRakennuksen tyyppi\nOmakotitalo\nKohde on\nKiinteistö\nTontin omistus\nVuokralla", /house or cottage/],
+  // Houses and cottages are read now (the "houses" group below); a plot with nothing built on it is not.
+  ["building plot", "Myydään rakentamaton tontti, Lieto\nTontin pinta-ala 1 400 m²\nHinta 45 000 €\nKunnallistekniikka tontin rajalla", /looks like a building plot.*Plots come in the full version/],
   ["unknown", "Selling my sofa, three seats, grey fabric, a few years old. Pick up in Turku. 120 €", /couldn’t tell/],
   ["too short", "Golf 2010", /Paste the whole ad/],
 ];
@@ -507,6 +507,220 @@ group("area rent", [
   ["kosteusvaurio", "Vuokrataan kaksio, Tampere\nKerrostalo 2005\n50 m²\nVuokra 800 €/kk\nVakuus 2 kk:n vuokra\nKylpyhuoneessa kosteusvaurio, korjataan keväällä 2027.",
     ["asks", (r) => has(r, /moisture damage, and has it been fixed/)], ["rights", (r) => /reasonably reduced rent/.test(said(r))]],
 ]);
+// Houses and cottages sold as real estate: synthetic ads in Etuovi's and Oikotie's real labels (observed 18.10.2026)
+// and plain text. `fields` must be read exactly; `want` lists what must be true of the result. Negations count:
+// "Ei kosteusvaurioita", oil heating replaced by a heat pump, "No condition inspection has been done".
+const HOUSE_ETUOVI = `Omakotitalo | 4h, k, s, khh
+Esimerkkitie 8, Muurame
+Hinta
+189 000 €
+Koko
+118 / 160 m²
+Vuosi
+1976
+Tilava omakotitalo rauhallisella alueella. Öljylämmitys, öljysäiliö maan alla. Ei kosteusvaurioita.
+Asunnon perustiedot
+Kohdenumero
+12345679
+Sijainti
+Muurame
+Esimerkkitie 8, 40950
+Tyyppi
+Omakotitalo
+(kiinteistö)
+Omistusmuoto
+Omistusasunto
+Huoneita
+4 huonetta
+Asuintilojen pinta-ala
+118 m²
+Kokonaispinta-ala
+160 m²
+Rakennusvuosi
+1976
+Hinta ja kustannukset
+Hinta
+Myyntihinta
+189 000,00 €
+Velaton hinta
+189 000,00 €
+Muut maksut
+Kiinteistövero
+640,00 € / vuosi
+Lisätietoa maksuista
+Öljyä mennyt noin 2000 l/v.
+Asunnon lisätiedot
+Tehdyt remontit
+2014 vesikatto uusittu.
+Asunnon kunto
+Tyydyttävä
+Energialuokka
+Ei lain edellyttämää energiatodistusta
+Lämmitysjärjestelmän kuvaus
+Öljylämmitys
+Vesikiertoinen patterilämmitys.
+Vesijohto
+Kunnan vesijohto
+Viemäri
+Kunnan
+Kattotyyppi
+Harjakatto
+Kattomateriaali
+Huopa
+Asunnon tontti
+Tontin omistus
+Oma
+Tontin pinta-ala
+1 210 m²
+Tie perille
+Kyllä`;
+const COTTAGE_ETUOVI = `Mökki tai huvila | 2h, tupakeittiö, s
+Esimerkkitie 120, Mäntyharju
+Hinta
+79 000 €
+Koko
+48 m²
+Vuosi
+1985
+Kesämökki omalla rannalla. Ei talviasuttava. Yksityistie, tiemaksu 180 €/v.
+Loma-asunnon perustiedot
+Kohdenumero
+12345680
+Sijainti
+Mäntyharju
+Tyyppi
+Mökki tai huvila
+Rakennusvuosi
+1985
+Asuintilojen pinta-ala
+48 m²
+Hinta ja kustannukset
+Myyntihinta
+79 000,00 €
+Lämmitysjärjestelmän kuvaus
+Sähkölämmitys
+Vesijohto
+Porakaivo
+Viemäri
+Saostuskaivot ja imeytyskenttä
+Kattomateriaali
+Huopa
+Rakennus- ja pintamateriaalit
+Puu. Rossipohja.
+Loma-asunnon tontti
+Tontin omistus
+Oma
+Tontin tyyppi
+Rantatontti
+Tontin pinta-ala
+0,6 ha
+Tie perille
+Kyllä`;
+// Oikotie puts the house type far down the page, under the site's own menu.
+const HOUSE_OIKOTIE_SHORT = "Kirjaudu\nMyytävät asunnot\nTurku\nTurku\nEsimerkkitie 1, 20900 Turku\nPalaa hakutuloksiin\n557 000 €\n●\n142,5 m²\nMyyntihinta\n557 000 €\nAsuinpinta-ala\n142,5 m²\nRakennusvuosi\n2026\nRakennuksen tyyppi\nOmakotitalo\nKohde on\nKiinteistö\nTontin omistus\nVuokralla";
+const HOUSE_OIKOTIE = `Myytävät asunnot
+Lahti
+Esimerkkikatu 5, 15100 Lahti
+265 000 €
+●
+126 m²
+Perustiedot
+Sijainti
+Esimerkkikatu 5, 15100 Lahti
+Kaupunginosa
+Laune
+Asuinpinta-ala
+126 m²
+Tontin pinta-ala
+905 m²
+Huoneiston kokoonpano
+5h+k+s+khh
+Huoneita
+5
+Kunto
+Hyvä
+Tehdyt remontit
+2012 Salaojat ja sadevesiviemärit uusittu
+2018 Ilma-vesilämpöpumppu asennettu
+Asumistyyppi
+Omistus
+Kohde on
+Kiinteistö
+Hinta
+Myyntihinta
+265 000 €
+Talon ja tontin tiedot
+Rakennuksen tyyppi
+Omakotitalo
+Rakennusvuosi
+1968
+Rakennusmateriaali
+Tiili
+Kattotyyppi
+Tasakatto
+Kattomateriaali
+Bitumikermi
+Lämmitys
+Ilma-vesilämpöpumppu
+Energialuokka
+E2018
+Tontin omistus
+Oma
+Vesi ja jätevesi
+Kunnallinen vesijohto ja viemäri
+Kuntotarkastus
+Tehty 2025
+Lisätietoja
+Kellarissa havaittu kohonneita kosteuslukemia, korjattu 2020.`;
+const HOUSE_TEXT_FI = "Myydään omakotitalo, Nokia.\nRakennettu 1982, asuinpinta-ala 128 m², tontti 1 500 m² oma. Hinta 198 000 €.\nMaalämpö (vaihdettu öljylämmityksestä 2016, öljysäiliö poistettu). Valesokkeli korjattu 2019.\nKuntotarkastusta ei ole tehty. Kunnallinen vesi ja viemäri. Sähkönkulutus 14 000 kWh/v. Kosteusvaurioita ei ole havaittu.";
+const HOUSE_TEXT_EN = "Detached house for sale in Espoo\nBuilt 1965, living area 135 m², plot 1,100 m², own\nAsking price €420,000\nDistrict heating. Municipal water and sewer.\nNo condition inspection has been done.\nRoof renewed in 1995. Crawl space foundation.\nNo moisture damage.";
+const COTTAGE_TEXT_EN = "Summer cottage for sale, Kuopio\nLog cabin built 1978, 40 m², own shore\nPrice 59 000 €\nWood heating, dry toilet, carried water. No road access: reached by boat.\nPlot 0.8 ha, leased";
+const asked = (r, re) => [...r.asks, ...(r.more ?? [])].some((a) => re.test(strip(a.q)));
+const top = (r, re) => r.asks.some((a) => re.test(strip(a.q)));
+const costOf = (r, re) => r.costs?.find((c) => re.test(c.what));
+const HOUSES = [
+  ["Etuovi house", HOUSE_ETUOVI, { kind: "house", cottage: false, buildingYear: 1976, livingAreaM2: 118, plotAreaM2: 1210, plot: "own", price: 189000, city: "Muurame",
+    heating: ["oil"], oilLitresYear: 2000, roofRenewed: 2014, roofType: "gable", roofMaterial: "felt", wastewater: { type: "municipal", systems: [] }, water: "municipal",
+    moisture: [], propertyTaxYear: 640, roadAccess: true, energy: { cls: null, none: true } },
+    ["oil tank asked", (r) => top(r, /oil tank/)], ["inspection asked", (r) => top(r, /condition inspection/)], ["no moisture ask", (r) => !asked(r, /moisture/)],
+    ["transfer tax 3%", (r) => costOf(r, /Transfer tax/)?.eur === 5670], ["property tax from the ad", (r) => costOf(r, /Property tax/)?.eur === 3200],
+    ["oil cost from litres", (r) => !!costOf(r, /Heating oil/)?.eur], ["hidden defect is the seller's", (r) => r.cover.items.some((i) => /hidden defect/.test(i.who))]],
+  ["Etuovi cottage", COTTAGE_ETUOVI, { kind: "house", cottage: true, buildingYear: 1985, livingAreaM2: 48, plotAreaM2: 6000, plot: "own", price: 79000, city: "Mäntyharju",
+    winterUse: false, shore: true, privateRoad: true, roadFee: 180, water: "drilled well", wastewater: { type: "own", systems: ["septic tanks", "soil infiltration"] },
+    foundation: ["crawl space"], roofMaterial: "felt", heating: ["electric"] },
+    ["wastewater asked", (r) => top(r, /wastewater/)], ["winter use asked", (r) => asked(r, /over winter/)], ["road asked", (r) => asked(r, /road charge/)],
+    ["well asked", (r) => asked(r, /well water/)], ["road charge cost", (r) => costOf(r, /Road charge/)?.eur === 900], ["stamp", (r) => r.stamp === "Cottage for sale"]],
+  ["Oikotie house, short", HOUSE_OIKOTIE_SHORT, { kind: "house", buildingYear: 2026, livingAreaM2: 142.5, price: 557000, plot: "leased", city: "Turku" },
+    ["lease asked", (r) => asked(r, /plot lease/)], ["flood area named", (r) => asked(r, /flooded/) && /Turun rannikkoalue/.test(strip(JSON.stringify(r.more.concat(r.asks))))]],
+  ["Oikotie house", HOUSE_OIKOTIE, { kind: "house", buildingYear: 1968, livingAreaM2: 126, plotAreaM2: 905, plot: "own", price: 265000, city: "Lahti", district: "Laune",
+    heating: ["air-to-water"], roofType: "flat", roofMaterial: "felt", drainsRenewed: 2012, foundation: ["basement"], water: "municipal",
+    wastewater: { type: "municipal", systems: [] }, inspection: { done: true, year: 2025 }, energy: { cls: "E", version: 2018 } },
+    ["moisture first, quoting the ad", (r) => /moisture/.test(r.asks[0].q) && /kohonneita kosteuslukemia/.test(r.asks[0].why)], ["report asked", (r) => asked(r, /report from 2025/)],
+    ["flat roof asked", (r) => asked(r, /flat roof/)], ["radon with Lahti's numbers", (r) => [...r.asks, ...r.more].some((a) => /Lahti.*415 Bq/.test(strip(a.why)))]],
+  ["plain Finnish", HOUSE_TEXT_FI, { kind: "house", buildingYear: 1982, livingAreaM2: 128, plotAreaM2: 1500, plot: "own", price: 198000, city: "Nokia", heating: ["ground-source"],
+    oilGone: true, plinthRepaired: 2019, inspection: { done: false, year: null }, energyKwhYear: 14000, moisture: [], foundation: ["false plinth"] },
+    ["no oil-tank age ask", (r) => !asked(r, /How old is the oil tank/)], ["old tank asked", (r) => asked(r, /old oil tank removed/)],
+    ["electricity cost", (r) => !!costOf(r, /Electricity/)?.eur], ["no moisture ask", (r) => !asked(r, /moisture/)]],
+  ["plain English", HOUSE_TEXT_EN, { kind: "house", buildingYear: 1965, livingAreaM2: 135, plotAreaM2: 1100, plot: "own", price: 420000, city: "Espoo", heating: ["district"],
+    water: "municipal", wastewater: { type: "municipal", systems: [] }, inspection: { done: false, year: null }, roofRenewed: 1995, foundation: ["crawl space"], moisture: [] },
+    ["crawl space asked", (r) => asked(r, /crawl space/)], ["Espoo flood area", (r) => asked(r, /flooded/)]],
+  ["English cottage", COTTAGE_TEXT_EN, { kind: "house", cottage: true, buildingYear: 1978, livingAreaM2: 40, plotAreaM2: 8000, plot: "leased", price: 59000, city: "Kuopio",
+    heating: ["wood"], water: "carried", wastewater: { type: "own", systems: ["dry toilet"] }, roadAccess: false },
+    ["access asked", (r) => asked(r, /How do you get there/)], ["lease asked", (r) => asked(r, /plot lease/)]],
+];
+const houseBad = [];
+for (const [name, text, fields, ...wants] of HOUSES) {
+  const f = engine.read(text);
+  for (const [k, v] of Object.entries(fields)) if (!same(v, f[k]) && JSON.stringify(v) !== JSON.stringify(f[k])) houseBad.push(`${name}: ${k} expected ${JSON.stringify(v)}, got ${JSON.stringify(f[k])}`);
+  const r = engine.analyse(text);
+  check(`house: ${name}`, r);
+  if (!r.message) for (const [why, ok] of wants) if (!ok(r, f)) houseBad.push(`${name}: ${why}`);
+}
+// Still not houses: a rental house is a rental, a flat with charges is a flat.
+if (engine.read("Vuokrataan omakotitalo, Tampere\n120 m²\nVuokra 1 450 €/kk\nVakuus 2 kk").kind !== "rent") houseBad.push("a house for rent isn't a rental");
+for (const t of samples.tests.filter((x) => x.kind === "home")) if (engine.read(t.text).kind !== "home") houseBad.push(`${t.id} isn't a flat any more`);
+if (houseBad.length) structural++;
+console.log(`${houseBad.length ? "FAIL" : "pass"}  houses           ${houseBad.join("; ")}`);
 
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],

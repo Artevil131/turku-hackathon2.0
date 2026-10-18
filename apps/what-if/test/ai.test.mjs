@@ -225,5 +225,24 @@ q = queue(top, bottom);
 ok("screenshots: one bad picture in the list stops all of them before sending",
   (await engine.analyseImages([img, "https://example.com/x.png"], { fetch: q.fetchMock })).message === engine.SHOT_FAIL && q.sent.length === 0);
 
+// 7. Houses and cottages: the AI reader has no house kind. A house the rules read stays a house: no call when the rules
+// have its year or price; otherwise the AI's flat-style fields fill the gaps, and a draft or an error gives the rules' house.
+const houseFull = "Omakotitalo, Kaarina\n5h, k, s, 142 m²\nRakennusvuosi 1979\nHinta 245 000 €\nTontti 1 200 m², oma";
+const houseBare = "Myydään omakotitalo, Kaarina. Iso piha ja autotalli, rauhallinen alue, tontti oma. Öljylämmitys. Kysy lisää!";
+ok("house: an ad with a year and a price makes no call", engine.plan(houseFull).callAI === false && engine.plan(houseFull).read.kind === "house");
+ok("house: an ad without a year or a price calls the AI", engine.plan(houseBare).callAI === true);
+const homeAnswer = { ok: true, model: "m", kind: "home", draft: null, fields: { buildingYear: 1979, livingAreaM2: 142, debtFreePrice: 245000, maintenanceCharge: 300, city: "Kaarina" } };
+const houseViaAI = await engine.analyseWithAI(houseBare, { fetch: reply(200, homeAnswer) });
+ok("house: the AI's flat fields fill a house result", houseViaAI?.kind === "house" && full(houseViaAI) && houseViaAI.price === 245000 && /1979/.test(houseViaAI.specs)
+  && /building year/.test(houseViaAI.aiNote ?? "") && !/maintenance/i.test(JSON.stringify(houseViaAI.costs)), houseViaAI?.kind ?? houseViaAI?.message);
+ok("house: the rules' oil heating is kept", /oil tank/.test(JSON.stringify([houseViaAI?.asks, houseViaAI?.more])));
+const houseDraft = await engine.analyseWithAI(houseBare, { fetch: reply(200, { ...draftFixture, kind: "other" }) });
+ok("house: a draft answer gives the rules' house, not a draft", houseDraft?.kind === "house" && full(houseDraft), houseDraft?.kind);
+const houseErr = await engine.analyseWithAI(houseBare, { fetch: reply(500, { ok: false }) });
+ok("house: an error gives the rules' house", JSON.stringify(houseErr) === rules(houseBare));
+ok("house: garbage AI fields give the rules' house", (await engine.analyseWithAI(houseBare, { fetch: reply(200, { ok: true, model: "m", kind: "home", fields: { buildingYear: "old", debtFreePrice: -5 } }) }))?.kind === "house");
+const houseShot = await engine.analyseImages([img], { fetch: reply(200, { ...homeAnswer, transcript: houseFull }) });
+ok("house: a screenshot of a house ad gives a house result", houseShot?.kind === "house" && full(houseShot) && houseShot.fromScreenshot === true, houseShot?.kind ?? houseShot?.message);
+
 console.log(`\nAI reader: ${pass} of ${pass + fail} pass.`);
 process.exit(fail ? 1 : 0);

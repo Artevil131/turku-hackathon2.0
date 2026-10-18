@@ -236,6 +236,91 @@ const flat = {
   oilSaid: fc.oilHeating.goalYearSaid,
 };
 
+// Radon by municipality (STUK) and significant flood risk areas (SYKE), for houses and, through areaRisks(), flats.
+// Sources become "r-<id>" and "f-<id>" in the page's source list.
+const radonFile = read("radon-municipalities.json");
+const floodFile = read("flood-risk-areas.json");
+const srcList = (sources, prefix) => Object.fromEntries(Object.entries(sources).map(([id, s]) => [`${prefix}${id}`, { text: s.name, url: s.url }]));
+const ids = (s) => (Array.isArray(s) ? s : [s]);
+const radon = {
+  ref: radonFile.referenceLevel.bqM3, refNew: radonFile.referenceLevel.newBuildingBqM3, refSrc: ids(radonFile.referenceLevel.source).map((x) => `r-${x}`),
+  national: [radonFile.national.avgBqM3, radonFile.national.shareOver300Pct, radonFile.national.measurements],
+  allHomes: radonFile.national.allDwellings?.avgBqM3 ?? null, allHomesSrc: `r-${radonFile.national.allDwellings?.source}`,
+  src: "r-stuk-radon-municipalities",
+  // municipality -> [average Bq/m³, % above 300, dwellings measured, last measurement year]; null where STUK has no figure
+  m: Object.fromEntries(Object.entries(radonFile.municipalities).filter(([, r]) => r.avgBqM3 != null).map(([k, r]) => [k, [r.avgBqM3, r.shareOver300Pct, r.measurements]])),
+  alias: radonFile.aliases ?? {},
+  sources: srcList(radonFile.meta.sources, "r-"),
+};
+for (const [k, r] of Object.entries(radonFile.municipalities)) if (r.avgBqM3 != null && r.source !== "stuk-radon-municipalities") throw new Error(`radon ${k}: unexpected source`);
+const flood = {
+  src: "f-syke-flood-risk-areas", mapSrc: "f-syke-flood-map", lawSrc: "f-law-620-2010",
+  a: floodFile.areas.map((x) => [x.name, x.floodTypes, x.designated]),
+  m: Object.fromEntries(Object.entries(floodFile.byMunicipality).map(([k, list]) => [k, list.map((id) => floodFile.areas.findIndex((x) => x.id === id))])),
+  sources: srcList(floodFile.meta.sources, "f-"),
+};
+for (const [k, list] of Object.entries(flood.m)) if (list.some((i) => i < 0)) throw new Error(`flood ${k}: unknown area`);
+for (const id of [flood.src, flood.mapSrc, flood.lawSrc]) if (!flood.sources[id]) throw new Error(`flood source ${id} missing`);
+
+// Houses and cottages (house-rules.json): the law, the transfer tax, prices, risk structures and If's terms. Each fact
+// keeps its plain-English rule and its sources, which become "h-<id>"; a fact the research couldn't confirm is left out.
+const hr = read("house-rules.json");
+const rcost = read("car-running-costs.json");
+const uniq = (a) => [...new Set(a)];
+const hs = (s) => (s == null ? [] : ids(s).map((x) => `h-${x}`));
+const need = (v, what) => { if (v == null) throw new Error(`house-rules.json: ${what} missing`); return v; };
+const fact = (o) => (o && o.rule ? { rule: o.rule, src: hs(o.source) } : null);
+const P = (path) => path.split(".").reduce((o, k) => (o == null ? o : o[k]), hr);
+const elecBand = (band, key) => band && { cents: band.latest.total, month: band.latest.month, label: band.label.replace(/ \(.*\)$/, ""), key };
+const ehh = rcost.energy.electricityPrices.householdTypes;
+const house = {
+  sources: srcList(hr.meta.sources, "h-"),
+  land: { years: need(P("landCode.noticeTime.maxYearsFromPossession"), "landCode.noticeTime"), src: hs(P("landCode.noticeTime.source")) },
+  tt: { pct: need(P("transferTax.ratePct"), "transferTax.ratePct"), src: hs(P("transferTax.source")) },
+  title: P("titleRegistration.feeEur.value") != null ? { fee: P("titleRegistration.feeEur.value"), year: +P("titleRegistration.feeEur.validFrom").slice(0, 4), src: hs(P("titleRegistration.feeEur.source")) } : null,
+  ptax: { src: hs(P("propertyTax.source")).find((x) => /2026/.test(x)) ?? hs(P("propertyTax.source"))[0] },
+  ww: {
+    near: P("wastewater.nearWaterOrGroundwater.rule"), elsewhere: P("wastewater.elsewhere.rule"), docs: P("wastewater.documents.rule"),
+    exemption: P("wastewater.exemption.rule") ? "An exemption granted to the seller lapses when the property changes owner." : null,
+    src: uniq([...hs(P("wastewater.nearWaterOrGroundwater.source")), ...hs(P("wastewater.elsewhere.source")), ...hs(P("wastewater.documents.source")), ...hs(P("wastewater.exemption.source"))]),
+  },
+  cottage: { use: P("cottage.useChange.rule"), useSrc: hs(P("cottage.useChange.source")), road: P("cottage.privateRoad.rule"), roadSrc: hs(P("cottage.privateRoad.source")) },
+  kt: {
+    low: need(P("conditionInspection.rangeEur"), "conditionInspection.rangeEur")[0], high: P("conditionInspection.rangeEur")[1],
+    src: uniq(P("conditionInspection.prices").flatMap((x) => hs(x.source))),
+    what: P("conditionInspection.what.rule"), whatSrc: hs(P("conditionInspection.what.source")),
+  },
+  risk: Object.fromEntries([["plinth", "falsePlinth"], ["crawl", "crawlSpace"], ["flat", "flatRoof"], ["slab", "slabOnGround"], ["basement", "basement"]]
+    .map(([k, key]) => { const r = P(`riskStructures.${key}`); return [k, r?.rule ? { rule: r.rule, from: r.eraFrom ?? null, to: r.eraTo ?? null, src: hs(r.source) } : null]; })),
+  radon: {
+    months: need(P("radon.howToMeasure.minMonths"), "radon.howToMeasure"), season: "between the start of September and the end of May",
+    price: P("radon.measurementPriceEur.value"), src: uniq([...hs(P("radon.howToMeasure.source")), ...hs(P("radon.measurementPriceEur.source"))]),
+    well: P("radon.drilledWell.rule"), wellSrc: hs(P("radon.drilledWell.source")),
+  },
+  oil: {
+    tank: { rule: `${P("oilHeating.tankInspection.rule")} ${P("oilHeating.tankInspection.insurerRule.rule") ?? ""}`.trim(), src: uniq([...hs(P("oilHeating.tankInspection.source")), ...hs(P("oilHeating.tankInspection.insurerRule.source"))]) },
+    spill: fact(P("oilHeating.spill")),
+    ground: P("oilHeating.switch.groundSourceEur"), air: P("oilHeating.switch.airToWaterEur"), switchSrc: hs(P("oilHeating.switch.source")),
+  },
+  well: { rule: P("well.rule"), every: P("well.testEveryYears"), src: uniq([...hs(P("well.source")), ...hs(P("well.secondary.source"))]) },
+  life: {
+    roof: { felt: P("lifetimes.roof.byMaterial.felt"), "sheet metal": P("lifetimes.roof.byMaterial.sheet"), tile: P("lifetimes.roof.byMaterial.tile"), src: hs(P("lifetimes.roof.source")) },
+    drain: { years: need(P("lifetimes.drainage.lifeYears"), "lifetimes.drainage"), src: hs(P("lifetimes.drainage.source")) },
+  },
+  ins: {
+    fire: fact(P("insurance.fire")), leak: fact(P("insurance.leak")), storm: fact(P("insurance.storm")), defects: fact(P("insurance.defects")),
+    flood: P("insurance.flood.rule") ? { ...fact(P("insurance.flood")), covered: true, who: "Covered by home insurance · if the flood counts as exceptional" } : null,
+    empty: P("insurance.emptyBuilding.rule") ? { ...fact(P("insurance.emptyBuilding")),
+      short: `If the building stands empty for over ${P("insurance.emptyBuilding.uninhabitedOverDays") === 7 ? "a week" : `${P("insurance.emptyBuilding.uninhabitedOverDays")} days`}, close the main water valve and switch off the water pump: If’s home insurance terms require it.` } : null,
+    hdi: P("insurance.hiddenDefectInsurance.exists") ? { rule: `A seller can insure their own hidden-defect liability: one such policy, sold with a condition inspection, covers up to €${P("insurance.hiddenDefectInsurance.sumInsuredEur").toLocaleString("en-GB")} for ${P("insurance.hiddenDefectInsurance.periodYears")} years after the handover (secondary source).`, src: hs(P("insurance.hiddenDefectInsurance.source")) } : null,
+  },
+  elec: {
+    D: elecBand(ehh.D, "D"), E: P("electricity.totalCents") != null ? { cents: P("electricity.totalCents"), month: P("electricity.month"), label: "household, over 15,000 kWh a year" } : null,
+    src: ["h-sf-13rb"],
+    oil: P("heatingOil.centsPerLitre") != null ? { cents: P("heatingOil.centsPerLitre"), month: P("heatingOil.month") } : P("electricity.heatingOil.centsPerLitre") != null ? { cents: P("electricity.heatingOil.centsPerLitre"), month: P("electricity.heatingOil.month") } : null,
+    oilSrc: ["h-sf-12ge"],
+  },
+};
 const data = {
   v: 1,
   trafi: {
@@ -271,6 +356,9 @@ const data = {
     rents,
     flat,
     moto,
+    radon,
+    flood,
+    house,
   },
 };
 

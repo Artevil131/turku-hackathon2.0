@@ -7,11 +7,11 @@ Our entry for If's challenge "If Insurance Could Do More" at JunctionXTurku
 > before you sign.
 
 Paste the ad for something you are about to sign for: a used car or
-motorcycle, a flat for sale, a flat to rent. Before you sign, you see three
-things to ask, what it really costs over the next years, what could go
-wrong and who would pay for it, and the safer choice. After you sign, If
-customers get reminders at the right moment and a logbook (huoltokirja)
-for the home or vehicle.
+motorcycle, a flat, house or cottage for sale, a flat to rent. Before you
+sign, you see three things to ask, what it really costs over the next
+years, what could go wrong and who would pay for it, and the safer choice.
+After you sign, If customers get reminders at the right moment and a
+logbook (huoltokirja) for the home or vehicle.
 
 **Try it:** https://what-if.what-if.workers.dev (D-028). The page is also one
 file that works offline: open `apps/what-if/index.html` in any browser.

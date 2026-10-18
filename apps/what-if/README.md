@@ -1,6 +1,6 @@
 # What if…
 
-Paste the ad for something you are about to sign for (a used car or motorcycle, a flat for sale, a flat for rent) and see
+Paste the ad for something you are about to sign for (a used car or motorcycle, a flat, house or cottage for sale, a flat for rent) and see
 three things to ask, the real cost over the next years, what could go wrong and who pays, and the safer
 choice. The If challenge entry; it replaces Ahead. The business model and pitch are in [PLAN.md](PLAN.md).
 
@@ -11,11 +11,11 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | Path | What it is |
 |---|---|
 | `index.html` | The whole app in one file. Deployment copies it to the site root as is. Opened from disk or as the claude.ai artifact it is rules-only and contacts no outside server; on our own site it can also ask the AI reader (below). |
-| `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; Statistics Finland's rents by postcode and municipality (`rent-areas.json`); the facts behind the flat questions (`flat-checks.json`); 17 test ads in real site formats. |
+| `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental, housing and house rules; STUK's radon by municipality and SYKE's significant flood risk areas; Statistics Finland's rents by postcode and municipality (`rent-areas.json`); the facts behind the flat questions (`flat-checks.json`); 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/`, plus Statistics Finland's prices of old flats by postcode from `libs/listing/data/prices-postcode.json`, and writes it into `index.html`. Run after changing anything in `data/`. |
 | `tools/fetch-rent-areas.mjs` | Fetches Statistics Finland's average rents (StatFin tables 15fa and 13eb) into `data/rent-areas.json`. A few small requests, free. |
-| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, houses, real-page quirks, powertrains (no timing belt on an electric car, no clutch on an automatic), and flats: the ad's own words with negations, the plot lease, the price and rent against the area. Currently 17 of 17 pass. |
-| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), and a pasted link making no call. Currently 113 of 113 pass. |
+| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links and the bookmarklet (no network: `fetch` throws), mopeds, snowmobiles, ATVs, building plots, houses and cottages (Etuovi, Oikotie and plain text, with negations), real-page quirks, powertrains (no timing belt on an electric car, no clutch on an automatic), and flats: the ad's own words with negations, the plot lease, the price and rent against the area. Currently 17 of 17 pass. |
+| `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four), a pasted link making no call, and houses (no call when the rules have a year or price; a draft or an error gives the rules' house). Currently 121 of 121 pass. |
 
 ```
 node apps/what-if/tools/build-data.mjs
@@ -28,7 +28,7 @@ node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
 
 `createEngine(DATA, today)` in `index.html` (between `/* engine:start */` and `/* engine:end */`) has two steps:
 
-1. **`read(adText)`** finds the kind (`car`, `moto`, `home`, `rent`) and pulls out the fields with rules, no
+1. **`read(adText)`** finds the kind (`car`, `moto`, `home`, `rent`, `house`) and pulls out the fields with rules, no
    AI. The fields the rules use are listed in `CORE` in `test/reader.test.mjs`, for example `make`, `model`,
    `year`, `km`, `price`, `sellerType` for cars, `buildingYear`, `livingAreaM2`, `debtFreePrice`,
    `pipeRenovation.status` for homes, `rent`, `deposit` for rentals.
@@ -36,7 +36,17 @@ node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
    it), `km`, `price`, `officeFee`, `engineCc`, `powerKw`, `licence` (`A1`, `A2` or `A`, worked out from
    cm³ and kW as a fact about the bike), `sellerType`, `city`, `lastInspection`, `abs` (true, false or null),
    `modified` and `modifications` (`lowered suspension`, `aftermarket exhaust`, `engine changes`). Mopeds,
-   snowmobiles and ATVs come back as `unsupported`.
+   snowmobiles, ATVs and building plots come back as `unsupported`.
+   For houses and cottages sold as real estate (`house`, `cottage` true or false): `buildingYear`, `livingAreaM2`,
+   `plotAreaM2`, `plot` (`own` or `leased`), `price`, `city` (any municipality in STUK's table), `heating`
+   (`oil`, `direct electric`, `storage electric`, `electric`, `ground-source`, `air-to-water`, `air-to-air`,
+   `district`, `wood`), `oilGone`, `oilTank`, `foundation` (`false plinth`, `crawl space`, `slab on ground`,
+   `basement`), `roofType`, `roofMaterial`, `roofRenewed`, `drainsRenewed`, `wastewater` (`municipal`, or `own`
+   with its systems), `water` (`municipal`, `drilled well`, `dug well`, `well`, `carried`, `lake`), `inspection`,
+   `moisture` (the ad's own sentences), `energy`, `asbestosSurvey`, `winterUse`, `roadAccess`, `privateRoad`,
+   `roadFee`, `shore`, and the ad's yearly `energyKwhYear`, `oilLitresYear`, `heatingCostYear` and
+   `propertyTaxYear`. A negated sentence ("Ei kosteusvaurioita", "öljylämmitys vaihdettu maalämpöön") makes no
+   claim, and an unknown field stays null.
 2. **`analyse(adText)`** turns those fields plus the data into the result: the three asks, the costs, the
    who-pays label on every what-if ("Not covered, you pay" or "Covered by insurance, after your excess"),
    the safer choice and the sources.
@@ -51,6 +61,21 @@ node apps/what-if/test/ai.test.mjs              # the AI reader, mocked
    the generic insurance question. Three are shown and the rest go into `more`. New fields: `postcode`,
    `plotLeaseEnds`, `energyClass`, `energyClassScale`, `heating` and `says` (the ad's words) for homes, `postcode` and
    `says.damage` for rentals.
+
+   For houses and cottages the asks are ranked too, three shown and the rest under "N more things to check":
+   moisture or mould the ad itself mentions; the condition inspection and the buyer's duty to inspect against
+   hidden defects (Land Code 540/1995, chapter 2); a false plinth, crawl space, flat roof or slab by the ad's
+   words or the house's era; a shore-side or groundwater-area own wastewater system, then any other; oil heating
+   and its tank; radon where STUK's share above 300 Bq/m³ is high; winter use of a cottage; a roof or
+   foundation drains past their lifetime; a leased plot; a private road; a well; flood risk areas; asbestos
+   before 1994. Costs over five years: the price, the 3 % transfer tax, the title fee, a condition inspection
+   if none is done, heating only from the ad's own kWh, litres or euros, property tax from the ad (otherwise
+   the municipalities' rates on vero.fi), road charge and plot rent from the ad, and home insurance as a quote.
+   Who pays follows If's home insurance terms; a hidden defect is the seller's under the Land Code.
+
+   `areaRisks(municipality, { kind })` gives the radon and flood-risk-area asks for any municipality, with their
+   sources, so a flat result can use them too: `areaRisks(h.city, { kind: "flat" }).asks` (each `{rank, ask,
+   sources}`). Flats don't call it yet.
 
    For cars the three asks are ranked: the inspection numbers first (or, when the ad's last inspection is
    overdue, why it hasn't been inspected), then a timing belt that may be due or an electric car's battery, changes
@@ -70,7 +95,8 @@ own site: Cloudflare Workers (`*.workers.dev`) or localhost. The server is in `d
    key fields:
    - a car or motorcycle without make and model;
    - a flat for sale without a building year and a price;
-   - a rental without a rent.
+   - a rental without a rent;
+   - a house or cottage without a building year or a price.
 
    Links and scraps of under 30 characters never go out, and none of the 17 sample ads makes a call.
 2. **What goes out.** `stripContacts(text)` takes out:
