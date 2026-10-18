@@ -298,6 +298,8 @@ function createEngine(DATA, today) {
   // "a, b and c", with a comma before "and" when an item has its own "and" ("springs and shock absorbers, brakes, and …").
   const and = (a) => (a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + (a.length > 2 && a.some((x) => / and /.test(x)) ? ", and " : " and ") + a[a.length - 1]);
   const uniq = (a) => [...new Set(a)];
+  // An electric car, as a whole word, so "sähköikkunat" or "electric mirrors" don't make a petrol car electric.
+  const ELECTRIC = /(?<!\p{L})(?:täys)?sähkö(?:auto)?(?!\p{L})|(?<!\p{L})bev(?!\p{L})|(?<!\p{L})electric(?!\p{L})(?!\s+(?:windows?|mirrors?|seats?|tailgate|boot|sunroof|parking|heat|sauna|stove))/u;
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   /* ---------- sources ---------- */
@@ -333,7 +335,7 @@ function createEngine(DATA, today) {
         { what: "You crash into another car", who: "Traffic insurance pays for the other car and people", tone: "covered", note: "Every car must have it, by law." },
         { what: "Your own car is damaged in a crash", who: "Covered with full kasko · after your excess", tone: "covered", note: "Partial kasko doesn’t cover crash damage to your own car." },
         { what: "The car is stolen", who: "Covered with kasko · after your excess", tone: "covered" },
-        { what: "It breaks down: timing belt, clutch, gearbox", who: "Not covered · you pay", tone: "pay" },
+        { what: "It breaks down: timing belt, clutch, gearbox", who: "Not covered · you pay", tone: "pay", breakdown: true },
         { what: "It fails the inspection", who: "Not covered · you pay", tone: "pay" },
       ],
       note: "Car insurance pays for accidents and theft, not for wear or breakdowns. That’s why the checks above matter before you buy.",
@@ -618,7 +620,7 @@ function createEngine(DATA, today) {
       if (/hybrid/.test(t)) return /plug-in|ladattava|phev/.test(t) ? "plug-in hybrid" : /diesel/.test(t) && !/bensiini|petrol/.test(t) ? "hybrid-diesel" : "hybrid-petrol";
       if (/diesel/.test(t)) return "diesel";
       if (/bensiini|petrol|gasoline/.test(t)) return "petrol";
-      if (/sähkö|electric/.test(t)) return "electric";
+      if (ELECTRIC.test(t)) return "electric";
       if (/kaasu|cng|lpg|biogas/.test(t)) return "gas";
       return null;
     };
@@ -642,6 +644,9 @@ function createEngine(DATA, today) {
       ?? inline(P, "katsastettu|inspected|katsastus voimassa|inspection", pDate);
     c.powerHp = +(P.text.match(/(?<!\d)(\d{2,3}) ?(?:hv|hp|ps)(?!\p{L})/iu)?.[1] ?? 0) || null;
     c.powerKw = +(P.text.match(/(?<!\d)(\d{2,3}) ?kw(?![\p{L}])/iu)?.[1] ?? 0) || null;
+    // An electric car's battery health as the ad states it: "SoH 92 %", "akun kunto 92 %".
+    const soh = +(low.match(/(?:soh|akun kunto|akun terveys|battery health|state of health)[^\d\n]{0,15}(\d{2,3})\s?%/)?.[1] ?? 0);
+    c.batterySoh = soh >= 30 && soh <= 100 ? soh : null;
 
     const f = c.flags;
     if (/jakoketju|timing chain|ketjuvetoinen|ketjukone|ketjumoottori|ei (?:jako)?hihnaa|no (?:timing )?belt/.test(low)) f.timingChain = true;
@@ -921,7 +926,7 @@ function createEngine(DATA, today) {
     const rent = count([/vuokra\s*\/\s*kk|(?:^|\n)vuokra(?:\n|\s+\d)|kuukausivuokra|monthly rent|(?:^|\n)rent(?:\n|:|\s+\d|\s+€)/, /vuokrataan|vuokra-asunnot|for rent|to rent|to let(?!\p{L})/u,
       /(?:^|\n)vakuus(?!\p{L})|vuokravakuus|takuuvuokra|(?<!\p{L})deposit(?!\p{L})/u, /vuokranantaja|lessor|landlord|vuokralainen|tenant/, /vuokrasopimus|vuokranmaksupäivä|rent payment|(?<!\p{L})lease(?!\p{L})|rental (?:number|agreement|contract)/u]);
     const carish = count([/mittarilukema|mileage|ajettu|\d\s?(?:km|tkm)(?![\p{L}\/])/u, /vuosimalli|year model|model year|ensirek|first reg/, /vaihteisto|gearbox|automaatti|manuaali|automatic|manual/,
-      /katsastettu|inspected|inspection date|katsastus/, /diesel|bensiini|petrol|hybrid|polttoaine|käyttövoima|fuel/, /rekisterinumero|registration number|vetotapa|drive type|korimalli|henkilöauto/]);
+      /katsastettu|inspected|inspection date|katsastus/, new RegExp(`diesel|bensiini|petrol|hybrid|polttoaine|käyttövoima|fuel|${ELECTRIC.source}`, "u"), /rekisterinumero|registration number|vetotapa|drive type|korimalli|henkilöauto/]);
     if (home >= 2 && home >= rent) return "home";
     if (rent >= 2 && rent > home) return "rent";
     if (vehicleClass(P, car) === "moto") return "moto";
@@ -1013,12 +1018,27 @@ function createEngine(DATA, today) {
     }
     asks.push(a1);
 
-    // 2. The timing belt, when it matters.
+    // Only ask about parts the car has: an electric car has no timing belt or clutch, an automatic no clutch to wear out.
+    // An unknown fuel or gearbox counts as having them, so nothing is left out by a guess.
     const f = c.flags;
-    const beltDue = !f.timingChain && f.timingBeltReplaced === undefined && (c.km ? c.km >= 80000 : age != null && age >= 8);
-    const beltNotDone = f.timingBeltReplaced === false;
+    const electric = c.fuel === "electric";
+    const hybrid = /hybrid/.test(c.fuel ?? "");
+    const clutch = !electric && c.gearbox !== "automatic";
+    const motor = electric ? "the electric motor" : "the gearbox";
+    // The breakdown a private-seller what-if names, and its price when we have a sourced one (clutches only).
+    const fault = clutch
+      ? { goes: "the clutch goes", cost: `€${F.clutch.low}–${grp(F.clutch.high)}`, tag: " · clutch prices AutoJerry 2026", src: ["clutch"] }
+      : { goes: `${motor} fails`, cost: "", tag: "", src: [] };
+
+    // 2. The timing belt, when it matters; for an electric car, the battery.
+    const beltDue = !electric && !f.timingChain && f.timingBeltReplaced === undefined && (c.km ? c.km >= 80000 : age != null && age >= 8);
+    const beltNotDone = !electric && f.timingBeltReplaced === false;
     const beltTag = `AutoJerry 2026: changing a timing belt costs €${F.belt.low}–${F.belt.high}, typically €${F.belt.typical}`;
-    if (f.timingBeltReplaced) {
+    if (electric) {
+      asks.push({ q: "“Can I see a report on the battery’s health?”",
+        why: `${c.batterySoh ? `The ad says the battery is at ${c.batterySoh}%. ` : ""}An electric car’s battery holds less charge as it ages, and its range drops with it. A garage or the maker can read the battery’s state of health (SoH): ask for the report, and whether the maker’s battery warranty is still valid.`,
+        whatif: "What if the battery has worn more than you thought? The range stays shorter.", cost: "", who: "you", tag: "Ask the seller" });
+    } else if (f.timingBeltReplaced) {
       const when = c.beltKm ? ` at ${grp(c.beltKm)} km` : c.beltYear ? ` in ${c.beltYear}` : "";
       asks.push({ q: "“Can I see the receipt for the timing belt?”",
         why: `The ad says the timing belt was changed${when}. A receipt proves it.${c.beltKm && c.km && c.km > c.beltKm ? ` That was ${grp(c.km - c.beltKm)} km ago.` : ""} Belts are usually changed around every ${grp(F.belt.km)} km, depending on the engine.`,
@@ -1036,22 +1056,22 @@ function createEngine(DATA, today) {
     if (c.sellerType === "dealer") {
       asks.push({ q: "“What do you promise about its condition, in writing?”",
         why: "You’re buying from a business, so consumer law covers you. If a fault shows up within a year, it’s presumed to have been there when you bought it, unless it’s normal wear for the car’s age and km. A general “sold as is” line doesn’t change that.",
-        whatif: "What if the gearbox fails in month three?", cost: "", who: "The dealer answers for it, unless it’s normal wear",
+        whatif: `What if ${motor} fails in month three?`, cost: "", who: "The dealer answers for it, unless it’s normal wear",
         tip: f.dealerWarranty ? `The ad mentions a warranty (${esc(f.dealerWarranty)}). It comes on top of your rights, not instead of them.` : "",
         tag: "Consumer Protection Act 38/1978, chapter 5", real: true });
       sources.push("ksl");
     } else if (c.sellerType === "private") {
       asks.push({ q: "“Can I take it to a garage before I buy?”",
         why: `You’re buying from a private person. If a fault shows up next month, it’s mostly your problem: a dealer would have to answer for it for a year, a private seller doesn’t. Used-car faults are the biggest car complaint in Finland: ${Math.round(F.disputes.defectShare * 100)}% of used-car cases at consumer advice were about defects.`,
-        whatif: "What if the clutch goes next month?", cost: `€${F.clutch.low}–${grp(F.clutch.high)}`, who: "you",
-        tag: "Sale of Goods Act 355/1987 · KKV 2024 · clutch prices AutoJerry 2026", real: true });
-      sources.push("kl", "kkv", "clutch");
+        whatif: `What if ${fault.goes} next month?`, cost: fault.cost, who: "you",
+        tag: `Sale of Goods Act 355/1987 · KKV 2024${fault.tag}`, real: true });
+      sources.push("kl", "kkv", ...fault.src);
     } else {
       asks.push({ q: "“Are you a dealer or a private seller?”",
         why: "It changes your rights. A dealer must answer for faults that show up within a year, unless they’re normal wear. With a private seller, a fault that shows up later is mostly your problem.",
-        whatif: "What if the clutch goes next month and the seller was private?", cost: `€${F.clutch.low}–${grp(F.clutch.high)}`, who: "you",
-        tag: "Consumer Protection Act, chapter 5 · Sale of Goods Act · clutch prices AutoJerry 2026", real: true });
-      sources.push("ksl", "kl", "clutch");
+        whatif: `What if ${fault.goes} next month and the seller was private?`, cost: fault.cost, who: "you",
+        tag: `Consumer Protection Act, chapter 5 · Sale of Goods Act${fault.tag}`, real: true });
+      sources.push("ksl", "kl", ...fault.src);
     }
 
     if (asks.length < 3 && f.rustMentioned) {
@@ -1076,7 +1096,9 @@ function createEngine(DATA, today) {
     if (beltDue || beltNotDone) costs.push({ what: "Timing belt, if due", note: `Typical garage price · AutoJerry 2026`, eur: F.belt.typical, seg: "fix" });
     const inspections = age == null ? 1 : age >= 9 ? 2 : age >= 2 ? 1 : 0;
     if (inspections) costs.push({ what: inspections === 2 ? "Two inspections" : "One inspection", note: `About ${eur(F.inspectionFee.walkIn)} each · Traficom ${F.inspectionFee.year} average price`, eur: inspections * F.inspectionFee.walkIn, seg: "run" });
-    costs.push({ what: "Two services", note: `Typical garage price ${eur(F.service.typical)} each · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * F.service.typical, seg: "run" });
+    costs.push({ what: "Two services", note: electric
+      ? `Typical garage price ${eur(F.service.typical)} each for a petrol or diesel car · AutoJerry 2026 · an electric car’s may differ`
+      : `Typical garage price ${eur(F.service.typical)} each · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * F.service.typical, seg: "run" });
     costs.push({ what: "Insurance", note: "Depends on you and the car", eur: null, seg: "ins" });
     if (inspections) sources.push("fee");
     sources.push("service");
@@ -1110,6 +1132,9 @@ function createEngine(DATA, today) {
     sources.push("ajl", "tll", "lookup", "lvl");
 
     const specs = [c.year, c.km ? `${grp(c.km)} km` : null, FUEL_WORDS[c.fuel] ?? c.fuel, c.gearbox, c.sellerType === "dealer" ? "dealer" : c.sellerType === "private" ? "private seller" : null, c.city ? esc(c.city) : null].filter(Boolean).join(" · ");
+    const parts = electric ? ["battery", "electric motor", "charger"]
+      : [f.timingChain ? "engine" : "timing belt", clutch && "clutch", "gearbox", hybrid && "hybrid battery"].filter(Boolean);
+    const cover = { ...COVER.car, items: COVER.car.items.map((i) => (i.breakdown ? { ...i, what: `It breaks down: ${parts.join(", ")}` } : i)) };
     const belt = f.timingChain ? "timing chain, says the ad" : f.timingBeltReplaced ? `changed${c.beltKm ? ` at ${grp(c.beltKm)} km` : c.beltYear ? ` in ${c.beltYear}` : ""}, says the ad` : f.timingBeltReplaced === false ? "not changed, says the ad" : nf;
     return {
       kind: "car", stamp: "Used car", name, specs, price: c.price, priceLabel: "Asking price",
@@ -1117,12 +1142,13 @@ function createEngine(DATA, today) {
         c.km ? `Checking what usually needs doing at ${grp(c.km)} km` : "Checking what usually needs doing", "Checking who pays if something goes wrong"],
       asks: asks.slice(0, 3), period: "Over two years", costs,
       costNote: "Only numbers from the ad or with a source. Insurance depends on you, so get your own price below.",
-      safer, cover: COVER.car,
+      safer, cover,
       later: { label: "After you buy", notif: { meta: "Tue 20:12", title: "Frost on your route tomorrow", text: "Black ice likely around 6:40. Leave ten minutes early and keep your distance." }, list: later },
       insure: { label: "Drive it home", title: "Get reminders for this car.", text: "They come with If car insurance. Traffic insurance is required by law from the moment the car is yours.",
         details: [["Car", c.year ? `${name}, ${c.year}` : name], c.km ? ["Km", grp(c.km)] : null, c.city ? ["Area", esc(c.city)] : null].filter(Boolean) },
       readout: [["Car", name], ["Year", shown(c.year)], ["Km", shown(c.km, grp)], ["Price", shown(c.price, eur)], ["Seller", shown(c.sellerType)], ["Fuel", shown(c.fuel)],
-        ["Gearbox", shown(c.gearbox)], ["Last inspection", shown(c.lastInspection)], ["Area", shown(c.city, esc)], ["Timing belt", belt]],
+        ["Gearbox", shown(c.gearbox)], ["Last inspection", shown(c.lastInspection)], ["Area", shown(c.city, esc)],
+        electric ? ["Battery", c.batterySoh ? `${c.batterySoh}% health, says the ad` : nf] : ["Timing belt", belt]],
       sources: uniq(sources),
     };
   }

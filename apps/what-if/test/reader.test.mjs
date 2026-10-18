@@ -125,6 +125,28 @@ const yzfOk = !yzf.message && /year/i.test(yzf.asks?.[0]?.q ?? "");
 if (!yzfOk) structural++;
 console.log(`${yzfOk ? "pass" : "FAIL"}  no year, asks     ${yzf.message ?? strip(yzf.asks?.[0]?.q ?? "")}`);
 
+// Only parts the car has: no timing belt on an electric car, no clutch on an automatic. `must` is what the result
+// has to name, `never` what it must not, anywhere in its asks, costs, sources, who pays or readout.
+const POWERTRAINS = [
+  ["electric", "Tesla Model 3 Long Range\n2019\n142 000 km\nSähkö\nAutomaatti\nHinta 21 900 €\nYksityinen myyjä, Turku", "electric", /battery/i, /timing belt|clutch/i],
+  ["electric, English", "Nissan Leaf 40 kWh\n2018\n96 000 km\nFuel: Electric\nAutomatic\nPrice 9 900 €\nPrivate seller, Espoo\nBattery health (SoH) 87 %", "electric", /at 87%/, /timing belt|clutch/i],
+  ["electric, dealer", "Volkswagen ID.3 Pro\n2021\n68 000 km\nTäyssähkö\nHinta 19 500 €\nAutoliike, Tampere\nToimistomaksu 199 €", "electric", /electric motor fails/, /timing belt|clutch/i],
+  ["automatic petrol", "Toyota Corolla 1.6\n2012\n188 000 km\nBensiini\nAutomaatti\nHinta 7 900 €\nYksityinen myyjä, Oulu", "petrol", /timing belt/i, /clutch/i],
+  ["hybrid", "Toyota Auris Hybrid\n2015\n180 000 km\nHybridi (bensiini/sähkö)\nAutomaatti\nHinta 10 900 €\nYksityinen myyjä, Turku", "hybrid-petrol", /hybrid battery/, /clutch/i],
+  ["manual petrol", "Ford Focus 1.6\n2010\n160 000 km\nManuaali\nSähköikkunat, electric mirrors\nHinta 3 900 €\nYksityinen myyjä, Pori", null, /timing belt.*clutch/i, /battery/i],
+];
+const powerBad = [];
+for (const [label, text, fuel, must, never] of POWERTRAINS) {
+  const r = engine.analyse(text);
+  check(label, r);
+  const said = strip(JSON.stringify([r.asks, r.costs, r.sources, r.cover?.items, r.readout]));
+  if ((engine.read(text).fuel ?? null) !== fuel) powerBad.push(`${label}: fuel read as ${engine.read(text).fuel}`);
+  if (!must.test(said)) powerBad.push(`${label}: doesn't say ${must}`);
+  if (never.test(said)) powerBad.push(`${label}: says ${said.match(never)[0]}`);
+}
+if (powerBad.length) structural++;
+console.log(`${powerBad.length ? "FAIL" : "pass"}  powertrains      ${powerBad.join("; ")}`);
+
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
   ["Kia Cee'd SW 1.6", "kia|ceed"], ["Kia pro_cee'd GT", "kia|proceed"], ["Mazda3 2.0 Skyactiv", "mazda|3"], ["Mazda 6 Wagon", "mazda|6"],

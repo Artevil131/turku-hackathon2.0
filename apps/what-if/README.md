@@ -13,7 +13,7 @@ Live: https://claude.ai/artifact/7SUmD83heokewMBwhrvcho (private link; ask Vaish
 | `index.html` | The whole app in one file. Deployment copies it to the site root as is. Opened from disk or as the claude.ai artifact it is rules-only and contacts no outside server; on our own site it can also ask the AI reader (below). |
 | `data/*.json` | Fact-checked source data with a source on every number (see `data/README.md`): Traficom's 2025 inspection statistics by make, model and first registration year; renovation life cycles and costs; used-car, motorcycle, rental and housing rules; 17 test ads in real site formats. |
 | `tools/build-data.mjs` | Builds the compact data from `data/` and writes it into `index.html`. Run after changing anything in `data/`. |
-| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses and real-page quirks. Currently 17 of 17 pass. |
+| `test/reader.test.mjs` | Runs the page's own engine against the 17 test ads in Node, plus links, mopeds, snowmobiles, ATVs, houses, real-page quirks and powertrains (no timing belt on an electric car, no clutch on an automatic). Currently 17 of 17 pass. |
 | `test/ai.test.mjs` | The AI-reader side with a mocked `/api/read`: contact stripping, when to call, results from AI fields, the draft card (`test/fixtures/ai-draft-moped.json`), every fallback, and screenshots (Cancel sends nothing, `{image}` only, the transcript through the rules, the failure message; several screenshots read together, Remove, one unread, at most four). Currently 110 of 110 pass. |
 
 ```
