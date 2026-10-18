@@ -27,6 +27,7 @@ All files are UTF-8 JSON with a 2-space indent. None holds personal data. Raw do
 The price of old flats by postal code (Statistics Finland table 13mu, 2025) is not copied here: `tools/build-data.mjs` reads it from `libs/listing/data/prices-postcode.json`.
 
 `test/car-running-costs.test.mjs` checks both new files: every number has a known source id, and the values pass sanity checks.
+| `timing-drive.json` (350 KB) and `timing-drive-evidence.json` (840 KB) | Timing belt, chain or wet belt per make, model and engine, with the belt change interval where a source gives one (added 18 October 2026, see below) | `secondary: true` on every entry whose drive or interval rests on a source other than the car maker. The evidence file holds the quotes, notes and what was left out. |
 
 `moto-rules.json` also records a correction: Valtioneuvoston asetus 1455/2019, which `traficom-inspections.json` cites for the inspection schedule, was repealed by the Vehicles Act 82/2021. The schedule itself is unchanged; the duties are now in the Act.
 
@@ -63,6 +64,31 @@ Key numbers: 30.4 % of all 2,184,538 inspections failed in 2025. At the first in
 - Our own additions: `ageYears` (2025 minus first-registration year), the shares in `commonFaults` (our arithmetic on Traficom's counts) and every English label (our translation; hints such as "(rust)" are ours).
 - Estimates: that the inspection prices include VAT, and that they are passenger-car prices.
 - Traficom's reuse terms were not checked. The page says only "© Traficom".
+
+## timing-drive.json
+
+**What it holds.** For the 100 most-inspected models in Traficom's 2025 statistics (Tesla Model 3 excluded: no timing drive), 1,184 entries, one per make, model, engine family and year range. Each says whether the camshafts run on a dry timing belt, a chain or a wet belt (a belt in engine oil, e.g. PSA PureTech, Ford EcoBoost 1.0), and gives the belt change interval in km and years where the source states one.
+
+- `make` and `model` are Traficom's keys, so an entry joins straight onto `traficom-inspections.json`. `years` are first-registration years, 2005–2022.
+- `engine.badges` are the names ads use ("1.6 TDI", "320d", "C 220 CDI", "D4", "1.2 PureTech"); `engine.codes` are engine codes from the sources.
+- `source` is an id in `meta.sources`. `ADAC` stands for ADAC's Autokatalog; the exact ADAC pages are listed per entry in the evidence file.
+- `timing-drive-evidence.json`, keyed by entry `id`: the verbatim quote from the source, extra sources, notes, and `leftOut` (810 cases with the reason).
+
+Key numbers (from `test/timing-drive.test.mjs`): model years with at least one entry hold 75.5 % of the 1,672,937 inspections of 2025 (cars first registered 2005–2021), and 32.2 % have an entry resting on a maker document. 662 entries are chains, 512 belts and 10 wet belts. 134 entries are primary, 1,050 secondary (577 of them ADAC).
+
+**Sources.**
+- Primary: VW, Audi and Škoda Self-Study Programmes (mirrored PDFs), Toyota Europe press kits, Daimler and BMW training documents, Volvo Drive-E press release and a Volvo Cars of North America bulletin, Kia and Hyundai Finnish owner's manuals, Nissan service schedules, Ford's 1.0 EcoBoost press release.
+- Secondary: ADAC Autokatalog (camshaft drive per variant), Haynes maintenance plans (belt intervals, labelled OEM schedules), Gates technical bulletin TB020 (VAG intervals), febi, ContiTech, repareo, CompleteCar, auto motor und sport, Professional Motor Mechanic.
+
+**How it was checked.** Every entry's quote was fetched again on 18 October 2026 and searched for in the source; 35 entries whose quote could not be found, or whose source could not be fetched, were dropped. Two table PDFs (Gates TB020, the Volvo bulletin) were checked by hand. ADAC was read page by page: an ADAC engine code is used only when every ADAC page read for it gives the same drive and at least two pages do. 14 codes disagree between ADAC pages (for example VW CJZ, CYV, CZC, CZD, BWA, Ford YZDA and the 2.0 EcoBlue codes, Renault K9K, Mercedes OM654), so ADAC is not used for them. Where ADAC and a research entry disagree for the same code, the research entry is kept (ADAC calls the Škoda Superb 1.8 T AWT a chain engine; Gates lists it as a belt).
+
+**Ambiguities left out.** A name that two engines share in the same model year is removed for those years: the switch years from VW's chain EA111 TSI to the belt EA211 (around 2012–2013), Volvo's five-cylinder and Drive-E D4/T5 in 2014–2016, the 2018 Ford Focus 1.0 EcoBoost (wet belt in the Mk III, chain per ADAC in the Mk IV) and many more, each listed in `leftOut`. Hyundai and Kia chains that rested only on a missing belt item in a service schedule were dropped unless ADAC states the chain; the ADAC read stopped before it reached Honda, Mitsubishi, Subaru, Suzuki, Hyundai, Kia, Opel, Renault, Dacia, Fiat, PSA and Saab, so those rest on the research sources alone.
+
+**Still missing or estimated.**
+- Most intervals are Haynes's general European schedule, which many plans label "Europe except Norway, Finland, Sweden". A Nordic schedule may differ.
+- The PSA PureTech wet-belt entries and VW's EA211 belt entries from SSP 511 were dropped because their sources could not be fetched at the final check; the gaps are in `leftOut`.
+- ADAC returned no pages for VW Golf Plus and Golf Sportsvan, Seat Leon ST, Volvo V60, V50, V90 and XC70, or Nissan Qashqai+2.
+- `years` follow ADAC's German sales periods or the source's generation span; a Finnish first registration can lag by a year.
 
 ## housing-rules.json
 
