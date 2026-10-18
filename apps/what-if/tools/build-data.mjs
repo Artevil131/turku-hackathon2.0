@@ -103,6 +103,106 @@ for (const ex of vt.examples) if (!(ex.eurPerYear > 0)) throw new Error(`vehicle
 const ev = powertrain.electricOnly.map((e) => e.key);
 for (const k of ev) if (!m[k]) throw new Error(`powertrain-models.json: ${k} is not a Traficom model key`);
 
+// Running a used car for two years (car-running-costs.json): energy, an electric car's services, battery test and
+// warranty, Toyota-group hybrid battery cover, and the link to Traficom's recall search. Every value keeps its source
+// id; the sources the page shows are copied with them, and a secondary source is marked as an estimate.
+// car-recalls-eu.json is not shipped: it is EU-wide, not "sold in Finland".
+const rc = read("car-running-costs.json");
+const rcUsed = new Set();
+const rcSrc = (s) => { for (const id of [s].flat()) { if (!rc.meta.sources[id]) throw new Error(`car-running-costs.json: unknown source ${id}`); rcUsed.add(id); } return [s].flat(); };
+const E = rc.energy, EC = rc.electricCars;
+const gapRow = (p) => E.consumption.realWorldGapWLTP.rows.find((r) => r.powertrain === p).gapPct;
+const nedcGap = E.consumption.realWorldGapWLTP.caveats.match(/NEDC gap had grown to around (\d+) % by (\d{4})/);
+const band = E.electricityPrices.householdTypes.D.label.match(/^household, ([\d,]+–[\d,]+ kWh a year)/);
+const startAll = EC.batteryWarranty.note.match(/runs from (first registration or delivery)/);
+if (!nedcGap || !band || !startAll) throw new Error("car-running-costs.json: the NEDC gap, electricity band D or the warranty start note changed shape");
+// When a battery warranty starts, in the maker's terms where the row states it, else the file's general note.
+const startOf = (r) => {
+  const t = r.conditions ?? "";
+  if (/from the delivery date on the warranty certificate/i.test(t)) return "from the delivery date on its warranty certificate";
+  if (/from first use or first registration, whichever is earlier/i.test(t)) return "from first use or first registration, whichever is earlier";
+  if (/from the date the car was put into use/i.test(t)) return "from the date the car was put into use";
+  return `from ${startAll[1]}`;
+};
+// Which ads a battery warranty row is for. `base` matches the model in the ad's title, `variant` the version anywhere
+// in the ad, `my` the model year; a make with one row for all its electric cars has no `base`. Every row of the file
+// must be listed here, so a new row can't be shown for the wrong car.
+const WARRANTY_MATCH = {
+  "Tesla|Model S, Model X": { base: String.raw`model ?[sx](?![a-z0-9])` },
+  // Checked before the RWD row, so "Long Range RWD" is a Long Range.
+  "Tesla|Model 3 / Model Y Premium Long Range RWD and AWD, Performance AWD": { first: true, base: String.raw`model ?[3y](?![a-z0-9])`, variant: String.raw`long range|performance|dual motor|(?<![a-z])awd(?![a-z])|premium` },
+  "Tesla|Model 3 RWD, Model Y RWD": { base: String.raw`model ?[3y](?![a-z0-9])`, variant: String.raw`(?<![a-z])rwd(?![a-z])|standard range|(?<![a-z])sr\+?(?![a-z])` },
+  "Volkswagen|ID models (BEV)": { base: String.raw`(?<![a-z])id\. ?\d|id\. ?buzz` },
+  "Škoda|Enyaq, Elroq": { base: "enyaq|elroq" },
+  "Audi|all BEV (e-tron, Q4 e-tron, Q6 e-tron …)": {},
+  "CUPRA|Born, Tavascan": { base: "born|tavascan" },
+  "Nissan|Leaf, Ariya": { base: "leaf|ariya" },
+  "Hyundai|all BEV": {},
+  "Kia|model year 2026 and newer (EV, HEV, PHEV)": { my: [2026, null] },
+  "Kia|model year 2025 and older (EV, HEV, PHEV)": { my: [null, 2025] },
+  "BMW|BMW i models (BEV); i3 60 Ah: 100,000 km": {},
+  "Mercedes-Benz|EQA, EQB, EQC, electric CLA, GLB, GLC, G 580": { base: String.raw`eq[abc]|(?<![a-z])(?:cla|glb|glc)(?![a-z])|g ?580` },
+  "Mercedes-Benz|EQE, EQE SUV, EQS, EQS SUV, Maybach EQS 680": { base: "eq[es]|maybach" },
+  "Volvo|all BEV": {},
+  "Polestar|all": {},
+  "Toyota|bZ4X, Urban Cruiser and other BEV passenger cars (not Proace)": { base: String.raw`^(?!.*proace)` },
+  "Toyota|EV-akkuturva extension for BEV passenger cars": { skip: true },
+  "Ford|all Ford BEVs (Mustang Mach-E, Explorer …)": {},
+  "Renault|R4, R5, Megane, Scenic E-Tech": { base: String.raw`(?<![a-z])r[45](?![a-z0-9])|megane|scenic` },
+  "Peugeot|BEV": {},
+  "Opel|BEV": {},
+  "Citroën|BEV and PHEV": {},
+  "MG|MG4, MGS5, MGS6, Cyberster": { base: String.raw`mg ?4|mgs ?[56]|cyberster|^mg 4` },
+  "BYD|all models (Dolphin, Dolphin Surf, Seal, Seal U, Sealion 7, Atto 2, Atto 3, Tang, Han, DM-i)": {},
+};
+const warranty = [];
+for (const r of EC.batteryWarranty.rows) {
+  const id = `${r.make}|${r.models}`;
+  const match = WARRANTY_MATCH[id];
+  if (!match) throw new Error(`car-running-costs.json: no WARRANTY_MATCH entry for battery warranty row ${id}`);
+  if (match.skip) continue;
+  if (!(r.years > 0 && r.km > 0)) throw new Error(`battery warranty row without years and km: ${id}`);
+  const row = { make: fold(r.make), maker: r.make, models: r.models, years: r.years, km: r.km, soh: r.minSoHPct, start: startOf(r),
+    defectOnly: /only when a manufacturing or material defect causes it/i.test(r.conditions ?? ""), src: rcSrc(r.source), ...match };
+  // BMW's i3 60 Ah has a lower km limit, stated in the same row.
+  const i3 = r.make === "BMW" && r.models.match(/i3 60 Ah: ([\d,]+) km/);
+  if (i3) warranty.push({ ...row, models: "BMW i3 60 Ah", km: +i3[1].replace(/,/g, ""), base: String.raw`(?<![a-z])i3(?![a-z0-9])`, variant: String.raw`60 ?ah` });
+  warranty.push({ ...row, models: r.make === "BMW" ? "BMW i models" : r.models });
+}
+warranty.sort((a, b) => (b.first ? 1 : 0) - (a.first ? 1 : 0));
+for (const w of warranty) delete w.first;
+const hyb = (make, re) => {
+  const r = EC.hybridBatteryWarranty.rows.find((x) => x.make === make && re.test(x.models));
+  if (!r || r.years !== 10 || r.km !== 350000) throw new Error(`car-running-costs.json: the ${make} hybrid battery cover changed`);
+  return { years: r.years, km: r.km, src: rcSrc(r.source), ...(r.checkCostEur === 0 ? { freeCheck: true } : {}) };
+};
+const svcRows = EC.servicePrices.rows.map((r) => ({ make: fold(r.make), model: r.model, avg: r.avgEur, low: r.lowEur, high: r.highEur, src: rcSrc(r.source) }));
+const sohTest = EC.batteryHealthTest.rows.find((r) => /^SOH test/.test(r.what));
+const aviloo = EC.batteryHealthTest.rows.filter((r) => /AVILOO/.test(r.what) && r.date).sort((a, b) => b.date.localeCompare(a.date))[0];
+const flash = aviloo.what.match(/^(AVILOO \w+ test)/)?.[1];
+if (!sohTest || !flash) throw new Error("car-running-costs.json: the battery test rows changed shape");
+const recallPattern = rc.recalls.traficom.linkPatterns.searchByKeyword;
+if (!/\{model\}/.test(recallPattern)) throw new Error("car-running-costs.json: the recall search link has no {model}");
+const run = {
+  km: { v: E.kmPerYear.national.valueKm, year: E.kmPerYear.national.year, src: rcSrc(E.kmPerYear.national.source) },
+  fuel: { month: E.fuelPrices.latest.month, petrol: E.fuelPrices.latest.petrol95E10, diesel: E.fuelPrices.latest.diesel, src: rcSrc(E.fuelPrices.source) },
+  elec: { month: E.electricityPrices.householdTypes.D.latest.month, c: E.electricityPrices.householdTypes.D.latest.total, band: band[1], src: rcSrc(E.electricityPrices.source) },
+  gap: { petrol: gapRow("petrol"), diesel: gapRow("diesel"), phevPetrol: gapRow("plug-in hybrid (petrol)"), phevDiesel: gapRow("plug-in hybrid (diesel)"),
+    nedc: +nedcGap[1], nedcYear: +nedcGap[2], src: rcSrc(E.consumption.realWorldGapWLTP.source) },
+  service: svcRows,
+  test: { avg: sohTest.avgEur, low: sohTest.lowEur, high: sohTest.highEur, src: rcSrc(sohTest.source),
+    aviloo: { what: flash, eur: aviloo.priceEur, date: aviloo.date, src: rcSrc(aviloo.source) } },
+  warranty,
+  hybrid: { toyota: hyb("Toyota", /hybridiakkuturva/), lexus: hyb("Lexus", /hybridiakkuturva/), suzuki: hyb("Suzuki", /Across and Swace/) },
+  recall: { url: recallPattern, src: rcSrc(rc.recalls.traficom.source.filter((id) => id !== "traficom-open-data")) },
+};
+for (const [k, v] of Object.entries({ km: run.km.v, petrol: run.fuel.petrol, diesel: run.fuel.diesel, elec: run.elec.c, gap: run.gap.petrol, test: run.test.avg }))
+  if (!(typeof v === "number" && v > 0)) throw new Error(`car-running-costs.json: ${k} is not a positive number`);
+run.sources = Object.fromEntries([...rcUsed].map((id) => {
+  const s = rc.meta.sources[id];
+  return [id, { text: s.name + (s.type === "secondary" ? " (estimate)" : ""), url: s.url }];
+}));
+
 const data = {
   v: 1,
   trafi: {
@@ -132,6 +232,7 @@ const data = {
     disputes: { usedShare: disputes.facts[0].value, defectShare: disputes.facts[1].value, url: disputes.source.url },
     tax,
     ev,
+    run,
     rentDepositMaxMonths: rent.deposit.maxMonthsOfRent.value,
     moto,
   },
