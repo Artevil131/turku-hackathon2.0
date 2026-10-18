@@ -304,6 +304,7 @@ function createEngine(DATA, today) {
   // An electric car, as a whole word, so "sähköikkunat" or "electric mirrors" don't make a petrol car electric.
   const ELECTRIC = /(?<!\p{L})(?:täys)?sähkö(?:auto)?(?!\p{L})|(?<!\p{L})bev(?!\p{L})|(?<!\p{L})electric(?!\p{L})(?!\s+(?:windows?|mirrors?|seats?|tailgate|boot|sunroof|parking|heat|sauna|stove))/u;
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   /* ---------- sources ---------- */
   const SRC = {
@@ -331,6 +332,7 @@ function createEngine(DATA, today) {
     fine: { text: "FINE: insurance for tenants, owners and housing companies", url: "https://www.fine.fi/oppaat/julkaisu/vuokralaisen-osakkaan-ja-taloyhtion-vakuutukset.html" },
     tax: { text: "Vehicle Tax Act 1281/2003: basic and motive-power tax from 1.1.2026", url: F.tax.lawUrl },
     taxcalc: { text: "Traficom: vehicle tax calculator", url: F.tax.calcUrl },
+    useban: { text: "Vehicles Act 82/2021, section 151: use ban on a car that missed its periodic inspection", url: "https://www.finlex.fi/fi/lainsaadanto/2021/82" },
   };
 
   /* ---------- who pays if something goes wrong ---------- */
@@ -656,6 +658,8 @@ function createEngine(DATA, today) {
     c.city = city(P);
     c.lastInspection = field(P, "katsastettu|inspection date|katsastus|inspected|viimeisin katsastus|last inspection|katsastuspäivä", pDate)
       ?? inline(P, "katsastettu|inspected|katsastus voimassa|inspection", pDate);
+    // The plate, only to point to it when an overdue inspection is worth looking up at Traficom. It goes nowhere else.
+    c.plate = field(P, "rekisterinumero|rekisteritunnus|registration number", (s) => (/^[A-ZÅÄÖ]{1,3}-\d{1,3}$/.test(s.trim()) ? s.trim() : null));
     c.powerHp = +(P.text.match(/(?<!\d)(\d{2,3}) ?(?:hv|hp|ps)(?!\p{L})/iu)?.[1] ?? 0) || null;
     c.powerKw = +(P.text.match(/(?<!\d)(\d{2,3}) ?kw(?![\p{L}])/iu)?.[1] ?? 0) || null;
     // An electric car's battery health as the ad states it: "SoH 92 %", "akun kunto 92 %".
@@ -1148,6 +1152,24 @@ function createEngine(DATA, today) {
       a1.whatif = "What if it fails next time? You pay for the repairs before you can drive it.";
       a1.tag = `Traficom inspection statistics ${DATA.trafi.year}`;
     }
+    // The next inspection after the ad's last one (the rule "After you buy" uses too). Overdue once its month is over:
+    // then the first ask is why, and the statistics become what to expect when it is inspected.
+    let nextDue = null;
+    if (c.lastInspection && c.year) {
+      const [ly, lm] = c.lastInspection.split("-").map(Number);
+      let due = ly + (ly - c.year >= 9 ? 1 : 2);
+      if (ly - c.year < 9 && due - c.year > 10) due = c.year + 10;
+      const m = (lm || 1) - 1;
+      nextDue = { y: due, m, last: `${MONTH_NAMES[m]} ${ly}`, by: `${MONTH_NAMES[m]} ${due}`, overdue: new Date(due, m + 1, 1) <= NOW };
+    }
+    if (nextDue?.overdue) {
+      const stats = a1.why ? ` When it’s inspected, here is how cars like it do. ${a1.why}` : "";
+      a1.q = `“Why hasn’t it been inspected since ${nextDue.last}?”`;
+      a1.why = `The ad says it was last inspected in ${nextDue.last}, so its next inspection was due by ${nextDue.by}. It may have failed, or been taken out of road use, or the ad may be out of date. Traficom’s vehicle lookup shows whether it’s in road use${c.plate ? `: the ad gives its plate, ${esc(c.plate)}` : ""}. Until it passes, it may be driven only to the inspection.${stats}`;
+      a1.whatif = a1.whatif.replace("What if it fails next time?", "What if it fails when it’s inspected?");
+      a1.tag = `${a1.tag} · Vehicles Act 82/2021, section 151`;
+      sources.push("useban");
+    }
     asks.push(a1);
 
     // Only ask about parts the car has: an electric car has no timing belt or clutch, an automatic no clutch to wear out.
@@ -1241,7 +1263,7 @@ function createEngine(DATA, today) {
     if (c.officeFee) costs.push({ what: "Office fee", note: "The dealer adds it on top · from the ad", eur: c.officeFee, seg: "price" });
     if (beltDue || beltNotDone) costs.push({ what: "Timing belt, if due", note: `Typical garage price · AutoJerry 2026`, eur: F.belt.typical, seg: "fix" });
     const inspections = age == null ? 1 : age >= 9 ? 2 : age >= 2 ? 1 : 0;
-    if (inspections) costs.push({ what: inspections === 2 ? "Two inspections" : "One inspection", note: `About ${eur(F.inspectionFee.walkIn)} each · Traficom ${F.inspectionFee.year} average price`, eur: inspections * F.inspectionFee.walkIn, seg: "run" });
+    if (inspections) costs.push({ what: nextDue?.overdue ? (inspections === 2 ? "Inspection now, and one more" : "Inspection now") : inspections === 2 ? "Two inspections" : "One inspection", note: `About ${eur(F.inspectionFee.walkIn)} each · Traficom ${F.inspectionFee.year} average price`, eur: inspections * F.inspectionFee.walkIn, seg: "run" });
     costs.push({ what: "Two services", note: electric
       ? `Typical garage price ${eur(F.service.typical)} each for a petrol or diesel car · AutoJerry 2026 · an electric car’s may differ`
       : `Typical garage price ${eur(F.service.typical)} each · AutoJerry 2026 · estimate: depends on your km`, eur: 2 * F.service.typical, seg: "run" });
@@ -1294,14 +1316,8 @@ function createEngine(DATA, today) {
 
     // After you buy: reminders that need the car's details, for If customers.
     const later = [{ when: "Within 7 days", text: "Register yourself as the new owner. The seller hands over the papers." }];
-    if (c.lastInspection && c.year) {
-      const [ly, lm] = c.lastInspection.split("-").map(Number);
-      let due = ly + (ly - c.year >= 9 ? 1 : 2);
-      if (ly - c.year < 9 && due - c.year > 10) due = c.year + 10;
-      const dueDate = new Date(due, (lm || 1) - 1, 1);
-      if (dueDate < NOW) later.push({ when: "Now", text: "Its next inspection may already be due. Check before you buy." });
-      else later.push({ when: `${MONTHS[(lm || 1) - 1]} ${due}`, text: `Inspection due.${causes.length ? ` Its usual weak spots: ${causes.slice(0, 2).join(", ")}.` : ""}` });
-    }
+    if (nextDue?.overdue) later.push({ when: "Now", text: `Its inspection was due by ${nextDue.by}, by the ad’s date. Check before you buy.` });
+    else if (nextDue) later.push({ when: `${MONTHS[nextDue.m]} ${nextDue.y}`, text: `Inspection due.${causes.length ? ` Its usual weak spots: ${causes.slice(0, 2).join(", ")}.` : ""}` });
     later.push({ when: "Nov–Mar", text: "Winter tyres whenever the weather or roads call for them, with at least 3 mm of tread." });
     later.push({ when: "Icy days", text: "A heads-up the evening before, for your own route." });
     sources.push("ajl", "tll", "lookup", "lvl");

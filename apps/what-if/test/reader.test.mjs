@@ -237,6 +237,17 @@ group("imported", [
   ["not imported", golf("Not imported, first owner in Finland."), ["not imported", notImp]],
 ]);
 
+// An inspection overdue by the ad's own date leads; one that isn't due yet changes nothing.
+const avensis = (insp) => `Toyota Avensis\n2010\n243 000 km\nBensiini\nManuaali\nRekisterinumero\nABC-123\nKatsastettu\n${insp}\nHinta 4 900 €\nYksityinen myyjä, Turku`;
+group("overdue", [
+  ["last inspected 5/2024", avensis("5/2024"),
+    ["leads", (r) => /since May 2024/.test(r.asks[0].q) && /due by May 2025/.test(r.asks[0].why)], ["plate pointed to", (r) => /plate, ABC-123/.test(r.asks[0].why)],
+    ["stats kept", (r) => /26\.2% of 2010 Toyota Avensis/.test(r.asks[0].why)], ["use ban sourced", (r) => r.sources.includes("useban")],
+    ["inspection now", (r) => r.costs.some((x) => /^Inspection now/.test(x.what))], ["later says when", (r) => r.later.list.some((l) => /was due by May 2025/.test(l.text))]],
+  ["last inspected 8/2026", avensis("8/2026"),
+    ["not overdue", (r) => /last inspection report/.test(r.asks[0].q) && !r.sources.includes("useban") && r.later.list.some((l) => l.when === "Aug 2027")]],
+]);
+
 // How ads spell models that Traficom names differently.
 const SPELLINGS = [["BMW 320d Touring", "bmw|3-sarja"], ["BMW M340i xDrive", "bmw|3-sarja"], ["Mercedes-Benz C 220 CDI", "mercedes-benz|c"],
   ["Kia Cee'd SW 1.6", "kia|ceed"], ["Kia pro_cee'd GT", "kia|proceed"], ["Mazda3 2.0 Skyactiv", "mazda|3"], ["Mazda 6 Wagon", "mazda|6"],
