@@ -1,0 +1,512 @@
+{
+  "meta": {
+    "title": "Significant flood risk areas in Finland (SYKE)",
+    "retrieved": "2026-10-18",
+    "conventions": {
+      "source": "'source' is an id in meta.sources",
+      "status": "primary = SYKE/ELY/ministry's own list",
+      "floodTypes": "river = vesistötulva (every inland area on the list is on a river; the published type does not split river from lake), sea = meritulva, stormwater = hulevesitulva. floodTypesPublished keeps SYKE's own Finnish value, which also names ice jams (jääpato), frazil-ice jams (hyydepato) and floods caused by a structure (rakenteesta aiheutuva tulva, here the Kyrkösjärvi dam).",
+      "designated": "year of the Ministry of Agriculture and Forestry decision of 19 December 2024 (3rd round). SYKE's attribute raportointivuosi is 2025, the year reported to the EU.",
+      "municipalities": "worked out by overlaying SYKE's published area polygons on Statistics Finland's 2026 municipal boundaries (statfi-municipalities-2026); a municipality is listed when it holds the largest part of the area, or when more than 1 km² of the area lies more than 1 km inside it; this drops slivers caused by the generalised 1:1,000,000 boundaries. Names are the Finnish names of 2026.",
+      "areaKm2": "area of SYKE's delineation (attribute area_m2), including sea where the area is coastal",
+      "sykeAreaNo": "SYKE attribute kohdenro; euCode is the Floods Directive APSFR code (attribute apsfrcode)"
+    },
+    "sources": {
+      "syke-flood-risk-areas": {
+        "name": "Tulvariskialueet (flood risk areas), layer NZ.Merkittavat_tulvariskialueet",
+        "publisher": "SYKE (Suomen ympäristökeskus); delineations by the ELY Centres",
+        "url": "https://avoindata.suomi.fi/data/fi/dataset/tulvariskialueet",
+        "dataUrl": "https://paikkatiedot.ymparisto.fi/geoserver/inspire_nz/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=inspire_nz:NZ.Merkittavat_tulvariskialueet&propertyName=objectid,kohdenro,apsfrcode,nimi,merkittavyys,tulvatyyppi,raportointivuosi,viranomainen,tulvatjurl,muutospvm,area_m2&outputFormat=application/json&count=500",
+        "type": "primary",
+        "licence": "CC BY 4.0. The catalogue says: 'Aineisto kuuluu SYKEn avoimiin aineistoihin (CC BY 4.0)'; use constraint 'Creative Commons Nimeä 4.0 Kansainvälinen https://www.syke.fi/fi/ymparistotieto/kayttolupa-ja-vastuut. Lähde: Syke, ELY-keskukset'. Attribute as 'Lähde: Syke, ELY-keskukset'.",
+        "retrieved": "2026-10-18",
+        "round": "3rd round: designated by the Ministry of Agriculture and Forestry on 19 December 2024, for the period to 2030",
+        "note": "Attribute-only WFS request (no geometry), 64 features: 18 with merkittavyys 'Merkittävä tulvariskialue' (used here) and 46 'Muu tulvariskialue' (other flood risk areas, not significant; not included). Dataset revision 2024-11-12, catalogue metadata modified 2026-01-27. For the municipality overlay, the 18 polygons were fetched once more with geometry (same layer, EPSG:3067)."
+      },
+      "mmm-2024-decision": {
+        "name": "Suomen merkittävät tulvariskialueet on nimetty (press release, 19 December 2024)",
+        "publisher": "Maa- ja metsätalousministeriö",
+        "url": "https://valtioneuvosto.fi/-/1410837/suomen-merkittavat-tulvariskialueet-on-nimetty",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "18 significant areas: 14 on river basins, 4 on the coast. Four earlier areas no longer met the criteria: Loviisa coastal area, Riihimäki city centre, Lapua and Kemijärvi town."
+      },
+      "vesi-fi-18-proposed": {
+        "name": "Suomeen ehdotettu 18 merkittävää tulvariskialuetta (22 March 2024)",
+        "publisher": "vesi.fi (SYKE and the ELY Centres)",
+        "url": "https://www.vesi.fi/suomeen-ehdotettu-18-merkittavaa-tulvariskialuetta/",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "No new significant areas were proposed in the 3rd round; gives the reasons the four areas were dropped."
+      },
+      "syke-laihianjoki-plan": {
+        "name": "Laihianjoen vesistöalueen tulvariskien hallintasuunnitelma vuosille 2022–2027 (Raportteja 47/2021)",
+        "publisher": "Etelä-Pohjanmaan ELY-keskus and SYKE",
+        "url": "https://doria.fi/handle/10024/184342",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Names Laihia, Vaasa and Mustasaari as the municipalities carrying out the plan's measures for the Laihia-Tuovila-Runsor area (e.g. measure 7.2); used to confirm Vaasa, which the boundary overlay put at only 3.7 km²."
+      },
+      "statfi-municipalities-2026": {
+        "name": "Kunnat 2026, 1:1 000 000 (WFS layer tilastointialueet:kunta1000k_2026)",
+        "publisher": "Tilastokeskus (Statistics Finland)",
+        "url": "https://geo.stat.fi/geoserver/tilastointialueet/wfs?service=WFS&request=GetCapabilities",
+        "dataUrl": "https://geo.stat.fi/geoserver/tilastointialueet/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=tilastointialueet:kunta1000k_2026&srsName=EPSG:3067&outputFormat=application/json",
+        "type": "primary",
+        "licence": "CC BY 4.0 (Statistics Finland open data)",
+        "retrieved": "2026-10-18"
+      },
+      "syke-flood-map": {
+        "name": "SYKE flood map service (Tulvakarttapalvelu, now in the vesi.fi map service)",
+        "url": "https://www.vesi.fi/karttapalvelu/",
+        "publisher": "SYKE",
+        "type": "primary"
+      },
+      "law-620-2010": {
+        "name": "Laki tulvariskien hallinnasta 620/2010",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2010/620",
+        "publisher": "Finlex",
+        "type": "primary"
+      }
+    },
+    "count": {
+      "areas": 18,
+      "municipalities": 29,
+      "riverBasin": 14,
+      "coastalSeaOnly": 4,
+      "inPreviousRound2018": 22,
+      "droppedSince2018": 4,
+      "addedIn2024": 0,
+      "source": "syke-flood-risk-areas"
+    },
+    "notes": [
+      "An area covers only part of a municipality, usually a town centre, village or river valley: the app must say 'part of <municipality> is in a significant flood risk area', never that a given address or building is at risk. SYKE itself says a building inside the delineation is not necessarily at flood risk; only the flood maps show that (syke-flood-map).",
+      "Not being in a significant flood risk area does not mean there is no flood risk: the ELY Centres list 46 further 'other flood risk areas' (muu tulvariskialue) in the same dataset, and floods also happen outside both.",
+      "No significant stormwater (hulevesitulva) risk areas have been designated: SYKE's catalogue says the municipalities have not named any. Åland has not designated any areas.",
+      "3rd round (2024): 18 areas, 14 on river basins and 4 coastal (mmm-2024-decision). No new areas were added; all 18 were already significant in the 2nd round (2018, 22 areas). Dropped in 2024, now 'other flood risk areas' or not listed: Loviisa coastal area, Riihimäki city centre (Riihimäen keskusta), Lapua and Kemijärvi town (Kemijärven kaupunki) (syke-flood-risk-areas, vesi-fi-18-proposed).",
+      "Pori is counted by the ministry among the 14 river-basin areas, but SYKE lists both river and sea flooding there (floodTypes river and sea).",
+      "Municipality slivers left out after the overlay (under 0.5 km², or lying wholly within 1 km of a generalised boundary): Huittinen area into Kokemäki (3.1 km², none more than 1 km inside; Kokemäki has its own 'other flood risk area'), Ilmajoki-Seinäjoki into Lapua (5.2 km², none more than 1 km inside), Turku coast into Raisio, Kemi coast into Keminmaa and Simo, Helsinki-Espoo coast into Kirkkonummi, Sipoo and Vantaa. These are most likely artefacts of the 1:1,000,000 boundaries but have not been checked against 1:10,000 boundaries.",
+      "Kymijoen alaosa reaches into Loviisa (about 52 km²): the Loviisa coastal sea-flood area was dropped in 2024, but the lower Kymijoki river area still covers part of Loviisa.",
+      "Ivalon taajama is the village of Ivalo in Inari; Lapväärtti (Lappfjärd) is in Kristiinankaupunki; Ylistaro is part of Seinäjoki and Vähäkyrö part of Vaasa, so Ylistaro-Koivulahti spans Mustasaari, Isokyrö, Vaasa and Seinäjoki.",
+      "The ELY Centres became Elinvoimakeskukset in 2025; the sources still call them ELY Centres."
+    ]
+  },
+  "areas": [
+    {
+      "id": "helsingin-ja-espoon-rannikkoalue",
+      "name": "Helsingin ja Espoon rannikkoalue",
+      "municipalities": [
+        "Helsinki",
+        "Espoo"
+      ],
+      "floodTypes": [
+        "sea"
+      ],
+      "floodTypesPublished": "meritulva",
+      "designated": 2024,
+      "sykeAreaNo": 1,
+      "euCode": "FITulvaTietoId141AlueId1",
+      "areaKm2": 535.3,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "huittinen",
+      "name": "Huittinen",
+      "municipalities": [
+        "Huittinen"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, jääpato, hyydepato",
+      "designated": 2024,
+      "sykeAreaNo": 3,
+      "euCode": "FITulvaTietoId49AlueId3",
+      "areaKm2": 101.7,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "pori",
+      "name": "Pori",
+      "municipalities": [
+        "Pori",
+        "Ulvila"
+      ],
+      "floodTypes": [
+        "river",
+        "sea"
+      ],
+      "floodTypesPublished": "vesistötulva, meritulva, jääpato, hyydepato",
+      "designated": 2024,
+      "sykeAreaNo": 4,
+      "euCode": "FITulvaTietoId39AlueId4",
+      "areaKm2": 104.4,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "haminan-ja-kotkan-rannikkoalue",
+      "name": "Haminan ja Kotkan rannikkoalue",
+      "municipalities": [
+        "Hamina",
+        "Kotka"
+      ],
+      "floodTypes": [
+        "sea"
+      ],
+      "floodTypesPublished": "meritulva",
+      "designated": 2024,
+      "sykeAreaNo": 6,
+      "euCode": "FITulvaTietoId143AlueId6",
+      "areaKm2": 238.9,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "kymijoen-alaosa",
+      "name": "Kymijoen alaosa",
+      "municipalities": [
+        "Kouvola",
+        "Kotka",
+        "Pyhtää",
+        "Loviisa"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, hyydepato",
+      "designated": 2024,
+      "sykeAreaNo": 7,
+      "euCode": "FITulvaTietoId144AlueId7",
+      "areaKm2": 412.5,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "ilmajoki-seinajoki",
+      "name": "Ilmajoki-Seinäjoki",
+      "municipalities": [
+        "Seinäjoki",
+        "Ilmajoki"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, rakenteesta aiheutuva tulva",
+      "designated": 2024,
+      "sykeAreaNo": 9,
+      "euCode": "FITulvaTietoId130AlueId9",
+      "areaKm2": 167.7,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "laihia-tuovila-runsor",
+      "name": "Laihia-Tuovila-Runsor",
+      "municipalities": [
+        "Laihia",
+        "Mustasaari",
+        "Vaasa"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 10,
+      "euCode": "FITulvaTietoId140AlueId10",
+      "areaKm2": 55.4,
+      "source": "syke-flood-risk-areas",
+      "status": "primary",
+      "municipalitiesSource": "syke-laihianjoki-plan"
+    },
+    {
+      "id": "ylistaro-koivulahti",
+      "name": "Ylistaro-Koivulahti",
+      "municipalities": [
+        "Mustasaari",
+        "Isokyrö",
+        "Vaasa",
+        "Seinäjoki"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, jääpato",
+      "designated": 2024,
+      "sykeAreaNo": 12,
+      "euCode": "FITulvaTietoId126AlueId12",
+      "areaKm2": 123.7,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "alavieska-ylivieska",
+      "name": "Alavieska-Ylivieska",
+      "municipalities": [
+        "Ylivieska",
+        "Alavieska"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, jääpato",
+      "designated": 2024,
+      "sykeAreaNo": 13,
+      "euCode": "FITulvaTietoId103AlueId13",
+      "areaKm2": 60.8,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "pudasjarven-taajama",
+      "name": "Pudasjärven taajama",
+      "municipalities": [
+        "Pudasjärvi"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 15,
+      "euCode": "FITulvaTietoId21AlueId15",
+      "areaKm2": 4.0,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "ivalon-taajama",
+      "name": "Ivalon taajama",
+      "municipalities": [
+        "Inari"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 17,
+      "euCode": "FITulvaTietoId95AlueId17",
+      "areaKm2": 35.0,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "kittilan-kirkonkyla",
+      "name": "Kittilän kirkonkylä",
+      "municipalities": [
+        "Kittilä"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 19,
+      "euCode": "FITulvaTietoId94AlueId19",
+      "areaKm2": 52.3,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "rovaniemen-kaupunki",
+      "name": "Rovaniemen kaupunki",
+      "municipalities": [
+        "Rovaniemi"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 20,
+      "euCode": "FITulvaTietoId90AlueId20",
+      "areaKm2": 99.6,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "tornion-kaupunki",
+      "name": "Tornion kaupunki",
+      "municipalities": [
+        "Tornio"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, jääpato",
+      "designated": 2024,
+      "sykeAreaNo": 21,
+      "euCode": "FITulvaTietoId32AlueId21",
+      "areaKm2": 22.2,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "turun-rannikkoalue",
+      "name": "Turun rannikkoalue",
+      "municipalities": [
+        "Turku"
+      ],
+      "floodTypes": [
+        "sea"
+      ],
+      "floodTypesPublished": "meritulva",
+      "designated": 2024,
+      "sykeAreaNo": 23,
+      "euCode": "FITulvaTietoId58AlueId23",
+      "areaKm2": 22.1,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "kemin-rannikkoalue",
+      "name": "Kemin rannikkoalue",
+      "municipalities": [
+        "Kemi"
+      ],
+      "floodTypes": [
+        "sea"
+      ],
+      "floodTypesPublished": "meritulva",
+      "designated": 2024,
+      "sykeAreaNo": 24,
+      "euCode": "FITulvaTietoId2260AlueId24",
+      "areaKm2": 173.9,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "lapvaartti",
+      "name": "Lapväärtti",
+      "municipalities": [
+        "Kristiinankaupunki"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva",
+      "designated": 2024,
+      "sykeAreaNo": 25,
+      "euCode": "FITulvaTietoId178AlueId25",
+      "areaKm2": 12.1,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    },
+    {
+      "id": "pyhajoen-alaosa",
+      "name": "Pyhäjoen alaosa",
+      "municipalities": [
+        "Merijärvi",
+        "Pyhäjoki",
+        "Oulainen"
+      ],
+      "floodTypes": [
+        "river"
+      ],
+      "floodTypesPublished": "vesistötulva, jääpato",
+      "designated": 2024,
+      "sykeAreaNo": 26,
+      "euCode": "FITulvaTietoId2258AlueId26",
+      "areaKm2": 151.6,
+      "source": "syke-flood-risk-areas",
+      "status": "primary"
+    }
+  ],
+  "byMunicipality": {
+    "Alavieska": [
+      "alavieska-ylivieska"
+    ],
+    "Espoo": [
+      "helsingin-ja-espoon-rannikkoalue"
+    ],
+    "Hamina": [
+      "haminan-ja-kotkan-rannikkoalue"
+    ],
+    "Helsinki": [
+      "helsingin-ja-espoon-rannikkoalue"
+    ],
+    "Huittinen": [
+      "huittinen"
+    ],
+    "Ilmajoki": [
+      "ilmajoki-seinajoki"
+    ],
+    "Inari": [
+      "ivalon-taajama"
+    ],
+    "Isokyrö": [
+      "ylistaro-koivulahti"
+    ],
+    "Kemi": [
+      "kemin-rannikkoalue"
+    ],
+    "Kittilä": [
+      "kittilan-kirkonkyla"
+    ],
+    "Kotka": [
+      "haminan-ja-kotkan-rannikkoalue",
+      "kymijoen-alaosa"
+    ],
+    "Kouvola": [
+      "kymijoen-alaosa"
+    ],
+    "Kristiinankaupunki": [
+      "lapvaartti"
+    ],
+    "Laihia": [
+      "laihia-tuovila-runsor"
+    ],
+    "Loviisa": [
+      "kymijoen-alaosa"
+    ],
+    "Merijärvi": [
+      "pyhajoen-alaosa"
+    ],
+    "Mustasaari": [
+      "laihia-tuovila-runsor",
+      "ylistaro-koivulahti"
+    ],
+    "Oulainen": [
+      "pyhajoen-alaosa"
+    ],
+    "Pori": [
+      "pori"
+    ],
+    "Pudasjärvi": [
+      "pudasjarven-taajama"
+    ],
+    "Pyhtää": [
+      "kymijoen-alaosa"
+    ],
+    "Pyhäjoki": [
+      "pyhajoen-alaosa"
+    ],
+    "Rovaniemi": [
+      "rovaniemen-kaupunki"
+    ],
+    "Seinäjoki": [
+      "ilmajoki-seinajoki",
+      "ylistaro-koivulahti"
+    ],
+    "Tornio": [
+      "tornion-kaupunki"
+    ],
+    "Turku": [
+      "turun-rannikkoalue"
+    ],
+    "Ulvila": [
+      "pori"
+    ],
+    "Vaasa": [
+      "laihia-tuovila-runsor",
+      "ylistaro-koivulahti"
+    ],
+    "Ylivieska": [
+      "alavieska-ylivieska"
+    ]
+  }
+}

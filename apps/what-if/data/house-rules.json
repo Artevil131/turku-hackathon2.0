@@ -1,0 +1,1336 @@
+{
+  "meta": {
+    "title": "Buying a detached house or cottage in Finland: the law, costs, risk structures, insurance terms",
+    "area": "house",
+    "retrieved": "2026-10-18",
+    "conventions": {
+      "status": "primary = law on Finlex, an authority, Statistics Finland, or If's own terms; secondary = a company price list, magazine or blog; derived = our arithmetic on primary or secondary numbers (see 'basis'); missing = nothing reliable found (value null, with 'gap').",
+      "source": "'source' is one id or a list of ids from meta.sources. Every number sits in an object that has a 'source', or below one.",
+      "rule": "'rule' is one plain English sentence stating a fact, never advice. 'quoteFi' is the source's own words, checked against the text downloaded on the date."
+    },
+    "relatedFiles": {
+      "housing-rules.json": "renovation lifetimes and costs for flats in housing companies; the asbestos rule (VNa 798/2015)",
+      "car-running-costs.json": "Statistics Finland's household electricity prices (13rb) and fuel prices (12ge)",
+      "radon-municipalities.json": "STUK's radon by municipality",
+      "flood-risk-areas.json": "SYKE's significant flood risk areas"
+    },
+    "sources": {
+      "sf-13rb": {
+        "name": "Statistics Finland, StatFin table 13rb: price of electricity by type of consumer, monthly (c/kWh)",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ehi/13rb.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/ehi/13rb.px",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-09-24",
+        "retrieved": "2026-10-18"
+      },
+      "sf-12ge": {
+        "name": "Statistics Finland, StatFin table 12ge: consumer prices of liquid fuels (incl. VAT), monthly",
+        "publisher": "Tilastokeskus",
+        "url": "https://pxdata.stat.fi/PxWeb/pxweb/fi/StatFin/StatFin__ehi/12ge.px/",
+        "api": "https://pxdata.stat.fi/PxWeb/api/v1/fi/StatFin/ehi/12ge.px",
+        "type": "primary",
+        "licence": "CC BY 4.0",
+        "updated": "2026-09-24",
+        "retrieved": "2026-10-18",
+        "note": "Series C 'Kevyt polttoöljy, snt/l' (light fuel oil, c/l incl. VAT); series D is the same in eur/MWh."
+      },
+      "px-if-oma": {
+        "name": "If, Kodin Omaisuusvakuutusehdot, ehto OMA 200.27, voimassa 1.1.2026 alkaen",
+        "publisher": "If Vahinkovakuutus Oy (If P&C Insurance Ltd (publ))",
+        "url": "https://www.if.fi/globalassets/fi/pdf/ehdot/kotivakuutusehdot.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "The PDF at this URL is titled 'Kodin Omaisuusvakuutusehdot' (home property insurance terms), version OMA 200.27, in force from 1 January 2026."
+      },
+      "px-if-yse": {
+        "name": "If, Yleiset sopimusehdot, ehto YLE 900.14, voimassa 1.7.2025 alkaen",
+        "publisher": "If Vahinkovakuutus Oy",
+        "url": "https://www.if.fi/globalassets/fi/pdf/ehdot/yleiset-sopimusehdot.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Opened only to check for a numeric storm-wind definition; it has none."
+      },
+      "px-if-okt": {
+        "name": "If, kotivakuutus omakotitaloon (product page with cover-level table Perus / Laaja / Laajaplus)",
+        "publisher": "If Vahinkovakuutus Oy",
+        "url": "https://www.if.fi/henkiloasiakkaat/vakuutukset/kotivakuutus/omakotitalo",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Read through a text extraction that flattened the comparison table; the per-level ticks were matched in the order Laajaplus, Laaja, Perus."
+      },
+      "px-stm-1044": {
+        "name": "Sosiaali- ja terveysministeriön asetus ionisoivasta säteilystä 1044/2018 (ajantasainen), 20 § ja 21 §; issued under säteilylaki 859/2018",
+        "publisher": "Finlex / Oikeusministeriö",
+        "url": "https://opendata.finlex.fi/finlex/avoindata/v1/akn/fi/act/statute-consolidated/2018/1044/fin@",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-stuk-viitearvot": {
+        "name": "STUK, Asuntojen radonia koskevat viitearvot ja määräykset",
+        "publisher": "Säteilyturvakeskus STUK",
+        "url": "https://stuk.fi/asuntojen-radonia-koskevat-viitearvot-ja-maaraykset",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-stuk-mittaaminen": {
+        "name": "STUK, Radonin mittaaminen",
+        "publisher": "Säteilyturvakeskus STUK",
+        "url": "https://stuk.fi/radonin-mittaaminen",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-stuk-kauppa": {
+        "name": "STUK verkkokauppa, Radonmittaus yksityisasuntoon",
+        "publisher": "Säteilyturvakeskus STUK",
+        "url": "https://kauppa.stuk.fi/products/radonmittaus-yksityisasuntoon",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-stuk-lahteet": {
+        "name": "STUK, Radonin lähteet",
+        "publisher": "Säteilyturvakeskus STUK",
+        "url": "https://stuk.fi/radonin-lahteet",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-vantaa-kaivo": {
+        "name": "Vantaan kaupunki, ympäristökeskus: Tarvittavat tutkimukset haettaessa vapautusta vesijohtoon liittämisvelvollisuudesta (ohje kaivovedestä)",
+        "publisher": "Vantaan kaupunki, Kaupunkiympäristö, Ympäristökeskus",
+        "url": "https://www.vantaa.fi/sites/default/files/document/Kaivovedest%C3%A4%20tarvittavat%20tutkimukset%20-ohje_0.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Municipal environmental-health authority; it states STUK's recommendation for radon in private wells. Undated."
+      },
+      "px-hel-talousvesi": {
+        "name": "Helsingin kaupunki, Talousveden laatu (kaivovesi)",
+        "publisher": "Helsingin kaupunki, ympäristöpalvelut",
+        "url": "https://www.hel.fi/fi/asuminen/asuminen-ja-terveys/talousveden-laatu",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Municipal environmental-health authority."
+      },
+      "px-eurofins-kaivo": {
+        "name": "Eurofins, Kaivovesitutkimukset",
+        "publisher": "Eurofins (laboratory)",
+        "url": "https://www.eurofins.com/fi-fi/ympaeristoe-ja-teollisuus/palvelumme/ympaeristoeanalyysipalvelut/kaivovesitutkimukset/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "px-hometalkoot-okt": {
+        "name": "Hometalkoot.fi, Omakotitalot (aikakausitalot 1940–1990)",
+        "publisher": "Hengitysliitto; content produced in the Ministry of the Environment's Kosteus- ja hometalkoot programme",
+        "url": "https://hometalkoot.talopeli.fi/info/HOUSE",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "hometalkoot.fi redirects here. The site says its material was produced in the Ympäristöministeriö's Kosteus- ja hometalkoot programme and is maintained by Hengitysliitto (an NGO); the content experts include a Ministry of the Environment official."
+      },
+      "px-hometalkoot-1950": {
+        "name": "Hometalkoot, Mallitalo 1950-luvun omakotitalo: Ongelmakohdat (PDF)",
+        "publisher": "Hengitysliitto / Kosteus- ja hometalkoot (Ympäristöministeriö)",
+        "url": "https://hometalkoot.talopeli.fi/pdf/omakotitalo/1950_omakotitalo_ongelmakohdat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Checklist dated 05.04.2016 in the PDF footer (same series)."
+      },
+      "px-hometalkoot-1960": {
+        "name": "Hometalkoot, Mallitalo 1960-luvun omakotitalo: Ongelmakohdat (PDF)",
+        "publisher": "Hengitysliitto / Kosteus- ja hometalkoot (Ympäristöministeriö)",
+        "url": "https://hometalkoot.talopeli.fi/pdf/omakotitalo/1960_omakotitalo_ongelmakohdat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-hometalkoot-1970": {
+        "name": "Hometalkoot, Mallitalo 1970-luvun omakotitalo: Ongelmakohdat (PDF)",
+        "publisher": "Hengitysliitto / Kosteus- ja hometalkoot (Ympäristöministeriö)",
+        "url": "https://hometalkoot.talopeli.fi/pdf/omakotitalo/1970_omakotitalo_ongelmakohdat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "PDF footer dated 05.04.2016."
+      },
+      "px-hometalkoot-1980": {
+        "name": "Hometalkoot, Mallitalo 1980-luvun omakotitalo: Ongelmakohdat (PDF)",
+        "publisher": "Hengitysliitto / Kosteus- ja hometalkoot (Ympäristöministeriö)",
+        "url": "https://hometalkoot.talopeli.fi/pdf/omakotitalo/1980_omakotitalo_ongelmakohdat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-hometalkoot-1990": {
+        "name": "Hometalkoot, Mallitalo 1990-luvun omakotitalo: Ongelmakohdat (PDF)",
+        "publisher": "Hengitysliitto / Kosteus- ja hometalkoot (Ympäristöministeriö)",
+        "url": "https://hometalkoot.talopeli.fi/pdf/omakotitalo/1990_omakotitalo_ongelmakohdat.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-kkv-menetelmat": {
+        "name": "KKV, Asunnon kunnon selvitysmenetelmiä",
+        "publisher": "Kilpailu- ja kuluttajavirasto (KKV)",
+        "url": "https://www.kkv.fi/kuluttaja-asiat/asuminen/remontit/asunnon-kunnon-selvitysmenetelmia/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-kkv-kuntotarkastus": {
+        "name": "KKV, Kuntotarkastus",
+        "publisher": "Kilpailu- ja kuluttajavirasto (KKV)",
+        "url": "https://www.kkv.fi/kuluttaja-asiat/asuminen/kuntotarkastus/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-kkv401-2025": {
+        "name": "Vastaus kirjalliseen kysymykseen KKV 401/2025 vp (kuntokartoitusten hinnoittelu ja voimassaolo), ympäristö- ja ilmastoministeri Sari Multala, 8.12.2025",
+        "publisher": "Eduskunta / Ympäristöministeriö",
+        "url": "https://api.eduskunta.fi/documents/fi/EA5533DF-27F6-C1F0-8750-9AFE42B00000.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-sustera-laskuri": {
+        "name": "Sustera (formerly Raksystems), kuntotarkastuksen hintalaskuri and hinnastot page",
+        "publisher": "Sustera",
+        "url": "https://sustera.fi/hinnastot/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "note": "Prices read from the page's own public price calculator (POST https://ajanvaraus.sustera.fi/api/hintalaskuri, service 'Kuntotarkastus', house type OKT, 140 m², 1 floor). The calculator ignored floor area (100, 200, 300 m² gave the same price). The page says all prices include VAT 25.5 % and that a km charge of 1.37 €/km from the office and an office fee of 12.55 € are added. raksystems.fi redirects to sustera.fi."
+      },
+      "px-sustera-kt": {
+        "name": "Sustera, Asuntokaupan kuntotarkastus (service page)",
+        "publisher": "Sustera",
+        "url": "https://sustera.fi/palvelu/kodit/asuntokauppa/asuntokaupan-kuntotarkastus/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "px-sustera-kauppaturva": {
+        "name": "Sustera, Kauppaturva (piilovirhevakuutus myyjälle)",
+        "publisher": "Sustera; insurer Helvetia; agent InSure Group Oy",
+        "url": "https://sustera.fi/palvelu/kodit/asuntokauppa/kauppaturva/",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "note": "Product page of the inspection firm that sells the policy; the insurer's own terms PDFs are linked there but were not opened."
+      },
+      "px-jep-hinnasto": {
+        "name": "JEP Tarkastus, Kuntotarkastus hinta (hinnasto Pirkanmaa ja Uusimaa)",
+        "publisher": "JEP Tarkastus",
+        "url": "https://jeptarkastus.fi/kuntotarkastus-hinta/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "px-satpa-hinnasto": {
+        "name": "Satpa, Kuntotarkastuksen hinta ja hinnasto alueittain",
+        "publisher": "Satpa",
+        "url": "https://satpa.fi/kodit/hinnasto/",
+        "type": "secondary",
+        "retrieved": "2026-10-18"
+      },
+      "px-tukes-oljy": {
+        "name": "Tukes, Öljylämmityslaitteistot",
+        "publisher": "Turvallisuus- ja kemikaalivirasto (Tukes)",
+        "url": "https://tukes.fi/koti-ja-vapaa-aika/kodin-tekniikka-ja-sahko/oljylammityslaitteistot",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-tampere-oljy": {
+        "name": "Tampere, Pidä huolta öljysäiliöstäsi (esite 6.4.2021)",
+        "publisher": "Tampereen kaupunki",
+        "url": "https://www.tampere.fi/sites/default/files/2023-06/pida_huolta_oljysailiostasi-esite_2021.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "px-pelastustoimi-oljy": {
+        "name": "Pelastustoimi, Lämmitysöljysäiliön ja öljylämmityslaitteiston sijoittaminen, huolto, tarkastuttaminen ja käytöstä poisto: asukasopas (1.10.2014)",
+        "publisher": "Pelastustoimi (pelastuslaitokset)",
+        "url": "https://pelastustoimi.fi/documents/25266713/129243486/L%C3%A4mmitys%C3%B6ljyn-ja-%C3%B6ljyl%C3%A4mmityslaitteiston-asukkaanopas.pdf/63fe8397-cd5b-79d3-0884-a8aa7e6db8f5?t=1661938160287",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Dated 2014; its tank classes match the current Tukes page."
+      },
+      "px-finanssiala-oljy": {
+        "name": "Finanssiala, Öljysäiliövuotovahinkojen torjunta, turvallisuusohje 2017",
+        "publisher": "Finanssiala ry",
+        "url": "https://www.finanssiala.fi/wp-content/uploads/2017/08/Oljysailiovuoto_vahinkojentorjunta.pdf",
+        "type": "secondary",
+        "retrieved": "2026-10-18",
+        "note": "Insurance-industry safety guide, not an authority."
+      },
+      "px-ym-osr": {
+        "name": "Ympäristöministeriö, Korvausten hakeminen öljysuojarahastosta: opas torjuntaviranomaisille 2017",
+        "publisher": "Ympäristöministeriö",
+        "url": "https://ym.fi/documents/1410903/38439968/Opas-torjuntaviranomaisille-korvausten-hakemisesta-oljysuojarahastosta-8A1DB3C8_E19E_4BA0_9A28_BC502C7E8A14-131183.pdf/5cf7d511-d636-13b5-ae38-c3469a49696d/Opas-torjuntaviranomaisille-korvausten-hakemisesta-oljysuojarahastosta-8A1DB3C8_E19E_4BA0_9A28_BC502C7E8A14-131183.pdf?t=1603260006987",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Dated 2017."
+      },
+      "px-motiva-oljy": {
+        "name": "Motiva, Pientalon kaasu- tai öljylämmitys (tietopankki), viimeksi päivitetty 9.6.2026",
+        "publisher": "Motiva Oy (state-owned sustainability company)",
+        "url": "https://www.motiva.fi/tietopankki/pientalon-kaasu-tai-oljylammitys/",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Motiva is wholly state-owned and acts as the public energy-advice body; treated as primary."
+      },
+      "px-motiva-esim": {
+        "name": "Motiva, Esimerkkejä öljylämmityksen vaihtamisen kustannuksista (2024)",
+        "publisher": "Motiva Oy",
+        "url": "https://www.motiva.fi/wp-content/uploads/sites/2/2025/11/Esimerkkeja-oljylammityksen-vaihtamisen-kustannuksista.pdf",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Example calculations at March 2024 price levels; two example houses."
+      },
+      "law-maakaari": {
+        "name": "Maakaari 540/1995 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1995/540",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "law-931-1996": {
+        "name": "Varainsiirtoverolaki 931/1996 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1996/931",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "6 § as amended by 1185/2023; 11 § (first-home exemption) repealed by 1185/2023."
+      },
+      "vero-varainsiirtovero": {
+        "name": "Varainsiirtovero",
+        "publisher": "Verohallinto (vero.fi)",
+        "url": "https://www.vero.fi/henkiloasiakkaat/omaisuus/varainsiirtovero/",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Lists the rates: kiinteistöt ja rakennukset 3 %, asunto-osakkeet ja kiinteistöyhtiön osakkeet 1,5 %."
+      },
+      "vero-kiinteiston-ostaja": {
+        "name": "Kiinteistön ostaja – muista varainsiirtovero ja lainhuuto tai kirjaaminen",
+        "publisher": "Verohallinto (vero.fi)",
+        "url": "https://www.vero.fi/henkiloasiakkaat/omaisuus/varainsiirtovero/kiinteiston-ostaja/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "vero-ensiasunto": {
+        "name": "Ensiasunnon ostaja ja varainsiirtovero",
+        "publisher": "Verohallinto (vero.fi)",
+        "url": "https://www.vero.fi/henkiloasiakkaat/omaisuus/varainsiirtovero/ensiasunto/",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "mml-hinnasto-kiinteistot": {
+        "name": "Hinnasto – Kiinteistöt (hinnat 1.1.2026 alkaen)",
+        "publisher": "Maanmittauslaitos",
+        "url": "https://www.maanmittauslaitos.fi/hinnasto/kiinteistot",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "The price list section is headed 'Hinnoittelun perusteet 1.1.2026 alkaen' and cites the MMM decree on Maanmittauslaitos fees for 2026."
+      },
+      "vero-kiinteistovero-prosentit": {
+        "name": "Kiinteistön arvo ja kiinteistöveroprosentit",
+        "publisher": "Verohallinto (vero.fi)",
+        "url": "https://www.vero.fi/henkiloasiakkaat/omaisuus/kiinteistovero/kiinteiston-arvo-ja-kiinteistoveroprosentit/",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Gives the legal ranges and links the 2026 municipal table (xlsx updated 31.3.2026)."
+      },
+      "vero-kiinteistoveroprosentit-2026": {
+        "name": "Kiinteistöveroprosentit 2026 (kunnittain)",
+        "publisher": "Verohallinto (vero.fi)",
+        "url": "https://www.vero.fi/henkiloasiakkaat/omaisuus/kiinteistovero/kiinteiston-arvo-ja-kiinteistoveroprosentit/kiinteistoveroprosentit/",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Table page; the same data as https://www.vero.fi/globalassets/henkiloasiakkaat/kiinteistovero/kiinteistoveroprosentit-2026_-paivitetty-31.3.2026.xlsx"
+      },
+      "law-654-1992": {
+        "name": "Kiinteistöverolaki 654/1992 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/1992/654",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "law-527-2014": {
+        "name": "Ympäristönsuojelulaki 527/2014 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2014/527",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "Wastewater rules in ch. 16 (154–157 a §), transitional rule in 238 § and in the entry-into-force provision of amending act 19/2017."
+      },
+      "law-157-2017": {
+        "name": "Valtioneuvoston asetus talousjätevesien käsittelystä viemäriverkostojen ulkopuolisilla alueilla 157/2017",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2017/157",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "law-646-2011": {
+        "name": "Jätelaki 646/2011 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2011/646",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "law-119-2001": {
+        "name": "Vesihuoltolaki 119/2001 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2001/119",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "10–11 § as amended by 1087/2025, in force 1.1.2026."
+      },
+      "law-751-2023": {
+        "name": "Rakentamislaki 751/2023 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2023/751",
+        "type": "primary",
+        "retrieved": "2026-10-18",
+        "note": "In force 1.1.2025."
+      },
+      "law-560-2018": {
+        "name": "Yksityistielaki 560/2018 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2018/560",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      },
+      "law-50-2013": {
+        "name": "Laki rakennuksen energiatodistuksesta 50/2013 (ajantasainen)",
+        "publisher": "Finlex / oikeusministeriö",
+        "url": "https://www.finlex.fi/fi/lainsaadanto/2013/50",
+        "type": "primary",
+        "retrieved": "2026-10-18"
+      }
+    }
+  },
+  "landCode": {
+    "hiddenDefect": {
+      "rule": "A property has a quality defect if, because of a hidden defect, its quality differs significantly from what a buyer could reasonably expect of a property of that kind given the price and other circumstances; this applies even when the seller did not know of it, and for this kind of defect the buyer can get a price reduction or, if it is substantial, cancellation, but damages only under the general damages rule, which the seller escapes by showing the defect was not due to the seller's negligence.",
+      "section": "Maakaari 2:17 § 1 mom. 5 kohta and 2 mom.; 2:32 § 2 mom.",
+      "quoteFi": "Kiinteistössä on laatuvirhe, jos: [...] 5) kiinteistö salaisen virheen vuoksi poikkeaa laadultaan merkittävästi siitä, mitä myydyn kaltaiselta kiinteistöltä voidaan kauppahinta ja muut olosuhteet huomioon ottaen perustellusti edellyttää.",
+      "quoteFi2": "Ostajalla on lisäksi 1 momentin 1–4 kohdassa tarkoitetun virheen perusteella oikeus saada korvaus vahingostaan.",
+      "seriousnessElement": "merkittävästi (significantly)",
+      "source": "law-maakaari",
+      "status": "primary",
+      "note": "The hidden defect ('salainen virhe') is 2:17 § 1 mom. 5 kohta, not 3 kohta; 3 kohta is the seller's failure to disclose (see sellerDisclosure). The statutory right to damages in 2:17 § 2 mom. covers only kohdat 1–4."
+    },
+    "sellerDisclosure": {
+      "rule": "A property also has a quality defect if, before the sale, the seller gave the buyer wrong or misleading information about its area, the condition or structures of its buildings or another quality feature, or left out such a feature affecting the use or value of a property of that kind that the seller knew or should have known about, where the information or omission can be assumed to have affected the sale; the seller is also liable for information given by a broker or other representative acting for the seller.",
+      "section": "Maakaari 2:17 § 1 mom. 2–4 kohta; 2:20 § 1 mom.",
+      "quoteFi": "myyjä on ennen kaupan tekemistä jättänyt ilmoittamatta ostajalle sellaisesta tyypillisesti myydyn kaltaisen kiinteistön käyttöön tai arvoon vaikuttavasta 2 kohdassa tarkoitetusta ominaisuudesta, josta myyjä tiesi tai hänen olisi pitänyt tietää, ja laiminlyönnin voidaan olettaa vaikuttaneen kauppaan;",
+      "quoteFi2": "Jos myyjän puolesta on toiminut kiinteistönvälittäjä tai joku muu edustaja, myyjä vastaa myös hänen antamistaan tiedoista sekä tiedonantovelvollisuuden laiminlyönnistä.",
+      "source": "law-maakaari",
+      "status": "primary"
+    },
+    "buyerInspection": {
+      "rule": "The buyer cannot claim as a quality defect anything that could have been noticed in an inspection of the property before the sale, nor anything the buyer must be presumed to have known, but without a special reason the buyer has no duty to check the seller's information or to extend the inspection to things that need technical or other unusual measures, and a seller who acted dishonestly or with gross negligence cannot rely on these limits.",
+      "section": "Maakaari 2:22 §",
+      "quoteFi": "Ostaja ei saa laatuvirheenä vedota seikkaan, joka olisi voitu havaita kiinteistön tarkastuksessa ennen kaupan tekemistä. Ostajalla ei ole velvollisuutta ilman erityistä syytä tarkistaa myyjän kiinteistöstä antamien tietojen paikkansapitävyyttä eikä ulottaa tarkastusta seikkoihin, joiden selvittäminen edellyttää teknisiä tai muita tavanomaisesta poikkevia toimenpiteitä.",
+      "deeperInspectionTrigger": "erityinen syy (a special reason)",
+      "source": "law-maakaari",
+      "status": "primary",
+      "gap": "The law names only 'erityinen syy' (a special reason) as the trigger for a deeper inspection; that signs of moisture are such a reason comes from case law and commentary, which was not opened today, so no moisture-specific rule is given."
+    },
+    "noticeTime": {
+      "rule": "The buyer loses the right to rely on a defect unless the buyer tells the seller about it and the claims based on it within a reasonable time of noticing it or of when it should have been noticed, and in any case loses the right to rely on a quality defect not notified within five years of the transfer of possession, unless the seller acted dishonestly or with gross negligence.",
+      "section": "Maakaari 2:25 §",
+      "quoteFi": "Jollei ostaja ilmoita laatuvirheestä taikka 23 §:n 1 momentissa tai 24 §:ssä tarkoitetusta sopimusrikkomuksesta myyjälle viiden vuoden kuluessa siitä, kun kiinteistön hallinta on luovutettu, hän menettää oikeutensa vedota siihen.",
+      "maxYearsFromPossession": 5,
+      "source": "law-maakaari",
+      "status": "primary",
+      "note": "A separate limit applies to cancellation: a cancellation action must be brought within ten years of the transfer of possession (Maakaari 2:34 § 3 mom.: 'kymmenen vuoden kuluessa siitä, kun kiinteistön hallinta on luovutettu')."
+    },
+    "remedies": {
+      "rule": "For a defect the buyer has a right to a price reduction or, if the defect is substantial, to cancel the sale, and for defects under 2:17 § 1 mom. kohdat 1–4 also to damages, which the seller avoids by showing the defect was not due to the seller's negligence.",
+      "section": "Maakaari 2:17 § 2 mom.; 2:18 § 2 mom.; 2:19 § 3 mom.; 2:31–2:34 §",
+      "quoteFi": "Ostajalla on virheen perusteella oikeus hinnanalennukseen tai, jos virhe on olennainen, oikeus purkaa kauppa.",
+      "maxYearsToSueForCancellation": {
+        "value": 10,
+        "section": "Maakaari 2:34 § 3 mom.",
+        "source": "law-maakaari"
+      },
+      "source": "law-maakaari",
+      "status": "primary"
+    }
+  },
+  "transferTax": {
+    "ratePct": 3,
+    "payer": "buyer",
+    "rule": "The transfer tax on buying a property (kiinteistö) is three per cent of the price or other consideration and is paid by the person acquiring the property.",
+    "section": "Varainsiirtoverolaki 4 § 1 mom.; 6 § 1 mom.",
+    "quoteFi": "Kiinteistön luovutuksessa vero on kolme prosenttia kauppahinnasta tai muun vastikkeen arvosta.",
+    "quoteFi2": "Kiinteistön omistusoikeuden luovutuksesta on luovutuksensaajan suoritettava veroa.",
+    "dueRule": "The tax must be paid at the latest when title registration (lainhuuto) is applied for, or within six months of the deed if title is not applied for in time, and the buyer must file the transfer tax return and pay the tax before the title can be registered.",
+    "dueSection": "Varainsiirtoverolaki 7 § 1 mom.",
+    "dueQuoteFi": "Vero on suoritettava viimeistään lainhuutoa tai kirjaamista haettaessa tai jos lainhuutoa tai kirjaamista ei ole säädetyssä ajassa haettu tai sitä ei ole haettava, kuuden kuukauden kuluessa luovutussopimuksen tekemisestä.",
+    "dueMonths": {
+      "value": 6,
+      "section": "Varainsiirtoverolaki 7 § 1 mom.",
+      "source": "law-931-1996"
+    },
+    "lateTitleSurcharge": {
+      "rule": "If title is not applied for within the set time, the tax is increased by 20 per cent for each started six-month period, up to 100 per cent.",
+      "section": "Varainsiirtoverolaki 8 §",
+      "quoteFi": "Jollei lainhuutoa tai kirjaamista ole säädetyssä ajassa haettu, veroa korotetaan 20 prosentilla jokaiselta alkavalta kuudelta kuukaudelta siitä päivästä lukien, jona lainhuutoa tai kirjaamista olisi viimeistään tullut hakea. Veroa korotetaan kuitenkin enintään 100 prosentilla.",
+      "pctPerStartedSixMonths": 20,
+      "maxPct": 100,
+      "source": "law-931-1996"
+    },
+    "firstHomeExemption": "The first-home exemption was abolished from 1.1.2024; it applies only if the binding deed was signed before 1.1.2024 (the former 11 § was repealed by act 1185/2023).",
+    "firstHomeExemptionQuoteFi": "Ensiasunnon varainsiirtoverovapaus on poistunut 1.1.2024.",
+    "firstHomeExemptionSource": [
+      "vero-ensiasunto",
+      "law-931-1996"
+    ],
+    "flatContext": {
+      "rule": "For context only: shares in a housing company or a real-estate company carry a different rate.",
+      "ratePct": 1.5,
+      "source": "vero-varainsiirtovero"
+    },
+    "source": [
+      "law-931-1996",
+      "vero-varainsiirtovero",
+      "vero-kiinteiston-ostaja",
+      "vero-ensiasunto"
+    ],
+    "status": "primary"
+  },
+  "titleRegistration": {
+    "rule": "Everyone who acquires a property must apply for title registration (lainhuuto) within six months of the deed or other document of acquisition, at Maanmittauslaitos, and the fee for a title registration in 2026 is 172 euros (no VAT).",
+    "section": "Maakaari 11:1 §",
+    "quoteFi": "Lainhuutoa on haettava kuuden kuukauden kuluessa luovutuskirjan tai muun saannon perusteena olevan asiakirjan tekemisestä, jollei jäljempänä toisin säädetä.",
+    "deadlineMonths": {
+      "value": 6,
+      "section": "Maakaari 11:1 § 2 mom.",
+      "source": "law-maakaari"
+    },
+    "feeEur": {
+      "value": 172,
+      "item": "7410107410 Lainhuudatus, 172,00 €, ei arvonlisäveroa",
+      "validFrom": "2026-01-01",
+      "source": "mml-hinnasto-kiinteistot"
+    },
+    "electronicDeedFee": {
+      "value": 236,
+      "item": "10954 Asiointimaksu luovutuskirjan laatimisesta (sis. lainhuudatusmaksun), Kiinteistövaihdannan palvelu",
+      "source": "mml-hinnasto-kiinteistot"
+    },
+    "source": [
+      "law-maakaari",
+      "mml-hinnasto-kiinteistot",
+      "vero-kiinteiston-ostaja"
+    ],
+    "status": "primary"
+  },
+  "propertyTax": {
+    "rule": "Property tax is the municipality's property tax percentage applied to the property's taxable value, each municipality sets its percentages yearly within ranges fixed in law, and the rate depends on the building's actual use (a permanent home has its own rate, holiday homes fall under 'other residential buildings').",
+    "section": "Kiinteistöverolaki 11 § 1–2 mom., 12 § 1 mom., 13 § 1 mom.",
+    "quoteFi": "Pääasiassa vakituiseen asumiseen käytettävien rakennusten veroprosentiksi kunnanvaltuusto määrää vähintään 0,41 ja enintään 1,00.",
+    "quoteFi2": "Kunnanvaltuusto määrää erikseen veroprosentin rakennuksille, joiden huoneistojen pinta-alasta yli puolta käytetään pääasiassa muuhun asumiseen kuin 12 §:ssä tarkoitettuun vakituiseen asumiseen. Veroprosentiksi määrätään vähintään 0,93 ja enintään 2,00.",
+    "rangePct": {
+      "permanentResidence": [
+        0.41,
+        1
+      ],
+      "otherResidential": [
+        0.93,
+        2
+      ],
+      "landGeneral": [
+        1.3,
+        2
+      ],
+      "source": [
+        "law-654-1992",
+        "vero-kiinteistovero-prosentit"
+      ]
+    },
+    "ratesTableUrl": "https://www.vero.fi/henkiloasiakkaat/omaisuus/kiinteistovero/kiinteiston-arvo-ja-kiinteistoveroprosentit/kiinteistoveroprosentit/",
+    "appNote": "The taxable value (verotusarvo) is not in a sales ad, so the app only links to the municipal rates table.",
+    "source": [
+      "law-654-1992",
+      "vero-kiinteistovero-prosentit",
+      "vero-kiinteistoveroprosentit-2026"
+    ],
+    "status": "primary",
+    "note": "vero.fi: the 'other residential' rate covers e.g. holiday homes and outbuildings such as a separate sauna; outbuildings in the yard of a permanent home take the permanent-home rate. Amendment 723/2026 (in force 1.8.2026) changes only the cross-reference list in 11 § 3 mom., not the ranges."
+  },
+  "wastewater": {
+    "standard": {
+      "rule": "Outside sewer networks, household wastewater must be treated so that the load is cut by at least 80 % for organic matter, 70 % for total phosphorus and 30 % for total nitrogen compared with untreated wastewater (the basic treatment requirement), and the owner must have a treatment system suited to the property that meets it.",
+      "section": "Ympäristönsuojelulaki 154 b §, 156 §",
+      "quoteFi": "Talousjätevedet on puhdistettava siten, että ympäristöön aiheutuva kuormitus vähenee orgaanisen aineen osalta vähintään 80 prosenttia, kokonaisfosforin osalta vähintään 70 prosenttia ja kokonaistypen osalta vähintään 30 prosenttia verrattuna haja-asutuksen kuormitusluvun avulla määritettyyn käsittelemättömän jäteveden kuormitukseen (perustason puhdistusvaatimus).",
+      "reductionPct": {
+        "organicMatter": 80,
+        "totalPhosphorus": 70,
+        "totalNitrogen": 30,
+        "source": "law-527-2014"
+      },
+      "stricterLocalGuidePct": {
+        "organicMatter": 90,
+        "totalPhosphorus": 85,
+        "totalNitrogen": 40,
+        "section": "VNa 157/2017 4 §",
+        "note": "Guide level where a municipality's environmental protection regulations set a stricter requirement (YSL 156 c §).",
+        "source": "law-157-2017"
+      },
+      "source": [
+        "law-527-2014",
+        "law-157-2017"
+      ],
+      "status": "primary"
+    },
+    "nearWaterOrGroundwater": {
+      "rule": "A system built before 2004 under the rules or permit of its time that lies within 100 m of a water body or the sea, or in a groundwater area used or suitable for water supply, had to be brought up to the basic treatment requirement by 31 October 2019.",
+      "section": "Ympäristönsuojelulaki 156 a §; transitional provision of act 19/2017",
+      "quoteFi": "Jätevesien käsittelyjärjestelmä, joka on tehty ennen vuotta 2004 rakentamisajankohtanaan voimassa olleiden vaatimusten tai myönnetyn rakennusluvan mukaisesti ja joka sijaitsee 156 a §:ssä tarkoitetulla alueella, on saatettava tämän lain 154 b §:ssä säädetyn mukaiseksi viimeistään 31 lokakuuta 2019.",
+      "nearWaterMeters": {
+        "value": 100,
+        "measuredFrom": "mean-water-level shoreline to the wall of the nearest building producing wastewater",
+        "source": "law-527-2014"
+      },
+      "deadline": {
+        "value": "2019-10-31",
+        "source": "law-527-2014"
+      },
+      "source": "law-527-2014",
+      "status": "primary"
+    },
+    "elsewhere": {
+      "rule": "Elsewhere, a pre-2004 system must be brought up to the basic requirement when a water toilet is built, when water and sewer installations are renovated so that the system is renewed or wholly repaired, or when a renovation comparable to constructing a building that needs a building permit (rakentamislupa) is done.",
+      "section": "Ympäristönsuojelulaki 156 b § (2 kohta as amended by 900/2024)",
+      "quoteFi": "rakennetaan vesikäymälä tai tehdään vesi- ja viemärilaitteistoja koskeva korjaus- ja muutostyö, jossa järjestelmää uusitaan tai kokonaisuudessaan korjataan; tai",
+      "source": "law-527-2014",
+      "status": "primary"
+    },
+    "exemption": {
+      "rule": "In the shore and groundwater zone the municipal authority can on application grant an exemption from the basic requirement for at most five years at a time if the load is very small or the work would be unreasonable for the holder (taking into account e.g. a planned sewer extension, high age or long-term unemployment or illness), and the exemption lapses when the property's ownership or possession changes.",
+      "section": "Ympäristönsuojelulaki 156 d §",
+      "quoteFi": "Myönnetty lupa raukeaa, jos kiinteistön käyttö muuttuu siten että kuormitus lisääntyy tai kiinteistön omistus tai hallinta vaihtuu.",
+      "maxYearsPerExemption": {
+        "value": 5,
+        "source": "law-527-2014"
+      },
+      "source": "law-527-2014",
+      "status": "primary"
+    },
+    "ageExemption": {
+      "rule": "The age-based exemption still exists: the basic requirement does not apply to a working system that existed on 9 March 2011 on a property whose permanently resident holder or holders had turned 68 by that date, provided the wastewater causes no risk of pollution.",
+      "section": "Ympäristönsuojelulaki 238 §",
+      "quoteFi": "Jos kiinteistön talousjätevesistä ei aiheudu ympäristön pilaantumisen vaaraa, 154 b §:ssä säädettyjä käsittelyvaatimuksia ei sovelleta 156 a tai 156 b §:ssä tarkoitetulla alueella sijaitsevan sellaisen kiinteistön 9 päivänä maaliskuuta 2011 olemassa olleeseen käyttökuntoiseen jätevesijärjestelmään, jonka kiinteistöllä vakituisesti asuva haltija tai haltijat ovat viimeistään mainittuna päivänä täyttäneet 68 vuotta.",
+      "ageYears": {
+        "value": 68,
+        "referenceDate": "2011-03-09",
+        "source": "law-527-2014"
+      },
+      "source": "law-527-2014",
+      "status": "primary",
+      "note": "The exemption is tied to the holder living there, so it does not carry over to a buyer who is not such a holder; this is a reading of the wording, not a separately sourced statement."
+    },
+    "holdingTank": {
+      "rule": "Sludge from septic and holding tanks (saostus- ja umpisäiliöliete) needs a waste transfer document before transport, and when it is collected from a household the waste transporter draws up and keeps that document instead of the holder.",
+      "section": "Jätelaki 121 § 1–2 mom.",
+      "quoteFi": "Jos 1 momentissa tarkoitettu jäte noudetaan kotitaloudesta, jätteen kuljettajan on jätteen haltijan sijasta laadittava siirtoasiakirja sekä huolehdittava asiakirjan antamisesta vastaanottajalle ja sen säilyttämisestä.",
+      "source": "law-646-2011",
+      "status": "primary",
+      "gap": "No national rule was found that a holding tank must be emptied at a set interval or that the owner must log each emptying; VNa 157/2017 (in force) has no such rule. Emptying intervals and any owner record are set in municipal waste-management or environmental protection regulations, which were not opened."
+    },
+    "documents": {
+      "rule": "The owner must have a report on the wastewater system (or a system plan under 157 a §) and the system's operating and maintenance instructions, and must show them to the supervising authority on request.",
+      "section": "Ympäristönsuojelulaki 157 §, 157 a §; VNa 157/2017 5–7 §",
+      "quoteFi": "Kiinteistön omistajan on huolehdittava siitä, että talousjätevesijärjestelmästä on jätevesistä ympäristöön aiheutuvan kuormituksen arviointia varten selvitys ja järjestelmän käyttö- ja huolto-ohjeet. Ne on pyydettäessä esitettävä valvontaviranomaiselle.",
+      "source": [
+        "law-527-2014",
+        "law-157-2017"
+      ],
+      "status": "primary",
+      "gap": "The law puts the duty on the property owner; it does not literally say the documents pass to the buyer in a sale. That they 'belong with the property' follows because the new owner carries the 157 § duty, but no text saying so was found."
+    },
+    "guidancePage": {
+      "url": null,
+      "gap": "The ymparisto.fi 'Haja-asutuksen jätevedet' guidance could not be found: https://www.ymparisto.fi/hajajatevesi now redirects to the general water page (https://www.ymparisto.fi/fi/ymparistoaiheet/luonto-vesistot-ja-meri/vedet-ja-vesistot), which has no wastewater section, and the ymparisto.fi sitemap lists no such page. Link the law instead, or the municipality's environmental protection office."
+    }
+  },
+  "municipalNetwork": {
+    "rule": "A property in a water utility's operating area must be connected to the utility's water and sewer network, except that the sewer connection is not required if the property has no water toilet and handles its wastewater under the Environmental Protection Act, and the municipal environmental authority grants an exemption on application when connecting would be unreasonable and would not endanger the utility, which lapses when ownership or possession changes.",
+    "section": "Vesihuoltolaki 10 § 1 mom., 11 § (as amended by 1087/2025, in force 1.1.2026)",
+    "quoteFi": "Vesihuoltolaitoksen toiminta-alueella oleva kiinteistö on liitettävä laitoksen talousvesi- ja jätevesiviemäriverkostoon.",
+    "quoteFi2": "Myönnetty vapautus raukeaa, jos kiinteistön käyttö muuttuu siten että vesihuoltolaitoksen palvelujen tarve lisääntyy tai kiinteistön omistus tai hallinta vaihtuu.",
+    "source": "law-119-2001",
+    "status": "primary"
+  },
+  "cottage": {
+    "useChange": {
+      "rule": "Changing the use of a building or part of it substantially, such as turning a holiday home into a permanent home, needs a building permit (rakentamislupa), and the municipality's building ordinance can name areas where this conversion needs no exceptional permit (poikkeamislupa).",
+      "section": "Rakentamislaki 42 § 3 mom. 3 kohta; 18 §",
+      "quoteFi": "Rakentamislupa tarvitaan aina, jos: [...] 3) muutetaan rakennuksen tai sen osan käyttötarkoitusta olennaisesti.",
+      "quoteFi2": "Kunta voi osoittaa rakennusjärjestyksessä ne alueet ja edellytykset, joilla vapaa-ajan-asunnon muuttaminen pysyvään asuinkäyttöön ei edellytä poikkeamislupaa eikä suunnittelutarvealuetta koskevien sijoittamisen edellytysten tarkastelua ennen rakentamisluvan myöntämistä.",
+      "inForceFrom": {
+        "value": "2025-01-01",
+        "source": "law-751-2023"
+      },
+      "source": "law-751-2023",
+      "status": "primary",
+      "note": "42 § 3 mom. as amended by 897/2024. Under 18 § the building authority can still require repairs or an exception from the essential technical requirements if the holiday home does not meet the requirements for a permanent home."
+    },
+    "privateRoad": {
+      "rule": "The owner of a property with a right of way to a private road is a road owner (tieosakas) who must share in the road's upkeep in proportion to the road units (tieyksiköt) set by the benefit the road brings, and the road charges (tiemaksut) are set from those units; the road is managed by a road association (tiekunta) if one has been set up, otherwise by the road owners together, and a new owner takes over the previous owner's road-upkeep commitments but not unpaid money charges.",
+      "section": "Yksityistielaki 3 §, 34 §, 35 §, 37 §, 45 § 3 mom., 48–49 §",
+      "quoteFi": "Tienpitovelvollisuus ja siitä aiheutuvat kustannukset jaetaan tieosakkaiden kesken tieyksikköjen perusteella.",
+      "quoteFi2": "Kiinteistön omistuksen siirryttyä toiselle, on uusi omistaja vastuussa edelliselle omistajalle syntyneistä, tienpidosta johtuneista sitoumuksista ja velvoitteista, ei kuitenkaan edellisen omistajan laiminlyömistä rahana suoritettavista maksuista.",
+      "source": "law-560-2018",
+      "status": "primary",
+      "note": "A tiekunta is not automatic: it is formed in a road survey, a founding meeting or by decision of the land register keeper, and exists once entered in the property information system (49 §). A road owner must tell the road association about sales of the road-owning property (35 § 4 mom.)."
+    },
+    "energyCertificate": {
+      "rule": "When a building is sold, a valid energy certificate must be available to prospective buyers at the viewing and handed to the buyer, and the public ad must state the energy class, but the duty does not apply to buildings intended for holiday use that are not used for accommodation business, or to buildings with a floor area under 50 square metres (and the other buildings listed in Rakentamislaki 37 § 2 mom. 1 and 3–7 kohta).",
+      "section": "Laki rakennuksen energiatodistuksesta 3 § 2 mom., 6 §, 8 §; Rakentamislaki 37 § 2 mom.",
+      "quoteFi": "loma-asumiseen tarkoitettuun rakennukseen, jota ei käytetä majoituselinkeinon harjoittamiseen;",
+      "quoteFi2": "Rakennusta, rakennuksen 4 §:n 1 momentissa tarkoitettua osaa tai huoneistoa taikka niiden hallintaoikeutta myytäessä tai vuokrattaessa tulee esittelytilanteessa mahdollisen ostajan tai vuokralaisen nähtävillä olla voimassa oleva rakennuksen tai sen osan energiatodistus.",
+      "smallBuildingExemption": {
+        "floorAreaUnderM2": 50,
+        "section": "Rakentamislaki 37 § 2 mom. 1 kohta (via energiatodistuslaki 3 § 2 mom. 1 kohta)",
+        "quoteFi": "rakennukseen, jonka kerrosala on alle 50 neliömetriä;",
+        "source": [
+          "law-751-2023",
+          "law-50-2013"
+        ]
+      },
+      "maxValidityYears": {
+        "value": 10,
+        "section": "Laki rakennuksen energiatodistuksesta 8 §",
+        "source": "law-50-2013"
+      },
+      "source": [
+        "law-50-2013",
+        "law-751-2023"
+      ],
+      "status": "primary",
+      "note": "The holiday-home exemption in the energy certificate law covers any building intended for holiday use (not used for accommodation business); the 'under four months a year' test is in Rakentamislaki 37 § 2 mom. 2 kohta, which the energy certificate law does not refer to."
+    }
+  },
+  "conditionInspection": {
+    "what": {
+      "rule": "A condition inspection for a home sale (asuntokaupan kuntotarkastus) uses mainly sensory, experience-based and non-destructive methods with interviews of the occupants, and includes moisture measurements and minor openings of structures.",
+      "quoteFi": "pääosin aistinvaraiset, kokemusperäiset  ja rakennetta rikkomattomat menetelmät, käyttäjien haastattelut, sisältää kosteusmittauksia ja vähäisiä rakenteiden avauksia",
+      "source": "px-kkv-menetelmat",
+      "status": "primary",
+      "alsoFi": {
+        "quoteFi": "Tavanomainen kuntotarkastus tehdään aistinvaraisesti ja pintamittauksiin perustuen eikä takaa sitä, ettei talosta myöhemmin löydy piileviä virheitä.",
+        "source": "px-kkv-kuntotarkastus"
+      },
+      "alsoSources": [
+        "px-sustera-kt"
+      ],
+      "sellerFirmQuoteFi": "Kuntotarkastus toteutetaan pintapuolisilla menetelmillä rakenteita rikkomatta."
+    },
+    "guideCard": {
+      "rule": "The performer's guide for a home-sale condition inspection is now Rakennustieto card RT 103996, which replaced KH 90-00394.",
+      "quoteFi": "RT 103996 (entinen KH 90-00394) -ohjeen mukaan. Sis. tarvittaessa yhden rakenneavauksen levyseinärakenteeseen.",
+      "source": "px-satpa-hinnasto",
+      "status": "secondary",
+      "note": "JEP Tarkastus's price list says the same ('RT 103996 (edellinen ohje KH 90-00394)'). The Rakennustieto card itself was not opened."
+    },
+    "regulation": {
+      "rule": "No Finnish law regulates condition inspections or their price or validity, and when a buyer requires a new inspection before closing, its cost is often split in half.",
+      "quoteFi": "Myöskään ympäristöministeriön hallinnonalalla ei ole sääntelyä kuntokartoituksiin liittyen. … kuntotarkastuksesta aiheutuvat kustannukset maksetaan usein puoliksi.",
+      "source": "px-kkv401-2025",
+      "status": "primary"
+    },
+    "prices": [
+      {
+        "company": "Sustera (ex-Raksystems)",
+        "lowEur": 1205,
+        "highEur": 1595,
+        "for": "omakotitalo in Turku, built 2015 (low) to 1975 (high); same price at 100–300 m²; plus 1.37 €/km and a 12.55 € office fee",
+        "source": "px-sustera-laskuri"
+      },
+      {
+        "company": "Sustera (ex-Raksystems)",
+        "lowEur": 1720,
+        "highEur": 1910,
+        "for": "omakotitalo in Helsinki, built 2015 (low) to 1975 (high); plus km charge and office fee",
+        "source": "px-sustera-laskuri"
+      },
+      {
+        "company": "Sustera (ex-Raksystems)",
+        "lowEur": 980,
+        "highEur": 1115,
+        "for": "omakotitalo in Oulu, built 2015 (low) to 1975 (high); plus km charge and office fee",
+        "source": "px-sustera-laskuri"
+      },
+      {
+        "company": "JEP Tarkastus",
+        "lowEur": 1200,
+        "highEur": 1450,
+        "for": "omakotitalo in Pirkanmaa, any size, 2010 or newer (low) to 1988 or older (high); VAT and travel included; one structure opening if needed",
+        "source": "px-jep-hinnasto"
+      },
+      {
+        "company": "JEP Tarkastus",
+        "lowEur": 1250,
+        "highEur": 1650,
+        "for": "omakotitalo in Uusimaa, any size, 2010 or newer (low) to 1988 or older (high); VAT and travel included",
+        "source": "px-jep-hinnasto"
+      },
+      {
+        "company": "Satpa",
+        "lowEur": 1450,
+        "highEur": 1800,
+        "for": "omakotitalo in Uusimaa, any size, 2010 or newer (low) to 1988 or older (high); plus 1 €/km from Helsinki (100 € flat beyond 50 km)",
+        "source": "px-satpa-hinnasto"
+      },
+      {
+        "company": "Satpa",
+        "lowEur": 950,
+        "highEur": 1200,
+        "for": "omakotitalo in Varsinais-Suomi, any size, 2010 or newer (low) to 1988 or older (high); travel included",
+        "source": "px-satpa-hinnasto"
+      },
+      {
+        "company": "Satpa",
+        "lowEur": 895,
+        "highEur": null,
+        "for": "omakotitalo in Keski-Suomi, any age or size; travel included",
+        "source": "px-satpa-hinnasto"
+      }
+    ],
+    "rangeEur": [
+      895,
+      1910
+    ],
+    "status": "derived",
+    "basis": "Lowest and highest of the published prices above (all incl. VAT 25.5 %), before any separate travel or office charges. Prices rise with building age and vary by region; all three firms price by build-year band, not by floor area."
+  },
+  "riskStructures": {
+    "falsePlinth": {
+      "rule": "A false plinth (valesokkeli) appears in the checklists for 1960s, 1970s and 1980s detached houses; low foundations with a false plinth became common in the 1970s, and the structure does not ventilate, so moisture damage develops easily.",
+      "quoteFi": "1970-luvulla taloista tehtiin entistä matalampia. Lattianpinta rakennettiin lähelle maanpintaa ja matalat perustukset valesokkelirakenteineen yleistyivät. … Valesokkelirakenne ei tuuletu, ja sen vuoksi siihen kehittyy helposti kosteusvaurio.",
+      "eraFrom": 1960,
+      "eraTo": 1989,
+      "source": "px-hometalkoot-1970",
+      "alsoSources": [
+        "px-hometalkoot-1960",
+        "px-hometalkoot-1980",
+        "px-hometalkoot-okt"
+      ],
+      "status": "primary",
+      "note": "The 1980s house page says the foundation is 'usein valesokkeliperustus'. Era bounds are the decades of the Hometalkoot model houses that list it, not a construction ban date."
+    },
+    "crawlSpace": {
+      "rule": "A ventilated crawl-space floor (rossipohja, tuulettuva alapohja) is listed for 1940s and 1950s houses; it can have moisture damage, and the joint between an extension's slab-on-ground floor and the old crawl-space floor is a risk structure where moisture damage is common.",
+      "quoteFi": "Tuulettuvissa alapohjissa voi olla kosteusvaurioita. … Onko talossasi lisäsiiven maavaraisen lattian ja vanhan osan rossipohjan liittymäkohta? Kysymyksessä on riskirakenne, jossa kosteusvauriot ovat yleisiä.",
+      "eraFrom": 1940,
+      "eraTo": 1959,
+      "source": "px-hometalkoot-1950",
+      "status": "primary"
+    },
+    "flatRoof": {
+      "rule": "Flat roofs were built on 1970s detached houses and are a moisture-damage risk when not maintained.",
+      "quoteFi": "70-luvulla taloihin rakennettiin tasakattoja, jotka huoltamattomina ovat kosteusvaurioriskejä.",
+      "eraFrom": 1970,
+      "eraTo": 1979,
+      "source": "px-hometalkoot-1970",
+      "status": "primary"
+    },
+    "slabOnGround": {
+      "rule": "A slab-on-ground floor with wooden battens and thermal insulation laid on top of the concrete slab is very prone to moisture damage and lasts on average 40 years; it appears in the checklists for 1940s to 1980s houses.",
+      "quoteFi": "Lattiarakenteet, joissa puukorotus ja lämmöneristeet on asennettu betonilaatan päälle, ovat erittäin kosteusvaurioherkkiä. … Alapohja, jossa betonilaatan päällä on lämmöneriste, kestää keskimäärin 40 vuotta.",
+      "eraFrom": 1940,
+      "eraTo": 1989,
+      "lifeYears": {
+        "value": 40,
+        "source": "px-hometalkoot-1970"
+      },
+      "source": "px-hometalkoot-1970",
+      "alsoSources": [
+        "px-hometalkoot-1980"
+      ],
+      "status": "primary",
+      "note": "The 1970s–1990s checklists add that a slab insulated from below is usually sound if joints are airtight, and that mineral wool under the slab is riskier than EPS ('Mineraalivillalla alapuolelta eristetty lattia on riskialttiimpi kuin styroxilla eristetty alapohja')."
+    },
+    "basement": {
+      "rule": "Concrete or block basement walls insulated on the inside are very prone to moisture damage because soil moisture keeps the wall damp, and mould often forms between the concrete and the insulation.",
+      "quoteFi": "Betonisen kellariseinän sisäpuolelle alun perin asennetut rapatut toja-levyt, mineraalivillaeristeet ja verhomuuraukset tai myöhemmin tehdyt lisälämmöneristykset ovat usein homeessa betonin ja eristeen rajapinnasta, koska betoniseinä on kostea maassa liikkuvan veden vaikutuksesta.",
+      "eraFrom": 1950,
+      "eraTo": null,
+      "source": "px-hometalkoot-1960",
+      "alsoSources": [
+        "px-hometalkoot-1950",
+        "px-hometalkoot-1990"
+      ],
+      "status": "primary",
+      "note": "The basement-wall item appears in the 1950s, 1960s and 1990s model-house checklists, so the source gives no end year."
+    }
+  },
+  "radon": {
+    "referenceLevel": {
+      "rule": "The reference level for radon in indoor air of a dwelling is 300 Bq/m³, assessed as an annual average.",
+      "valueBqM3": 300,
+      "section": "STM asetus 1044/2018, 20 § (issued under säteilylaki 859/2018)",
+      "quoteFi": "Asunnon ja muun oleskelutilan sisäilman radonpitoisuuden viitearvo on 300 becquereliä kuutiometrissä.",
+      "source": "px-stm-1044",
+      "status": "primary"
+    },
+    "newBuilding": {
+      "rule": "The reference level for the design and construction of a new building is 200 Bq/m³.",
+      "valueBqM3": 200,
+      "section": "STM asetus 1044/2018, 21 §",
+      "quoteFi": "Uuden rakennuksen suunnittelua ja toteutusta koskeva sisäilman radonpitoisuuden viitearvo on 200 becquereliä kuutiometrissä.",
+      "source": "px-stm-1044",
+      "status": "primary"
+    },
+    "howToMeasure": {
+      "rule": "A home radon measurement must be continuous, last at least two months (STUK prefers three) and be made between the start of September and the end of May.",
+      "minMonths": 2,
+      "preferredMonths": 3,
+      "seasonFi": "syyskuun alun (1.9.) ja toukokuun lopun (31.5.) välisenä aikana",
+      "quoteFi": "Mittauksen on oltava yhtäjaksoinen ja kestettävä mieluiten kolme, mutta vähintään kaksi kuukautta, ja se on tehtävä syyskuun alun ja toukokuun lopun välisenä aikana.",
+      "source": "px-stuk-viitearvot",
+      "alsoSources": [
+        "px-stuk-mittaaminen",
+        "px-stm-1044"
+      ],
+      "status": "primary",
+      "note": "The season is September–May only; no source mentions November. STUK multiplies the measurement-season result by 0.9 to estimate the annual average."
+    },
+    "measurementPriceEur": {
+      "rule": "STUK's radon measurement for a private home costs 86.60 € including taxes, for one measurement jar with instructions, return envelope, analysis and the result.",
+      "value": 86.6,
+      "includesVat": true,
+      "source": "px-stuk-kauppa",
+      "status": "primary"
+    },
+    "drilledWell": {
+      "rule": "STUK recommends reducing radon in private well water when it exceeds 1000 Bq/l, and drilled-well water is tested for radon, arsenic and uranium in addition to the normal tests.",
+      "actionLevelBqL": 1000,
+      "quoteFi": "Porakaivovedestä on tutkittava myös radon-, arseeni- ja uraanipitoisuus. … Yksityisten kaivojen osalta Säteilyturvakeskus suosittelee, että kaivoveden radonpitoisuutta pienennetään, jos pitoisuus ylittää 1000 Bq/l. Kaivoveden korkea radonpitoisuus kohottaa merkittävästi myös huoneen radonpitoisuutta.",
+      "source": "px-vantaa-kaivo",
+      "status": "primary",
+      "gap": "STUK's own web pages opened today (radon, radonin lähteet, talousveden radioaktiivisuuden valvonta) do not state the private-well figure; the 1000 Bq/l recommendation is STUK's as quoted by Vantaa's environmental authority. STUK's 'Radonin lähteet' says radon in drinking water passes into indoor air, especially when water is heated and in showers.",
+      "alsoSources": [
+        "px-stuk-lahteet"
+      ]
+    }
+  },
+  "oilHeating": {
+    "tankInspection": {
+      "rule": "Periodic inspection is mandatory only for underground oil tanks in important groundwater areas (first within 10 years of commissioning, then by condition class); municipal environmental protection regulations may make inspection mandatory for other tanks, and Tukes recommends regular inspection for all tanks.",
+      "quoteFi": "Tärkeillä pohjavesialueilla olevien maanalaisten öljysäiliöiden tarkastus on pakollista. Tarkastus on tehtävä ensimmäisen kerran 10 vuoden kuluttua öljysäiliön käyttöönotosta. Myös muille öljysäiliöille suositellaan säännöllisiä tarkastuksia. Kunnan ympäristönsuojelumääräyksissä myös muiden kuin pohjavesialueilla olevien maanalaisten öljysäiliöiden tarkastukset voivat olla pakollisia.",
+      "legalBasis": "KTM:n päätös maanalaisten öljysäiliöiden määräaikaistarkastuksista 344/1983 (cited by px-pelastustoimi-oljy and px-finanssiala-oljy)",
+      "firstInspectionWithinYears": {
+        "value": 10,
+        "source": "px-tukes-oljy"
+      },
+      "intervalYearsByClass": {
+        "A_metal": 5,
+        "A_nonMetal": 10,
+        "B": 2,
+        "C": "take out of use within 6 months",
+        "D": "take out of use immediately",
+        "source": "px-tukes-oljy"
+      },
+      "intervalYears": [
+        2,
+        10
+      ],
+      "intervalStatus": "primary",
+      "inspector": "A Tukes-approved oil-tank inspection company; the report goes to the rescue authority.",
+      "source": "px-tukes-oljy",
+      "alsoSources": [
+        "px-tampere-oljy",
+        "px-pelastustoimi-oljy",
+        "px-finanssiala-oljy"
+      ],
+      "status": "primary",
+      "insurerRule": {
+        "rule": "If's home insurance terms require oil tanks and their pipes to be inspected at least every 10 years, and by an expert firm at least every 5 years for buildings in groundwater areas.",
+        "intervalYears": 10,
+        "groundwaterAreaIntervalYears": 5,
+        "section": "OMA 200.27, 5.5 kohta 10",
+        "quoteFi": "Öljysäiliöt ja niihin liittyvät putkistot on tarkastettava vähintään 10 vuoden välein. Asiantuntijaliikkeen on tarkastettava vähintään viiden (5) vuoden välein pohjavesialueilla sijaitsevien rakennusten öljysäiliöt ja niihin liittyvät putkistot. Öljysäiliö, joka ei ole säiliöstandardin mukainen, tulee poistaa käytöstä.",
+        "source": "px-if-oma",
+        "status": "primary"
+      }
+    },
+    "spill": {
+      "rule": "The property owner or holder is primarily responsible for a heating-oil tank and pays for cleaning up a leak; the Oil Pollution Compensation Fund (öljysuojarahasto) may pay soil and groundwater clean-up only at its discretion, as a secondary payer, when the polluter cannot be found or cannot pay and the holder of the area cannot reasonably be required to clean it.",
+      "quoteFi": "Ensisijainen vastuu pientalon lämmitysöljysäiliöstä on kiinteistön omistajalla tai haltijalla, joka myös vastaa mahdollisessa öljyvahinkotilanteessa puhdistuskustannuksista.",
+      "source": "px-pelastustoimi-oljy",
+      "fund": {
+        "rule": "A fund payment for clean-up requires the owner's written undertaking to repay it with interest if the property is sold within 10 years of the clean-up being completed.",
+        "repayIfSoldWithinYears": 10,
+        "quoteFi": "Öljyn pilaaman maa-alueen ja pohjaveden tutkimus- ja kunnostamiskustannuksiin öljysuojarahastosta voidaan myöntää harkinnanvarainen korvaus, jos pilaantumisen aiheuttajaa ei saada selville tai tavoiteta, taikka tämä ei kykene vastaamaan puhdistamisen kustannuksista eikä pilaantuneen alueen haltijaa voida kohtuudella velvoittaa puhdistamaan aluetta. … Korvauksen saaminen edellyttää kiinteistön omistajan antamaa kirjallista vakuutusta siitä, että hän sitoutuu palauttamaan öljysuojarahaston vaatimuksesta kunnostuskustannuksiin myönnetyn korvauksen korkoineen, jos kiinteistö myydään 10 vuoden kuluessa",
+        "law": "Laki öljysuojarahastosta 1406/2004",
+        "source": "px-ym-osr",
+        "status": "primary"
+      },
+      "status": "primary",
+      "gap": "oljysuojarahasto.fi did not resolve today and the Finlex page for 1406/2004 returned no text; the fund conditions come from the Ministry of the Environment's 2017 guide. No household deductible amount was found."
+    },
+    "switch": {
+      "rule": "Motiva's 2024 example calculations put replacing oil heating (removal included) at about 23,000–26,000 € for a ground-source heat pump and about 17,000–18,000 € for an air-to-water heat pump.",
+      "groundSourceEur": [
+        23000,
+        26000
+      ],
+      "airToWaterEur": [
+        17000,
+        18000
+      ],
+      "districtHeatEur": [
+        13000,
+        13000
+      ],
+      "source": "px-motiva-esim",
+      "status": "primary",
+      "note": "Two example houses: a small 1990s house in Central Finland (2,000 l oil/yr: GSHP 23,000 €, ASHP-water 17,000 €) and a larger 1970s house in Southern Finland (3,000 l oil/yr: GSHP 26,000 €, ASHP-water 18,000 €). Motiva says actual prices vary a lot and air-to-water units of the same brand and output can differ by up to 6,000 €. Assumed lifetimes: air-to-water heat pump about 15 years, ground-source about 20 years, oil boiler and district-heat substation about 25 years, oil burner about 15 years."
+    },
+    "grant2026": {
+      "rule": "The state grant for giving up oil or gas heating (from the Elinvoimakeskus, formerly the ELY Centre; 4,000 € for district heat, ground-source or air-to-water heat pump, 2,500 € for other systems) closed to applications on 25 May 2026, and funded projects had to be finished by 31 August 2026.",
+      "open": false,
+      "closedOn": "2026-05-25",
+      "projectsDoneBy": "2026-08-31",
+      "grantEur": {
+        "toHeatPumpOrDistrictHeat": 4000,
+        "toOther": 2500
+      },
+      "quoteFi": "Elinvoimakeskuksen avustukset öljy- ja kaasulämmityksestä luopumiseen ovat päättyneet 25.5.2026. … Avustettavien remonttien on oltava valmiita viimeistään 31.8.2026.",
+      "source": "px-motiva-oljy",
+      "status": "primary",
+      "householdDeduction": {
+        "rule": "An increased household tax deduction (kotitalousvähennys) for the labour share of replacing oil or gas heating is available for the years 2022–2027.",
+        "years": [
+          2022,
+          2027
+        ],
+        "quoteFi": "Öljylämmityksestä luopumiseen saa korotetun kotitalousvähennyksen vuosina 2022–2027.",
+        "source": "px-motiva-oljy",
+        "status": "primary"
+      }
+    }
+  },
+  "well": {
+    "testEveryYears": [
+      3,
+      5
+    ],
+    "rule": "A household well's water should be tested regularly at least every three years, and whenever its colour, taste or smell changes or it is suspected of causing symptoms; the well owner is responsible for testing.",
+    "atLeastEveryYears": {
+      "value": 3,
+      "source": "px-hel-talousvesi",
+      "status": "primary"
+    },
+    "quoteFi": "Kaivon omistajana vastaat kaivosi vedenlaadun tutkimisesta. … Lisäksi veden laatu tulisi tutkia säännöllisesti vähintään kolmen vuoden välein",
+    "source": "px-hel-talousvesi",
+    "secondary": {
+      "rule": "A water laboratory advises testing a well when it is taken into use and then regularly, for example every 3–5 years.",
+      "testEveryYears": [
+        3,
+        5
+      ],
+      "quoteFi": "Uuden kaivon veden laatu kannattaa tutkituttaa käyttöönoton yhteydessä sekä tämän jälkeen säännöllisesti, esimerkiksi 3–5 vuoden välein, ja aina, jos veden laadussa havaitaan muutoksia.",
+      "source": "px-eurofins-kaivo",
+      "status": "secondary"
+    },
+    "whatToTest": {
+      "ringWell": [
+        "sensory assessment (appearance, smell)",
+        "E. coli",
+        "coliform bacteria",
+        "enterococci",
+        "colour",
+        "turbidity",
+        "pH",
+        "KMnO4 (oxidisability)",
+        "fluoride",
+        "chloride",
+        "ammonium",
+        "nitrite",
+        "nitrate",
+        "manganese",
+        "iron"
+      ],
+      "drilledWellAlso": [
+        "radon",
+        "arsenic",
+        "uranium"
+      ],
+      "basis": "STM asetus 401/2001 (small water units), as listed by Vantaa",
+      "source": "px-vantaa-kaivo",
+      "status": "primary"
+    },
+    "status": "primary",
+    "gap": "THL's well-water page timed out and no THL, Ruokavirasto or STM page with an interval was opened; the three-year minimum is the Helsinki environmental-health authority's and the 3–5 range is a laboratory's."
+  },
+  "lifetimes": {
+    "drainage": {
+      "rule": "Foundation drains last on average 40 years, and drains built to the newest rules 50 years; drains laid before the 1998 moisture rules likely have shortcomings, and the drain network should be cleaned every 10 years.",
+      "lifeYears": [
+        40,
+        50
+      ],
+      "quoteFi": "Todennäköisesti ennen vuoden 1998 uusia kosteusmääräyksiä asennetuissa salaojissa on puutteita. Aikaisemmin käytetyt tiili- tai peltosalaojaputket ovat lyhytikäisiä ja uusimisen tarpeessa. … Salaojat kestävät keskimäärin 40 vuotta ja uusimpien määräysten mukaan toteutetut 50 vuotta. … Puhdistuta salaojaverkosto 10 vuoden välein.",
+      "source": "px-hometalkoot-1950",
+      "alsoSources": [
+        "px-hometalkoot-1980",
+        "px-hometalkoot-1990"
+      ],
+      "status": "primary"
+    },
+    "roof": {
+      "rule": "A tile roof lasts on average 45 years, a profiled sheet-metal roof 40 years, a galvanised and painted standing-seam metal roof 60 years, and newer rubber-bitumen felt roofs about 25–35 years; older bitumen felt roofs have already reached the end of their life.",
+      "byMaterial": {
+        "felt": [
+          25,
+          35
+        ],
+        "sheet": [
+          40,
+          60
+        ],
+        "tile": [
+          45,
+          45
+        ]
+      },
+      "detail": {
+        "feltRubberBitumen": [
+          25,
+          35
+        ],
+        "sheetProfiled": 40,
+        "sheetStandingSeam": 60,
+        "tileAverage": 45,
+        "fibreCement": 30
+      },
+      "quoteFi": "Tiilikate kestää keskimäärin 45 vuotta, profiilipeltikate 40 vuotta ja sinkitty sekä maalattu konesaumapeltikate 60 vuotta. Vanhempien bitumikermikatteiden eli huopakatteiden käyttöikä on täyttynyt. Uudemmat, kumia sisältävät kumibitumikermikatteet kestävät noin 25–35 vuotta. Varttikate ja muut kuitusementtikatteet kestävät noin 30 vuotta.",
+      "source": "px-hometalkoot-1980",
+      "alsoSources": [
+        "px-hometalkoot-1970",
+        "px-hometalkoot-1990"
+      ],
+      "status": "primary",
+      "note": "Tile is given as a single average (45), so its range is [45, 45]; 'sheet' spans profiled (40) to standing-seam (60). The source does not separate concrete and clay tile. Fibre-cement (minerit/vartti) roofs must be removed as asbestos work."
+    },
+    "sewerPipes": {
+      "lifeYears": null,
+      "status": "missing",
+      "gap": "No authority or named source opened today gives a lifetime for a detached house's sewer pipes. The Hometalkoot checklists only say to have original sewers inspected and to be ready to renew them ('Jos … viemärit ovat alkuperäisiä, tutkituta niiden kunto ammattilaisella. Varaudu uusimaan viemärit.', px-hometalkoot-1970). If's terms instead cut leak compensation by pipe age (0 % at 0–29 years, 25 % at 30–50, 50 % over 50; see insurance.leak), which is not a lifetime."
+    },
+    "heatingEquipment": {
+      "rule": "Motiva puts the possible life of an air-to-water heat pump at about 15 years, a ground-source heat pump about 20 years, an oil boiler about 25 years and an oil burner about 15 years.",
+      "years": {
+        "airToWaterHeatPump": 15,
+        "groundSourceHeatPump": 20,
+        "oilBoiler": 25,
+        "oilBurner": 15
+      },
+      "source": "px-motiva-esim",
+      "status": "primary"
+    }
+  },
+  "insurance": {
+    "terms": {
+      "name": "Kodin Omaisuusvakuutusehdot",
+      "version": "OMA 200.27",
+      "validFrom": "2026-01-01",
+      "source": "px-if-oma"
+    },
+    "fire": {
+      "rule": "If's home insurance covers sudden and unforeseen direct damage to the insured building caused by fire that has got loose, soot, smoke, an explosion, or lightning that struck the property directly; If's product page lists this in all three cover levels.",
+      "section": "3.2 Paloturva",
+      "quoteFi": "Vakuutuksesta korvataan äkillinen ja ennalta arvaamaton välitön esinevahinko, jonka syynä on - irti päässyt tuli, noki, savu tai savukaasu - räjähdys - salamanisku, joka on kohdistunut suoraan vakuutettuun omaisuuteen ja mekaanisesti pirstonut sitä.",
+      "source": "px-if-oma",
+      "status": "primary"
+    },
+    "leak": {
+      "rule": "Damage from a leak caused by a sudden and unforeseen breakage of the building's fixed plumbing or heating equipment, its pipes or a connected appliance is covered, but not water through floor-drain joints or a failed or missing waterproofing, rain or melt water through the foundation, walls or roof, slowly developing damage such as rot, mould or corrosion, and the payout is cut by 25 % for pipes aged 30–50 years and 50 % for pipes over 50.",
+      "section": "3.5 Vuototurva; exclusions 4 kohta 1 ja 2; age deduction 6.2.1.3",
+      "quoteFi": "Vakuutuksesta korvataan rakennuksen kiinteän LVI-laitteen, -putkiston tai niihin kytketyn kulutuslaitteen äkillisen ja ennalta arvaamattoman rikkoutumisen seurauksena syntyneen vuodon aiheuttama välitön esinevahinko. … Vakuutuksesta ei korvata vahinkoja, joissa - vesi on päässyt rakenteeseen lattiakaivon ja korokerenkaan liittymiskohdista … - vesi on läpäissyt vesieristeen tai vesieriste on puuttunut kokonaan - sulamis- tai sadevesi on läpäissyt ulkoapäin rakenteen kuten perustuksen, ulkoseinän tai vesikaton. … 2) hitaasti kehittyvistä tapahtumista, kuten - syöpymisestä tai pilaantumisesta - sienettymisestä, homehtumisesta, lahoamisesta",
+      "pipeAgeDeduction": [
+        {
+          "ageYears": [
+            0,
+            29
+          ],
+          "deductionPct": 0
+        },
+        {
+          "ageYears": [
+            30,
+            50
+          ],
+          "deductionPct": 25
+        },
+        {
+          "ageYears": [
+            51,
+            null
+          ],
+          "deductionPct": 50
+        }
+      ],
+      "pipeAgeDeductionSection": "6.2.1.3 (unless the policy schedule says otherwise; age counted in calendar years from commissioning or pipe renewal)",
+      "source": "px-if-oma",
+      "status": "primary",
+      "note": "6.2.1.2 also says damage to a wet room, roof or floor covering is compensated at current (depreciated) value, using the technical lifetimes of RT card 18-103765."
+    },
+    "storm": {
+      "rule": "Sudden and unforeseen direct damage caused by storm wind (myrskytuuli) or hail is covered, but the terms give no wind-speed threshold for storm wind.",
+      "section": "3.3 Luonnonilmiöturva",
+      "quoteFi": "Vakuutuksesta korvataan äkillinen ja ennalta arvaamaton välitön esinevahinko, jonka syynä on myrskytuuli tai rakeet.",
+      "minWindMs": null,
+      "source": "px-if-oma",
+      "status": "primary",
+      "gap": "Neither OMA 200.27 nor If's general terms YLE 900.14 define 'myrskytuuli' with a number; the 17 m/s figure could not be confirmed for If. (A search result said other insurers use e.g. over 15 m/s or over 20 m/s; not opened, not used.)",
+      "alsoSources": [
+        "px-if-yse"
+      ]
+    },
+    "flood": {
+      "rule": "Damage to an insured building in Finland from an exceptional heavy-rain, river/lake or sea flood is covered when the water entered the building straight from the ground surface or through fixed sewer pipes; rain counts as exceptional at 30 mm in an hour or 75 mm in a day and a water level at a once-in-50-years level or rarer, yard damage from water-body and sea floods is not covered, and flood damage to a building built without the required permit is excluded.",
+      "section": "3.3 Luonnonilmiöturva; definitions 'Tulvien määrittely'; exclusion 4 kohta 27",
+      "quoteFi": "Lisäksi vakuutuksesta korvataan Suomessa sijaitsevalle vakuutetulle rakennukselle … aiheutunut äkillinen ja ennalta arvaamaton välitön esinevahinko, jonka syynä on poikkeuksellinen rankkasade-, vesistö- tai merivesitulva ja vesi on tunkeutunut rakennukseen suoraan maanpinnalta tai kiinteästi asennettujen viemäriputkistojen kautta. Vesistö- ja merivesitulvissa ei korvata piha-alueelle aiheutuneita vahinkoja. … Sadetta pidetään poikkeuksellisena, kun sademäärä on 30 mm tunnissa tai 75 mm vuorokaudessa. Poikkeuksellisena vedenpinnan tai merenpinnan nousuna pidetään vedenkorkeutta, jonka esiintymistodennäköisyys on kerran 50 vuodessa tai harvemmin.",
+      "rainMmPerHour": 30,
+      "rainMmPerDay": 75,
+      "waterLevelReturnYears": 50,
+      "coverLevels": [
+        "Perus",
+        "Laaja",
+        "Laajaplus"
+      ],
+      "coverLevelsSource": "px-if-okt",
+      "coverLevelsQuoteFi": "Korvaamme erilaisten luonnonilmiöiden kuten myrskyn, rakeiden tai tulvan talolle aiheuttamia vahinkoja.",
+      "source": "px-if-oma",
+      "status": "primary",
+      "note": "The terms also require keeping storm-water drainage working and checking drains at least yearly (5.4 kohdat 1–2). Cover levels were read from a flattened table and should be rechecked on the live page."
+    },
+    "frost": {
+      "rule": "Damage caused by frost, ice or freezing is excluded, and the protective rules require enough heating in the cold season or, if the building is left without enough base heat, draining the plumbing and heating system of water, keeping the water-meter space warm and checking the heating at least once a week.",
+      "section": "4 kohta 5 (exclusion); 5.5 kohdat 1–2 (protective rules); 5.2 kohta 14",
+      "quoteFi": "Vakuutuksesta ei korvata vahinkoa, joka on aiheutunut … 5) pakkasesta, jäästä, jäätymisestä, kuivuudesta, kuumuudesta, kosteudesta, routimisesta tai maan liikkumisesta … 1) Kylmänä vuodenaikana rakennuksen riittävästä lämmityksestä on huolehdittava. 2) Jos rakennus jätetään kylmänä vuodenaikana ilman riittävää peruslämpöä, LVI-laitteet ja johtoverkko on tyhjennettävä vedestä. Tällöinkin vesimittaritilan riittävästä peruslämmöstä on huolehdittava, ja lämmityksen riittävyys on käytävä tarkastamassa vähintään kerran viikossa.",
+      "checkHeatingEveryDays": 7,
+      "source": "px-if-oma",
+      "status": "primary",
+      "note": "Section 5 says breaking a protective rule can mean no compensation or reduced compensation under the general terms, section 5. Frozen pipes must not be thawed with open flame or a hot-air blower (5.2 kohta 14)."
+    },
+    "emptyBuilding": {
+      "rule": "If the building is uninhabited for more than a week, the main shut-off valve inside the building must be closed (before the water meter if there is one) and the water pump switched off; in the cold season a building left without enough base heat must be drained, and the insurer treats supervision of a building as a visit at least once a month.",
+      "section": "5.5 Vuotovahinkojen torjunta, kohdat 2–3; 5 Suojeluohjeet (valvonta)",
+      "quoteFi": "3) Jos rakennus on asumattomana yli viikon, pääsulkuventtiili rakennuksen sisällä on suljettava ja käyttövesipumppu on kytkettävä pois käytöstä. Mikäli rakennuksessa on vesimittari, sulkuventtiili on suljettava ennen vesimittaria. … Suojeluohjeissa rakennuksen valvonnalla tarkoitetaan käyntiä rakennuksessa vähintään kerran kuukaudessa.",
+      "uninhabitedOverDays": 7,
+      "visitAtLeastEveryMonths": 1,
+      "source": "px-if-oma",
+      "status": "primary"
+    },
+    "defects": {
+      "rule": "The insurance does not cover damage to property caused by design, installation, workmanship, structural, manufacturing or material defects, construction against the rules or good practice of its time, building or foundation defects, or slowly developing events such as corrosion, rot, mould, wear, condensation, settling or movement of structures.",
+      "section": "4 Vakuutusturvien yleiset rajoitukset, kohdat 1, 2, 5 ja 6",
+      "quoteFi": "Vakuutuksesta ei korvata vahinkoa, joka on aiheutunut 1) omaisuudelle tai esineelle - suunnittelu-, asennus-, käsittely- käyttö- tai työvirheestä - rakenne-, valmistus- tai aineviasta - muusta rakennusajankohdan mukaisten säädösten, määräysten tai hyvän rakennustavan vastaisesta rakentamisesta - korjaamiseen tai rakentamiseen käytetyistä sopimattomista tai laadultaan ilmeisen heikoista osista tai materiaaleista - rakennusvirheestä - perustamisvirheestä. … 2) hitaasti kehittyvistä tapahtumista, kuten - syöpymisestä tai pilaantumisesta - sienettymisestä, homehtumisesta, lahoamisesta - kulumisesta, aineen väsymisestä, kondensiosta tai muusta vastaavasta vähitellen tapahtuvasta ilmiöstä … 6) rakenteiden liikkumisesta",
+      "source": "px-if-oma",
+      "status": "primary"
+    },
+    "hiddenDefectInsurance": {
+      "rule": "A hidden-defect insurance for the seller (Kauppaturva, insured by Helvetia through InSure Group Oy) is sold with Sustera's condition inspection: for a detached house it costs 2,650 €, with a 75,000 € sum insured, a 3,000 € deductible and a 5-year period from handover, and it must be taken out before the buyer gets possession.",
+      "exists": true,
+      "priceEur": 2650,
+      "sumInsuredEur": 75000,
+      "deductibleEur": 3000,
+      "periodYears": 5,
+      "conditions": [
+        "requires Sustera's own asuntokaupan kuntotarkastus for a detached house",
+        "the seller is a natural person or an undivided estate",
+        "living area at most 350 m²",
+        "cannot be bought after the buyer has received possession"
+      ],
+      "quoteFi": "Kauppaturva luo taloudellista turvaa asunnon tai kiinteistön myyjälle. Vakuutus kattaa piilovirheisiin perustuvan taloudellisen vastuun kohteesta riippuen, joko 2 tai 5 vuotta, kohteen hallinnan luovutuksesta laskettuna. Vakuutuksenottajana on asunnon tai kiinteistön myyjä. Vakuuttajana toimii Susterasta erillisenä toimiva vakuutusyhtiö Helvetia.",
+      "section": null,
+      "source": "px-sustera-kauppaturva",
+      "status": "secondary",
+      "gap": "Only the seller-side product page was opened; the insurer's (Helvetia) policy terms PDF, FINE's guidance and other insurers' products were not opened. If's own home insurance terms do not cover hidden defects."
+    }
+  },
+  "electricity": {
+    "band": "E",
+    "label": "Kotitalousasiakas, vuosikulutus > 15 000 kWh (household, over 15,000 kWh a year: e.g. a house with electric heating)",
+    "month": "2026-06",
+    "totalCents": 14.892,
+    "components": {
+      "energyCents": 5.86,
+      "networkCents": 3.681,
+      "taxesCents": 5.351
+    },
+    "source": "sf-13rb",
+    "series12m": {
+      "months": [
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01",
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06"
+      ],
+      "total": [
+        13.896,
+        15.679,
+        14.659,
+        15.003,
+        15.277,
+        14.411,
+        18.503,
+        19.358,
+        14.13,
+        15.055,
+        15.432,
+        14.892
+      ],
+      "source": "sf-13rb"
+    },
+    "twelveMonthAverageTotal": {
+      "status": "derived",
+      "value": 15.5,
+      "basis": "Our unweighted mean of the 12 monthly totals above (15.52), rounded to 0.1 c."
+    },
+    "note": "Total price in c/kWh incl. electricity tax and VAT ('Kokonaishinta'). Latest month in the table on 2026-10-18 is 2026M06 (table updated 2026-09-24). Band D (5,000–15,000 kWh) for the same month is 17.910 c/kWh.",
+    "heatingOil": {
+      "month": "2026-06",
+      "centsPerLitre": 167,
+      "eurPerMWh": 167.5,
+      "label": "Kevyt polttoöljy, snt/l (light fuel oil, incl. VAT)",
+      "source": "sf-12ge",
+      "series12m": {
+        "months": [
+          "2025-07",
+          "2025-08",
+          "2025-09",
+          "2025-10",
+          "2025-11",
+          "2025-12",
+          "2026-01",
+          "2026-02",
+          "2026-03",
+          "2026-04",
+          "2026-05",
+          "2026-06"
+        ],
+        "centsPerLitre": [
+          128,
+          122,
+          123,
+          120,
+          130,
+          122,
+          121,
+          127,
+          179,
+          203,
+          177,
+          167
+        ],
+        "source": "sf-12ge"
+      },
+      "note": "Price rose from 127 c/l in February 2026 to 179 in March and 203 in April 2026, then fell to 167 by June."
+    }
+  }
+}

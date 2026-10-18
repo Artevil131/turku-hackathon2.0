@@ -20,6 +20,9 @@ All files are UTF-8 JSON with a 2-space indent. None holds personal data. Raw do
 | `car-recalls-eu.json` (1.5 MB) | 3,048 EU Safety Gate recall alerts for passenger cars, October 2016 to October 2026 | All Safety Gate's, except our normalised make names and parsed years. Built by `tools/recalls-snapshot.mjs`. |
 | `rent-areas.json` (122 KB) | Statistics Finland's average rent per m² a month for privately financed rental flats: 27 municipalities by rooms (1, 2, 3+, all; also new leases only) from table 15fa, latest quarter, and 473 postal code areas by rooms from table 13eb, its last quarter. Built by `tools/fetch-rent-areas.mjs` | All Statistics Finland's (CC BY 4.0); only the needed columns are kept. Added 18 October 2026. |
 | `flat-checks.json` (9 KB) | The facts behind the questions a flat ad's own words raise: plot lease renewal, energy class, oil heating, moisture damage, condition surveys, company loans | Every fact has a `source` id; `type` primary or secondary (Yle on plot rents is secondary). Added 18 October 2026. |
+| `house-rules.json` (80 KB) | Buying a detached house or cottage: the Land Code on defects and time limits, transfer tax and title fee, property tax, scattered-settlement wastewater, private roads, the energy certificate, condition inspection prices, risk structures by era, radon measurement, oil tanks, wells, roof and drain lifetimes, If's home insurance terms (OMA 200.27), and electricity (over 15,000 kWh) and heating-oil prices | `status`: primary, secondary, derived or missing, with a `basis` or `gap`. Every number has a `source` id from `meta.sources`; law and terms carry `quoteFi`. Added 18 October 2026. |
+| `radon-municipalities.json` (94 KB) | STUK's indoor radon in small houses by municipality: average, median, share above 200/300/1000 Bq/m³, dwellings measured; the reference levels | All STUK's, except the name aliases. Measured houses are not a sample, so the averages run high (see below). |
+| `flood-risk-areas.json` (18 KB) | SYKE's 18 significant flood risk areas (2024 decision, to 2030) with their municipalities and flood types | The areas are SYKE's; the municipalities are our overlay on Statistics Finland's boundaries (see below). |
 
 The price of old flats by postal code (Statistics Finland table 13mu, 2025) is not copied here: `tools/build-data.mjs` reads it from `libs/listing/data/prices-postcode.json`.
 
@@ -278,6 +281,39 @@ Key numbers:
 - `moisture`, `companyLoans`, `conditionSurvey`: facts already checked in `housing-rules.json` and `rent-rules.json` (FINE, AOYL 6:3 § and 7:27 §, VNa 130/2001 8 §, Residential Leases Act 23 § and 63 §).
 
 **Still missing.** No plot rent rule from a municipality other than Helsinki; no national figure for how much plot rents rise at renewal. Energy class limits (kWh/m² a year by building type) are not in the file.
+
+## house-rules.json
+
+**What it holds.** The facts for a house or cottage sold as real estate (kiinteistö), gathered and checked on 18 October 2026 from the sources' own texts: every `quoteFi` was matched word for word against the downloaded text.
+
+- `landCode`: Maakaari 540/1995 chapter 2: the quality defect and the hidden defect (2:17 § 1 mom. 5 kohta), the seller's information (2:17, 2:20), the buyer's duty to inspect (2:22), notice within a reasonable time and at most 5 years from possession (2:25), remedies.
+- `transferTax`: 3 % for a property, paid by the buyer, due at the latest when title is applied for; the first-home exemption ended 1.1.2024. `titleRegistration`: within 6 months, fee 172 € in 2026.
+- `propertyTax`: the legal ranges and vero.fi's 2026 rates by municipality. The taxable value is not in an ad, so the app links to the rates.
+- `wastewater`: the basic treatment requirement (YSL 154 b §), the 31.10.2019 deadline within 100 m of water or in a groundwater area, the renovation triggers elsewhere (156 b §, amended 900/2024), exemptions that lapse with a new owner (156 d §), the age exemption (238 §), the system documents (157 §). `municipalNetwork`: Vesihuoltolaki 10–11 §.
+- `cottage`: change of use (Rakentamislaki 42 §), private roads (Yksityistielaki), the energy certificate and its holiday-home exemption.
+- `conditionInspection`: what it is (KKV), and nine published prices from three firms; `rangeEur` 895–1,910 € is derived (lowest and highest).
+- `riskStructures`: false plinth (1960s–80s), crawl space (1940s–50s), flat roof (1970s), slab with insulation on top (1940s–80s, about 40 years), basement walls insulated inside, from the Ministry of the Environment's Kosteus- ja hometalkoot checklists by decade.
+- `radon`: 300 and 200 Bq/m³ (STM 1044/2018), how STUK says to measure (at least 2 months, September to May), STUK's price 86.60 €, drilled wells.
+- `oilHeating`: tank inspections (Tukes; If's own 10-year rule), who pays for a leak, Motiva's 2024 switching examples (ground-source 23,000–26,000 €, air-to-water 17,000–18,000 €), the closed 2026 grant.
+- `well`, `lifetimes` (drains 40–50 years; roofs: felt 25–35, sheet metal 40–60, tile about 45), `insurance` (fire, leak with the pipe-age deduction, storm, flood, frost, the empty-building rule, exclusions, and one seller's hidden-defect insurance), `electricity` (13rb band over 15,000 kWh, 14.892 c/kWh in June 2026; light fuel oil 167 c/l from 12ge).
+
+**Secondary.** The condition inspection prices (Sustera, JEP Tarkastus, Satpa), that RT 103996 replaced KH 90-00394, the 3–5-year well interval (a laboratory), and the hidden-defect insurance (Sustera's product page).
+
+**Still missing.** No lifetime for a house's sewer pipes; no wind speed for "myrskytuuli" in If's terms; no national rule on emptying a holding tank (municipal regulations); THL's well page did not load; STUK's 1,000 Bq/l for well water is quoted through Vantaa; the oil fund's own site did not resolve (its conditions are from the Ministry of the Environment's 2017 guide); that signs of moisture deepen the buyer's duty to inspect is case law, not opened.
+
+## radon-municipalities.json
+
+**What it holds.** STUK's table "Pientalojen radonpitoisuudet kunnittain" (radontilasto_pientalot_kunta_ja_koko_suomi_2023.xlsx, created April 2024, the latest STUK links): small-house dwellings measured 1980–2023, one value per dwelling (the highest), the annual average as STUK computes it (a September–May measurement × 0.9). 308 municipalities; 301 with an average and 276 with shares. Whole numbers as STUK rounds them.
+
+**Read with care.** Measured houses are not a random sample: the national row is 228 Bq/m³ with 19 % above 300, against STUK's about 94 Bq/m³ for all homes. STUK says one home's radon can be known only by measuring. Municipalities with under 10 measured dwellings have no figures, and those with 10–29 have no shares. Pertunmaa (merged into Mäntyharju on 1.1.2025) is kept apart, as STUK lists it.
+
+**Licence.** None stated on the page or in the file; STUK's open-data page uses CC BY 4.0 for its datasets, but this table isn't listed there. Attribute STUK.
+
+## flood-risk-areas.json
+
+**What it holds.** The 18 significant flood risk areas (merkittävät tulvariskialueet) the Ministry of Agriculture and Forestry named on 19.12.2024 under the Act on Flood Risk Management 620/2010 (14 river, 4 coastal; none for stormwater), from SYKE's open data (attributes only, CC BY 4.0, "Lähde: Syke, ELY-keskukset"). Four 2018 areas were dropped: the Loviisa coast, Riihimäki, Lapua and Kemijärvi.
+
+**Our step.** SYKE's data has no municipality field. The municipalities are our overlay of SYKE's polygons on Statistics Finland's 2026 boundaries (1:1,000,000): a municipality is listed if it holds the largest part of the area or more than 1 km² lies over 1 km inside it; small slivers are listed in `meta.notes`. An area covers part of a municipality at most, so the app says "part of" and links to the flood map, never that an address is at risk.
 
 ## What the reader can rely on
 
